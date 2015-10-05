@@ -3,13 +3,15 @@
  *  The list of settings values are listed here bower_components/foundation/scss/foundation/_settings.scss
  */
 $topbar-bg-color: #000;
-
+$fa-font-path: "../../bower_components/font-awesome/fonts";
 
 /**
  *  The import of foundation is made manually because there is still no links of the
  *  sass version in their bower.json...
  */
 @import '../../bower_components/foundation/scss/foundation';
+
+@import '../../bower_components/font-awesome/scss/font-awesome.scss';
 
 /**
  *  Do not remove this comments bellow. It's the markers used by wiredep to inject
