@@ -1,7 +1,6 @@
 package com.exadel.training.dao.domain;
 
 import javax.persistence.*;
-import java.util.Date;
 
 /**
  * Created by ayudovin on 05.10.2015.
@@ -13,12 +12,15 @@ public class Lesson {
     @GeneratedValue
     private long id;
 
-    private Date date;
+    private long date;
 
     private String place;
 
     @ManyToOne(cascade = CascadeType.ALL)
     private Training training;
+
+    public Lesson() {
+    }
 
     public long getId() {
         return id;
@@ -28,11 +30,11 @@ public class Lesson {
         this.id = id;
     }
 
-    public Date getDate() {
+    public long getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(long date) {
         this.date = date;
     }
 

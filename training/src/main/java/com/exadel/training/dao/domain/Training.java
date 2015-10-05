@@ -15,6 +15,7 @@ public class Training {
     @GeneratedValue
     private long id;
 
+    @NotNull
     private String title;
 
     private String description;
@@ -22,13 +23,17 @@ public class Training {
     @Column(length = 5000)
     private int language;
 
+    private int maxSize;
+
     private boolean isInner;
 
-    private String exept;
+    private String excerpt;
 
-    private int sumRaiting;
+    private int sumRating;
 
-    private int countListenerRaiting;
+    private int countListenerRating;
+
+    private boolean isCanceled;
 
     @ManyToOne(cascade = CascadeType.ALL)
     private User coach;
@@ -44,6 +49,9 @@ public class Training {
 
     @ManyToMany(cascade = CascadeType.ALL)
     private List<Tag> tagList;
+
+    public Training() {
+    }
 
     public long getId() {
         return id;
@@ -85,28 +93,29 @@ public class Training {
         this.isInner = isInner;
     }
 
-    public String getExept() {
-        return exept;
+    public String getExcerpt() {
+        return excerpt;
     }
 
-    public void setExept(String exept) {
-        this.exept = exept;
+    public void setExcerpt(String excerpt) {
+        this.excerpt = excerpt;
     }
 
-    public int getSumRaiting() {
-        return sumRaiting;
+
+    public int getCountListenerRating() {
+        return countListenerRating;
     }
 
-    public void setSumRaiting(int sumRaiting) {
-        this.sumRaiting = sumRaiting;
+    public void setCountListenerRating(int countListenerRating) {
+        this.countListenerRating = countListenerRating;
     }
 
-    public int getCountListenerRaiting() {
-        return countListenerRaiting;
+    public int getSumRating() {
+        return sumRating;
     }
 
-    public void setCountListenerRaiting(int countListenerRaiting) {
-        this.countListenerRaiting = countListenerRaiting;
+    public void setSumRating(int sumRating) {
+        this.sumRating = sumRating;
     }
 
     public User getCoach() {
@@ -147,5 +156,21 @@ public class Training {
 
     public void setTagList(List<Tag> tagList) {
         this.tagList = tagList;
+    }
+
+    public boolean isCanceled() {
+        return isCanceled;
+    }
+
+    public void setIsCanceled(boolean isCanceled) {
+        this.isCanceled = isCanceled;
+    }
+
+    public int getMaxSize() {
+        return maxSize;
+    }
+
+    public void setMaxSize(int maxSize) {
+        this.maxSize = maxSize;
     }
 }
