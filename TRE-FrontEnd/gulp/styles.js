@@ -11,12 +11,11 @@ var $ = require('gulp-load-plugins')();
 var wiredep = require('wiredep').stream;
 var _ = require('lodash');
 
+var tmpSass = path.join(conf.paths.tmpSass,'/tmp-sass/');
  
 
 gulp.task('styles',['styles-inject'], function () { 
-  return $.rubySass([
-      path.join(conf.paths.tmp, '/sass-temp/index.scss')
-  ],{sourcemap: true})
+    return $.rubySass([tmpSass],{sourcemap: true})
     .on('error', $.rubySass.logError)
     .pipe($.autoprefixer()).on('error', conf.errorHandler('Autoprefixer'))
     .pipe($.sourcemaps.write())
@@ -44,8 +43,7 @@ gulp.task('styles-inject', function(){
     return gulp.src(path.join(conf.paths.src, '/app/index.scss'))
         .pipe($.inject(injectFiles, injectOptions))
         .pipe(wiredep(_.extend({}, conf.wiredep)))
-        .pipe(gulp.dest(path.join(conf.paths.tmp, '/sass-temp/')))
-    
+        .pipe(gulp.dest(tmpSass));
 })
 
 

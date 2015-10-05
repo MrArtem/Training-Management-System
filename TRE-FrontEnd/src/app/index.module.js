@@ -1,7 +1,12 @@
-(function() {
-  'use strict';
+(function () {
+    'use strict';
 
-  angular
-    .module('tmsApp', ['ngCookies', 'ngTouch', 'ngSanitize', 'ngResource', 'ui.router']);
+    angular
+        .module('tmsApp', ['ngCookies',
+             'ngTouch',
+             'ngSanitize',
+             'ngResource',
+             'ui.router',
+             'tmsAPI']);
 
 })();
