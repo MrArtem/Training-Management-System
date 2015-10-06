@@ -15,7 +15,7 @@ import org.springframework.orm.hibernate4.HibernateTransactionManager;
  */
 @Configuration
 @EnableAutoConfiguration
-@ComponentScan("com.exadel.training.dao")
+@ComponentScan({"com.exadel.training.dao", "com.exadel.training.controller"})
 public class WebApplicationStarter extends SpringBootServletInitializer {
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {

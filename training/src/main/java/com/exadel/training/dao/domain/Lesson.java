@@ -1,6 +1,7 @@
 package com.exadel.training.dao.domain;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * Created by ayudovin on 05.10.2015.
@@ -18,6 +19,9 @@ public class Lesson {
 
     @ManyToOne(cascade = CascadeType.ALL)
     private Training training;
+    
+    @OneToMany
+    private List<Attendance> attendanceList;
 
     public Lesson() {
     }
@@ -52,5 +56,13 @@ public class Lesson {
 
     public void setTraining(Training training) {
         this.training = training;
+    }
+
+    public List<Attendance> getAttendanceList() {
+        return attendanceList;
+    }
+
+    public void setAttendanceList(List<Attendance> attendanceList) {
+        this.attendanceList = attendanceList;
     }
 }
