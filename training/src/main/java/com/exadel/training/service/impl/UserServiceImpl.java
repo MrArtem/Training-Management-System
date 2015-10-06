@@ -1,8 +1,9 @@
 package com.exadel.training.service.impl;
 
 import com.exadel.training.dao.domain.Training;
-import com.exadel.training.dao.impl.UserDAO;
-import com.exadel.training.service.UserServie;
+import com.exadel.training.dao.UserDAO;
+import com.exadel.training.dao.domain.User;
+import com.exadel.training.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,10 +15,15 @@ import java.util.List;
  */
 @Service
 @Transactional
-public class UserServieImpl implements UserServie{
+public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserDAO userDAO;
+
+    @Override
+    public User getUserById(long id) {
+        return userDAO.getUserByID(id);
+    }
 
     @Override
     public List<Training> getTrainingListOfUserListener(long id) {

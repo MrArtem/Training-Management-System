@@ -34,7 +34,7 @@ public class User {
     private List<Training> trainingListCoach;
 
     @OneToMany(mappedBy = "user")
-    private List<Feedback> feedbacks;
+    private List<Feedback> feedbackList;
 
     @OneToMany(mappedBy = "user")
     private List<Comment> comments;
@@ -101,12 +101,12 @@ public class User {
         this.trainingListCoach = trainingListCoach;
     }
 
-    public List<Feedback> getFeedbacks() {
-        return feedbacks;
+    public List<Feedback> getFeedbackList() {
+        return feedbackList;
     }
 
-    public void setFeedbacks(List<Feedback> feedbacks) {
-        this.feedbacks = feedbacks;
+    public void setFeedbackList(List<Feedback> feedbackList) {
+        this.feedbackList = feedbackList;
     }
 
     public List<Comment> getCommentList() {

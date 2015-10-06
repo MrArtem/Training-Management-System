@@ -1,4 +1,4 @@
-package com.exadel.training.dao.impl;
+package com.exadel.training.dao;
 
 import com.exadel.training.dao.domain.User;
 
