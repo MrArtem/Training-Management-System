@@ -40,6 +40,10 @@ $fa-font-path: "../../bower_components/font-awesome/fonts";
   }
 }
 
+table {
+  width: 100% !important;
+}
+
 /**
  *  Do not remove this comments bellow. It's the markers used by gulp-inject to inject
  *  all your sass files automatically

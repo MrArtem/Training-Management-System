@@ -8,26 +8,31 @@
     /** @ngInject */
     function routeConfig($stateProvider, $urlRouterProvider) {
         $stateProvider
-            .state('mycourses', {
-                url: '/',
-                templateUrl: 'app/page.mycourses/mycourses.html',
-                controller: 'MyCoursesController',
-                controllerAs: 'mycourses'
+            .state('admin', {
+                url: '/admin',
+                templateUrl: 'app/page.admin/admin.html',
+                controller: 'AdminController',
+                controllerAs: 'admin'
             }).state('browse', {
                 url: '/browse',
                 templateUrl: 'app/page.browse/browse.html',
                 controller: 'BrowseController',
                 controllerAs: 'browse'
+            }).state('courseinfo', {
+                url: '/courseinfo',
+                templateUrl: 'app/page.courseinfo/courseinfo.html',
+                controller: 'CourseInfoController',
+                controllerAs: 'courseinfo'
             }).state('createcourse', {
                 url: '/createcourse',
                 templateUrl: 'app/page.createcourse/createcourse.html',
                 controller: 'CreateCourseController',
                 controllerAs: 'createcourse'
-            }).state('courseinfo', {
-                url: '/courseinfo/:courseId',
-                templateUrl: 'app/page.courseinfo/courseinfo.html',
-                controller: 'CourseInfoController',
-                controllerAs: 'courseinfo'
+            }).state('mycourses', {
+                url: '/',
+                templateUrl: 'app/page.mycourses/mycourses.html',
+                controller: 'MyCoursesController',
+                controllerAs: 'mycourses'
             })
         ;
 
