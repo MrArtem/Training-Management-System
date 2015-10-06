@@ -17,6 +17,7 @@ import org.mockito.Mock;
 @RunWith(MockitoJUnitRunner.class)
 public class UserServiceImplTest {
     private static final long TEST_EXPECTED_ID = 1;
+    private static final long TEST_EXPECTED_ID_Exception = 0;
 
     @InjectMocks
     private UserService userService = new UserServiceImpl();
@@ -34,5 +35,15 @@ public class UserServiceImplTest {
         long actual = userService.getUserById(TEST_EXPECTED_ID).getId();
 
         Assert.assertEquals(TEST_EXPECTED_ID, actual);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public  void testGetUserByIdException() throws Exception {
+        User testUser = new User();
+        testUser.setId(TEST_EXPECTED_ID_Exception);
+
+        Mockito.when(userDAO.getUserByID(TEST_EXPECTED_ID_Exception)).thenReturn(testUser);
+
+        long actual = userService.getUserById(TEST_EXPECTED_ID_Exception).getId();
     }
 }

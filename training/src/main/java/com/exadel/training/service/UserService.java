@@ -11,6 +11,6 @@ import java.util.List;
 public interface UserService {
     User getUserById(long id);
 
-    List<Training> getTrainingListOfUserListener(long id);
-    List<Training> getTrainingListOfUserCoach(long id);
+    List<Training> getListenerTrainingListOfUser(long id);
+    List<Training> getCoachTrainingListOfUser(long id);
 }

@@ -22,16 +22,20 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserById(long id) {
+        if(id == 0) {
+            throw new IllegalArgumentException("can't find user with id == 0");
+        }
+
         return userDAO.getUserByID(id);
     }
 
     @Override
-    public List<Training> getTrainingListOfUserListener(long id) {
+    public List<Training> getListenerTrainingListOfUser(long id) {
         return userDAO.getUserByID(id).getTrainingsListener();
     }
 
     @Override
-    public List<Training> getTrainingListOfUserCoach(long id) {
+    public List<Training> getCoachTrainingListOfUser(long id) {
         return userDAO.getUserByID(id).getTrainingsCoach();
     }
 }
