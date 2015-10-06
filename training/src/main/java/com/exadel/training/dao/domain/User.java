@@ -1,7 +1,5 @@
 package com.exadel.training.dao.domain;
 
-import org.springframework.stereotype.Component;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -111,12 +109,12 @@ public class User {
         this.feedbacks = feedbacks;
     }
 
-    public List<Comment> getComments() {
+    public List<Comment> getCommentList() {
         return comments;
     }
 
-    public void setComments(List<Comment> comments) {
-        this.comments = comments;
+    public void setCommentList(List<Comment> commentList) {
+        this.comments = commentList;
     }
 
     public List<Attendance> getAttendances() {
@@ -126,4 +124,7 @@ public class User {
     public void setAttendances(List<Attendance> attendances) {
         this.attendances = attendances;
     }
+}
+ enum Role{
+   
 }
