@@ -18,8 +18,6 @@ import java.util.List;
  * Created by ayudovin on 01.10.2015.
  */
 
-@Configuration
-@EnableAutoConfiguration
 @SpringBootApplication
 @RestController
 public class Main {

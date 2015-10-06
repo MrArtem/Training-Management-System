@@ -1,5 +1,7 @@
 package com.exadel.training.dao.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -11,8 +13,9 @@ public class Tag {
     @GeneratedValue
     private Long id;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "tagList")
-    private List<Training> training;
+    private List<Training> trainingList;
 
     private String specialty;
 
@@ -25,12 +28,12 @@ public class Tag {
         return id;
     }
 
-    public List<Training> getTraining() {
-        return training;
+    public List<Training> getTrainingList() {
+        return trainingList;
     }
 
-    public void setTraining(List<Training> training) {
-        this.training = training;
+    public void setTrainingList(List<Training> training) {
+        this.trainingList = training;
     }
 
     public String getSpecialty() {

@@ -16,19 +16,22 @@ public class Comment {
     @ManyToOne(cascade = CascadeType.ALL)
     private User user;
 
-    private boolean clear;
+    private Boolean clear;
 
-    private boolean interesting;
+    private Boolean interesting;
 
-    private boolean newMaterial;
+    private Boolean newMaterial;
 
-    private int effective;
+    private Integer effective;
 
-    private boolean recommendation;
+    private Boolean recommendation;
 
     private String other;
 
+    private Boolean isDeleted;
+
     public Comment() {
+        isDeleted = false;
     }
 
     public Long getId() {
@@ -51,43 +54,43 @@ public class Comment {
         this.user = user;
     }
 
-    public boolean isClear() {
+    public Boolean getClear() {
         return clear;
     }
 
-    public void setClear(boolean clear) {
+    public void setClear(Boolean clear) {
         this.clear = clear;
     }
 
-    public boolean isInteresting() {
+    public Boolean getInteresting() {
         return interesting;
     }
 
-    public void setInteresting(boolean interesting) {
+    public void setInteresting(Boolean interesting) {
         this.interesting = interesting;
     }
 
-    public boolean isNewMaterial() {
+    public Boolean getNewMaterial() {
         return newMaterial;
     }
 
-    public void setNewMaterial(boolean newMaterial) {
+    public void setNewMaterial(Boolean newMaterial) {
         this.newMaterial = newMaterial;
     }
 
-    public int getEffective() {
+    public Integer getEffective() {
         return effective;
     }
 
-    public void setEffective(int effective) {
+    public void setEffective(Integer effective) {
         this.effective = effective;
     }
 
-    public boolean isRecommendation() {
+    public Boolean getRecommendation() {
         return recommendation;
     }
 
-    public void setRecommendation(boolean recommendation) {
+    public void setRecommendation(Boolean recommendation) {
         this.recommendation = recommendation;
     }
 
@@ -97,5 +100,13 @@ public class Comment {
 
     public void setOther(String other) {
         this.other = other;
+    }
+
+    public Boolean getIsDeleted() {
+        return isDeleted;
+    }
+
+    public void setIsDeleted(Boolean isDeleted) {
+        this.isDeleted = isDeleted;
     }
 }
