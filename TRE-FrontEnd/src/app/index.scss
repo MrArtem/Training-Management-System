@@ -44,6 +44,11 @@ table {
   width: 100% !important;
 }
 
+.scrollable-div {
+  max-height: 400px;
+  overflow: auto;
+}
+
 /**
  *  Do not remove this comments bellow. It's the markers used by gulp-inject to inject
  *  all your sass files automatically
