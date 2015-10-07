@@ -11,6 +11,10 @@ import java.util.List;
 @Table
 public class User {
 
+    private  enum Role{
+        ADMIN, USER, EXCOACH, EXUSER
+    }
+
     @Id
     @GeneratedValue
     private long id;
@@ -135,7 +139,4 @@ public class User {
     public void setAttendances(List<Attendance> attendances) {
         this.attendances = attendances;
     }
-}
- enum Role{
-   ADMIN, USER, EXCOACH, EXUSER
 }
