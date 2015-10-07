@@ -16,6 +16,10 @@ public class User {
     private long id;
 
     @NotNull
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
+    @NotNull
     private String firstName;
 
     @NotNull
@@ -24,7 +28,6 @@ public class User {
     @NotNull
     private String email;
 
-    @NotNull
     private String phone;
 
     @ManyToMany(cascade = CascadeType.ALL)
@@ -71,6 +74,14 @@ public class User {
 
     public String getEmail() {
         return email;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     public void setEmail(String email) {
@@ -126,5 +137,5 @@ public class User {
     }
 }
  enum Role{
-   
+   ADMIN, USER, EXCOACH, EXUSER
 }

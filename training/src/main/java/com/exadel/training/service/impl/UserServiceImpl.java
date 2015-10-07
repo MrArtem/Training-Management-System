@@ -16,14 +16,23 @@ import java.util.List;
 @Service
 @Transactional
 public class UserServiceImpl implements UserService {
+    public static final long ILLEGAL_ID = 0;
 
     @Autowired
     private UserDAO userDAO;
 
     @Override
+    public boolean isCoach(long idUser, long idTraining) {
+        if (idUser == ILLEGAL_ID || idTraining == ILLEGAL_ID) {
+            throw new IllegalArgumentException("id cant't be 0 ");
+        }
+        return userDAO.isCoach(idUser, idTraining);
+    }
+
+    @Override
     public User getUserById(long id) {
-        if(id == 0) {
-            throw new IllegalArgumentException("can't find user with id == 0");
+        if (id == ILLEGAL_ID) {
+            throw new IllegalArgumentException("id cant't be 0 ");
         }
 
         return userDAO.getUserByID(id);
@@ -31,11 +40,19 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<Training> getListenerTrainingListOfUser(long id) {
+        if (id == ILLEGAL_ID) {
+            throw new IllegalArgumentException("id cant't be 0 ");
+        }
+
         return userDAO.getUserByID(id).getTrainingsListener();
     }
 
     @Override
     public List<Training> getCoachTrainingListOfUser(long id) {
+        if (id == ILLEGAL_ID) {
+            throw new IllegalArgumentException("id cant't be 0 ");
+        }
+
         return userDAO.getUserByID(id).getTrainingsCoach();
     }
 }

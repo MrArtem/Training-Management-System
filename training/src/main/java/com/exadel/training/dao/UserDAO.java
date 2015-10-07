@@ -8,5 +8,8 @@ import com.exadel.training.dao.domain.User;
 public interface UserDAO {
     void save(User user);
     void update(User user);
+
+    Boolean isCoach(long idUser, long idTraining);
+
     User getUserByID(long id);
 }
