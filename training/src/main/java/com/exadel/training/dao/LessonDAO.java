@@ -16,4 +16,8 @@ public interface LessonDAO {
     Lesson getLessonById(long id);
 
     List<Lesson> getLessonListByTraining(long trainingId);
+
+    Long getStartDateByTraining(long trainingId);
+
+    Long getEndDateByTraining(long trainingId);
 }

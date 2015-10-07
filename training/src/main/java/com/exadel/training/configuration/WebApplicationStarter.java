@@ -10,9 +10,6 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.orm.hibernate4.HibernateTransactionManager;
 
-/**
- * Created by azapolski on 10/5/2015.
- */
 @Configuration
 @EnableAutoConfiguration
 @ComponentScan({"com.exadel.training.dao", "com.exadel.training.controller"})
