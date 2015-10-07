@@ -14,7 +14,6 @@ public class ApproveAction {
         CREATE, EDIT, REMOVE
     }
 
-
     @Id
     @GeneratedValue
     private Long id;
