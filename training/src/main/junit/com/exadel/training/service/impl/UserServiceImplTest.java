@@ -1,5 +1,6 @@
 package com.exadel.training.service.impl;
 
+import com.exadel.training.dao.TrainingDAO;
 import com.exadel.training.dao.UserDAO;
 import com.exadel.training.dao.domain.Training;
 import com.exadel.training.dao.domain.User;
@@ -30,7 +31,12 @@ public class UserServiceImplTest {
     private UserDAO userDAO;
 
     @Mock
+    private TrainingDAO trainingDAO;
+
+    @Mock
     private User testUser = new User();
+    @Mock
+    private Training testTraining = new Training();
 
     @Test
     public void testGetUserById() throws Exception {
@@ -97,24 +103,27 @@ public class UserServiceImplTest {
 
     @Test
     public void testIsCoach() throws Exception {
-        Mockito.when(userDAO.isCoach(TEST_EXPECTED_ID, TEST_EXPECTED_ID)).thenReturn(true);
-        Mockito.when(userDAO.isCoach(TEST_EXPECTED_ID, TEST_EXPECTED_ID + 1)).thenReturn(false);
+        Mockito.when(testTraining.getCoach()).thenReturn(testUser);
+        Mockito.when(testUser.getId()).thenReturn(TEST_EXPECTED_ID);
+
+        Mockito.when(trainingDAO.getTrainingById(TEST_EXPECTED_ID)).thenReturn(testTraining);
+        Mockito.when(userDAO.getUserByID(TEST_EXPECTED_ID)).thenReturn(testUser);
 
         Boolean actual1 = userService.isCoach(TEST_EXPECTED_ID, TEST_EXPECTED_ID);
-        Boolean actual2 = userService.isCoach(TEST_EXPECTED_ID, TEST_EXPECTED_ID + 1);
 
         Assert.assertEquals(new Boolean(true), actual1);
-        Assert.assertEquals(new Boolean(false), actual2);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testIsCoachException() throws Exception {
-        Mockito.when(userDAO.isCoach(TEST_EXPECTED_ID_EXCEPTION, TEST_EXPECTED_ID)).thenReturn(false);
-        Mockito.when(userDAO.isCoach(TEST_EXPECTED_ID, TEST_EXPECTED_ID_EXCEPTION)).thenReturn(false);
-        Mockito.when(userDAO.isCoach(TEST_EXPECTED_ID_EXCEPTION, TEST_EXPECTED_ID_EXCEPTION)).thenReturn(false);
+        Mockito.when(testTraining.getCoach()).thenReturn(testUser);
+        Mockito.when(testUser.getId()).thenReturn(TEST_EXPECTED_ID_EXCEPTION);
 
-        Boolean actual1 = userService.isCoach(TEST_EXPECTED_ID_EXCEPTION, TEST_EXPECTED_ID);
+        Mockito.when(trainingDAO.getTrainingById(TEST_EXPECTED_ID_EXCEPTION)).thenReturn(testTraining);
+        Mockito.when(userDAO.getUserByID(TEST_EXPECTED_ID_EXCEPTION)).thenReturn(testUser);
+
+        Boolean actual1 = userService.isCoach(TEST_EXPECTED_ID_EXCEPTION, TEST_EXPECTED_ID_EXCEPTION);
         Boolean actual2 = userService.isCoach(TEST_EXPECTED_ID, TEST_EXPECTED_ID_EXCEPTION);
-        Boolean actual3 = userService.isCoach(TEST_EXPECTED_ID_EXCEPTION, TEST_EXPECTED_ID_EXCEPTION);
+        Boolean actual3 = userService.isCoach(TEST_EXPECTED_ID_EXCEPTION, TEST_EXPECTED_ID);
     }
 }
