@@ -5,7 +5,7 @@ import javax.persistence.*;
 @Entity
 @Table
 public class Listener {
-    private enum State {
+    public enum State {
         WAITING, LEAVE, ACCEPTED
     }
 
