@@ -19,9 +19,9 @@ public class TrainingModel {
 
     private String coachName;
 
-    private long startDate;
+    private Long startDate;
 
-    private long endDate;
+    private Long endDate;
 
     private double rating;
 
@@ -78,19 +78,19 @@ public class TrainingModel {
         this.coachName = coachName;
     }
 
-    public long getStartDate() {
+    public Long getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(long startDate) {
+    public void setStartDate(Long startDate) {
         this.startDate = startDate;
     }
 
-    public long getEndDate() {
+    public Long getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(long endDate) {
+    public void setEndDate(Long endDate) {
         this.endDate = endDate;
     }
 

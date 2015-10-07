@@ -6,9 +6,11 @@ import com.exadel.training.service.LessonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
+@Transactional
 public class LessonServiceImpl implements LessonService{
 
     @Autowired
@@ -20,12 +22,12 @@ public class LessonServiceImpl implements LessonService{
     }
 
     @Override
-    public long getStartDateByTraining(long trainingId) {
-        return 0;
+    public Long getStartDateByTraining(long trainingId) {
+        return lessonDAO.getStartDateByTraining(trainingId);
     }
 
     @Override
-    public long getEndDateByTraining(long trainingId) {
-        return 0;
+    public Long getEndDateByTraining(long trainingId) {
+        return lessonDAO.getEndDateByTraining(trainingId);
     }
 }

@@ -9,7 +9,7 @@ public interface LessonService {
 
     List<Lesson> getLessonByTraining(long trainingId);
 
-    long getStartDateByTraining(long trainingId);
+    Long getStartDateByTraining(long trainingId);
 
-    long getEndDateByTraining(long trainingId);
+    Long getEndDateByTraining(long trainingId);
 }
