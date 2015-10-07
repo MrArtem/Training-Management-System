@@ -1,6 +1,7 @@
 package com.exadel.training.service.impl;
 
 import com.exadel.training.dao.TrainingDAO;
+import com.exadel.training.dao.domain.Listener;
 import com.exadel.training.dao.domain.Training;
 import com.exadel.training.dao.UserDAO;
 import com.exadel.training.dao.domain.User;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -47,8 +49,13 @@ public class UserServiceImpl implements UserService {
         if (id == ILLEGAL_ID) {
             throw new IllegalArgumentException("id cant't be 0 ");
         }
+        List<Training> trainingList = new ArrayList<Training>();
 
-        return userDAO.getUserByID(id).getTrainingsListener();
+        for (Listener listener : userDAO.getUserByID(id).getTrainingListListener()) {
+            trainingList.add(listener.getTraining());
+        }
+
+        return trainingList;
     }
 
     @Override
