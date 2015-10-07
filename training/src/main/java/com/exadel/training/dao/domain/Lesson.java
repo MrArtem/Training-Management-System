@@ -1,11 +1,10 @@
 package com.exadel.training.dao.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.List;
 
-/**
- * Created by ayudovin on 05.10.2015.
- */
 @Entity
 @Table
 public class Lesson {
@@ -17,9 +16,11 @@ public class Lesson {
 
     private String place;
 
+    @JsonIgnore
     @ManyToOne(cascade = CascadeType.ALL)
     private Training training;
-    
+
+    @JsonIgnore
     @OneToMany
     private List<Attendance> attendanceList;
 

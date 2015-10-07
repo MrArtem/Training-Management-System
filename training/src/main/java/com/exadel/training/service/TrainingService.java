@@ -1,9 +1,11 @@
 package com.exadel.training.service;
 
-import com.exadel.training.controller.model.GetTrainingModel;
+import com.exadel.training.dao.domain.Training;
 
 
 public interface TrainingService {
 
-    GetTrainingModel getTraining(long id);
+    Training getTraining(long id);
+
+    boolean canRate(long id);
 }

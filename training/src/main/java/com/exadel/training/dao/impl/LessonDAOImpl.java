@@ -41,4 +41,17 @@ public class LessonDAOImpl implements LessonDAO{
         Training training = session.load(Training.class, trainingId);
         return training.getLessonList();
     }
+
+    @Override
+    public Long getStartDateByTraining(long trainingId) {
+        Session session = sessionFactory.getCurrentSession();
+        Training training = session.load(Training.class,trainingId);
+        return (Long)session.createQuery("select max(les.date) from Lesson les where les.training =:training")
+                .setParameter("training",training).uniqueResult();
+    }
+
+    @Override
+    public Long getEndDateByTraining(long trainingId) {
+        return 0L;
+    }
 }
