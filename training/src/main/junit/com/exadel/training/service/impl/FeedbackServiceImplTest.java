@@ -24,6 +24,7 @@ import static org.junit.Assert.*;
 @RunWith(MockitoJUnitRunner.class)
 public class FeedbackServiceImplTest {
     private static final long TEST_EXPECTED_ID = 1;
+    private static final long TEST_EXPECTED_ID_EXCEPTION = 0;
 
     @InjectMocks
     private FeedbackService feedbackService = new FeedbackServiceImpl();
@@ -47,5 +48,18 @@ public class FeedbackServiceImplTest {
 
         List<Feedback> feedbackListActual = feedbackService.getFeedbackListForUser(TEST_EXPECTED_ID);
         Assert.assertEquals(feedbackList,feedbackListActual);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testGetFeedbackListForUserException() throws Exception {
+        List<Feedback> feedbackList = new ArrayList<Feedback>();
+        Feedback feedback = new Feedback();
+        feedback.setId(TEST_EXPECTED_ID_EXCEPTION);
+        feedbackList.add(feedback);
+
+        Mockito.when(userDAO.getUserByID(TEST_EXPECTED_ID_EXCEPTION)).thenReturn(testUser);
+        Mockito.when(testUser.getFeedbackList()).thenReturn(feedbackList);
+
+        List<Feedback> feedbackListActual = feedbackService.getFeedbackListForUser(TEST_EXPECTED_ID_EXCEPTION);
     }
 }

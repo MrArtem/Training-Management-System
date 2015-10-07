@@ -9,6 +9,8 @@ import java.util.List;
  * Created by HP on 06.10.2015.
  */
 public interface UserService {
+    boolean isCoach(long idUser, long idTraining);
+
     User getUserById(long id);
 
     List<Training> getListenerTrainingListOfUser(long id);
