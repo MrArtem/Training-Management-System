@@ -19,7 +19,7 @@
 
     /** @ngInject */
     function NavbarController() {
-      var navbarController = this;
+      var vm = this;
 
       // "vm.creation" is avaible by directive option "bindToController: true"
       
