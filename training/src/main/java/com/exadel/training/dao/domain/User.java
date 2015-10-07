@@ -1,7 +1,5 @@
 package com.exadel.training.dao.domain;
 
-import org.springframework.stereotype.Component;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -36,7 +34,7 @@ public class User {
     private List<Training> trainingListCoach;
 
     @OneToMany(mappedBy = "user")
-    private List<Feedback> feedbacks;
+    private List<Feedback> feedbackList;
 
     @OneToMany(mappedBy = "user")
     private List<Comment> comments;
@@ -103,20 +101,20 @@ public class User {
         this.trainingListCoach = trainingListCoach;
     }
 
-    public List<Feedback> getFeedbacks() {
-        return feedbacks;
+    public List<Feedback> getFeedbackList() {
+        return feedbackList;
     }
 
-    public void setFeedbacks(List<Feedback> feedbacks) {
-        this.feedbacks = feedbacks;
+    public void setFeedbackList(List<Feedback> feedbackList) {
+        this.feedbackList = feedbackList;
     }
 
-    public List<Comment> getComments() {
+    public List<Comment> getCommentList() {
         return comments;
     }
 
-    public void setComments(List<Comment> comments) {
-        this.comments = comments;
+    public void setCommentList(List<Comment> commentList) {
+        this.comments = commentList;
     }
 
     public List<Attendance> getAttendances() {
@@ -126,4 +124,7 @@ public class User {
     public void setAttendances(List<Attendance> attendances) {
         this.attendances = attendances;
     }
+}
+ enum Role{
+   
 }
