@@ -23,22 +23,7 @@ import java.util.List;
 @SpringBootApplication
 @RestController
 public class Main {
-
-    @Autowired
-    LessonDAO lessonDAO;
-
-    @Autowired
-    TrainingDAO trainingDAO;
-
-    @RequestMapping("/")
-    String home() {
-        Training training = trainingDAO.getTrainingById(8);
-        List<Lesson> lessonList = training.getLessonList();
-        return lessonList.toString();
-    }
     public static void main(String[] args) throws Exception {
         SpringApplication.run(Main.class, args);
-
-
     }
 }
