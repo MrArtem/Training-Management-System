@@ -5,12 +5,16 @@ import com.exadel.training.dao.domain.Feedback;
 import com.exadel.training.dao.domain.User;
 import com.exadel.training.service.FeedbackService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 /**
  * Created by ayudovin on 06.10.2015.
  */
+@Service
+@Transactional
 public class FeedbackServiceImpl implements FeedbackService {
     public static final long ILLEGAL_ID = 0;
 
