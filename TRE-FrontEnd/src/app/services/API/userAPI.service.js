@@ -1,12 +1,13 @@
-(function(){
+(function () {
     'use strict';
     angular
         .module('tmsAPI')
         .factory('userAPI', userAPI);
 
     /* @ngInject */
-    function userAPI(){
-        return {};
+    function userAPI() {
+        var userAPI = {}
+        return userAPI;
     }
 
 })();
