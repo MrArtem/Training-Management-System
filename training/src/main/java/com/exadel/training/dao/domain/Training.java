@@ -38,8 +38,8 @@ public class Training {
     @ManyToOne(cascade = CascadeType.ALL)
     private User coach;
 
-    @ManyToMany(mappedBy = "trainingListListener")
-    private List<User> listenerList;
+    @OneToMany(mappedBy = "training")
+    private List<Listener> listenerList;
 
     @OneToMany(mappedBy = "training")
     private List<Lesson> lessonList;
@@ -126,11 +126,11 @@ public class Training {
         this.coach = coach;
     }
 
-    public List<User> getListenerList() {
+    public List<Listener> getListenerList() {
         return listenerList;
     }
 
-    public void setListenerList(List<User> listenerList) {
+    public void setListenerList(List<Listener> listenerList) {
         this.listenerList = listenerList;
     }
 

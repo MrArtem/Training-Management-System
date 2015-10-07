@@ -1,6 +1,7 @@
 package com.exadel.training.dao.impl;
 
 import com.exadel.training.dao.domain.Lesson;
+import com.exadel.training.dao.domain.Listener;
 import com.exadel.training.dao.domain.Training;
 import com.exadel.training.dao.TrainingDAO;
 import com.exadel.training.dao.domain.User;
@@ -45,7 +46,7 @@ public class TrainingDAOImpl implements TrainingDAO {
     }
 
     @Override
-    public List<User> getListenerList(long trainingId) {
+    public List<Listener> getListenerList(long trainingId) {
         Session session = sessionFactory.getCurrentSession();
         Training training  = session.load(Training.class, trainingId);
         return training.getListenerList();
