@@ -58,4 +58,5 @@ public class TrainingDAOImpl implements TrainingDAO {
         Training training = session.load(Training.class, trainingId);
         return training.getLessonList();
     }
+
 }

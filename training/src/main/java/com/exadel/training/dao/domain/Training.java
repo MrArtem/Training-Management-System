@@ -50,6 +50,9 @@ public class Training {
     @ManyToMany(cascade = CascadeType.ALL)
     private List<Tag> tagList;
 
+    @OneToMany(mappedBy = "training")
+    private List<Feedback> feedbackList;
+
     public Training() {
     }
 
@@ -172,5 +175,13 @@ public class Training {
 
     public void setMaxSize(int maxSize) {
         this.maxSize = maxSize;
+    }
+
+    public List<Feedback> getFeedbackList() {
+        return feedbackList;
+    }
+
+    public void setFeedbackList(List<Feedback> feedbackList) {
+        this.feedbackList = feedbackList;
     }
 }

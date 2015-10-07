@@ -7,9 +7,6 @@ import com.exadel.training.dao.domain.User;
 
 import java.util.List;
 
-/**
- * Created by azapolski on 10/5/2015.
- */
 public interface TrainingDAO {
 
     void addTraining(Training training);
