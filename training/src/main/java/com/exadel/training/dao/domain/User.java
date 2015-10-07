@@ -30,8 +30,8 @@ public class User {
 
     private String phone;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    private List<Training> trainingListListener;
+    @OneToMany(mappedBy = "user")
+    private List<Listener> trainingListListener;
 
     @OneToMany(mappedBy = "coach")
     private List<Training> trainingListCoach;
@@ -96,14 +96,6 @@ public class User {
         this.phone = phone;
     }
 
-    public List<Training> getTrainingsListener() {
-        return trainingListListener;
-    }
-
-    public void setTrainingsListener(List<Training> trainingListListener) {
-        this.trainingListListener = trainingListListener;
-    }
-
     public List<Training> getTrainingsCoach() {
         return trainingListCoach;
     }
@@ -134,6 +126,14 @@ public class User {
 
     public void setAttendances(List<Attendance> attendances) {
         this.attendances = attendances;
+    }
+
+    public List<Listener> getTrainingListListener() {
+        return trainingListListener;
+    }
+
+    public void setTrainingListListener(List<Listener> trainingListListener) {
+        this.trainingListListener = trainingListListener;
     }
 }
  enum Role{

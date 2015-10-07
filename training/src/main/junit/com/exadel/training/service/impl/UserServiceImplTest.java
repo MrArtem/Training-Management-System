@@ -2,6 +2,7 @@ package com.exadel.training.service.impl;
 
 import com.exadel.training.dao.TrainingDAO;
 import com.exadel.training.dao.UserDAO;
+import com.exadel.training.dao.domain.Listener;
 import com.exadel.training.dao.domain.Training;
 import com.exadel.training.dao.domain.User;
 import com.exadel.training.service.UserService;
@@ -32,11 +33,12 @@ public class UserServiceImplTest {
 
     @Mock
     private TrainingDAO trainingDAO;
-
     @Mock
     private User testUser = new User();
     @Mock
     private Training testTraining = new Training();
+    @Mock
+    private Listener listener = new Listener();
 
     @Test
     public void testGetUserById() throws Exception {
@@ -61,21 +63,25 @@ public class UserServiceImplTest {
 
     @Test
     public void testGetListenerTrainingListOfUser() throws Exception {
-        List<Training> trainingListTest = new ArrayList<Training>();
+        List<Listener> listenerListTest = new ArrayList<Listener>();
+        listener.setTraining(testTraining);
+        testTraining.setId(TEST_EXPECTED_ID);
+        listenerListTest.add(listener);
 
         Mockito.when(userDAO.getUserByID(TEST_EXPECTED_ID)).thenReturn(testUser);
-        Mockito.when(testUser.getTrainingsListener()).thenReturn(trainingListTest);
+        Mockito.when(testUser.getTrainingListListener()).thenReturn(listenerListTest);
+        Mockito.when(listener.getTraining()).thenReturn(testTraining);
 
         List<Training> actual = userService.getListenerTrainingListOfUser(TEST_EXPECTED_ID);
-        Assert.assertEquals(trainingListTest, actual);
+        Assert.assertEquals(testTraining.getId(), actual.get(0).getId());
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testGetListenerTrainingListOfUserException() throws Exception {
-        List<Training> trainingListTest = new ArrayList<Training>();
+        List<Listener> trainingListTest = new ArrayList<Listener>();
 
         Mockito.when(userDAO.getUserByID(TEST_EXPECTED_ID_EXCEPTION)).thenReturn(testUser);
-        Mockito.when(testUser.getTrainingsListener()).thenReturn(trainingListTest);
+        Mockito.when(testUser.getTrainingListListener()).thenReturn(trainingListTest);
 
         List<Training> actual = userService.getListenerTrainingListOfUser(TEST_EXPECTED_ID_EXCEPTION);
     }
@@ -91,12 +97,12 @@ public class UserServiceImplTest {
         Assert.assertEquals(trainingListTest, actual);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+   @Test(expected = IllegalArgumentException.class)
     public void testGetListenerCoachListOfUserException() throws Exception {
-        List<Training> trainingListTest = new ArrayList<Training>();
+        List<Listener> listenerList = new ArrayList<Listener>();
 
         Mockito.when(userDAO.getUserByID(TEST_EXPECTED_ID_EXCEPTION)).thenReturn(testUser);
-        Mockito.when(testUser.getTrainingsListener()).thenReturn(trainingListTest);
+        Mockito.when(testUser.getTrainingListListener()).thenReturn(listenerList);
 
         List<Training> actual = userService.getListenerTrainingListOfUser(TEST_EXPECTED_ID_EXCEPTION);
     }
