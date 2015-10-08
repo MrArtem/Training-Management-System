@@ -1,22 +1,30 @@
-<div class="row">
-    <div class="small-12 medium-8 large-8 column">
+<div class="approval">
+    <div class="row">
+        <div class="small-12 medium-8 large-8 column">
 
-        <table>
-            <caption>Something that needs your attention</caption>
-            <thead>
-            <tr>
-                <th>What</th>
-                <th>Who</th>
-                <th>Status</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td>Some training</td>
-                <td>John Doe</td>
-                <td>Draft</td>
-            </tr>
-            </tbody>
-        </table>
+            <h5>Something that needs your attention</h5>
+
+            <div class="scrollable-div">
+
+                <table>
+                    <thead>
+                    <tr>
+                        <th>What</th>
+                        <th>Who</th>
+                        <th>Where</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="i in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]">
+                        <td>Some training</td>
+                        <td>John Doe</td>
+                        <td>Draft</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+            </div>
+
+        </div>
     </div>
 </div>

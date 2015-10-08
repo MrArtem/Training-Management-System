@@ -8,6 +8,7 @@
     /** @ngInject */
     function CreateCourseController() {
         var vm = this;
+        vm.courseInfo = {};
 
 
     }

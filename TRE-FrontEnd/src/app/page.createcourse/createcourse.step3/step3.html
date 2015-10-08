@@ -1,0 +1,40 @@
+<div class="step3">
+
+    <div class="row">
+
+        <div class="small-1 column"><a ui-sref="createcourse.step2">Previous</a></div>
+
+        <div class="small-10 column">
+
+            <div class="row">
+                <div class="small-12 column">
+                    <label>Language
+                        <select ng-model="courseInfo.language">
+                            <option value="1">English</option>
+                            <option value="2">Russian</option>
+                        </select>
+                    </label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="small-6 column">
+                    <label>Maximum number of participants
+                        <input type="number" placeholder="participant number" ng-model="courseInfo.maxSize">
+                    </label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="small-12 column">
+                    <label>Place
+                        <input type="text" placeholder="place" ng-model="courseInfo.place">
+                    </label>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="small-1 column"><a ui-sref="createcourse.step4">Next</a></div>
+
+    </div>
+
+</div>

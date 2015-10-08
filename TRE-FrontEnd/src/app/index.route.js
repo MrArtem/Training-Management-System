@@ -24,6 +24,7 @@
                 controller: 'CourseInfoController',
                 controllerAs: 'courseinfo'
             }).state('createcourse', {
+                abstract: true,
                 url: '/createcourse',
                 templateUrl: 'app/page.createcourse/createcourse.html',
                 controller: 'CreateCourseController',
@@ -36,6 +37,7 @@
             })
         ;
 
+        $urlRouterProvider.when('/createcourse', '/createcourse/step1');
         $urlRouterProvider.otherwise('/');
     }
 
