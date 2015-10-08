@@ -1,5 +1,6 @@
 package com.exadel.training.service.impl;
 
+import com.exadel.training.dao.FeedbackDAO;
 import com.exadel.training.dao.UserDAO;
 import com.exadel.training.dao.domain.Feedback;
 import com.exadel.training.dao.domain.User;
@@ -20,6 +21,8 @@ public class FeedbackServiceImpl implements FeedbackService {
 
     @Autowired
     private UserDAO userDAO;
+    @Autowired
+    private FeedbackDAO feedbackDAO;
 
     @Override
     public List<Feedback> getFeedbackListForUser(long id) {
@@ -28,5 +31,14 @@ public class FeedbackServiceImpl implements FeedbackService {
         }
 
         return userDAO.getUserByID(id).getFeedbackList();
+    }
+
+    @Override
+    public List<Feedback> getFeedbackListFromTrainingForUser(long idUser, long idTraining) {
+        if (idUser == ILLEGAL_ID || idTraining == ILLEGAL_ID) {
+            throw new IllegalArgumentException("id can't be 0");
+        }
+
+        return feedbackDAO.getFeedbackListFromTrainingForUser(idUser, idTraining);
     }
 }
