@@ -11,7 +11,7 @@ import java.util.List;
 @Table
 public class User {
 
-    private  enum Role{
+    public   enum Role{
         ADMIN, USER, EXCOACH, EXUSER
     }
 

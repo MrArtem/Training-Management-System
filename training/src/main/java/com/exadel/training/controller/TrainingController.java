@@ -1,5 +1,6 @@
 package com.exadel.training.controller;
 
+import com.exadel.training.controller.model.AddingTrainingModel;
 import com.exadel.training.controller.model.ListenerModel;
 import com.exadel.training.controller.model.TrainingModel;
 import com.exadel.training.dao.domain.Lesson;
@@ -8,10 +9,7 @@ import com.exadel.training.dao.domain.Training;
 import com.exadel.training.service.LessonService;
 import com.exadel.training.service.TrainingService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,5 +44,10 @@ public class TrainingController {
             listenerModelList.add(new ListenerModel(listener));
         }
         return listenerModelList;
+    }
+
+    @RequestMapping(value = "/training/add", method = RequestMethod.POST)
+    void addTraining(@RequestBody AddingTrainingModel addingTrainingModel) {
+        
     }
 }
