@@ -9,19 +9,11 @@
             <div class="row">
 
                 <ul class="tabs" data-tab>
-                    <li class="tab-title active"><a href="#manual">Add dates manually</a></li>
-                    <li class="tab-title"><a href="#repeat">Set repeat model</a></li>
+                    <li class="tab-title" ui-sref-active="active"><a ui-sref=".manual">Add dates manually</a></li>
+                    <li class="tab-title" ui-sref-active="active"><a ui-sref=".repeat">Set repeat model</a></li>
                 </ul>
-                <div class="tabs-content">
-                    <div class="content active" id="manual">
-                        <input type='text' ng-model='my.model' datepicker=''>
 
-                    </div>
-                    <div class="content" id="repeat">
-                        <p>This is the second panel of the basic tab example. This is the second panel of the basic tab
-                            example.</p>
-                    </div>
-                </div>
+                <div ui-view></div>
 
             </div>
 

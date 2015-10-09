@@ -3,6 +3,7 @@
  *  The list of settings values are listed here bower_components/foundation/scss/foundation/_settings.scss
  */
 $topbar-bg-color: #000;
+
 $fa-font-path: "../../bower_components/font-awesome/fonts";
 
 /**
@@ -40,13 +41,17 @@ $fa-font-path: "../../bower_components/font-awesome/fonts";
   }
 }
 
-table {
+.fullwidth-table {
   width: 100% !important;
 }
 
 .scrollable-div {
   max-height: 400px;
   overflow: auto;
+}
+
+.nested-view {
+  margin: 0.5em;
 }
 
 /**

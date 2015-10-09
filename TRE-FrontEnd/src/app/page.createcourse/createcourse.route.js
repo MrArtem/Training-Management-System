@@ -28,6 +28,10 @@
                 templateUrl: 'app/page.createcourse/createcourse.step4/step4.html',
                 controller: 'Step4Controller',
                 controllerAs: 'step4'
+            }).state('createcourse.step4.manual', {
+                templateUrl: 'app/page.createcourse/createcourse.step4/step4.tabs/manual.tab.html'
+            }).state('createcourse.step4.repeat', {
+                templateUrl: 'app/page.createcourse/createcourse.step4/step4.tabs/repeat.tab.html'
             })
         ;
         $urlRouterProvider.otherwise('/');

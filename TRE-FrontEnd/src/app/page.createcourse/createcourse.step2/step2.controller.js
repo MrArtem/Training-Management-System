@@ -6,7 +6,7 @@
         .controller('Step2Controller', Step2Controller);
 
     /** @ngInject */
-    function Step2Controller() {
-        var vm = this;
+    function Step2Controller($scope) {
+        var scope = $scope;
     }
 })();
