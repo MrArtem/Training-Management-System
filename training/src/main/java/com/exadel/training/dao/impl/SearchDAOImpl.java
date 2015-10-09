@@ -22,7 +22,6 @@ import java.util.List;
  * Created by ayudovin on 08.10.2015.
  */
 @Repository
-@Transactional
 public class SearchDAOImpl implements SearchDAO, InitializingBean {
 
 
