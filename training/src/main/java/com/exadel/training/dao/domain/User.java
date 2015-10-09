@@ -11,9 +11,17 @@ import java.util.List;
 @Table
 public class User {
 
+    private  enum Role{
+        ADMIN, USER, EXCOACH, EXUSER
+    }
+
     @Id
     @GeneratedValue
     private long id;
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     @NotNull
     private String firstName;
@@ -24,11 +32,10 @@ public class User {
     @NotNull
     private String email;
 
-    @NotNull
     private String phone;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    private List<Training> trainingListListener;
+    @OneToMany(mappedBy = "user")
+    private List<Listener> trainingListListener;
 
     @OneToMany(mappedBy = "coach")
     private List<Training> trainingListCoach;
@@ -73,6 +80,14 @@ public class User {
         return email;
     }
 
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
     public void setEmail(String email) {
         this.email = email;
     }
@@ -83,14 +98,6 @@ public class User {
 
     public void setPhone(String phone) {
         this.phone = phone;
-    }
-
-    public List<Training> getTrainingsListener() {
-        return trainingListListener;
-    }
-
-    public void setTrainingsListener(List<Training> trainingListListener) {
-        this.trainingListListener = trainingListListener;
     }
 
     public List<Training> getTrainingsCoach() {
@@ -124,7 +131,12 @@ public class User {
     public void setAttendances(List<Attendance> attendances) {
         this.attendances = attendances;
     }
-}
- enum Role{
-   
+
+    public List<Listener> getTrainingListListener() {
+        return trainingListListener;
+    }
+
+    public void setTrainingListListener(List<Listener> trainingListListener) {
+        this.trainingListListener = trainingListListener;
+    }
 }

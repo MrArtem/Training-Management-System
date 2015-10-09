@@ -38,8 +38,8 @@ public class Training {
     @ManyToOne(cascade = CascadeType.ALL)
     private User coach;
 
-    @ManyToMany(mappedBy = "trainingListListener")
-    private List<User> listenerList;
+    @OneToMany(mappedBy = "training")
+    private List<Listener> listenerList;
 
     @OneToMany(mappedBy = "training")
     private List<Lesson> lessonList;
@@ -49,6 +49,9 @@ public class Training {
 
     @ManyToMany(cascade = CascadeType.ALL)
     private List<Tag> tagList;
+
+    @OneToMany(mappedBy = "training")
+    private List<Feedback> feedbackList;
 
     public Training() {
     }
@@ -126,11 +129,11 @@ public class Training {
         this.coach = coach;
     }
 
-    public List<User> getListenerList() {
+    public List<Listener> getListenerList() {
         return listenerList;
     }
 
-    public void setListenerList(List<User> listenerList) {
+    public void setListenerList(List<Listener> listenerList) {
         this.listenerList = listenerList;
     }
 
@@ -172,5 +175,13 @@ public class Training {
 
     public void setMaxSize(int maxSize) {
         this.maxSize = maxSize;
+    }
+
+    public List<Feedback> getFeedbackList() {
+        return feedbackList;
+    }
+
+    public void setFeedbackList(List<Feedback> feedbackList) {
+        this.feedbackList = feedbackList;
     }
 }
