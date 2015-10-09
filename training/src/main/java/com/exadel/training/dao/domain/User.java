@@ -1,7 +1,20 @@
 package com.exadel.training.dao.domain;
 
+import org.apache.lucene.analysis.charfilter.MappingCharFilterFactory;
+import org.apache.lucene.analysis.core.LowerCaseFilterFactory;
+import org.apache.lucene.analysis.core.WhitespaceTokenizerFactory;
+import org.apache.lucene.analysis.miscellaneous.WordDelimiterFilterFactory;
+import org.apache.lucene.analysis.ngram.NGramFilterFactory;
+import org.apache.lucene.analysis.snowball.SnowballPorterFilterFactory;
+import org.apache.lucene.analysis.standard.StandardTokenizerFactory;
+import org.apache.lucene.analysis.synonym.SynonymFilterFactory;
+import org.hibernate.search.annotations.*;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+
+import org.hibernate.search.annotations.Index;
+import org.hibernate.search.annotations.Parameter;
 import java.util.List;
 
 /**
@@ -9,9 +22,35 @@ import java.util.List;
  */
 @Entity
 @Table
+@Indexed
+@AnalyzerDef(name = "customAnalyzer",
+        tokenizer = @TokenizerDef(factory = WhitespaceTokenizerFactory.class),
+        filters = {
+                @TokenFilterDef(factory = LowerCaseFilterFactory.class),
+                @TokenFilterDef(factory = SnowballPorterFilterFactory.class, params = {
+                        @Parameter(name = "language", value = "English")
+                }),
+                @TokenFilterDef(factory = SnowballPorterFilterFactory.class, params = {
+                        @Parameter(name = "language", value = "Russian")
+                }),
+                @TokenFilterDef(factory = LowerCaseFilterFactory.class),
+                @TokenFilterDef(factory = SnowballPorterFilterFactory.class, params = {
+                        @Parameter(name = "language", value = "English")
+                }),
+                @TokenFilterDef(factory = SnowballPorterFilterFactory.class, params = {
+                        @Parameter(name = "language", value = "Russian")
+                }),
+                @TokenFilterDef(factory = WordDelimiterFilterFactory.class, params = {
+                        @Parameter(name = "splitOnCaseChange", value = "1")
+                }),
+                @TokenFilterDef(factory = NGramFilterFactory.class, params = {
+                        @Parameter(name = "minGramSize", value = "3"),
+                        @Parameter(name = "maxGramSize", value = "10")
+                })
+        })
 public class User {
 
-    private  enum Role{
+    public   enum Role{
         ADMIN, USER, EXCOACH, EXUSER
     }
 
@@ -24,14 +63,22 @@ public class User {
     private Role role;
 
     @NotNull
+    @Field(index = Index.YES, analyze = Analyze.YES, store = Store.YES)
+    @Analyzer(definition = "customAnalyzer")
     private String firstName;
 
     @NotNull
+    @Field(index = Index.YES, analyze = Analyze.YES, store = Store.YES)
+    @Analyzer(definition = "customAnalyzer")
     private String lastName;
 
     @NotNull
+    @Field(index = Index.YES, analyze = Analyze.YES, store = Store.YES)
+    @Analyzer(definition = "customAnalyzer")
     private String email;
 
+    @Field(index = Index.YES, analyze = Analyze.YES, store = Store.YES)
+    @Analyzer(definition = "customAnalyzer")
     private String phone;
 
     @OneToMany(mappedBy = "user")
