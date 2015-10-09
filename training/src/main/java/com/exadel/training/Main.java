@@ -14,14 +14,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 @EnableAutoConfiguration
 @EnableWebMvc
-@RestController
 public class Main {
-
-    @RequestMapping("/")
-    public String cntr() {
-        return "hey";
-    }
-
     public static void main(String[] args) throws Exception {
         SpringApplication.run(Main.class, args);
     }
