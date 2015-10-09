@@ -6,11 +6,11 @@ import javax.persistence.*;
 @Table
 public class ApproveAction {
 
-    private enum TableName {
+    public enum TableName {
         APPROVE_TRAINING, APPROVE_LESSON
     }
 
-    private enum Type {
+    public enum Type {
         CREATE, EDIT, REMOVE
     }
 
