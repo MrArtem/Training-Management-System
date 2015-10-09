@@ -5,7 +5,7 @@
         .factory('authAPI', userAPI);
 
     /* @ngInject */
-    function userAPI($q, $timeout) {
+    function userAPI($http, $timeout) {
         var userAPI = {
             login: login,
             logout: logout
@@ -16,16 +16,8 @@
         /////
         
         function login (login,password) {
-            var defer = $q.defer();
-            $timeout(function() {
-                
-                defer.resolve({login: login, password: password});
-                
-            },1000)
-            
-            
-            
-            return defer.promise
+            var headers = {authorization: "Basic " + btoa(login + ":" + password)};
+            return $http.get('login', {headers: headers});
         }
         
         function logout () {

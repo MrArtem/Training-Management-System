@@ -41,20 +41,21 @@
             return isLogged
         }
 
-        function login(username, password, isRemember) {
+        function login(login, password, isRemember) {
             //Perform Server log in
 
-            authAPI.login(username, password).then(function () {
-
+            authAPI.login(login, password).then(function (data) {
                 // success :
                 isLogged = true;
-                user.login = username;
-                user.password = password;
-                user.accessRights = accessRights.accessRightsFromString("ADMIN");
+                user.login = data.login;
+                user.username = data.username;
+                user.accessRights = accessRights.accessRightsFromString(data.accessRights);
                 if (isRemember) {
                     putUserCreds(user);
                 }
                 $state.go('mycourses');
+
+            }, function(){
 
             })
 
