@@ -27,7 +27,7 @@ public class AddingTrainingModel {
 
     private List<Integer> tagList;
 
-    private List<Lesson> lessonList;
+    private List<LessonModel> lessonList;
 
     private RepeatModel repeatModel;
 
@@ -111,11 +111,11 @@ public class AddingTrainingModel {
         this.tagList = tagList;
     }
 
-    public List<Lesson> getLessonList() {
+    public List<LessonModel> getLessonList() {
         return lessonList;
     }
 
-    public void setLessonList(List<Lesson> lessonList) {
+    public void setLessonList(List<LessonModel> lessonList) {
         this.lessonList = lessonList;
     }
 

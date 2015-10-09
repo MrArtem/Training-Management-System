@@ -58,7 +58,7 @@ public class ListenerModel {
         User user = listener.getUser();
         name = user.getFirstName() + " " + user.getLastName();
         isInternal = true;
-        if(user.getRole() == User.Role.EXUSER) {
+        if(user.getRole() == User.Role.EX_USER) {
             isInternal = false;
         }
         participantId = listener.getId();

@@ -15,13 +15,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@RequestMapping("/training")
 public class TrainingController {
     @Autowired
     private TrainingService trainingService;
     @Autowired
     private LessonService lessonService;
 
-    @RequestMapping(value = "/training/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     TrainingModel getTrainingMadel(@PathVariable("id") long trainingId) {
         TrainingModel trainingModel = new TrainingModel();
         Training training = trainingService.getTraining(trainingId);
@@ -31,12 +32,12 @@ public class TrainingController {
         return trainingModel;
     }
 
-    @RequestMapping(value = "/training/{id}/lesson_list", method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}/lesson_list", method = RequestMethod.GET)
     List<Lesson> getLessonListByTraining(@PathVariable("id") long trainingId) {
         return lessonService.getLessonByTraining(trainingId);
     }
 
-    @RequestMapping(value = "/training/{id}/listener_list")
+    @RequestMapping(value = "/{id}/listener_list")
     List<ListenerModel> getListenerList(@PathVariable("id") long trainingId) {
         List<Listener> listenerList = trainingService.getListenerListRecord(trainingId);
         List<ListenerModel> listenerModelList = new ArrayList<ListenerModel>();
@@ -46,8 +47,33 @@ public class TrainingController {
         return listenerModelList;
     }
 
-    @RequestMapping(value = "/training/add", method = RequestMethod.POST)
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
     void addTraining(@RequestBody AddingTrainingModel addingTrainingModel) {
+        if(addingTrainingModel.getIsRepeating()) {
+            trainingService.addTrainingRepeat(addingTrainingModel.getCoachId()
+                    ,addingTrainingModel.getTitle()
+                    ,addingTrainingModel.getDescription()
+                    ,addingTrainingModel.getShortInfo()
+                    ,addingTrainingModel.getLanguage()
+                    ,addingTrainingModel.getMaxSize()
+                    ,addingTrainingModel.getPlace()
+                    ,addingTrainingModel.getAdditionalInfo()
+                    ,addingTrainingModel.getRepeatModel());
+        } else {
+            trainingService.addTrainingNotRepeat(addingTrainingModel.getCoachId()
+                    , addingTrainingModel.getTitle()
+                    , addingTrainingModel.getDescription()
+                    , addingTrainingModel.getShortInfo()
+                    , addingTrainingModel.getLanguage()
+                    , addingTrainingModel.getMaxSize()
+                    , addingTrainingModel.getPlace()
+                    , addingTrainingModel.getAdditionalInfo()
+                    , addingTrainingModel.getLessonList());
+        }
+    }
+
+    @RequestMapping(value = "/confirm_add/{id}", method = RequestMethod.POST)
+    void confirmAddTraining(@PathVariable("id") long trainingId,@RequestBody AddingTrainingModel addingTrainingModel) {
         
     }
 }

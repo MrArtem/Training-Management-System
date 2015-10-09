@@ -4,8 +4,10 @@ import com.exadel.training.controller.model.LessonModel;
 import com.exadel.training.controller.model.RepeatModel;
 import com.exadel.training.dao.ListenerDAO;
 import com.exadel.training.dao.TrainingDAO;
+import com.exadel.training.dao.domain.ApproveTraining;
 import com.exadel.training.dao.domain.Listener;
 import com.exadel.training.dao.domain.Training;
+import com.exadel.training.dao.domain.User;
 import com.exadel.training.service.TrainingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,13 +39,25 @@ public class TrainingServiceImpl implements TrainingService {
         return listenerDAO.getListenerListRecord(trainingId);
     }
 
+    private ApproveTraining getApproveTraining(User coach
+            , String title, String description, String shortInfo, Integer language, Integer maxSize, String additionalInfo) {
+        ApproveTraining approveTraining = new ApproveTraining();
+        approveTraining.setTitle(title);
+        approveTraining.setDescription(description);
+        approveTraining.setExcerpt(shortInfo);
+        //todo additionalInfo
+        approveTraining.setMaxSize(maxSize);
+        approveTraining.setLanguage(language);
+        return approveTraining;
+    }
+
     @Override
-    public void addTrainingNotRepeat(Long coachId, String title, String description, String shortInfo, String language, Integer maxSize, String place, String additionalInfo, List<LessonModel> lessonModelList) {
+    public void addTrainingNotRepeat(Long coachId, String title, String description, String shortInfo, Integer language, Integer maxSize, String place, String additionalInfo, List<LessonModel> lessonModelList) {
 
     }
 
     @Override
-    public void addTrainingRepeat(Long coachId, String title, String description, String shortInfo, String language, Integer maxSize, String place, String additionalInfo, RepeatModel repeatModel) {
+    public void addTrainingRepeat(Long coachId, String title, String description, String shortInfo, Integer language, Integer maxSize, String place, String additionalInfo, RepeatModel repeatModel) {
 
     }
 }

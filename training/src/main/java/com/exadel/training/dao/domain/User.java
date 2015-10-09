@@ -12,7 +12,7 @@ import java.util.List;
 public class User {
 
     public   enum Role{
-        ADMIN, USER, EXCOACH, EXUSER
+        ADMIN, USER, EX_COACH, EX_USER
     }
 
     @Id

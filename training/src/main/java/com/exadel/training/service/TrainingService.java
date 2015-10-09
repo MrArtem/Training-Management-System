@@ -20,7 +20,7 @@ public interface TrainingService {
             , String title
             , String description
             , String shortInfo
-            , String language
+            , Integer language
             , Integer maxSize
             , String place
             , String additionalInfo
@@ -30,7 +30,7 @@ public interface TrainingService {
             , String title
             , String description
             , String shortInfo
-            , String language
+            , Integer language
             , Integer maxSize
             , String place
             , String additionalInfo
