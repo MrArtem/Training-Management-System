@@ -24,6 +24,11 @@ public class User {
     private Role role;
 
     @NotNull
+    private String login;
+
+
+
+    @NotNull
     private String firstName;
 
     @NotNull
@@ -33,6 +38,9 @@ public class User {
     private String email;
 
     private String phone;
+
+    @OneToOne
+    private UserPassword userPassword;
 
     @OneToMany(mappedBy = "user")
     private List<Listener> trainingListListener;
@@ -58,6 +66,14 @@ public class User {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
     }
 
     public String getFirstName() {
@@ -98,6 +114,14 @@ public class User {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public UserPassword getUserPassword() {
+        return userPassword;
+    }
+
+    public void setUserPassword(UserPassword userPassword) {
+        this.userPassword = userPassword;
     }
 
     public List<Training> getTrainingsCoach() {

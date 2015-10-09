@@ -29,4 +29,12 @@ public class UserDAOImpl implements UserDAO {
     public User getUserByID(long id) {
         return sessionFactory.getCurrentSession().load(User.class, id);
     }
+
+    @Override
+    public User getUserByLogin(String userLogin) {
+        return (User)sessionFactory.getCurrentSession()
+                .createQuery("from User as u where u.login = :userLogin")
+                .setParameter("userLogin", userLogin)
+                .uniqueResult();
+    }
 }

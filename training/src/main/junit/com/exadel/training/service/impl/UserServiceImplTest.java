@@ -132,4 +132,17 @@ public class UserServiceImplTest {
         Boolean actual2 = userService.isCoach(TEST_EXPECTED_ID, TEST_EXPECTED_ID_EXCEPTION);
         Boolean actual3 = userService.isCoach(TEST_EXPECTED_ID_EXCEPTION, TEST_EXPECTED_ID);
     }
+
+    @Test
+    public void testGetUserByLogin() throws Exception {
+        User testUser = new User();
+        testUser.setId(TEST_EXPECTED_ID);
+        testUser.setLogin("");
+
+        Mockito.when(userDAO.getUserByLogin("")).thenReturn(testUser);
+
+        long actual = userService.getUserByLogin("").getId();
+
+        Assert.assertEquals(TEST_EXPECTED_ID, actual);
+    }
 }

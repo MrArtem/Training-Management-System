@@ -45,6 +45,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User getUserByLogin(String login) {
+        return userDAO.getUserByLogin(login);
+    }
+
+    @Override
     public List<Training> getListenerTrainingListOfUser(long id) {
         if (id == ILLEGAL_ID) {
             throw new IllegalArgumentException("id cant't be 0 ");

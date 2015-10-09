@@ -12,6 +12,7 @@ public interface UserService {
     boolean isCoach(long idUser, long idTraining);
 
     User getUserById(long id);
+    User getUserByLogin(String login);
 
     List<Training> getListenerTrainingListOfUser(long id);
     List<Training> getCoachTrainingListOfUser(long id);
