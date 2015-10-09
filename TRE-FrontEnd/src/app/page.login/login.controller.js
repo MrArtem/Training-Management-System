@@ -13,8 +13,8 @@
         ////
         
         function submit(){
-           if(authService.login(vm.username, vm.password, vm.isRemember))
-               $state.go('mycourses');
+            authService.login(vm.username, vm.password, vm.isRemember)
+               
         }
 
 

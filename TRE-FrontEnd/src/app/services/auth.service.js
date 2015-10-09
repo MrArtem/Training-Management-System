@@ -1,11 +1,11 @@
 (function () {
     'use strict';
     angular
-        .module('tmsAPI')
+        .module('tmsApp')
         .factory('authService', authService);
 
     /* @ngInject */
-    function authService($cookies, $state) {
+    function authService($cookies, $state, authAPI) {
         var accessRights = {
             admin: 0,
             user: 1,
@@ -32,11 +32,11 @@
             getUser: getUser,
             getAccessRights: getAccessRights
         };
-        
+
         return authService;
 
         //functions
-        
+
         function getIsLogged() {
             return isLogged
         }
@@ -44,16 +44,24 @@
         function login(username, password, isRemember) {
             //Perform Server log in
 
-            // success :
-            isLogged = true;
-            user.login = username;
-            user.password = password;
-            user.accessRights = accessRights.accessRightsFromString("ADMIN");
+            authAPI.login(username, password).then(function () {
+
+                // success :
+                isLogged = true;
+                user.login = username;
+                user.password = password;
+                user.accessRights = accessRights.accessRightsFromString("ADMIN");
+                if (isRemember) {
+                    putUserCreds(user);
+                }
+                $state.go('mycourses');
+
+            })
+
+
+
             
-            if(isRemember){
-                putUserCreds(user);
-            }
-            
+
             return true;
             //return success promise
 
@@ -62,13 +70,13 @@
 
 
         }
-        
-        function credsLogin(){
+
+        function credsLogin() {
             var userCreds = getUserCreds()
-            if(userCreds){
+            if (userCreds) {
                 user = userCreds;
                 isLogged = true;
-            }  
+            }
         }
 
         function logout() {
@@ -89,7 +97,7 @@
         }
 
         function accessRightsFromString(accessString) {
-            
+
             if (accessString === "ADMIN")
                 return this.admin;
             if (accessString === "USER")
@@ -98,17 +106,19 @@
                 return this.exCoach;
             if (accessString === "EX_USER")
                 return this.exUser;
-            
-            return this.noRights;    
+
+            return this.noRights;
         }
-        
+
         function putUserCreds(user) {
             $cookies.putObject('user', user);
         }
-        function getUserCreds(){
+
+        function getUserCreds() {
             return $cookies.getObject('user');
         }
-        function clearUserCreds(){
+
+        function clearUserCreds() {
             return $cookies.remove('user');
         }
 
