@@ -20,13 +20,14 @@
 
         <!-- Right Nav Section -->
         <ul class="right">
-            <li class=""><a href="#">Search</a></li>
-            <li class=""><a href="#">Lang</a></li>
+            <li class=""><a href="#"><i class="fa fa-search"></i></a></li>
+            <li class=""><a href="#"><i class="fa fa-globe"></i></a></li>
             <li class="has-dropdown">
-                <a href="#">UserIcon</a>
+                <a href="#"><i class="fa fa-user"></i></a>
                 <ul class="dropdown">
+                    <li><label>Username</label></li>
                     <li><a href="#">Profile</a></li>
-                    <li><a href="#">Logoout</a></li>
+                    <li><a href="#" ng-click="vm.logout()">Logout</a></li>
                 </ul>
             </li>
         </ul>

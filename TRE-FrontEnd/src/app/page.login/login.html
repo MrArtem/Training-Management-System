@@ -1,0 +1,30 @@
+<form ng-submit="login.submit()" role="form" name="loginform" class="login-form" novalidate>
+    <div class="row">
+        <div class="row">
+            <div class="small-3 columns">
+                <label for="username" class="right inline"><i class="fa fa-user"></i></label>
+            </div>
+            <div class="small-9 columns">
+                <input type="text" id="username" placeholder="Username" ng-model="login.login" required>
+            </div>
+        </div>
+        <div class="row">
+            <div class="small-3 columns">
+                <label for="password" class="right inline"><i class="fa fa-lock"></i></label>
+            </div>
+            <div class="small-9 columns">
+                <input type="text" id="password" placeholder="Password" ng-model="login.password" required>
+            </div>
+        </div>
+        <div class="row">
+            <div class="small-9 small-offset-3 columns">
+                <label>
+                    <input type="checkbox" name="remember" ng-model="login.isRemember">
+                    <span>Remember Me</span>
+                </label>
+                <div>
+                </div>
+
+                <button type="submit" ng-disabled="loginform.$invalid">Log in</button>
+            </div>
+</form>
