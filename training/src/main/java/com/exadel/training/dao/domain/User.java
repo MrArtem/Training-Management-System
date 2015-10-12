@@ -50,7 +50,7 @@ import java.util.List;
         })
 public class User {
 
-    public   enum Role{
+    public enum Role{
         ADMIN, USER, EXCOACH, EXUSER
     }
 

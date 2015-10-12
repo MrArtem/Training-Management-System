@@ -26,6 +26,15 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
+    public Boolean isCoachOfCurrentUser(long idCurrentUser, long idCoach) {
+        return (Boolean)sessionFactory.getCurrentSession()
+                .createQuery("select case when (count(l)>0) then true else false end from Listener as l inner join l.training as t where l.user.id = :idCurrentUser and t.coach.id = :idCoach")
+                .setParameter("idCurrentUser", idCurrentUser)
+                .setParameter("idCoach", idCoach)
+                .uniqueResult();
+    }
+
+    @Override
     public User getUserByID(long id) {
         return sessionFactory.getCurrentSession().load(User.class, id);
     }
