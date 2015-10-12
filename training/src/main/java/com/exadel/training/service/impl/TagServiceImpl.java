@@ -2,6 +2,7 @@ package com.exadel.training.service.impl;
 
 import com.exadel.training.dao.TagDAO;
 import com.exadel.training.dao.domain.Tag;
+import com.exadel.training.dao.domain.Training;
 import com.exadel.training.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -30,5 +31,11 @@ public class TagServiceImpl implements TagService{
     @Transactional
     public List<Tag> getTagList() {
         return tagDAO.getTagList();
+    }
+
+    //TODO: criteria
+    @Override
+    public List<Training> getTrainingListByTagList(List<Tag> tagList) {
+        return null;
     }
 }

@@ -9,5 +9,8 @@ import java.util.List;
  */
 public interface FeedbackDAO {
     Feedback getFeedvackByID(long id);
+
     void addFeedback(Feedback feedback);
+
+    List<Feedback> getFeedbackListFromTrainingForUser(long idUser, long idTraining);
 }

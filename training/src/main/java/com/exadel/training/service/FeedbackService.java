@@ -9,4 +9,5 @@ import java.util.List;
  */
 public interface FeedbackService {
     List<Feedback> getFeedbackListForUser(long id);
+    List<Feedback> getFeedbackListFromTrainingForUser(long idUser, long idTraining);
 }
