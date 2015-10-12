@@ -20,10 +20,7 @@ public class TagServiceImpl implements TagService{
 
     @Override
     @Transactional
-    public void addTag(String specialty, String colour) {
-        Tag tag = new Tag();
-        tag.setColour(colour);
-        tag.setSpecialty(specialty);
+    public void addTag(Tag tag) {
         tagDAO.addTag(tag);
     }
 

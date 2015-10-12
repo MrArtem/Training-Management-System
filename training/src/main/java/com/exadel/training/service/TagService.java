@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface TagService {
 
-    void addTag(String specialty, String colour);
+    void addTag(Tag tag);
 
     List<Tag> getTagList();
 
