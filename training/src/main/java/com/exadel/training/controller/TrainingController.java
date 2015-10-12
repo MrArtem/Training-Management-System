@@ -1,6 +1,7 @@
 package com.exadel.training.controller;
 
 import com.exadel.training.controller.model.AddingTrainingModel;
+import com.exadel.training.controller.model.LessonModel;
 import com.exadel.training.controller.model.ListenerModel;
 import com.exadel.training.controller.model.TrainingModel;
 import com.exadel.training.dao.domain.Lesson;
@@ -79,9 +80,12 @@ public class TrainingController {
         
     }
 
-    @RequestMapping(value = "/getAdd", method = RequestMethod.POST)
+    @RequestMapping(value = "/getAdd", method = RequestMethod.GET)
     AddingTrainingModel getAdd() {
         AddingTrainingModel addingTrainingModel = new AddingTrainingModel();
-        addingTrainingModel.set
+        List<LessonModel> lessonList = new ArrayList<LessonModel>();
+        lessonList.add(new LessonModel());
+        addingTrainingModel.setLessonList(lessonList);
+        return addingTrainingModel;
     }
 }

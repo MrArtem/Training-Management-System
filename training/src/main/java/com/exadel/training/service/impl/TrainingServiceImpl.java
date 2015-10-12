@@ -93,6 +93,8 @@ public class TrainingServiceImpl implements TrainingService {
         approveActionDAO.addApproveAction(approveAction);
         for(LessonModel lessonModel : lessonModelList) {
             Lesson lesson  = new Lesson();
+            lesson.setTraining(training);
+            lesson.setDate(lessonModel.getDate());
             lessonDAO.addLesson(lesson);
             ApproveLesson approveLesson = new ApproveLesson();
             approveLesson.setLesson(lesson);

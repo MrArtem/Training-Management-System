@@ -5,10 +5,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-/**
- * Created by azapolski on 10/6/2015.
- */
-@Repository
 public interface LessonDAO {
 
     void addLesson(Lesson lesson);
