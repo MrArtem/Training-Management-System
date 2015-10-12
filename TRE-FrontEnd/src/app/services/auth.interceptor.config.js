@@ -10,11 +10,11 @@
     }
 
     /** @ngInject */
-    function interceptor($state) {
+    function interceptor() {
         return {
             responseError: function (rejection) {
                 switch (rejection.status) {
-                    case: 401:
+                    case 401:
                     // Unauthorized
                     $state.go('login');
                     break;

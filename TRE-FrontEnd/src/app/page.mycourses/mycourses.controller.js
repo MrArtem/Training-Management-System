@@ -8,7 +8,8 @@
     /** @ngInject */
     function MyCoursesController() {
         var vm = this;
-
+        vm.filter = {isCoach: "", search: ""};
+        
 
     }
 })();
