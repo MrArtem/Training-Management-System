@@ -2,10 +2,12 @@ package com.exadel.training.controller.model.userModels;
 
 
 import com.exadel.training.dao.domain.User;
+import org.springframework.context.annotation.ComponentScan;
 
 /**
  * Created by ayudovin on 12.10.2015.
  */
+
 public class UserModel {
     private long id;
     private String firstName;

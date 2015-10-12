@@ -14,9 +14,8 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @Configuration
 @EnableAutoConfiguration
 @EnableWebMvc
-@ComponentScan({"com.exadel.training.dao"
-        ,"com.exadel.training.service"
-        ,"com.exadel.training.controller"})
+@ComponentScan
+
 public class WebApplicationStarter extends SpringBootServletInitializer {
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
