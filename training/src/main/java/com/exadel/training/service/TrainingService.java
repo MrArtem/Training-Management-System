@@ -22,6 +22,7 @@ public interface TrainingService {
             , String shortInfo
             , Integer language
             , Integer maxSize
+            , boolean isInner
             , String place
             , String additionalInfo
             , List<LessonModel> lessonModelList);
@@ -32,6 +33,7 @@ public interface TrainingService {
             , String shortInfo
             , Integer language
             , Integer maxSize
+            , boolean isInner
             , String place
             , String additionalInfo
             , RepeatModel repeatModel);

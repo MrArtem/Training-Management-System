@@ -56,6 +56,7 @@ public class TrainingController {
                     ,addingTrainingModel.getShortInfo()
                     ,addingTrainingModel.getLanguage()
                     ,addingTrainingModel.getMaxSize()
+                    ,addingTrainingModel.isInner()
                     ,addingTrainingModel.getPlace()
                     ,addingTrainingModel.getAdditionalInfo()
                     ,addingTrainingModel.getRepeatModel());
@@ -66,6 +67,7 @@ public class TrainingController {
                     , addingTrainingModel.getShortInfo()
                     , addingTrainingModel.getLanguage()
                     , addingTrainingModel.getMaxSize()
+                    , addingTrainingModel.isInner()
                     , addingTrainingModel.getPlace()
                     , addingTrainingModel.getAdditionalInfo()
                     , addingTrainingModel.getLessonList());
@@ -75,5 +77,11 @@ public class TrainingController {
     @RequestMapping(value = "/confirm_add/{id}", method = RequestMethod.POST)
     void confirmAddTraining(@PathVariable("id") long trainingId,@RequestBody AddingTrainingModel addingTrainingModel) {
         
+    }
+
+    @RequestMapping(value = "/getAdd", method = RequestMethod.POST)
+    AddingTrainingModel getAdd() {
+        AddingTrainingModel addingTrainingModel = new AddingTrainingModel();
+        addingTrainingModel.set
     }
 }

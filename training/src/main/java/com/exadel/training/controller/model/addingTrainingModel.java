@@ -31,6 +31,8 @@ public class AddingTrainingModel {
 
     private RepeatModel repeatModel;
 
+    private boolean isInner;
+
     public Long getCoachId() {
         return coachId;
     }
@@ -125,5 +127,13 @@ public class AddingTrainingModel {
 
     public void setRepeatModel(RepeatModel repeatModel) {
         this.repeatModel = repeatModel;
+    }
+
+    public boolean isInner() {
+        return isInner;
+    }
+
+    public void setIsInner(boolean isInner) {
+        this.isInner = isInner;
     }
 }
