@@ -1,0 +1,67 @@
+<div class="nested-view repeat-tab">
+
+    <h3>Set repeat model</h3>
+
+    <div class="row">
+
+        <div class="small-7 column">
+
+            <div class="row collapse">
+
+                <div class="row" ng-repeat="day in step4.days track by $index">
+
+                    <div class="small-3 column">
+                        <div class="small-6 column">
+                            <label class="right" ng-bind="step4.days[$index]"></label>
+                        </div>
+                        <div class="small-6 column">
+                            <input type="checkbox" ng-model="step4.onDays[$index]">
+                        </div>
+
+                    </div>
+
+                    <div class="small-5 column">
+                        <div class="small-6 column">
+                            <input type="number" ng-model="tempDates[$index].hours"
+                                   ng-disabled="!step4.onDays[$index]">
+                        </div>
+                        <div class="small-6 column">
+                            <input type="number" ng-model="tempDates[$index].minutes"
+                                   ng-disabled="!step4.onDays[$index]">
+                        </div>
+
+                    </div>
+
+                    <div class="small-4 column">
+                        <input type="text" ng-model="tempDates[$index].place" ng-disabled="!step4.onDays[$index]">
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+        <div class="small-5 column">
+            <div class="row">
+                <div class="small-4 column">
+                    <label for="startDate" class="right inline">Start date:</label>
+                </div>
+                <div class="small-8 column">
+                    <input type="text" id="startDate" ng-model="temp.startDate" datepicker="">
+                </div>
+            </div>
+            <div class="row">
+                <div class="small-4 column">
+                    <label for="endDate" class="right inline">End date:</label>
+                </div>
+                <div class="small-8 column">
+                    <input type="text" id="endDate" ng-model="temp.endDate" datepicker="">
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+</div>
+
