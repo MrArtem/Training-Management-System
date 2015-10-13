@@ -1,9 +1,11 @@
 package com.exadel.training.dao;
 
 import com.exadel.training.dao.domain.Lesson;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public interface LessonDAO {
 
     void addLesson(Lesson lesson);
