@@ -11,9 +11,6 @@ public class ApproveTraining {
     @GeneratedValue
     private Long id;
 
-    @OneToOne
-    private Training training;
-
     @OneToMany
     private List<Tag> tagList;
 
@@ -37,14 +34,6 @@ public class ApproveTraining {
 
     public Long getId() {
         return id;
-    }
-
-    public Training getTraining() {
-        return training;
-    }
-
-    public void setTraining(Training training) {
-        this.training = training;
     }
 
     public String getTitle() {
