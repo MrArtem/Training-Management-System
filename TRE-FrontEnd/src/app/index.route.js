@@ -41,7 +41,6 @@
                 controllerAs: 'courseinfo',
                 auth: true,
                 accessRights: 2
-            })
             }).state('managecourse', {
                 abstract: true,
                 url: '/managecourse',

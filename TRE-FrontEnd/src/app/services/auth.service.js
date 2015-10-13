@@ -20,7 +20,7 @@
         var user = {
             login: "",
             username: "",
-            accessRights: 4,
+            accessRights: 4
         };
 
 

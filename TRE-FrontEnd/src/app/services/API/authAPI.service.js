@@ -10,26 +10,25 @@
             login: login,
             logout: logout
         }
-    
+
         return userAPI;
-        
+
         /////
-        
-        function login (login,password) {
+
+        function login(login, password) {
             var defer = $q.defer();
-            $timeout(function() {
-                
+            $timeout(function () {
+
                 defer.resolve({login: login, password: password});
-                
-            },1000)
-            
-            
-            
+
+            }, 1000)
+
+
             return defer.promise
         }
-        
-        function logout () {
-            
+
+        function logout() {
+
         }
     }
 
