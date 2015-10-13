@@ -23,12 +23,16 @@
                 templateUrl: 'app/page.courseinfo/courseinfo.html',
                 controller: 'CourseInfoController',
                 controllerAs: 'courseinfo'
-            }).state('createcourse', {
+            }).state('managecourse', {
                 abstract: true,
-                url: '/createcourse',
-                templateUrl: 'app/page.createcourse/createcourse.html',
-                controller: 'CreateCourseController',
-                controllerAs: 'createcourse'
+                url: '/managecourse',
+                templateUrl: 'app/page.managecourse/managecourse.html',
+                controller: 'ManageCourseController',
+                controllerAs: 'managecourse',
+                params: {
+                    courseId: null,
+                    type: null
+                }
             }).state('mycourses', {
                 url: '/',
                 templateUrl: 'app/page.mycourses/mycourses.html',
