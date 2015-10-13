@@ -1,7 +1,82 @@
 <div class="container">
 
     <a ui-sref="courseinfo">courseinfo</a>
-    <a ui-sref="admin">admin page</a>
+    <a ui-sref="admin">admin page</a> {{mycourses.filter}}
+    <div class="tools-header row">
+        <div class="medium-6 medium-offset-3  hide-for-small-only columns">
     <a ui-sref="managecourse.step1">create course!</a>
+
+            <ul class="segmented-tool button-group  toggle" data-toggle="buttons-radio">
+                <li>
+                    <input type="radio" id="r1" ng-model="mycourses.filter.isCoach" value="" data-toggle="button">
+                    <label class="button small secondary " for="r1">All</label>
+                </li>
+                <li>
+                    <input type="radio" id="r2" ng-model="mycourses.filter.isCoach" value=false data-toggle="button">
+                    <label class="button small secondary " for="r2">Student</label>
+                </li>
+                <li>
+                    <input type="radio" id="r3" ng-model="mycourses.filter.isCoach" value=true data-toggle="button">
+                    <label class="button small secondary" for="r3">Coach</label>
+                </li>
+            </ul>
+
+
+
+        </div>
+        <div class="medium-3 small-12  columns">
+            <form>
+                <div class="row collapse  search-tool">
+                    <div class="small-12 columns">
+                        <i class="fa fa-search"></i>
+                        <input type="text" placeholder="Quick Look" ng-model="mycourses.filter.search">
+                    </div>
+                </div>
+            </form>
+
+        </div>
+
+    </div>
+
+    <section class="course-list row">
+        <div class="course-item columns">
+            <h1 class="course-title">Angular Fundamental.
+            Data Binding</h1>
+            <h2 class="course-lesson-number">Lesson #2</h2>
+            <p class="course-excerpt">I’ve worked with Angular on quite a few apps at this point, and have seen many different ways to structure them. I’m writing a book on architecting Angular apps right now with the MEAN stack and as such have researched heavily into this specific topic.</p>
+            <div class="course-meta">
+                <h3 class="course-date">When:<span class="value"> today</span></h3>
+                <h3 class="course-place">Where:<span class="value"> unit 243</span></h3>
+                <h3 class="course-coach">Who:<span class="value"> Papa Johns</span></h3>
+                <a class="course-goto"><i class="fa fa-arrow-right"></i></a>
+            </div>
+        </div>
+        <div class="course-item columns">
+            <h1 class="course-title">Angular Fundamental.
+                Data Binding</h1>
+            <h2 class="course-lesson-number">Lesson #2</h2>
+            <p class="course-excerpt">I’ve worked with Angular on quite a few apps at this point, and have seen many different ways to structure them. I’m writing a book on architecting Angular apps right now with the MEAN stack and as such have researched heavily into this specific topic.</p>
+            <div class="course-meta">
+                <h3 class="course-date">When:<span class="value"> today</span></h3>
+                <h3 class="course-place">Where:<span class="value"> unit 243</span></h3>
+                <h3 class="course-coach">Who:<span class="value"> Papa Johns</span></h3>
+                <a class="course-goto"><i class="fa fa-arrow-right"></i></a>
+            </div>
+        </div>
+        <div class="course-item columns">
+            <h1 class="course-title">Angular Fundamental.
+                Data Binding</h1>
+            <h2 class="course-lesson-number">Lesson #2</h2>
+            <p class="course-excerpt">I’ve worked with Angular on quite a few apps at this point, and have seen many different ways to structure them. I’m writing a book on architecting Angular apps right now with the MEAN stack and as such have researched heavily into this specific topic.</p>
+            <div class="course-meta">
+                <h3 class="course-date">When:<span class="value"> today</span></h3>
+                <h3 class="course-place">Where:<span class="value"> unit 243</span></h3>
+                <h3 class="course-coach">Who:<span class="value"> Papa Johns</span></h3>
+                <a class="course-goto"><i class="fa fa-arrow-right"></i></a>
+            </div>
+        </div>
+        
+    </section>
+    
 
 </div>

@@ -1,0 +1,43 @@
+.tools-header {
+    
+    $segment-height: 44px;
+    
+    .segmented-tool {
+        $segmented-button-width: 7rem;
+        
+        
+        width: $segmented-button-width*3;
+        margin: auto;
+        
+        input[data-toggle] {
+            display: none;
+        }
+        input[data-toggle]:checked + label,
+        input[data-toggle]:checked + label:active {
+            background-color: darkgrey;
+        }
+        
+        .button{
+            margin: 0;
+            width: $segmented-button-width;
+            height: $segment-height;
+        }
+        .button-group.toggle li:not(first-child) {
+            margin: 0 -0.9rem;
+        }
+    }
+    .search-tool {
+        input {
+            height: $segment-height;
+            margin: 0;
+            padding-left: 30px;
+        }
+        i{
+            position: absolute;
+            top: 14px;
+            left: 10px;
+            color: $secondary-color;
+        }
+    }
+}
+

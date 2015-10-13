@@ -1,29 +1,36 @@
-(function() {
-  'use strict';
+(function () {
+    'use strict';
 
-  angular
-    .module('tmsApp')
-    .directive('navBar', navBar);
-
-  /** @ngInject */
-  function navBar() {
-    var directive = {
-      restrict: 'E',
-      templateUrl: 'app/components/navbar/navbar.html',
-      controller: NavbarController,
-      controllerAs: 'vm',
-      bindToController: true
-    };
-
-    return directive;
+    angular
+        .module('tmsApp')
+        .directive('navBar', navBar);
 
     /** @ngInject */
-    function NavbarController() {
-      var vm = this;
+    function navBar() {
+        var directive = {
+            restrict: 'E',
+            templateUrl: 'app/components/navbar/navbar.html',
+            controller: NavbarController,
+            controllerAs: 'vm',
+            bindToController: true
+        };
 
-      // "vm.creation" is avaible by directive option "bindToController: true"
-      
+        return directive;
+
+        /** @ngInject */
+        function NavbarController(authService) {
+            var vm = this;
+            vm.logout = logout;
+
+            
+            //////
+            
+            function logout(){
+                authService.logout();
+            }
+
+
+        }
     }
-  }
 
 })();

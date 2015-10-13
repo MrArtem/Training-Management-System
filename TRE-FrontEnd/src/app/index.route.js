@@ -1,3 +1,15 @@
+/* 
+.state 
+    .auth === true /* need to be loggedin to visit the page
+    .accessRights === (0 to 4) 
+        0 === admin rights only,
+        1 === user+
+        2 === exCoach+
+        3 === exUser+
+        4 === noRights
+*/
+
+
 (function () {
     'use strict';
 
@@ -12,17 +24,24 @@
                 url: '/admin',
                 templateUrl: 'app/page.admin/admin.html',
                 controller: 'AdminController',
-                controllerAs: 'admin'
+                controllerAs: 'admin',
+                auth: true,
+                accessRights: 0
             }).state('browse', {
                 url: '/browse',
                 templateUrl: 'app/page.browse/browse.html',
                 controller: 'BrowseController',
-                controllerAs: 'browse'
+                controllerAs: 'browse',
+                auth: true,
+                accessRights: 1
             }).state('courseinfo', {
                 url: '/courseinfo',
                 templateUrl: 'app/page.courseinfo/courseinfo.html',
                 controller: 'CourseInfoController',
-                controllerAs: 'courseinfo'
+                controllerAs: 'courseinfo',
+                auth: true,
+                accessRights: 2
+            })
             }).state('managecourse', {
                 abstract: true,
                 url: '/managecourse',
@@ -37,8 +56,20 @@
                 url: '/',
                 templateUrl: 'app/page.mycourses/mycourses.html',
                 controller: 'MyCoursesController',
-                controllerAs: 'mycourses'
+                controllerAs: 'mycourses',
+                auth: true,
+                accessRights: 2
+            }).state('login', {
+                url: '/login',
+                templateUrl: 'app/page.login/login.html',
+                controller: 'LoginController',
+                controllerAs: 'login',
+                accessRights: 4,
+                auth: false
+
             })
+
+
         ;
 
         $urlRouterProvider.when('/createcourse', '/createcourse/step1');
