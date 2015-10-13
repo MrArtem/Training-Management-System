@@ -1,6 +1,7 @@
 package com.exadel.training.controller;
 
 import com.exadel.training.controller.model.userModels.UserModel;
+import com.exadel.training.notification.Notification;
 import com.exadel.training.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,12 +19,15 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private Notification notification;
 
     @RequestMapping(value = "/user_info/{idUser}", method = RequestMethod.GET)
     public UserModel getUserInfo(@PathVariable("idUser") long idUser) {
         long idCurrentUser = 1;
         UserModel userModel = new UserModel(userService.getUserById(idCurrentUser), userService.isCoachOfCurrentUser(idCurrentUser, idUser));
 
+        notification.send("mrartem6695@gmail.com", "Exadel", "Hello");
         return userModel;
     }
 
