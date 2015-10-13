@@ -9,5 +9,7 @@ public interface UserDAO {
     void save(User user);
     void update(User user);
 
+    Boolean isCoachOfCurrentUser(long idCurrentUser, long idCoach);
+
     User getUserByID(long id);
 }

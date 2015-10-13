@@ -28,11 +28,16 @@ public class UserServiceImpl implements UserService {
     private TrainingDAO trainingDAO;
 
     @Override
-    public boolean isCoach(long idUser, long idTraining) {
+    public Boolean isCoach(long idUser, long idTraining) {
         if (idUser == ILLEGAL_ID || idTraining == ILLEGAL_ID) {
             throw new IllegalArgumentException("id cant't be 0 ");
         }
         return trainingDAO.getTrainingById(idTraining).getCoach().getId() == idUser ? true : false;
+    }
+
+    @Override
+    public Boolean isCoachOfCurrentUser(long idCurrentUser, long idCoach) {
+        return userDAO.isCoachOfCurrentUser(idCurrentUser, idCoach);
     }
 
     @Override

@@ -11,9 +11,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.orm.hibernate4.HibernateTransactionManager;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
-@EnableAutoConfiguration
-@EnableWebMvc
-@ComponentScan
 @Configuration
 public class WebApplicationStarter extends SpringBootServletInitializer {
     @Override
