@@ -17,6 +17,7 @@ public class ApproveTraining {
     @OneToMany
     private List<Tag> tagList;
 
+
     private String title;
 
     private String description;

@@ -1,9 +1,6 @@
 package com.exadel.training.controller;
 
-import com.exadel.training.controller.model.AddingTrainingModel;
-import com.exadel.training.controller.model.LessonModel;
-import com.exadel.training.controller.model.ListenerModel;
-import com.exadel.training.controller.model.TrainingModel;
+import com.exadel.training.controller.model.*;
 import com.exadel.training.dao.domain.Lesson;
 import com.exadel.training.dao.domain.Listener;
 import com.exadel.training.dao.domain.Training;
@@ -42,42 +39,52 @@ public class TrainingController {
     List<ListenerModel> getListenerList(@PathVariable("id") long trainingId) {
         List<Listener> listenerList = trainingService.getListenerListRecord(trainingId);
         List<ListenerModel> listenerModelList = new ArrayList<ListenerModel>();
-        for(Listener listener : listenerList) {
+        for (Listener listener : listenerList) {
             listenerModelList.add(new ListenerModel(listener));
         }
         return listenerModelList;
     }
 
-    @RequestMapping(value = "/add", method = RequestMethod.POST)
-    void addTraining(@RequestBody AddingTrainingModel addingTrainingModel) {
-        if(addingTrainingModel.getIsRepeating()) {
-            trainingService.addTrainingRepeat(addingTrainingModel.getCoachId()
-                    ,addingTrainingModel.getTitle()
-                    ,addingTrainingModel.getDescription()
-                    ,addingTrainingModel.getShortInfo()
-                    ,addingTrainingModel.getLanguage()
-                    ,addingTrainingModel.getMaxSize()
-                    ,addingTrainingModel.isInner()
-                    ,addingTrainingModel.getPlace()
-                    ,addingTrainingModel.getAdditionalInfo()
-                    ,addingTrainingModel.getRepeatModel());
-        } else {
-            trainingService.addTrainingNotRepeat(addingTrainingModel.getCoachId()
-                    , addingTrainingModel.getTitle()
-                    , addingTrainingModel.getDescription()
-                    , addingTrainingModel.getShortInfo()
-                    , addingTrainingModel.getLanguage()
-                    , addingTrainingModel.getMaxSize()
-                    , addingTrainingModel.isInner()
-                    , addingTrainingModel.getPlace()
-                    , addingTrainingModel.getAdditionalInfo()
-                    , addingTrainingModel.getLessonList());
-        }
+    @RequestMapping(value = "/create", method = RequestMethod.POST)
+    void createTraining(@RequestBody AddingTrainingModel addingTrainingModel) {
+        trainingService.createTraining(addingTrainingModel.getCoachId()
+                , addingTrainingModel.getTitle()
+                , addingTrainingModel.getDescription()
+                , addingTrainingModel.getShortInfo()
+                , addingTrainingModel.getLanguage()
+                , addingTrainingModel.getMaxSize()
+                , addingTrainingModel.isInner()
+                , addingTrainingModel.getTagList()
+                , addingTrainingModel.getAdditionalInfo()
+                , addingTrainingModel.getIsRepeating()
+                , addingTrainingModel.getLessonList()
+                , addingTrainingModel.getRepeatModel());
+
     }
 
-    @RequestMapping(value = "/confirm_add/{id}", method = RequestMethod.POST)
-    void confirmAddTraining(@PathVariable("id") long trainingId,@RequestBody AddingTrainingModel addingTrainingModel) {
-        
+    @RequestMapping(value = "/confirm/{id}", method = RequestMethod.POST)
+    void confirmAddTraining(@PathVariable("id") long trainingId, @RequestBody AddingTrainingModel addingTrainingModel) {
+        trainingService.confirmTraining(trainingId
+                , addingTrainingModel.getTitle()
+                , addingTrainingModel.getDescription()
+                , addingTrainingModel.getShortInfo()
+                , addingTrainingModel.getLanguage()
+                , addingTrainingModel.getMaxSize()
+                , addingTrainingModel.isInner()
+                , addingTrainingModel.getTagList()
+                , addingTrainingModel.getAdditionalInfo()
+                , addingTrainingModel.getLessonList()
+                , addingTrainingModel.getRepeatModel());
+    }
+
+    @RequestMapping(value = "cancel_create/{id}", method = RequestMethod.PUT)
+    void cancelCreate(@PathVariable("id") Long trainingId) {
+        trainingService.cancelCreate(trainingId);
+    }
+
+    @RequestMapping(value = "cancel_change/{id}", method = RequestMethod.PUT)
+    void cancelChange(@PathVariable("id") Long trainingId) {
+        trainingService.cancelChange(trainingId);
     }
 
     @RequestMapping(value = "/getAdd", method = RequestMethod.GET)
@@ -86,6 +93,9 @@ public class TrainingController {
         List<LessonModel> lessonList = new ArrayList<LessonModel>();
         lessonList.add(new LessonModel());
         addingTrainingModel.setLessonList(lessonList);
+        RepeatModel repeatModel = new RepeatModel();
+        repeatModel.setLessonList(new LessonModel[7]);
+        addingTrainingModel.setRepeatModel(repeatModel);
         return addingTrainingModel;
     }
 }

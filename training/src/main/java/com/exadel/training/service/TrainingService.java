@@ -3,6 +3,7 @@ package com.exadel.training.service;
 import com.exadel.training.controller.model.LessonModel;
 import com.exadel.training.controller.model.RepeatModel;
 import com.exadel.training.dao.domain.Listener;
+import com.exadel.training.dao.domain.Tag;
 import com.exadel.training.dao.domain.Training;
 
 import java.util.List;
@@ -16,25 +17,34 @@ public interface TrainingService {
 
     List<Listener> getListenerListRecord(long trainingId);
 
-    void addTrainingNotRepeat(Long coachId
+    void createTraining(Long coachId
             , String title
             , String description
             , String shortInfo
             , Integer language
             , Integer maxSize
             , boolean isInner
-            , String place
+            , List<Long> tagIdList
             , String additionalInfo
-            , List<LessonModel> lessonModelList);
+            , boolean isRepeating
+            , List<LessonModel> lessonModelList
+            , RepeatModel repeatModel
+    );
 
-    void addTrainingRepeat(Long coachId
+    void confirmTraining(Long trainingId
             , String title
             , String description
             , String shortInfo
             , Integer language
             , Integer maxSize
             , boolean isInner
-            , String place
+            , List<Long> tagIdList
             , String additionalInfo
-            , RepeatModel repeatModel);
+            , List<LessonModel> lessonModelList
+            , RepeatModel repeatModel
+    );
+
+    void cancelCreate(Long trainingId);
+
+    void cancelChange(Long trainingId);
 }

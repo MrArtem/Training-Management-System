@@ -25,7 +25,7 @@ public class AddingTrainingModel {
 
     private Boolean isRepeating;
 
-    private List<Integer> tagList;
+    private List<Long> tagList;
 
     private List<LessonModel> lessonList;
 
@@ -105,11 +105,11 @@ public class AddingTrainingModel {
         this.isRepeating = isRepeating;
     }
 
-    public List<Integer> getTagList() {
+    public List<Long> getTagList() {
         return tagList;
     }
 
-    public void setTagList(List<Integer> tagList) {
+    public void setTagList(List<Long> tagList) {
         this.tagList = tagList;
     }
 
