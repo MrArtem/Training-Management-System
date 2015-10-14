@@ -21,7 +21,7 @@ public class Attendance {
     private User user;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    private Training training;
+    private Lesson lesson;
 
     public Attendance(){
     }
@@ -58,11 +58,11 @@ public class Attendance {
         this.user = user;
     }
 
-    public Training getTraining() {
-        return training;
+    public Lesson getLesson() {
+        return lesson;
     }
 
-    public void setTraining(Training training) {
-        this.training = training;
+    public void setLesson(Lesson lesson) {
+        this.lesson = lesson;
     }
 }

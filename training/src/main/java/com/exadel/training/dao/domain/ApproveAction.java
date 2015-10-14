@@ -7,10 +7,6 @@ import java.util.List;
 @Table
 public class ApproveAction {
 
-    public enum TableName {
-        APPROVE_TRAINING, APPROVE_LESSON
-    }
-
     public enum Type {
         CREATE, EDIT, REMOVE
     }
@@ -24,6 +20,9 @@ public class ApproveAction {
     @OneToOne
     private Training training;
 
+    @OneToOne
+    private ApproveTraining approveTraining;
+
     @OneToMany
     List<ApproveLesson> approveLessonList;
 
@@ -31,6 +30,14 @@ public class ApproveAction {
     private Type type;
 
     public ApproveAction() {
+    }
+
+    public ApproveTraining getApproveTraining() {
+        return approveTraining;
+    }
+
+    public void setApproveTraining(ApproveTraining approveTraining) {
+        this.approveTraining = approveTraining;
     }
 
     public Long getId() {
