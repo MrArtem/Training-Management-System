@@ -1,6 +1,7 @@
 package com.exadel.training.service.impl;
 
 import com.exadel.training.dao.SearchDAO;
+import com.exadel.training.dao.domain.Training;
 import com.exadel.training.dao.domain.User;
 import com.exadel.training.service.SearchService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,5 +24,10 @@ public class SearchServiceImpl implements SearchService {
     @Override
     public List<User> searchService(String searchWord) {
         return searchDAO.searchUser(searchWord);
+    }
+
+    @Override
+    public List<Training> searchTraining(String searchWord) {
+        return searchDAO.searchTraining(searchWord);
     }
 }
