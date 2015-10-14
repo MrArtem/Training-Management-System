@@ -24,6 +24,7 @@
                     $state.go('login');
                     break;
                 }
+
             }
         }
 

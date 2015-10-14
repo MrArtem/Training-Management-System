@@ -6,15 +6,14 @@
         .controller('LoginController', LoginController);
 
     /** @ngInject */
-    function LoginController(authService, $state) {
+    function LoginController($state, authService) {
         var vm = this;
         vm.submit = submit;
             
         ////
         
         function submit(){
-            authService.login(vm.username, vm.password, vm.isRemember)
-               
+            authService.login(vm.username, vm.password, vm.isRemember);
         }
 
 
