@@ -8,11 +8,15 @@ import com.exadel.training.notification.help.MessageGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.activation.DataHandler;
+import javax.activation.DataSource;
+import javax.activation.FileDataSource;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
+import java.nio.file.Paths;
 import java.util.Properties;
 
 
@@ -55,7 +59,16 @@ public class NotificationEmail implements Notification {
             MimeMultipart multipart = new MimeMultipart("related");
             BodyPart messagePart = new MimeBodyPart();
 
+            messagePart.setContent(text, "text/html; charset = \"UTF-8\"");
+            multipart.addBodyPart(messagePart);
 
+            messagePart = new MimeBodyPart();
+            DataSource dataSource = new FileDataSource(Paths.get(".", "messageForm","logo.png").normalize().toFile());
+            messagePart.setDataHandler(new DataHandler(dataSource));
+            messagePart.setHeader("Content-ID", "<image>");
+            multipart.addBodyPart(messagePart);
+
+            message.setContent(multipart);
             Transport.send(message);
             System.out.println("Done");
 
