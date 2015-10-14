@@ -194,14 +194,14 @@ public class TrainingServiceImpl implements TrainingService {
         }
         training.setState(Training.State.REMOVE);
         trainingDAO.changeTraining(training);
+        approveActionDAO.removeApproveAction(approveAction);
     }
 
     @Override
     public void confirmTraining(Long actionId, String title, String description, String shortInfo
             , Integer language, Integer maxSize, boolean isInner, List<Long> tagIdList
             , List<LessonModel> lessonModelList, RepeatModel repeatModel) {
-        //todo
-        ApproveAction approveAction = null;
+        ApproveAction approveAction = approveActionDAO.getApproveAction(actionId);
         removeApproveCreate(approveAction, true);
         Training training = approveAction.getTraining();
         training.setTitle(title);
@@ -220,8 +220,7 @@ public class TrainingServiceImpl implements TrainingService {
 
     @Override
     public void cancelCreate(Long actionId) {
-        //TODO
-        ApproveAction approveAction = null;
+        ApproveAction approveAction = approveActionDAO.getApproveAction(actionId);
         removeApproveCreate(approveAction, false);
     }
 
@@ -235,6 +234,29 @@ public class TrainingServiceImpl implements TrainingService {
             , Integer language, Integer maxSize, boolean isInner, List<Long> tagIdList
             , String additionalInfo, List<LessonModel> lessonModelList, RepeatModel repeatModel) {
 
+        //TODO tagList &  lessonList !!!
+        approveAction.setDate(getTime());
+        ApproveTraining approveTraining = approveAction.getApproveTraining();
+        Training training = approveAction.getTraining();
+        if( !training.getTitle().equals(title)) {
+            approveTraining.setTitle(title);
+        }
+        if( !training.getDescription().equals(description)) {
+            approveTraining.setDescription(description);
+        }
+        if( !training.getExcerpt().equals(shortInfo)) {
+            approveTraining.setExcerpt(shortInfo);
+        }
+        if( training.getLanguage() != language) {
+            approveTraining.setLanguage(language);
+        }
+        if( training.getMaxSize() != maxSize) {
+            approveTraining.setMaxSize(maxSize);
+        }
+        if( training.isInner() != isInner) {
+            approveTraining.setIsInner(isInner);
+        }
+        approveTraining.setAdditionalInfo(additionalInfo);
     }
 
     private void editTrainingNotPrevApprove(Training training, String title
@@ -252,7 +274,8 @@ public class TrainingServiceImpl implements TrainingService {
         ApproveAction approveAction = new ApproveAction();
         approveAction.setDate(getTime());
         approveAction.setTraining(training);
-        List<ApproveLesson> approveLessonList = null;
+        approveAction.setApproveTraining(approveTraining);
+        List<ApproveLesson> approveLessonList;
         if (training.isRepeat()) {
             approveLessonList = addLessonListRepeating(training, repeatModel, false, false);
         } else {
@@ -260,12 +283,22 @@ public class TrainingServiceImpl implements TrainingService {
         }
         approveAction.setApproveLessonList(approveLessonList);
         approveActionDAO.addApproveAction(approveAction);
+
     }
 
     @Override
     public void editTraining(Long trainingId, String title, String description, String shortInfo
             , Integer language, Integer maxSize, boolean isInner, List<Long> tagIdList
             , String additionalInfo, List<LessonModel> lessonModelList, RepeatModel repeatModel) {
-
+        ApproveAction approveAction = approveActionDAO.getApproveActionByTrainingId(trainingId);
+        if(approveAction == null) {
+            editTrainingNotPrevApprove(trainingDAO.getTrainingById(trainingId),title, description
+                    , shortInfo, language, maxSize, isInner, tagIdList
+                    , additionalInfo, lessonModelList, repeatModel);
+        } else {
+            editTrainingWithPrevApprove(approveAction,title, description
+                    , shortInfo, language, maxSize, isInner, tagIdList
+                    , additionalInfo, lessonModelList, repeatModel);
+        }
     }
 }
