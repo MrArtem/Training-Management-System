@@ -25,7 +25,7 @@ public class MessageGeneratorHTML implements MessageGenerator {
 
     private final String FOOTER = "";
 
-    private final String SITE_URI = "http://localhost:8080/#/";
+    private final String SITE_URI = "http://localhost:9000/#/";
 
     private SimpleDateFormat formatDate = new SimpleDateFormat("dd-MM-YYYY");
 

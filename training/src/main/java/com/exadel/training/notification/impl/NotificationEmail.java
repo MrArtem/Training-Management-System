@@ -4,6 +4,8 @@ package com.exadel.training.notification.impl;
  * Created by ayudovin on 13.10.2015.
  */
 import com.exadel.training.notification.Notification;
+import com.exadel.training.notification.help.MessageGenerator;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.mail.*;
@@ -18,6 +20,9 @@ import java.util.Properties;
 public class NotificationEmail implements Notification {
     private final String USERNAME = "mrartem6695@gmail.com";
     private final String PASSWORD = "jordan23!";
+
+    @Autowired
+    private MessageGenerator messageGenerator;
 
     private Properties properties;
     private Session session;
@@ -45,7 +50,7 @@ public class NotificationEmail implements Notification {
             message.setRecipients(Message.RecipientType.TO,
                     InternetAddress.parse(adress));
             message.setSubject(subject);
-            message.setText("");
+            message.setText(text);
 
             MimeMultipart multipart = new MimeMultipart("related");
             BodyPart messagePart = new MimeBodyPart();
