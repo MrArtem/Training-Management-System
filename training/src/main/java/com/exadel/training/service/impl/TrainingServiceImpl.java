@@ -65,7 +65,7 @@ public class TrainingServiceImpl implements TrainingService {
     }
 
     private ApproveTraining getApproveTraining(String title
-            , String description, String shortInfo, Integer language, Integer maxSize, String additionalInfo) {
+            , String description, String shortInfo, Integer language, Integer maxSize, String additionalInfo, boolean isInner) {
         ApproveTraining approveTraining = new ApproveTraining();
         approveTraining.setTitle(title);
         approveTraining.setDescription(description);
@@ -73,12 +73,13 @@ public class TrainingServiceImpl implements TrainingService {
         approveTraining.setAdditionalInfo(additionalInfo);
         approveTraining.setMaxSize(maxSize);
         approveTraining.setLanguage(language);
+        approveTraining.setIsInner(isInner);
         return approveTraining;
     }
 
     private List<Tag> getTagList(List<Long> tagIdList) {
         List<Tag> tagList = new ArrayList<Tag>();
-        if(tagIdList == null) {
+        if (tagIdList == null) {
             return null;
         }
         for (Long i : tagIdList) {
@@ -88,15 +89,18 @@ public class TrainingServiceImpl implements TrainingService {
     }
 
     private List<ApproveLesson> addLessonListNotRepeating(Training training
-            , List<LessonModel> lessonModelList, boolean isConfirmed) {
+            , List<LessonModel> lessonModelList, boolean isConfirmed, boolean createLesson) {
         List<ApproveLesson> approveLessonList = new ArrayList<ApproveLesson>();
         for (LessonModel lessonModel : lessonModelList) {
-            Lesson lesson = new Lesson();
-            lesson.setTraining(training);
-            lesson.setDate(lessonModel.getDate());
-            lesson.setPlace(lessonModel.getPlace());
-            lessonDAO.addLesson(lesson);
-            if(!isConfirmed) {
+            Lesson lesson = null;
+            if (createLesson) {
+                lesson = new Lesson();
+                lesson.setTraining(training);
+                lesson.setDate(lessonModel.getDate());
+                lesson.setPlace(lessonModel.getPlace());
+                lessonDAO.addLesson(lesson);
+            }
+            if (!isConfirmed) {
                 ApproveLesson approveLesson = new ApproveLesson();
                 approveLesson.setLesson(lesson);
                 approveLesson.setDate(lessonModel.getDate());
@@ -107,7 +111,8 @@ public class TrainingServiceImpl implements TrainingService {
         return approveLessonList;
     }
 
-    private List<ApproveLesson> addLessonListRepeating(Training training, RepeatModel repeatModel, boolean isConfirmed) {
+    private List<ApproveLesson> addLessonListRepeating(Training training, RepeatModel repeatModel
+            , boolean isConfirmed, boolean createLesson) {
         List<ApproveLesson> approveLessonList = new ArrayList<ApproveLesson>();
         LessonModel[] lessonModelList = repeatModel.getLessonList();
         int dayOfWeekStart = getDayOfWeek(repeatModel.getStartDate());
@@ -118,11 +123,14 @@ public class TrainingServiceImpl implements TrainingService {
             int offset = (i - dayOfWeekStart + DAY_OF_WEEK) % DAY_OF_WEEK;
             long dateLesson = lessonModelList[i].getDate() + repeatModel.getStartDate() + offset * MILLIS_IN_DAY;
             for (; dateLesson < repeatModel.getEndDate(); dateLesson += MILLIS_IN_WEEK) {
-                Lesson lesson = new Lesson();
-                lesson.setTraining(training);
-                lesson.setDate(dateLesson);
-                lessonDAO.addLesson(lesson);
-                if(!isConfirmed) {
+                Lesson lesson = null;
+                if (createLesson) {
+                    lesson = new Lesson();
+                    lesson.setTraining(training);
+                    lesson.setDate(dateLesson);
+                    lessonDAO.addLesson(lesson);
+                }
+                if (!isConfirmed) {
                     ApproveLesson approveLesson = new ApproveLesson();
                     approveLesson.setLesson(lesson);
                     approveLesson.setDate(dateLesson);
@@ -158,18 +166,19 @@ public class TrainingServiceImpl implements TrainingService {
                 , shortInfo
                 , language
                 , maxSize
-                , additionalInfo);
+                , additionalInfo
+                , isInner);
         approveTraining.setTagList(tagList);
         trainingApproveDAO.addApprove(approveTraining);
         ApproveAction approveAction = new ApproveAction();
         approveAction.setDate(getTime());
         approveAction.setType(ApproveAction.Type.CREATE);
         approveAction.setTraining(training);
-        List<ApproveLesson> approveLessonList  = null;
+        List<ApproveLesson> approveLessonList = null;
         if (isRepeating) {
-            approveLessonList = addLessonListRepeating(training, repeatModel,false);
+            approveLessonList = addLessonListRepeating(training, repeatModel, false, true);
         } else {
-            approveLessonList = addLessonListNotRepeating(training, lessonModelList,false);
+            approveLessonList = addLessonListNotRepeating(training, lessonModelList, false, true);
         }
         approveAction.setApproveLessonList(approveLessonList);
         approveActionDAO.addApproveAction(approveAction);
@@ -177,9 +186,9 @@ public class TrainingServiceImpl implements TrainingService {
 
     private void removeApproveCreate(ApproveAction approveAction, boolean removeLesson) {
         Training training = approveAction.getTraining();
-        for(Lesson lesson : training.getLessonList()) {
+        for (Lesson lesson : training.getLessonList()) {
             lessonApproveDAO.removeApprove(lesson.getApproveLesson());
-            if(removeLesson) {
+            if (removeLesson) {
                 lessonDAO.removeLesson(lesson);
             }
         }
@@ -192,8 +201,8 @@ public class TrainingServiceImpl implements TrainingService {
             , Integer language, Integer maxSize, boolean isInner, List<Long> tagIdList
             , List<LessonModel> lessonModelList, RepeatModel repeatModel) {
         //todo
-        ApproveAction approveAction = null ;
-        removeApproveCreate(approveAction,true);
+        ApproveAction approveAction = null;
+        removeApproveCreate(approveAction, true);
         Training training = approveAction.getTraining();
         training.setTitle(title);
         training.setDescription(description);
@@ -202,10 +211,10 @@ public class TrainingServiceImpl implements TrainingService {
         training.setMaxSize(maxSize);
         training.setIsInner(isInner);
         training.setTagList(getTagList(tagIdList));
-        if(training.isRepeat()) {
-            addLessonListRepeating(training,repeatModel,true);
+        if (training.isRepeat()) {
+            addLessonListRepeating(training, repeatModel, true, true);
         } else {
-            addLessonListNotRepeating(training, lessonModelList, true);
+            addLessonListNotRepeating(training, lessonModelList, true, true);
         }
     }
 
@@ -213,7 +222,7 @@ public class TrainingServiceImpl implements TrainingService {
     public void cancelCreate(Long actionId) {
         //TODO
         ApproveAction approveAction = null;
-        removeApproveCreate(approveAction,false);
+        removeApproveCreate(approveAction, false);
     }
 
     @Override
@@ -238,13 +247,19 @@ public class TrainingServiceImpl implements TrainingService {
                 , shortInfo
                 , language
                 , maxSize
-                , additionalInfo);
+                , additionalInfo
+                , isInner);
         ApproveAction approveAction = new ApproveAction();
         approveAction.setDate(getTime());
         approveAction.setTraining(training);
-        if(training.isRepeat()) {
-
+        List<ApproveLesson> approveLessonList = null;
+        if (training.isRepeat()) {
+            approveLessonList = addLessonListRepeating(training, repeatModel, false, false);
+        } else {
+            approveLessonList = addLessonListNotRepeating(training, lessonModelList, false, false);
         }
+        approveAction.setApproveLessonList(approveLessonList);
+        approveActionDAO.addApproveAction(approveAction);
     }
 
     @Override
