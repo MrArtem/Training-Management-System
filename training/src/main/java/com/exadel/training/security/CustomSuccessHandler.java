@@ -23,6 +23,7 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler{
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         clearAuthenticationAttributes(request);
         try {
+            response.addHeader("Content-Type","application/json");
             PrintWriter writer = response.getWriter();
             writer.print("{'login': 'FAILURE'}");
             writer.flush();

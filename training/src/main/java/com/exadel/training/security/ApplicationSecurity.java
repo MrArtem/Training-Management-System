@@ -35,7 +35,7 @@ public class ApplicationSecurity extends WebSecurityConfigurerAdapter{
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests().antMatchers("/training/**").authenticated();
         http.csrf().disable();
-        http.formLogin().loginPage("/login").permitAll();
+        http.formLogin().loginPage("/api/login").permitAll();
         http.formLogin().successHandler(customSuccessHandler);
         http.formLogin().failureHandler(customFailureHandler);
         http.exceptionHandling().authenticationEntryPoint(customEntryPoint);
@@ -45,6 +45,6 @@ public class ApplicationSecurity extends WebSecurityConfigurerAdapter{
     protected void configure(AuthenticationManagerBuilder builder) throws Exception {
         builder.inMemoryAuthentication().withUser("user").password("user").roles("USER").and().withUser("admin")
                 .password("admin").roles("ADMIN");
-        builder.use
+        //builder.use
     }
 }

@@ -16,8 +16,8 @@
         /////
         
         function login (login,password) {
-            var headers = {authorization: "Basic " + btoa(login + ":" + password)};
-            return $http.get('login', {headers: headers});
+            var headers = {'Content-Type': 'application/x-www-form-urlencoded'};
+            return $http.post('/api/login', "username=" + login + "&password=" + password, {headers: headers});
         }
         
         function logout () {
