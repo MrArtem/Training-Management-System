@@ -31,7 +31,23 @@ public interface TrainingService {
             , RepeatModel repeatModel
     );
 
-    void confirmTraining(Long trainingId
+    void confirmTraining(Long actionId
+            , String title
+            , String description
+            , String shortInfo
+            , Integer language
+            , Integer maxSize
+            , boolean isInner
+            , List<Long> tagIdList
+            , List<LessonModel> lessonModelList
+            , RepeatModel repeatModel
+    );
+
+    void cancelCreate(Long actionId);
+
+    void cancelChange(Long actionId);
+
+    void editTraining(Long trainingId
             , String title
             , String description
             , String shortInfo
@@ -43,8 +59,4 @@ public interface TrainingService {
             , List<LessonModel> lessonModelList
             , RepeatModel repeatModel
     );
-
-    void cancelCreate(Long trainingId);
-
-    void cancelChange(Long trainingId);
 }

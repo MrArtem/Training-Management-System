@@ -41,7 +41,7 @@ public class Training {
     private boolean isRepeat;
 
     @OneToOne
-    private ApproveTraining approveTraining;
+    private ApproveAction approveAction;
 
     @ManyToOne(cascade = CascadeType.ALL)
     private User coach;
@@ -215,11 +215,11 @@ public class Training {
         this.isRepeat = isRepeat;
     }
 
-    public ApproveTraining getApproveTraining() {
-        return approveTraining;
+    public ApproveAction getApproveAction() {
+        return approveAction;
     }
 
-    public void setApproveTraining(ApproveTraining approveTraining) {
-        this.approveTraining = approveTraining;
+    public void setApproveAction(ApproveAction approveAction) {
+        this.approveAction = approveAction;
     }
 }

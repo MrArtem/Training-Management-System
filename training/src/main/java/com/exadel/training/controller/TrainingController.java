@@ -1,14 +1,16 @@
 package com.exadel.training.controller;
 
-import com.exadel.training.controller.model.CommentModel;
-import com.exadel.training.controller.model.ListenerModel;
-import com.exadel.training.controller.model.TrainingModel;
+import com.exadel.training.controller.model.*;
 import com.exadel.training.dao.domain.*;
-import com.exadel.training.service.*;
+import com.exadel.training.service.CommentService;
+import com.exadel.training.service.LessonService;
+import com.exadel.training.service.TagService;
+import com.exadel.training.service.TrainingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -18,6 +20,10 @@ public class TrainingController {
     private TrainingService trainingService;
     @Autowired
     private LessonService lessonService;
+    @Autowired
+    private CommentService commentService;
+    @Autowired
+    private TagService tagService;
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     TrainingModel getTrainingMadel(@PathVariable("id") long trainingId) {
@@ -62,8 +68,32 @@ public class TrainingController {
     }
 
     @RequestMapping(value = "/confirm/{id}", method = RequestMethod.POST)
-    void confirmAddTraining(@PathVariable("id") long trainingId, @RequestBody AddingTrainingModel addingTrainingModel) {
-        trainingService.confirmTraining(trainingId
+    void confirmAddTraining(@PathVariable("id") long actionId, @RequestBody AddingTrainingModel addingTrainingModel) {
+        trainingService.confirmTraining(actionId
+                , addingTrainingModel.getTitle()
+                , addingTrainingModel.getDescription()
+                , addingTrainingModel.getShortInfo()
+                , addingTrainingModel.getLanguage()
+                , addingTrainingModel.getMaxSize()
+                , addingTrainingModel.isInner()
+                , addingTrainingModel.getTagList()
+                , addingTrainingModel.getLessonList()
+                , addingTrainingModel.getRepeatModel());
+    }
+
+    @RequestMapping(value = "cancel_create/{id}", method = RequestMethod.PUT)
+    void cancelCreate(@PathVariable("id") Long actionId) {
+        trainingService.cancelCreate(actionId);
+    }
+
+    @RequestMapping(value = "cancel_change/{id}", method = RequestMethod.PUT)
+    void cancelChange(@PathVariable("id") Long actionId) {
+        trainingService.cancelChange(actionId);
+    }
+
+    @RequestMapping(value = "/edit/{id}", method = RequestMethod.PUT)
+    void editTraining(@PathVariable("id") long trainingId, @RequestBody AddingTrainingModel addingTrainingModel) {
+        trainingService.editTraining(trainingId
                 , addingTrainingModel.getTitle()
                 , addingTrainingModel.getDescription()
                 , addingTrainingModel.getShortInfo()
@@ -74,16 +104,6 @@ public class TrainingController {
                 , addingTrainingModel.getAdditionalInfo()
                 , addingTrainingModel.getLessonList()
                 , addingTrainingModel.getRepeatModel());
-    }
-
-    @RequestMapping(value = "cancel_create/{id}", method = RequestMethod.PUT)
-    void cancelCreate(@PathVariable("id") Long trainingId) {
-        trainingService.cancelCreate(trainingId);
-    }
-
-    @RequestMapping(value = "cancel_change/{id}", method = RequestMethod.PUT)
-    void cancelChange(@PathVariable("id") Long trainingId) {
-        trainingService.cancelChange(trainingId);
     }
 
     @RequestMapping(value = "/getAdd", method = RequestMethod.GET)
