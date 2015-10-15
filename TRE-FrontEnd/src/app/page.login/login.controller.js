@@ -13,8 +13,7 @@
         ////
         
         function submit(){
-            authService.login(vm.login, vm.password, vm.isRemember)
-               
+            authService.login(vm.login, vm.password, vm.isRemember);
         }
 
 

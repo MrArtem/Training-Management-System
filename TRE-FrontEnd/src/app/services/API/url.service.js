@@ -6,7 +6,8 @@
 
     /* @ngInject */
     function UrlProvider() {
-        var urlProvider = {};
+        var urlProvider = {
+        };
         return urlProvider;
     }
 })();

@@ -43,6 +43,7 @@
 
         function login(login, password, isRemember) {
             //Perform Server log in
+            console.log(login + " " + password);
 
             authAPI.login(login, password).then(function (data) {
                 // success :
