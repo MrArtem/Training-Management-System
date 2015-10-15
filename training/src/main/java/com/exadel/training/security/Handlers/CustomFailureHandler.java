@@ -1,4 +1,4 @@
-package com.exadel.training.security;
+package com.exadel.training.security.Handlers;
 
 
 import org.springframework.security.core.AuthenticationException;
@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Component
-public class CustomFailureHandler extends SimpleUrlAuthenticationFailureHandler{
+public class CustomFailureHandler extends SimpleUrlAuthenticationFailureHandler {
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
         super.onAuthenticationFailure(request, response, exception);

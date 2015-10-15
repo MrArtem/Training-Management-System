@@ -1,9 +1,12 @@
-package com.exadel.training.security;
+package com.exadel.training.security.Handlers;
 
 
+import com.exadel.training.security.User.CustomUser;
+import com.exadel.training.security.User.UserModel.UserModelSecurity;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
@@ -12,10 +15,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.Writer;
 
 @Component
-public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler{
+public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
     @Autowired
     ObjectMapper objectMapper;
 
@@ -23,11 +25,17 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler{
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         clearAuthenticationAttributes(request);
         try {
-            response.addHeader("Content-Type","application/json");
+            CustomUser user = (CustomUser) authentication.getPrincipal();
+            String userName = user.getFirstName() + " " + user.getSecondName();
+            String role = "";
+            for (GrantedAuthority grantedAuthority : user.getAuthorities()) {
+                role = grantedAuthority.getAuthority();
+            }
+            UserModelSecurity userModelSecurity = new UserModelSecurity(userName, user.getUserId(), role);
             PrintWriter writer = response.getWriter();
-            writer.print("{'login': 'FAILURE'}");
+            objectMapper.writeValue(writer, userModelSecurity);
             writer.flush();
-        }catch (IOException e) {
+        } catch (IOException e) {
             System.out.println(e);
         }
     }
