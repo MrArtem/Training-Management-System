@@ -10,18 +10,18 @@
             login: login,
             logout: logout
         }
-    
+
         return userAPI;
-        
+
         /////
-        
-        function login (login,password) {
+
+        function login(login, password) {
             var headers = {'Content-Type': 'application/x-www-form-urlencoded'};
             return $http.post('/api/login', "username=" + login + "&password=" + password, {headers: headers});
         }
-        
-        function logout () {
-            
+
+        function logout() {
+
         }
     }
 
