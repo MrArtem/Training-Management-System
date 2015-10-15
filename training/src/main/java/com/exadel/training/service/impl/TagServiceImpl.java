@@ -30,9 +30,9 @@ public class TagServiceImpl implements TagService{
         return tagDAO.getTagList();
     }
 
-    //TODO: criteria
     @Override
-    public List<Training> getTrainingListByTagList(List<Tag> tagList) {
-        return null;
+    @Transactional
+    public Tag getTagBySpecialty(String specialty) {
+        return tagDAO.getTagBySpecialty(specialty);
     }
 }

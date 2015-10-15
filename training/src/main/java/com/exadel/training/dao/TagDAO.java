@@ -11,4 +11,6 @@ public interface TagDAO {
     void addTag(Tag tag);
 
     List<Tag> getTagList();
+
+    Tag getTagBySpecialty(String specialty);
 }

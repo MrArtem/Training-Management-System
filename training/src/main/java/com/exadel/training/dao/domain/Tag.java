@@ -17,6 +17,7 @@ public class Tag {
     @ManyToMany(mappedBy = "tagList")
     private List<Training> trainingList;
 
+    @Column(unique=true)
     private String specialty;
 
     private String colour;

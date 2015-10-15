@@ -9,7 +9,7 @@ public interface TagService {
 
     void addTag(Tag tag);
 
-    List<Tag> getTagList();
+    Tag getTagBySpecialty(String specialty);
 
-    List<Training> getTrainingListByTagList(List<Tag> tagList);
+    List<Tag> getTagList();
 }
