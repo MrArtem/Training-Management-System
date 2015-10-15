@@ -72,7 +72,7 @@ public class TrainingController {
                                           @RequestParam("page") Integer page,
                                                    @RequestParam("tag") List<String> specialtyList) {
         List<Tag> tagList = new ArrayList<Tag>();
-        for (String specialty :specialtyList) {
+        for (String specialty : specialtyList) {
             tagList.add(tagService.getTagBySpecialty(specialty));
         }
         List<Training> trainingList;
