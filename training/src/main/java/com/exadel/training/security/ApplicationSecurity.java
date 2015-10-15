@@ -33,7 +33,7 @@ public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
         http.formLogin().loginPage("/api/login").permitAll();
         http.formLogin().successHandler(customSuccessHandler);
         http.formLogin().failureHandler(customFailureHandler);
-        http.logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login").permitAll();
+        http.logout().logoutRequestMatcher(new AntPathRequestMatcher("/api/logout")).logoutSuccessUrl("/login").permitAll();
         http.exceptionHandling().authenticationEntryPoint(customEntryPoint);
     }
 

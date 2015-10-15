@@ -66,14 +66,6 @@
 
         }
 
-        function credsLogin() {
-            var userCreds = getUserCreds();
-            if (userCreds) {
-                user = userCreds;
-                isLogged = true;
-            }
-        }
-
         function logout() {
             // server logout
             // just logout
@@ -81,6 +73,14 @@
             user = {};
             clearUserCreds();
             $state.go('login');
+        }
+
+        function credsLogin() {
+            var userCreds = getUserCreds();
+            if (userCreds) {
+                user = userCreds;
+                isLogged = true;
+            }
         }
 
         function getUser() {

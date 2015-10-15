@@ -13,7 +13,10 @@
             createCourse: createCourse,
             editCourse: editCourse,
             getApproveList: getApproveList,
-            getEditedCourse: getEditedCourse
+            getCoursesForUser: getCoursesForUser,
+            getEditedCourse: getEditedCourse,
+            login: login,
+            logout: logout
         };
         return urlProvider;
     }
@@ -41,8 +44,19 @@
     function getApproveList() {
         //return ;
     }
+    function getCoursesForUser(login) {
+        //return;
+    }
 
     function getEditedCourse(trainingId) {
         return '/training/get_edited_course/' + trainingId;
+    }
+
+    function login() {
+        return '/api/login';
+    }
+
+    function logout() {
+        return '/api/logout';
     }
 })();

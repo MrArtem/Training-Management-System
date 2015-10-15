@@ -16,6 +16,5 @@
             authService.login(vm.username, vm.password, vm.isRemember);
         }
 
-
     }
 })();

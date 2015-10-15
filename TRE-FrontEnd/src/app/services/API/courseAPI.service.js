@@ -15,6 +15,7 @@
             editCourse: editCourse,
             getAttachments: getAttachments,
             getComments: getComments,
+            getCoursesForUser: getCoursesForUser,
             getEditedCourse: getEditedCourse,
             getParticipants: getParticipants,
             getShortInfo: getShortInfo,
@@ -183,6 +184,14 @@
 
         function deleteLesson(lessonId) {
 
+        }
+
+        //////////
+
+        function getCoursesForUser(login) {
+            return $http.get(urlProvider.getCoursesForUser(login)).then(function (results) {
+                return results.data;
+            });
         }
 
     }

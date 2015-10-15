@@ -13,10 +13,9 @@
         <ul class="left">
             <li><a ui-sref="mycourses">My Courses</a></li>
             <li><a ui-sref="browse">Browse</a></li>
-            <li><a ui-sref="browse">Profile</a></li>
+            <li><a ui-sref="profile">Profile</a></li>
+            <li ng-if="navbar.isAdmin"><a ui-sref="admin">Admin</a></li>
         </ul>
-
-
 
         <!-- Right Nav Section -->
         <ul class="right">
@@ -25,9 +24,9 @@
             <li class="has-dropdown">
                 <a href="#"><i class="fa fa-user"></i></a>
                 <ul class="dropdown">
-                    <li><label>Username</label></li>
+                    <li><label>{{navbar.username}}</label></li>
                     <li><a href="#">Profile</a></li>
-                    <li><a href="#" ng-click="vm.logout()">Logout</a></li>
+                    <li><a href="#" ng-click="navbar.logout()">Logout</a></li>
                 </ul>
             </li>
         </ul>

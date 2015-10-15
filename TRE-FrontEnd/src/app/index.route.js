@@ -41,6 +41,13 @@
                 controllerAs: 'courseinfo',
                 auth: true,
                 accessRights: 2
+            }).state('login', {
+                url: '/login',
+                templateUrl: 'app/page.login/login.html',
+                controller: 'LoginController',
+                controllerAs: 'login',
+                accessRights: 4,
+                auth: false
             }).state('managecourse', {
                 abstract: true,
                 url: '/managecourse',
@@ -50,7 +57,9 @@
                 params: {
                     courseId: null,
                     type: null
-                }
+                },
+                auth: true,
+                accessRights: 2
             }).state('mycourses', {
                 url: '/',
                 templateUrl: 'app/page.mycourses/mycourses.html',
@@ -58,16 +67,14 @@
                 controllerAs: 'mycourses',
                 auth: true,
                 accessRights: 2
-            }).state('login', {
-                url: '/login',
-                templateUrl: 'app/page.login/login.html',
-                controller: 'LoginController',
-                controllerAs: 'login',
-                accessRights: 4,
-                auth: false
-
+            }).state('profile', {
+                url: '/profile',
+                templateUrl: 'app/page.profile/profile.html',
+                controller: 'ProfileController',
+                controllerAs: 'profile',
+                auth: true,
+                accessRights: 2
             })
-
 
         ;
 
