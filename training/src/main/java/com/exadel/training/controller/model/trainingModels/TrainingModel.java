@@ -1,9 +1,6 @@
 package com.exadel.training.controller.model.trainingModels;
 
-
 import com.exadel.training.dao.domain.Tag;
-import com.exadel.training.dao.domain.Training;
-import com.exadel.training.dao.domain.User;
 
 import java.util.List;
 
@@ -19,24 +16,15 @@ public class TrainingModel {
 
     private String coachName;
 
-    private Long startDate;
-
-    private Long endDate;
-
-    private double rating;
-
     private List<Tag> tagList;
-
-    private boolean canSubscribe;
 
     private long coachId;
 
     private int language;
 
-    private boolean isCoach;
+    private long maxSize;
 
-    public TrainingModel() {
-    }
+    private boolean isRepeating;
 
     public long getTrainingId() {
         return trainingId;
@@ -78,44 +66,12 @@ public class TrainingModel {
         this.coachName = coachName;
     }
 
-    public Long getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(Long startDate) {
-        this.startDate = startDate;
-    }
-
-    public Long getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(Long endDate) {
-        this.endDate = endDate;
-    }
-
-    public double getRating() {
-        return rating;
-    }
-
-    public void setRating(double rating) {
-        this.rating = rating;
-    }
-
     public List<Tag> getTagList() {
         return tagList;
     }
 
     public void setTagList(List<Tag> tagList) {
         this.tagList = tagList;
-    }
-
-    public boolean isCanSubscribe() {
-        return canSubscribe;
-    }
-
-    public void setCanSubscribe(boolean canSubscribe) {
-        this.canSubscribe = canSubscribe;
     }
 
     public long getCoachId() {
@@ -134,27 +90,19 @@ public class TrainingModel {
         this.language = language;
     }
 
-    public boolean isCoach() {
-        return isCoach;
+    public long getMaxSize() {
+        return maxSize;
     }
 
-    public void setIsCoach(boolean isCoach) {
-        this.isCoach = isCoach;
+    public void setMaxSize(long maxSize) {
+        this.maxSize = maxSize;
     }
 
-    public void setTraining(Training training) {
-        title = training.getTitle();
-        shortInfo = training.getExcerpt();
-        description = training.getDescription();
-        if(training.getCountListenerRating() != 0) {
-            rating = (double) training.getSumRating() / training.getCountListenerRating();
-        } else {
-            rating = 0;
-        }
-        language = training.getLanguage();
-        tagList = training.getTagList();
-        User coach = training.getCoach();
-        coachName = coach.getFirstName() + " " + coach.getLastName();
-        coachId = coach.getId();
+    public boolean isRepeating() {
+        return isRepeating;
+    }
+
+    public void setIsRepeating(boolean isRepeating) {
+        this.isRepeating = isRepeating;
     }
 }

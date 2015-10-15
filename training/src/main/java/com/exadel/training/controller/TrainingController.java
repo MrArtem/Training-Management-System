@@ -1,6 +1,6 @@
 package com.exadel.training.controller;
 
-import com.exadel.training.controller.model.*;
+import com.exadel.training.controller.model.CommentModel;
 import com.exadel.training.controller.model.trainingModels.*;
 import com.exadel.training.dao.domain.*;
 import com.exadel.training.service.CommentService;
@@ -27,13 +27,13 @@ public class TrainingController {
     private TagService tagService;
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    TrainingModel getTrainingMadel(@PathVariable("id") long trainingId) {
-        TrainingModel trainingModel = new TrainingModel();
+    GetTrainingModel getTrainingMadel(@PathVariable("id") long trainingId) {
+        GetTrainingModel getTrainingModel = new GetTrainingModel();
         Training training = trainingService.getTraining(trainingId);
-        trainingModel.setTraining(training);
-        trainingModel.setStartDate(lessonService.getStartDateByTraining(trainingId));
-        trainingModel.setEndDate(lessonService.getEndDateByTraining(trainingId));
-        return trainingModel;
+        getTrainingModel.setTraining(training);
+        getTrainingModel.setStartDate(lessonService.getStartDateByTraining(trainingId));
+        getTrainingModel.setEndDate(lessonService.getEndDateByTraining(trainingId));
+        return getTrainingModel;
     }
 
     @RequestMapping(value = "/{id}/lesson_list", method = RequestMethod.GET)
@@ -105,18 +105,6 @@ public class TrainingController {
                 , addingTrainingModel.getAdditionalInfo()
                 , addingTrainingModel.getLessonList()
                 , addingTrainingModel.getRepeatModel());
-    }
-
-    @RequestMapping(value = "/getAdd", method = RequestMethod.GET)
-    AddingTrainingModel getAdd() {
-        AddingTrainingModel addingTrainingModel = new AddingTrainingModel();
-        List<LessonModel> lessonList = new ArrayList<LessonModel>();
-        lessonList.add(new LessonModel());
-        addingTrainingModel.setLessonList(lessonList);
-        RepeatModel repeatModel = new RepeatModel();
-        repeatModel.setLessonList(new LessonModel[7]);
-        addingTrainingModel.setRepeatModel(repeatModel);
-        return addingTrainingModel;
     }
 
     @RequestMapping(value = "/add_tag", method = RequestMethod.POST)
@@ -227,5 +215,52 @@ public class TrainingController {
         return commentModelList;
     }
 
-    @RequestMapping(value = "/get")
+    @RequestMapping(value = "/getApproveTraining/{id}", method = RequestMethod.GET)
+    public ApproveGetTrainingModel getApproveTrainingModel(@PathVariable("id") long actionId) {
+        ApproveAction approveAction = trainingService.getApproveAction(actionId);
+        ApproveTraining approveTraining = approveAction.getApproveTraining();
+        ApproveGetTrainingModel approveTrainingModel = new ApproveGetTrainingModel();
+        Training training = approveAction.getTraining();
+
+
+        if (approveTraining != null) {
+            approveTrainingModel.setTitle(approveTraining.getTitle());
+            approveTrainingModel.setDescription(approveTraining.getDescription());
+            approveTrainingModel.setAdditionalInfo(approveTraining.getAdditionalInfo());
+            approveTrainingModel.setMaxSize(approveTraining.getMaxSize());
+            approveTrainingModel.setTagList(approveTraining.getTagList());
+            approveTrainingModel.setShortInfo(approveTraining.getExcerpt());
+            approveTrainingModel.setTagList(approveTraining.getTagList());
+            //todo coachName
+        } else {
+            approveTrainingModel.setTitle(training.getTitle());
+            approveTrainingModel.setDescription(training.getDescription());
+            approveTrainingModel.setMaxSize(training.getMaxSize());
+            approveTrainingModel.setTagList(training.getTagList());
+            approveTrainingModel.setShortInfo(training.getExcerpt());
+            User coach = training.getCoach();
+            approveTrainingModel.setCoachId(coach.getId());
+            approveTrainingModel.setCoachName(coach.getFirstName() + " " + coach.getLastName());
+            approveTrainingModel.setTagList(training.getTagList());
+        }
+        approveTrainingModel.setIsRepeating(training.isRepeat());
+
+
+        if (training.isRepeat()) {
+            approveTrainingModel.setRepeatModel(trainingService.getApproveRepeatModel(actionId));
+        } else {
+            List<ApproveLesson> approveLessonList = trainingService.getApproveLessonList(actionId);
+            List<LessonModel> lessonModelList = new ArrayList<LessonModel>();
+            for (ApproveLesson approveLesson : approveLessonList) {
+                LessonModel lessonModel = new LessonModel();
+                lessonModel.setPlace(approveLesson.getPlace());
+                lessonModel.setDate(approveLesson.getDate());
+                lessonModelList.add(lessonModel);
+            }
+            approveTrainingModel.setLessonModelList(lessonModelList);
+        }
+
+
+        return approveTrainingModel;
+    }
 }
