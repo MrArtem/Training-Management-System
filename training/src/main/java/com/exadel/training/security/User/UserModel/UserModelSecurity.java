@@ -4,12 +4,12 @@ public class UserModelSecurity {
 
     private String username;
     private Long userId;
-    private String role;
+    private String accessRight;
 
-    public UserModelSecurity(String username, Long userId, String role) {
+    public UserModelSecurity(String username, Long userId, String accessRight) {
         this.username = username;
         this.userId = userId;
-        this.role = role;
+        this.accessRight = accessRight;
     }
 
     public String getUsername() {
@@ -28,11 +28,11 @@ public class UserModelSecurity {
         this.userId = userId;
     }
 
-    public String getRole() {
-        return role;
+    public String getAccessRight() {
+        return accessRight;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setAccessRight(String accessRight) {
+        this.accessRight = accessRight;
     }
 }
