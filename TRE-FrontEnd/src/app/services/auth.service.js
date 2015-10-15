@@ -44,10 +44,11 @@
 
             authAPI.login(login, password).then(function (data) {
                 // success :
+                console.log(data);
                 isLogged = true;
                 user.username = data.username;
                 user.userId = data.userId;
-                user.accessRights = accessRights.accessRightsFromString(data.acessRights);
+                user.accessRights = accessRights.accessRightsFromString(data.accessRights);
                 if (isRemember) {
                     putUserCreds(user);
                 }
