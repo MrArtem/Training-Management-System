@@ -1,6 +1,7 @@
 package com.exadel.training.controller;
 
 import com.exadel.training.controller.model.*;
+import com.exadel.training.controller.model.trainingModels.*;
 import com.exadel.training.dao.domain.*;
 import com.exadel.training.service.CommentService;
 import com.exadel.training.service.LessonService;
@@ -225,4 +226,6 @@ public class TrainingController {
         }
         return commentModelList;
     }
+
+    @RequestMapping(value = "/get")
 }

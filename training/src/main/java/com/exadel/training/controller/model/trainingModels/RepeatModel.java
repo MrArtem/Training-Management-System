@@ -1,4 +1,4 @@
-package com.exadel.training.controller.model;
+package com.exadel.training.controller.model.trainingModels;
 
 
 public class RepeatModel {

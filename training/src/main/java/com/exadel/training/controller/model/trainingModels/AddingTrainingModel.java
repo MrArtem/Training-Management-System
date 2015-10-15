@@ -1,7 +1,5 @@
-package com.exadel.training.controller.model;
+package com.exadel.training.controller.model.trainingModels;
 
-
-import com.exadel.training.dao.domain.Lesson;
 
 import java.util.List;
 

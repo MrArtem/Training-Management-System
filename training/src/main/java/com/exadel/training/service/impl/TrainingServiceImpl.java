@@ -1,7 +1,7 @@
 package com.exadel.training.service.impl;
 
-import com.exadel.training.controller.model.LessonModel;
-import com.exadel.training.controller.model.RepeatModel;
+import com.exadel.training.controller.model.trainingModels.LessonModel;
+import com.exadel.training.controller.model.trainingModels.RepeatModel;
 import com.exadel.training.dao.*;
 import com.exadel.training.dao.domain.*;
 import com.exadel.training.service.TrainingService;
