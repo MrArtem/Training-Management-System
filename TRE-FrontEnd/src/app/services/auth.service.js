@@ -7,30 +7,28 @@
     /* @ngInject */
     function authService($cookies, $state, authAPI) {
         var accessRights = {
+            accessRightsFromString: accessRightsFromString,
             admin: 0,
             user: 1,
             exCoach: 2,
             exUser: 3,
-            noRights: 4,
-            accessRightsFromString: accessRightsFromString
+            noRights: 4
         };
-
 
         var isLogged = false;
         var user = {
+            accessRights: 4,
             login: "",
-            username: "",
-            accessRights: 4
+            username: ""
         };
 
-
         var authService = {
-            login: login,
             credsLogin: credsLogin,
-            logout: logout,
-            isLogged: getIsLogged,
+            getAccessRights: getAccessRights,
             getUser: getUser,
-            getAccessRights: getAccessRights
+            isLogged: getIsLogged,
+            login: login,
+            logout: logout
         };
 
         return authService;
@@ -38,29 +36,27 @@
         //functions
 
         function getIsLogged() {
-            return isLogged
+            return isLogged;
         }
 
-        function login(username, password, isRemember) {
+        function login(login, password, isRemember) {
             //Perform Server log in
 
-            authAPI.login(username, password).then(function () {
-
+            authAPI.login(login, password).then(function (data) {
                 // success :
+                console.log(data);
                 isLogged = true;
-                user.login = username;
-                user.password = password;
-                user.accessRights = accessRights.accessRightsFromString("ADMIN");
+                user.username = data.username;
+                user.userId = data.userId;
+                user.accessRights = accessRights.accessRightsFromString(data.accessRights);
                 if (isRemember) {
                     putUserCreds(user);
                 }
                 $state.go('mycourses');
 
-            })
+            }, function () {
 
-
-
-            
+            });
 
             return true;
             //return success promise
@@ -68,11 +64,10 @@
             //error:
             //return error promise
 
-
         }
 
         function credsLogin() {
-            var userCreds = getUserCreds()
+            var userCreds = getUserCreds();
             if (userCreds) {
                 user = userCreds;
                 isLogged = true;
@@ -121,8 +116,6 @@
         function clearUserCreds() {
             return $cookies.remove('user');
         }
-
-
 
     }
 

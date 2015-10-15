@@ -5,7 +5,7 @@
         .factory('authAPI', userAPI);
 
     /* @ngInject */
-    function userAPI($q, $timeout) {
+    function userAPI($http, $timeout) {
         var userAPI = {
             login: login,
             logout: logout
@@ -16,15 +16,10 @@
         /////
 
         function login(login, password) {
-            var defer = $q.defer();
-            $timeout(function () {
-
-                defer.resolve({login: login, password: password});
-
-            }, 1000)
-
-
-            return defer.promise
+            var headers = {'Content-Type': 'application/x-www-form-urlencoded'};
+            return $http.post('/api/login', "username=" + login + "&password=" + password, {headers: headers}).then(function(result) {
+                return result.data;
+            });
         }
 
         function logout() {
