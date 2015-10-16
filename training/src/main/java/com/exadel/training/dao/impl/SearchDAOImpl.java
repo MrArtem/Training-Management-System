@@ -71,9 +71,9 @@ public class SearchDAOImpl implements SearchDAO, InitializingBean {
                 .keyword()
                 .fuzzy()
                 .withPrefixLength(5)
-                .onFields("title", "description", "excerpt", "coach.firstName", "coach.lastName", "coach.email", "coach.phone")
-                .matching(searchWord)
-                .createQuery();
+                .onFields("title", "description", "excerpt", "coach.firstName", "coach.lastName", "coach.email", "coach.phone", "tagList.specialty")
+                        .matching(searchWord)
+                        .createQuery();
 
         FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery(query, Training.class);
         List<Training> result = fullTextQuery.list();
