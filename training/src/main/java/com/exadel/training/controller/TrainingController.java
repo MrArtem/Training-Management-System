@@ -2,6 +2,7 @@ package com.exadel.training.controller;
 
 import com.exadel.training.controller.model.CommentModel;
 import com.exadel.training.controller.model.ListenerModel;
+import com.exadel.training.controller.model.TrainingListModel;
 import com.exadel.training.controller.model.TrainingModel;
 import com.exadel.training.dao.domain.*;
 import com.exadel.training.service.*;
@@ -14,6 +15,9 @@ import java.util.List;
 
 @RestController
 public class TrainingController {
+
+    private final Integer PAGE_SIZE = 10;
+
     @Autowired
     private TrainingService trainingService;
     @Autowired
@@ -24,6 +28,9 @@ public class TrainingController {
 
     @Autowired
     private CommentService commentService;
+
+    @Autowired
+    private UserService userService;
 
     @RequestMapping(value = "/training/{id}", method = RequestMethod.GET)
     TrainingModel getTrainingMadel(@PathVariable("id") long trainingId) {
@@ -60,7 +67,34 @@ public class TrainingController {
         return tagService.getTagList();
     }
 
-    //TODO: /training_list RequestParam - isActual, List<Tag>
+    @RequestMapping(value = "/training_list", method = RequestMethod.GET)
+    public List<TrainingListModel> getTrainingList(@RequestParam("is_actual") Boolean isActual,
+                                          @RequestParam("page") Integer page,
+                                                   @RequestParam("tag") List<String> specialtyList) {
+        List<Tag> tagList = new ArrayList<Tag>();
+        for (String specialty : specialtyList) {
+            tagList.add(tagService.getTagBySpecialty(specialty));
+        }
+        List<Training> trainingList;
+        trainingList = trainingService.getTrainingListByTagList(page, PAGE_SIZE, isActual, tagList);
+        List<TrainingListModel> trainingListModelList = new ArrayList<TrainingListModel>();
+        for(Training training : trainingList) {
+            TrainingListModel trainingListModel = new TrainingListModel();
+            trainingListModel.setId(training.getId());
+            trainingListModel.setTitle(training.getTitle());
+            trainingListModel.setExcerpt(training.getExcerpt());
+            trainingListModel.setCoachId(training.getCoach().getId());
+            trainingListModel.setCoachName(training.getCoach().getFirstName() +
+                    " " + training.getCoach().getLastName());
+            trainingListModel.setTagList(training.getTagList());
+            //todo get user here
+            User user = new User();
+            trainingListModel.setIsCoach(userService.isCoach(user.getId(), training.getId()));
+            //todo get next date and place
+            trainingListModelList.add(trainingListModel);
+        }
+        return trainingListModelList;
+    }
 
     @RequestMapping(value = "/training/{id}/add_comment")
     public void addComment(@PathVariable("id") Long trainingId, @RequestBody CommentModel commentModel) {

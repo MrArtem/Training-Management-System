@@ -3,6 +3,7 @@ package com.exadel.training.service.impl;
 import com.exadel.training.dao.ListenerDAO;
 import com.exadel.training.dao.TrainingDAO;
 import com.exadel.training.dao.domain.Listener;
+import com.exadel.training.dao.domain.Tag;
 import com.exadel.training.dao.domain.Training;
 import com.exadel.training.service.TrainingService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,5 +34,10 @@ public class TrainingServiceImpl implements TrainingService {
     @Override
     public List<Listener> getListenerListRecord(long trainingId) {
         return listenerDAO.getListenerListRecord(trainingId);
+    }
+
+    @Override
+    public List<Training> getTrainingListByTagList(Integer page, Integer pageSize, Boolean isActual, List<Tag> tagList) {
+        return trainingDAO.getTrainingListByTagList(page, pageSize, isActual, tagList);
     }
 }
