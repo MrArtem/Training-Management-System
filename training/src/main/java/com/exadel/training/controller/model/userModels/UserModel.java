@@ -2,7 +2,6 @@ package com.exadel.training.controller.model.userModels;
 
 
 import com.exadel.training.dao.domain.User;
-import org.springframework.context.annotation.ComponentScan;
 
 /**
  * Created by ayudovin on 12.10.2015.
@@ -10,8 +9,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 public class UserModel {
     private long id;
-    private String firstName;
-    private String lastname;
+    private String username;
     private String phone;
     private String email;
     private Boolean isCoach;
@@ -20,8 +18,7 @@ public class UserModel {
     }
     public UserModel(User user) {
         this.id = user.getId();
-        this.firstName = user.getFirstName();
-        this.lastname = user.getLastName();
+        this.username =  user.getLastName() + " " + user.getFirstName();
         this.phone = user.getPhone();
         this.email = user.getEmail();
     }
@@ -39,20 +36,12 @@ public class UserModel {
         this.id = id;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastname() {
-        return lastname;
-    }
-
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPhone() {

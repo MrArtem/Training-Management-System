@@ -24,19 +24,12 @@ public class UserController {
 
     @Autowired
     private UserService userService;
-    @Autowired
-    private SearchService searchService;
-    @Autowired
-    private Notification notification;
-    @Autowired
-    private MessageGenerator messageGenerator;
 
     @RequestMapping(value = "/user_info/{idUser}", method = RequestMethod.GET)
     public UserModel getUserInfo(@PathVariable("idUser") long idUser) {
         long idCurrentUser = 1;
         UserModel userModel = new UserModel(userService.getUserById(idCurrentUser), userService.isCoachOfCurrentUser(idCurrentUser, idUser));
 
-        List<Training> trainingList = searchService.searchTraining("art");
         return userModel;
     }
 
