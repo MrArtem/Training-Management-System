@@ -25,6 +25,18 @@
             isCoach: false
         });
 
+        vm.userCourses.push({
+            trainingTitle: 'Java for beginners',
+            trainingId: 2,
+            nextLesson: 1,
+            nextDate: '18.10.2015',
+            nextPlace: 'unit 243',
+            shortInfo: 'Basic Java knowledge.',
+            coachName: 'Johnny Depp',
+            coachId: 2,
+            isCoach: true
+        });
+
         function getMyCourses(login) {
             courseAPI.getCoursesForUser(login).then(function(data) {
                 vm.userCourses = angular.copy(data);

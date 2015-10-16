@@ -3,10 +3,11 @@
 
     angular
         .module('tmsApp', ['ngCookies',
-             'ngTouch',
-             'ngSanitize',
-             'ngResource',
-             'ui.router',
-             'tmsAPI']);
+            'ngTouch',
+            'ngSanitize',
+            'ngResource',
+            'ui.router',
+            'ui.bootstrap',
+            'tmsAPI']);
 
 })();

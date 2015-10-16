@@ -9,7 +9,7 @@
     function CourseInfoController(courseAPI) {
         var vm = this;
 
-        vm.courseinfo = {};
+        vm.courseInfo = {};
 
         vm.getShortInfo = getShortInfo;
         vm.saveAttachments = saveAttachments;
@@ -21,38 +21,38 @@
 
         function getShortInfo() {
             //courseAPI.getShortInfo().then(function(data) {
-            //    vm.courseinfo.title = data.title;
-            //    vm.courseinfo.shortInfo = data.shortInfo;
-            //    vm.courseinfo.description = data.description;
-            //    vm.courseinfo.coachName = data.coachName;
-            //    vm.courseinfo.startDate = data.startDate;
-            //    vm.courseinfo.endDate = data.endDate;
-            //    vm.courseinfo.language = data.language;
-            //    vm.courseinfo.rating = data.rating;
-            //    vm.courseinfo.canSubscribe = data.canSubscribe;
-            //    vm.courseinfo.canComment = data.canComment;
-            //    vm.courseinfo.canRate = data.canRate;
-            //    vm.courseinfo.isCoach = data.isCoach;
-            //    vm.courseinfo.trainingId = data.trainingId;
-            //    vm.courseinfo.coachId = data.coachId;
-            //    vm.courseinfo.tagList = angular.copy(data.tagList);
+            //    vm.courseInfo.title = data.title;
+            //    vm.courseInfo.shortInfo = data.shortInfo;
+            //    vm.courseInfo.description = data.description;
+            //    vm.courseInfo.coachName = data.coachName;
+            //    vm.courseInfo.startDate = data.startDate;
+            //    vm.courseInfo.endDate = data.endDate;
+            //    vm.courseInfo.language = data.language;
+            //    vm.courseInfo.rating = data.rating;
+            //    vm.courseInfo.canSubscribe = data.canSubscribe;
+            //    vm.courseInfo.canComment = data.canComment;
+            //    vm.courseInfo.canRate = data.canRate;
+            //    vm.courseInfo.isCoach = data.isCoach;
+            //    vm.courseInfo.trainingId = data.trainingId;
+            //    vm.courseInfo.coachId = data.coachId;
+            //    vm.courseInfo.tagList = angular.copy(data.tagList);
             //});
         }
 
         function saveAttachments(attachments) {
-            vm.courseinfo.attachments = angular.copy(attachments);
+            vm.courseInfo.attachments = angular.copy(attachments);
         }
 
         function saveComments(comments) {
-            vm.courseinfo.comments = angular.copy(comments);
+            vm.courseInfo.comments = angular.copy(comments);
         }
 
         function saveParticipants(participants) {
-            vm.courseinfo.participants = angular.copy(participants);
+            vm.courseInfo.participants = angular.copy(participants);
         }
 
         function saveTimetable(timetable) {
-            vm.courseinfo.timetable = angular.copy(timetable);
+            vm.courseInfo.lessonList = angular.copy(timetable);
         }
 
     }

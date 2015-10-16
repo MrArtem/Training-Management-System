@@ -7,6 +7,7 @@
 
     /** @ngInject */
     function routeConfig($stateProvider, $urlRouterProvider) {
+        var modalInstance;
         $stateProvider
             .state('courseinfo.attachments', {
                 url: '/attachments',
@@ -33,6 +34,32 @@
                 templateUrl: 'app/page.courseinfo/courseinfo.timetable/timetable.html',
                 controller: 'TimetableController',
                 controllerAs: 'timetable'
+            }).state('courseinfo.timetable.editlesson', {
+                url: '/editlesson',
+                onEnter: function ($modal, $stateParams) {
+                    modalInstance = $modal.open({
+                        templateUrl: 'app/page.courseinfo/courseinfo.timetable/editlesson.modal.html',
+                        controller: 'ModalEditLessonController',
+                        controllerAs: 'editlesson',
+                        resolve: {
+                            index: function () {
+                                return $stateParams.lessonId;
+                            }
+                        }
+                    }).result.finally(function () {
+                            console.log('finally clause');
+                            modalInstance = null;
+                            if ($state.$current.name === 'courseinfo.timetable.editlesson') {
+                                $state.go('^');
+                            }
+                        });
+                    ;
+                },
+                onExit: function() {
+                    if (modalInstance) {
+                        modalInstance.close();
+                    }
+                }
             })
         ;
 

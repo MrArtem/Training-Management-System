@@ -3,15 +3,38 @@
 
     angular
         .module('tmsApp')
-        .controller('TimetableController', TimetableController);
+        .controller('TimetableController', TimetableController)
+        .controller('OpenEditModalController', OpenEditModalController)
+        .controller('ModalEditLessonController', ModalEditLessonController)
+        .controller('ModalAddLessonController', ModalAddLessonController);
 
     /** @ngInject */
-    function TimetableController($scope, courseAPI) {
+    function OpenEditModalController($scope, $stateParams, $modal) {
+        console.log('opening modal');
+        var modalInstance = $modal.open({
+            templateUrl: 'app/page.courseinfo/courseinfo.timetable/editlesson.modal.html',
+            controller: 'ModalEditLessonController',
+            resolve: {
+                courseinfo: function () {
+                    return $scope.$parent.courseInfo;
+                },
+                index: function () {
+                    return $stateParams.lessonId;
+                }
+            }
+        });
+
+        modalInstance.result.then();
+    }
+
+    /** @ngInject */
+    function TimetableController($scope, $modal, courseAPI) {
         var vm = this;
         vm.addLesson = addLesson;
         vm.deleteLesson = deleteLesson;
         vm.editLesson = editLesson;
         vm.getTimetable = getTimetable;
+        vm.openEditLessonModal = openEditLessonModal;
 
         vm.getTimetable();
 
@@ -39,5 +62,47 @@
             //    }
             //);
         }
+
+        function openEditLessonModal(index) {
+            console.log('open modal' + index);
+            var modalInstance = $modal.open({
+                templateUrl: 'app/page.courseinfo/courseinfo.timetable/editlesson.modal.html',
+                controller: 'ModalEditLessonController',
+                resolve: {
+                    courseinfo: function () {
+                        return $scope.$parent.courseInfo;
+                    },
+                    index: function () {
+                        return index;
+                    }
+                }
+            });
+
+            modalInstance.result.then();
+        }
     }
+
+    /** @ngInject */
+    function ModalAddLessonController($scope, $modalInstance, courseinfo) {
+
+    }
+
+    /** @ngInject */
+    function ModalEditLessonController($state, $scope, $modalInstance, courseinfo, index) {
+        console.log('opening modal');
+        var vm = this;
+        vm.courseinfo = courseinfo;
+        vm.index = index;
+
+        $scope.ok = function () {
+            console.log('ok clicked');
+            $modalInstance.close($scope.$parent.courseInfo.lessonList[vm.index], vm.index);
+        };
+
+        $scope.cancel = function () {
+            $modalInstance.dismiss('cancel');
+        };
+
+    }
+
 })();

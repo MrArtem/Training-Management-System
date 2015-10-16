@@ -1,5 +1,115 @@
 <div class="container profile">
 
-    <h3>Profile page</h3>
+    <div class="row">
+        <h3>Profile page</h3>
+        <p>Email: <span>someemail@gmail.com</span></p>
+        <p>Phone number: <span>+ ... somenumber</span></p>
+    </div>
+
+    <div class="row">
+        <div class="small-12 medium-8 large-8 column">
+
+            <h5>Attended trainings</h5>
+
+            <div class="scrollable-div">
+
+                <table class="fullwidth-table">
+                    <thead>
+                    <tr>
+                        <th>Coach</th>
+                        <th>Training</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="course in profile.pastCourses">
+                        <td>{{course.coachName}}</td>
+                        <td>{{course.trainingTitle}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="small-12 medium-8 large-8 column">
+
+            <h5>Current trainings</h5>
+
+            <div class="scrollable-div">
+
+                <table class="fullwidth-table">
+                    <thead>
+                    <tr>
+                        <th>Coach</th>
+                        <th>Training</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="course in profile.currentCourses">
+                        <td>{{course.coachName}}</td>
+                        <td>{{course.trainingTitle}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="small-12 medium-8 large-8 column">
+
+            <h5>Waiting for trainings</h5>
+
+            <div class="scrollable-div">
+
+                <table class="fullwidth-table">
+                    <thead>
+                    <tr>
+                        <th>Coach</th>
+                        <th>Training</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="course in profile.waitingCourses">
+                        <td>{{course.coachName}}</td>
+                        <td>{{course.trainingTitle}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="small-12 medium-8 large-8 column">
+
+            <h5>Feedbacks</h5>
+
+            <div class="scrollable-div">
+
+                <table class="fullwidth-table">
+                    <thead>
+                    <tr>
+                        <th>Who left</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="fb in profile.feedbacks">
+                        <td>{{fb.coachName}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+            </div>
+
+        </div>
+    </div>
 
 </div>

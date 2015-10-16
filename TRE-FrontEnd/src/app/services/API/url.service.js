@@ -14,7 +14,12 @@
             editCourse: editCourse,
             getApproveList: getApproveList,
             getCoursesForUser: getCoursesForUser,
+            getCurrentCoursesForUser: getCurrentCoursesForUser,
             getEditedCourse: getEditedCourse,
+            getFeedbacksOnUser: getFeedbacksOnUser,
+            getPastCoursesForUser: getPastCoursesForUser,
+            getProfileInfo: getProfileInfo,
+            getWaitingCoursesForUser: getWaitingCoursesForUser,
             login: login,
             logout: logout
         };
@@ -48,8 +53,28 @@
         //return;
     }
 
+    function getCurrentCoursesForUser(userId) {
+        //return;
+    }
+
     function getEditedCourse(trainingId) {
         return '/training/get_edited_course/' + trainingId;
+    }
+
+    function getFeedbacksOnUser(userId) {
+        //return;
+    }
+
+    function getPastCoursesForUser(userId) {
+        //return;
+    }
+
+    function getProfileInfo(userId) {
+        //return;
+    }
+
+    function getWaitingCoursesForUser(userId) {
+        //return;
     }
 
     function login() {

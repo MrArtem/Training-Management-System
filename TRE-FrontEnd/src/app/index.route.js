@@ -72,6 +72,9 @@
                 templateUrl: 'app/page.profile/profile.html',
                 controller: 'ProfileController',
                 controllerAs: 'profile',
+                params: {
+                    userId: null
+                },
                 auth: true,
                 accessRights: 2
             })

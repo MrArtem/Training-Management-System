@@ -2,7 +2,6 @@
 
     <a ui-sref="courseinfo">courseinfo</a>
     <a ui-sref="managecourse.step1">create course!</a>
-    <a ui-sref="admin">admin page</a>
 
     <div class="tools-header row">
         <div class="medium-6 medium-offset-3  hide-for-small-only columns">
@@ -39,7 +38,7 @@
     </div>
 
     <section class="course-list row">
-        <div class="course-item column" ng-repeat="course in mycourses.userCourses">
+        <div class="course-item column" ng-repeat="course in mycourses.userCourses | filter:{isCoach: mycourses.filter.isCoach}">
             <h1 class="course-title">{{course.trainingTitle}}</h1>
 
             <h2 class="course-lesson-number">Lesson #{{course.nextLesson}}</h2>
