@@ -184,7 +184,7 @@ public class TrainingServiceImpl implements TrainingService {
         approveActionDAO.addApproveAction(approveAction);
     }
 
-    private void removeApproveCreate(ApproveAction approveAction, boolean removeLesson) {
+    private void removeApproveLessonList(ApproveAction approveAction, boolean removeLesson) {
         Training training = approveAction.getTraining();
         for (Lesson lesson : training.getLessonList()) {
             lessonApproveDAO.removeApprove(lesson.getApproveLesson());
@@ -202,7 +202,7 @@ public class TrainingServiceImpl implements TrainingService {
             , Integer language, Integer maxSize, boolean isInner, List<Long> tagIdList
             , List<LessonModel> lessonModelList, RepeatModel repeatModel) {
         ApproveAction approveAction = approveActionDAO.getApproveAction(actionId);
-        removeApproveCreate(approveAction, true);
+        removeApproveLessonList(approveAction, true);
         Training training = approveAction.getTraining();
         training.setTitle(title);
         training.setDescription(description);
@@ -221,12 +221,17 @@ public class TrainingServiceImpl implements TrainingService {
     @Override
     public void cancelCreate(Long actionId) {
         ApproveAction approveAction = approveActionDAO.getApproveAction(actionId);
-        removeApproveCreate(approveAction, false);
+        removeApproveLessonList(approveAction, false);
     }
 
     @Override
-    public void cancelChange(Long trainingId) {
-        //todo
+    public void cancelChange(Long actionId) {
+        ApproveAction approveAction = approveActionDAO.getApproveAction(actionId);
+        ApproveTraining approveTraining = approveAction.getApproveTraining();
+        if(approveTraining != null) {
+            trainingApproveDAO.removeApprove(approveTraining);
+        }
+        removeApproveLessonList(approveAction, false);
     }
 
     private void editTrainingWithPrevApprove(ApproveAction approveAction, String title
@@ -234,7 +239,6 @@ public class TrainingServiceImpl implements TrainingService {
             , Integer language, Integer maxSize, boolean isInner, List<Long> tagIdList
             , String additionalInfo, List<LessonModel> lessonModelList, RepeatModel repeatModel) {
 
-        //TODO tagList &  lessonList !!!
         approveAction.setDate(getTime());
         ApproveTraining approveTraining = approveAction.getApproveTraining();
         Training training = approveAction.getTraining();
@@ -257,6 +261,18 @@ public class TrainingServiceImpl implements TrainingService {
             approveTraining.setIsInner(isInner);
         }
         approveTraining.setAdditionalInfo(additionalInfo);
+        approveTraining.setTagList(getTagList(tagIdList));
+
+
+        removeApproveLessonList(approveAction,false);
+
+        List<ApproveLesson> approveLessonList;
+        if(training.isRepeat()) {
+            approveLessonList = addLessonListRepeating(training,repeatModel,false,false);
+        } else {
+            approveLessonList = addLessonListNotRepeating(training,lessonModelList,false,false);
+        }
+        approveAction.setApproveLessonList(approveLessonList);
     }
 
     private void editTrainingNotPrevApprove(Training training, String title
@@ -318,8 +334,29 @@ public class TrainingServiceImpl implements TrainingService {
         ApproveAction approveAction = approveActionDAO.getApproveAction(actionId);
         List<ApproveLesson> approveLessonList = approveAction.getApproveLessonList();
         RepeatModel repeatModel = new RepeatModel();
-        //todo create repeatModel
-
-        return null;
+        LessonModel[] lessonModelList = new LessonModel[7];
+        Long startDate = null;
+        Long endDate = null;
+        for( ApproveLesson approveLesson : approveLessonList) {
+            int dayOfWeek = getDayOfWeek(approveLesson.getDate());
+            LessonModel lessonModel = new LessonModel();
+            lessonModel.setDate(approveLesson.getDate());
+            lessonModel.setPlace(approveLesson.getPlace());
+            lessonModelList[dayOfWeek] = lessonModel;
+            if(startDate == null) {
+                startDate = approveLesson.getDate();
+                endDate = approveLesson.getDate();
+            }
+            if(startDate > approveLesson.getDate()) {
+                startDate = approveLesson.getDate();
+            }
+            if(endDate < approveLesson.getDate()) {
+                endDate = approveLesson.getDate();
+            }
+        }
+        repeatModel.setLessonList(lessonModelList);
+        repeatModel.setStartDate(startDate);
+        repeatModel.setEndDate(endDate);
+        return repeatModel;
     }
 }

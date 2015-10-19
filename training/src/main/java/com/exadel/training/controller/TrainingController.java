@@ -221,7 +221,7 @@ public class TrainingController {
         ApproveTraining approveTraining = approveAction.getApproveTraining();
         ApproveGetTrainingModel approveTrainingModel = new ApproveGetTrainingModel();
         Training training = approveAction.getTraining();
-
+        User coach = training.getCoach();
 
         if (approveTraining != null) {
             approveTrainingModel.setTitle(approveTraining.getTitle());
@@ -231,20 +231,19 @@ public class TrainingController {
             approveTrainingModel.setTagList(approveTraining.getTagList());
             approveTrainingModel.setShortInfo(approveTraining.getExcerpt());
             approveTrainingModel.setTagList(approveTraining.getTagList());
-            //todo coachName
+            approveTrainingModel.setCoachId(coach.getId());
+            approveTrainingModel.setCoachName(coach.getFirstName() + " " + coach.getLastName());
         } else {
             approveTrainingModel.setTitle(training.getTitle());
             approveTrainingModel.setDescription(training.getDescription());
             approveTrainingModel.setMaxSize(training.getMaxSize());
             approveTrainingModel.setTagList(training.getTagList());
             approveTrainingModel.setShortInfo(training.getExcerpt());
-            User coach = training.getCoach();
             approveTrainingModel.setCoachId(coach.getId());
             approveTrainingModel.setCoachName(coach.getFirstName() + " " + coach.getLastName());
             approveTrainingModel.setTagList(training.getTagList());
         }
         approveTrainingModel.setIsRepeating(training.isRepeat());
-
 
         if (training.isRepeat()) {
             approveTrainingModel.setRepeatModel(trainingService.getApproveRepeatModel(actionId));
