@@ -1,5 +1,8 @@
 package com.exadel.training.dao.domain;
 
+import org.hibernate.search.annotations.*;
+import org.hibernate.search.annotations.Index;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -9,6 +12,7 @@ import java.util.List;
  */
 @Entity
 @Table
+@Indexed
 public class Training {
     public enum State {
         CREATE, NONE, REMOVE
@@ -19,8 +23,12 @@ public class Training {
     private long id;
 
     @NotNull
+    @Field(index = org.hibernate.search.annotations.Index.YES, analyze = Analyze.YES, store = Store.YES)
+    @Analyzer(definition = "customAnalyzer")
     private String title;
 
+    @Field(index = Index.YES, analyze = Analyze.YES, store = Store.YES)
+    @Analyzer(definition = "customAnalyzer")
     private String description;
 
     @Column(length = 5000)
@@ -30,6 +38,8 @@ public class Training {
 
     private boolean isInner;
 
+    @Field(index = Index.YES, analyze = Analyze.YES, store = Store.YES)
+    @Analyzer(definition = "customAnalyzer")
     private String excerpt;
 
     private int sumRating;
@@ -43,6 +53,7 @@ public class Training {
     @OneToOne
     private ApproveAction approveAction;
 
+    @IndexedEmbedded
     @ManyToOne(cascade = CascadeType.ALL)
     private User coach;
 

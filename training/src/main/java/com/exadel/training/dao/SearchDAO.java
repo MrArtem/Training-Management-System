@@ -1,5 +1,6 @@
 package com.exadel.training.dao;
 
+import com.exadel.training.dao.domain.Training;
 import com.exadel.training.dao.domain.User;
 
 import javax.validation.groups.ConvertGroup;
@@ -10,4 +11,5 @@ import java.util.List;
  */
 public interface SearchDAO {
     List<User> searchUser(String searchWord);
+    List<Training> searchTraining(String searchWord);
 }

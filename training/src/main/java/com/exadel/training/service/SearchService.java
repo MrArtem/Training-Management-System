@@ -1,5 +1,6 @@
 package com.exadel.training.service;
 
+import com.exadel.training.dao.domain.Training;
 import com.exadel.training.dao.domain.User;
 
 import java.util.List;
@@ -9,4 +10,5 @@ import java.util.List;
  */
 public interface SearchService {
     List<User> searchService(String searchWord);
+    List<Training> searchTraining(String searchWord);
 }

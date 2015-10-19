@@ -59,4 +59,6 @@ public interface TrainingService {
             , List<LessonModel> lessonModelList
             , RepeatModel repeatModel
     );
+
+    List<Training> getTrainingListByTagList(Integer page, Integer pageSize,Boolean isActual, List<Tag> tagList);
 }

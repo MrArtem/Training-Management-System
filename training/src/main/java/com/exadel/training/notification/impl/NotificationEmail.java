@@ -4,13 +4,19 @@ package com.exadel.training.notification.impl;
  * Created by ayudovin on 13.10.2015.
  */
 import com.exadel.training.notification.Notification;
+import com.exadel.training.notification.help.MessageGenerator;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.activation.DataHandler;
+import javax.activation.DataSource;
+import javax.activation.FileDataSource;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
+import java.nio.file.Paths;
 import java.util.Properties;
 
 
@@ -18,6 +24,9 @@ import java.util.Properties;
 public class NotificationEmail implements Notification {
     private final String USERNAME = "mrartem6695@gmail.com";
     private final String PASSWORD = "jordan23!";
+
+    @Autowired
+    private MessageGenerator messageGenerator;
 
     private Properties properties;
     private Session session;
@@ -45,12 +54,21 @@ public class NotificationEmail implements Notification {
             message.setRecipients(Message.RecipientType.TO,
                     InternetAddress.parse(adress));
             message.setSubject(subject);
-            message.setText("");
+            message.setText(text);
 
             MimeMultipart multipart = new MimeMultipart("related");
             BodyPart messagePart = new MimeBodyPart();
 
+            messagePart.setContent(text, "text/html; charset = \"UTF-8\"");
+            multipart.addBodyPart(messagePart);
 
+            messagePart = new MimeBodyPart();
+            DataSource dataSource = new FileDataSource(Paths.get(".", "messageForm","logo.png").normalize().toFile());
+            messagePart.setDataHandler(new DataHandler(dataSource));
+            messagePart.setHeader("Content-ID", "<image>");
+            multipart.addBodyPart(messagePart);
+
+            message.setContent(multipart);
             Transport.send(message);
             System.out.println("Done");
 

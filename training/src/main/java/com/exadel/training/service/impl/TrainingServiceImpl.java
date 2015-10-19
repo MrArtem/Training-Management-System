@@ -301,4 +301,9 @@ public class TrainingServiceImpl implements TrainingService {
                     , additionalInfo, lessonModelList, repeatModel);
         }
     }
+
+    @Override
+    public List<Training> getTrainingListByTagList(Integer page, Integer pageSize, Boolean isActual, List<Tag> tagList) {
+        return trainingDAO.getTrainingListByTagList(page, pageSize, isActual, tagList);
+    }
 }
