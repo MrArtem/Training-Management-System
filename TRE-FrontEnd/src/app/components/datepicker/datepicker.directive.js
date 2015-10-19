@@ -3,7 +3,7 @@
 
     angular
         .module('tmsApp')
-        .directive('datepicker', datePicker);
+        .directive('treDatepicker', datePicker);
 
     /** @ngInject */
     function datePicker() {
