@@ -1,6 +1,7 @@
 package com.exadel.training.controller;
 
 import com.exadel.training.controller.model.*;
+import com.exadel.training.controller.model.userModels.UserModel;
 import com.exadel.training.dao.domain.*;
 import com.exadel.training.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,12 +25,10 @@ public class TrainingController {
     private CommentService commentService;
     @Autowired
     private TagService tagService;
-
-    @Autowired
-    private CommentService commentService;
-
     @Autowired
     private UserService userService;
+    @Autowired
+    private ListenerService listenerService;
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     TrainingModel getTrainingMadel(@PathVariable("id") long trainingId) {
@@ -48,10 +47,17 @@ public class TrainingController {
 
     @RequestMapping(value = "/{id}/listener_list")
     List<ListenerModel> getListenerList(@PathVariable("id") long trainingId) {
-        List<Listener> listenerList = trainingService.getListenerListRecord(trainingId);
+        List<User> listenerList = listenerService.getListenerListAccepted(trainingId);
         List<ListenerModel> listenerModelList = new ArrayList<ListenerModel>();
-        for (Listener listener : listenerList) {
-            listenerModelList.add(new ListenerModel(listener));
+        for (User user : listenerList) {
+            ListenerModel listenerModel = new ListenerModel();
+            listenerModel.setUserId(user.getId());
+            listenerModel.setUsername(user.getFirstName() + " " + user.getLastName());
+            listenerModel.setEmail(user.getEmail());
+            if (user.getRole() == User.Role.EX_USER) {
+                listenerModel.setIsExternal(true);
+            }
+            listenerModelList.add(listenerModel);
         }
         return listenerModelList;
     }
@@ -136,7 +142,7 @@ public class TrainingController {
 
     @RequestMapping(value = "/training_list", method = RequestMethod.GET)
     public List<TrainingListModel> getTrainingList(@RequestParam("is_actual") Boolean isActual,
-                                          @RequestParam("page") Integer page,
+                                                   @RequestParam("page") Integer page,
                                                    @RequestParam("tag") List<String> specialtyList) {
         List<Tag> tagList = new ArrayList<Tag>();
         for (String specialty : specialtyList) {
@@ -145,7 +151,7 @@ public class TrainingController {
         List<Training> trainingList;
         trainingList = trainingService.getTrainingListByTagList(page, PAGE_SIZE, isActual, tagList);
         List<TrainingListModel> trainingListModelList = new ArrayList<TrainingListModel>();
-        for(Training training : trainingList) {
+        for (Training training : trainingList) {
             TrainingListModel trainingListModel = new TrainingListModel();
             trainingListModel.setId(training.getId());
             trainingListModel.setTitle(training.getTitle());
@@ -257,5 +263,37 @@ public class TrainingController {
             commentModelList.add(commentModel);
         }
         return commentModelList;
+    }
+
+    @RequestMapping(value = "{id}/addListener", method = RequestMethod.POST)
+    void addListener(@PathVariable("id") long trainingId) {
+        //todo security
+        long userId = 1;
+        listenerService.addListener(trainingId, userId);
+    }
+
+    @RequestMapping(value = "{id}/leave/{userId}", method = RequestMethod.PUT)
+    void leaveListener(@PathVariable("id") long trainingId, @PathVariable("userId") Long userId) {
+        listenerService.leaveListener(trainingId, userId);
+
+    }
+
+    @RequestMapping(value = "{id}/leave", method = RequestMethod.PUT)
+    void leaveListener(@PathVariable("id") long trainingId) {
+        //todo security
+        Long userId = 1L;
+        listenerService.leaveListener(trainingId, userId);
+    }
+
+    @RequestMapping(value = "{id}/add", method = RequestMethod.POST)
+    void addListener(@RequestBody UserModel userModel) {
+        //todo add ex_user
+    }
+
+    @RequestMapping(value = "{id}/set_rating/{rating}")
+    RatingModel setRating(@PathVariable("id") long trainingId, @PathVariable("rating") int rating) {
+        //todo security
+        long userId = 1L;
+        return new RatingModel(trainingService.setRating(trainingId, rating, userId));
     }
 }

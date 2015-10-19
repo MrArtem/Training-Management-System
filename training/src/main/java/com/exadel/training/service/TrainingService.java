@@ -2,7 +2,6 @@ package com.exadel.training.service;
 
 import com.exadel.training.controller.model.LessonModel;
 import com.exadel.training.controller.model.RepeatModel;
-import com.exadel.training.dao.domain.Listener;
 import com.exadel.training.dao.domain.Tag;
 import com.exadel.training.dao.domain.Training;
 
@@ -14,8 +13,6 @@ public interface TrainingService {
     Training getTraining(long id);
 
     boolean canRate(long id);
-
-    List<Listener> getListenerListRecord(long trainingId);
 
     void createTraining(Long coachId
             , String title
@@ -60,5 +57,8 @@ public interface TrainingService {
             , RepeatModel repeatModel
     );
 
-    List<Training> getTrainingListByTagList(Integer page, Integer pageSize,Boolean isActual, List<Tag> tagList);
+    List<Training> getTrainingListByTagList(Integer page, Integer pageSize, Boolean isActual, List<Tag> tagList);
+
+
+    double setRating(long trainingId, int rating, long userId);
 }

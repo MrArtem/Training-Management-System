@@ -59,11 +59,6 @@ public class TrainingServiceImpl implements TrainingService {
         return false;
     }
 
-    @Override
-    public List<Listener> getListenerListRecord(long trainingId) {
-        return listenerDAO.getListenerListRecord(trainingId);
-    }
-
     private ApproveTraining getApproveTraining(String title
             , String description, String shortInfo, Integer language, Integer maxSize, String additionalInfo, boolean isInner) {
         ApproveTraining approveTraining = new ApproveTraining();
@@ -238,22 +233,22 @@ public class TrainingServiceImpl implements TrainingService {
         approveAction.setDate(getTime());
         ApproveTraining approveTraining = approveAction.getApproveTraining();
         Training training = approveAction.getTraining();
-        if( !training.getTitle().equals(title)) {
+        if (!training.getTitle().equals(title)) {
             approveTraining.setTitle(title);
         }
-        if( !training.getDescription().equals(description)) {
+        if (!training.getDescription().equals(description)) {
             approveTraining.setDescription(description);
         }
-        if( !training.getExcerpt().equals(shortInfo)) {
+        if (!training.getExcerpt().equals(shortInfo)) {
             approveTraining.setExcerpt(shortInfo);
         }
-        if( training.getLanguage() != language) {
+        if (training.getLanguage() != language) {
             approveTraining.setLanguage(language);
         }
-        if( training.getMaxSize() != maxSize) {
+        if (training.getMaxSize() != maxSize) {
             approveTraining.setMaxSize(maxSize);
         }
-        if( training.isInner() != isInner) {
+        if (training.isInner() != isInner) {
             approveTraining.setIsInner(isInner);
         }
         approveTraining.setAdditionalInfo(additionalInfo);
@@ -291,12 +286,12 @@ public class TrainingServiceImpl implements TrainingService {
             , Integer language, Integer maxSize, boolean isInner, List<Long> tagIdList
             , String additionalInfo, List<LessonModel> lessonModelList, RepeatModel repeatModel) {
         ApproveAction approveAction = approveActionDAO.getApproveActionByTrainingId(trainingId);
-        if(approveAction == null) {
-            editTrainingNotPrevApprove(trainingDAO.getTrainingById(trainingId),title, description
+        if (approveAction == null) {
+            editTrainingNotPrevApprove(trainingDAO.getTrainingById(trainingId), title, description
                     , shortInfo, language, maxSize, isInner, tagIdList
                     , additionalInfo, lessonModelList, repeatModel);
         } else {
-            editTrainingWithPrevApprove(approveAction,title, description
+            editTrainingWithPrevApprove(approveAction, title, description
                     , shortInfo, language, maxSize, isInner, tagIdList
                     , additionalInfo, lessonModelList, repeatModel);
         }
@@ -305,5 +300,22 @@ public class TrainingServiceImpl implements TrainingService {
     @Override
     public List<Training> getTrainingListByTagList(Integer page, Integer pageSize, Boolean isActual, List<Tag> tagList) {
         return trainingDAO.getTrainingListByTagList(page, pageSize, isActual, tagList);
+    }
+
+    @Override
+    public double setRating(long trainingId, int rating, long userId) {
+        Listener listener = listenerDAO.getListenerByTrainingUser(trainingId, userId);
+        if (listener != null && listener.isCanRate()) {
+            Training training = trainingDAO.getTrainingById(trainingId);
+            int sumRating = training.getSumRating() + rating;
+            training.setSumRating(sumRating);
+            int count = training.getCountListenerRating() + 1;
+            training.setCountListenerRating(count);
+            trainingDAO.changeTraining(training);
+            listener.setCanRate(false);
+            listenerDAO.changeListener(listener);
+            return (double) sumRating / count;
+        }
+        return -1;
     }
 }
