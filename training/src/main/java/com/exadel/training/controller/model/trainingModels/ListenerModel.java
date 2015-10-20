@@ -1,4 +1,4 @@
-package com.exadel.training.controller.model;
+package com.exadel.training.controller.model.trainingModels;
 
 
 import com.exadel.training.dao.domain.Listener;
@@ -57,7 +57,10 @@ public class ListenerModel {
     public ListenerModel(Listener listener) {
         User user = listener.getUser();
         name = user.getFirstName() + " " + user.getLastName();
-        //todo add isInternal
+        isInternal = true;
+        if(user.getRole() == User.Role.EX_USER) {
+            isInternal = false;
+        }
         participantId = listener.getId();
         if (listener.getState() == Listener.State.WAITING) {
             isWaiting = true;

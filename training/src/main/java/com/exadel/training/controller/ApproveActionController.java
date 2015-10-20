@@ -1,6 +1,6 @@
 package com.exadel.training.controller;
 
-import com.exadel.training.controller.model.ApproveActionModel;
+import com.exadel.training.controller.model.trainingModels.ApproveActionModel;
 import com.exadel.training.dao.domain.ApproveAction;
 import com.exadel.training.dao.domain.Training;
 import com.exadel.training.dao.domain.User;

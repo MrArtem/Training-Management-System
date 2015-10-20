@@ -14,6 +14,9 @@ import java.util.List;
 @Table
 @Indexed
 public class Training {
+    public enum State {
+        CREATE, NONE, REMOVE
+    }
 
     @Id
     @GeneratedValue
@@ -43,7 +46,12 @@ public class Training {
 
     private int countListenerRating;
 
-    private boolean isCanceled;
+    private State state;
+
+    private boolean isRepeat;
+
+    @OneToOne
+    private ApproveAction approveAction;
 
     @IndexedEmbedded
     @ManyToOne(cascade = CascadeType.ALL)
@@ -65,6 +73,20 @@ public class Training {
     private List<Feedback> feedbackList;
 
     public Training() {
+    }
+
+    public Training(String title, String description, int language, int maxSize, boolean isInner, String excerpt, boolean isRepeat, User coach) {
+        this.title = title;
+        this.description = description;
+        this.language = language;
+        this.maxSize = maxSize;
+        this.isInner = isInner;
+        this.excerpt = excerpt;
+        this.sumRating = 0;
+        this.countListenerRating = 0;
+        this.state = State.CREATE;
+        this.isRepeat = isRepeat;
+        this.coach = coach;
     }
 
     public long getId() {
@@ -172,12 +194,12 @@ public class Training {
         this.tagList = tagList;
     }
 
-    public boolean isCanceled() {
-        return isCanceled;
+    public State getState() {
+        return state;
     }
 
-    public void setIsCanceled(boolean isCanceled) {
-        this.isCanceled = isCanceled;
+    public void setState(State state) {
+        this.state = state;
     }
 
     public int getMaxSize() {
@@ -194,5 +216,21 @@ public class Training {
 
     public void setFeedbackList(List<Feedback> feedbackList) {
         this.feedbackList = feedbackList;
+    }
+
+    public boolean isRepeat() {
+        return isRepeat;
+    }
+
+    public void setIsRepeat(boolean isRepeat) {
+        this.isRepeat = isRepeat;
+    }
+
+    public ApproveAction getApproveAction() {
+        return approveAction;
+    }
+
+    public void setApproveAction(ApproveAction approveAction) {
+        this.approveAction = approveAction;
     }
 }

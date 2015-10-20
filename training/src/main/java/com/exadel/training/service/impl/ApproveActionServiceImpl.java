@@ -1,6 +1,5 @@
 package com.exadel.training.service.impl;
 
-import com.exadel.training.controller.model.ApproveActionModel;
 import com.exadel.training.dao.ApproveActionDAO;
 import com.exadel.training.dao.domain.ApproveAction;
 import com.exadel.training.service.ApproveActionService;
@@ -8,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
