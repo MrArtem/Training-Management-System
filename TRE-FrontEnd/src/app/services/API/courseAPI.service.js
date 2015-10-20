@@ -5,7 +5,7 @@
         .factory('courseAPI', courseAPI);
 
     /* @ngInject */
-    function courseAPI($state, urlProvider) {
+    function courseAPI($state, $http, urlProvider) {
         var courseAPI = {
             addLesson: addLesson,
             cancelCreate: cancelCreate,
@@ -42,8 +42,10 @@
 
         }
 
-        function getTimetable() {
-
+        function getTimetable(courseId) {
+            return $http.get(urlProvider.getTimetable(courseId)).then(function (result) {
+                return result.data;
+            });
         }
 
         //////////
@@ -174,16 +176,31 @@
 
         //////////
 
-        function addLesson(newdDate, newPlace) {
-
+        function addLesson(courseId, newDate, newPlace) {
+            var lessonInfo = {
+                date: newDate,
+                place: newPlace
+            };
+            return $http.post(urlProvider.addLesson(courseId), lessonInfo).then(function(result) {
+                return result.data;
+            });
         }
 
-        function editLesson(lessonId, newDate, newPlace) {
-
+        function editLesson(courseId, lessonId, newDate, newPlace) {
+            var lessonInfo = {
+                id: lessonId,
+                newDate: newDate,
+                newPlace: newPlace
+            };
+            return $http.post(urlProvider.editLesson(courseId), lessonInfo).then(function (result) {
+                return result.data;
+            });
         }
 
-        function deleteLesson(lessonId) {
-
+        function deleteLesson(courseId, lessonId) {
+            return $http.post(urlProvider.deleteLesson(courseId, lessonId)).then(function (result) {
+                return result.data;
+            });
         }
 
         //////////

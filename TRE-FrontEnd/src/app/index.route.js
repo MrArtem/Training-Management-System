@@ -39,6 +39,9 @@
                 templateUrl: 'app/page.courseinfo/courseinfo.html',
                 controller: 'CourseInfoController',
                 controllerAs: 'courseinfo',
+                params: {
+                  courseId: null
+                },
                 auth: true,
                 accessRights: 2
             }).state('login', {

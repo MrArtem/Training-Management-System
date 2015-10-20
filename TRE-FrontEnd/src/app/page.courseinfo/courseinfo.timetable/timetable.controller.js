@@ -6,38 +6,44 @@
         .controller('TimetableController', TimetableController);
 
     /** @ngInject */
-    function TimetableController($scope, $modal, courseAPI) {
+    function TimetableController($scope, $stateParams, courseAPI) {
         var vm = this;
+
         vm.addLesson = addLesson;
         vm.deleteLesson = deleteLesson;
         vm.editLesson = editLesson;
+        vm.getLessonId = getLessonId;
         vm.getTimetable = getTimetable;
 
         vm.getTimetable();
 
-        function addLesson(newDate, newPlace) {
-            //courseAPI.addLesson(newDate, newPlace).then(function () {
-            //    vm.getTimetable();
-            //});
+        function addLesson() {
+            courseAPI.addLesson($stateParams.courseId, vm.newDate, vm.newPlace).then(function (data) {
+                $scope.$parent.courseInfo.lessonList = angular.copy(data);
+            });
         }
 
-        function deleteLesson(lessonId) {
-            //courseAPI.deleteLesson(lessonId).then(function() {      //maybe change without calling server?
-            //    vm.getTimetable();
-            //});
+        function deleteLesson() {
+            courseAPI.deleteLesson($stateParams.courseId, vm.editedLessonId).then(function() {      //maybe change without calling server?
+                $scope.$parent.courseInfo.lessonList = angular.copy(data);
+            });
         }
 
-        function editLesson(lessonId, newDate, newPlace) {
-            //courseAPI.editLesson(lessonId, newDate, newPlace).then(function(data) {     //maybe change without calling server?
-            //    vm.getTimetable();
-            //});
+        function editLesson() {
+            courseAPI.editLesson($stateParams.courseId, vm.editedLessonId, vm.editedDate, vm.editedPlace).then(function (data) {     //maybe change without calling server?
+                $scope.$parent.courseInfo.lessonList = angular.copy(data);
+            });
+        }
+
+        function getLessonId(index) {
+            vm.editedLessonId = $scope.$parent.courseInfo.lessonList[index].id;
         }
 
         function getTimetable() {
-            //courseAPI.getTimetable().then(function (data) {
-            //        $scope.$parent.saveTimetable(data);
-            //    }
-            //);
+            courseAPI.getTimetable($stateParams.courseId).then(function (data) {
+                    $scope.$parent.saveTimetable(data);
+                }
+            );
         }
     }
 

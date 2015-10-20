@@ -2,6 +2,9 @@
     <div class="row">
         <div class="small-12 medium-8 large-8 column">
             <h5>Timetable</h5>
+            <div class="row">
+                <a class="button round tiny" data-reveal-id="addLessonModal">Add date</a>
+            </div>
 
             <div class="scrollable-div">
 
@@ -15,11 +18,11 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr ng-repeat="i in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]">
-                        <td>№ {{i}}</td>
-                        <td>Some date</td>
-                        <td>Some place</td>
-                        <td><a data-reveal-id="editLessonModal">Edit</a></td>
+                    <tr ng-repeat="lesson in courseInfo.lessonList">
+                        <td>{{$index + 1}}</td>
+                        <td>{{lesson.date}}</td>
+                        <td>{{lesson.place}}</td>
+                        <td><a data-reveal-id="editLessonModal" ng-click="timetable.getLessonId($index)">Edit</a></td>
                     </tr>
                     </tbody>
                 </table>
@@ -31,9 +34,9 @@
     </div>
 </div>
 
-<div id="editLessonModal" class="reveal-modal tiny" data-reveal aria-labelledby="modalTitle" aria-hidden="true"
+<div id=addLessonModal" class="reveal-modal tiny" data-reveal aria-labelledby="addTitle" aria-hidden="true"
      role="dialog">
-    <h2 id="modalTitle">Edit lesson</h2>
+    <h2 id="addTitle">Add lesson</h2>
 
     <div class="row">
         <div class="small-12 medium-6 column">
@@ -45,11 +48,29 @@
             <input type='text' ng-model="timetable.newPlace" tre-datepicker="">
         </div>
     </div>
-    <!--<div class="row">-->
-        <!--<div class="small-8 medium-4 large-4 column">-->
-            <!--<label>New place</label>-->
-            <!--<input type='text' ng-model="timetable.newPlace" tre-datepicker="">-->
-        <!--</div>-->
-    <!--</div>-->
+    <div class="row">
+        <a href="#" class="right button round tiny" ng-click="timetable.addLesson()">OK</a>
+    </div>
+    <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+</div>
+
+<div id="editLessonModal" class="reveal-modal tiny" data-reveal aria-labelledby="modalTitle" aria-hidden="true"
+     role="dialog">
+    <h2 id="modalTitle">Edit lesson</h2>
+
+    <div class="row">
+        <div class="small-12 medium-6 column">
+            <label>New date</label>
+            <input type='text' ng-model="timetable.editedDate" tre-datepicker="">
+        </div>
+        <div class="small-12 medium-6 column">
+            <label>New place</label>
+            <input type='text' ng-model="timetable.editedPlace" tre-datepicker="">
+        </div>
+    </div>
+    <div class="row">
+        <a href="#" class="right button round tiny close-reveal-modal" ng-click="timetable.deleteLesson()">Delete lesson</a>
+        <a href="#" class="right button round tiny close-reveal-modal" ng-click="timetable.editLesson()">OK</a>
+    </div>
     <a class="close-reveal-modal" aria-label="Close">&#215;</a>
 </div>

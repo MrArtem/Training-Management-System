@@ -7,11 +7,14 @@
     /* @ngInject */
     function UrlProvider() {
         var urlProvider = {
+            addLesson: addLesson,
             cancelCreate: cancelCreate,
             cancelEdit: cancelEdit,
             confirm: confirm,
             createCourse: createCourse,
+            deleteLesson: deleteLesson,
             editCourse: editCourse,
+            editLesson: editLesson,
             getApproveList: getApproveList,
             getCoursesForUser: getCoursesForUser,
             getCurrentCoursesForUser: getCurrentCoursesForUser,
@@ -19,11 +22,16 @@
             getFeedbacksOnUser: getFeedbacksOnUser,
             getPastCoursesForUser: getPastCoursesForUser,
             getProfileInfo: getProfileInfo,
+            getTimetable: getTimetable,
             getWaitingCoursesForUser: getWaitingCoursesForUser,
             login: login,
             logout: logout
         };
         return urlProvider;
+    }
+
+    function addLesson(courseId) {
+        return '/training/' + courseId + '/add_lesson';
     }
 
     function cancelCreate(trainingId) {
@@ -42,8 +50,16 @@
         return '/training/create';
     }
 
+    function deleteLesson(courseId, lessonId) {
+        return '/training/' + courseId + '/delete_lesson/' + lessonId;
+    }
+
     function editCourse(trainingId) {
         return '/training/edit/' + trainingId;
+    }
+
+    function editLesson(trainingId) {
+        return '/training/' + trainingId + '/edit_lesson';
     }
 
     function getApproveList() {
@@ -71,6 +87,10 @@
 
     function getProfileInfo(userId) {
         //return;
+    }
+
+    function getTimetable(courseId) {
+        return '/training/' + courseId + '/get_lessons';
     }
 
     function getWaitingCoursesForUser(userId) {
