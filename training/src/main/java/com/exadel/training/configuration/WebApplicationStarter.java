@@ -6,7 +6,6 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.web.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -17,7 +16,6 @@ import javax.persistence.EntityManagerFactory;
 @Configuration
 @EnableAutoConfiguration
 @EnableTransactionManagement
-@ComponentScan({"com.exadel.training.dao", "com.exadel.training.controller"})
 @Import(WebSecurityConfiguration.class)
 public class WebApplicationStarter extends SpringBootServletInitializer {
     @Override
@@ -27,7 +25,7 @@ public class WebApplicationStarter extends SpringBootServletInitializer {
 
     @Bean
     public SessionFactory sessionFactory(EntityManagerFactory hemf) {
-        return hemf.unwrap(SessionFactory.class) ;
+        return hemf.unwrap(SessionFactory.class);
     }
 
     @Bean
