@@ -31,35 +31,35 @@
     }
 
     function addLesson(courseId) {
-        return '/training/' + courseId + '/add_lesson';
+        return '/api/training/' + courseId + '/add_lesson';
     }
 
     function cancelCreate(trainingId) {
-        return '/training/cancel_create/' + trainingId;
+        return '/api/training/cancel_create/' + trainingId;
     }
 
     function cancelEdit(trainingId) {
-        return '/training/cancel_edit/' + trainingId;
+        return '/api/training/cancel_edit/' + trainingId;
     }
 
     function confirm(trainingId) {
-        return '/training/confirm/' + trainingId;
+        return '/api/training/confirm/' + trainingId;
     }
 
     function createCourse() {
-        return '/training/create';
+        return '/api/training/create';
     }
 
     function deleteLesson(courseId, lessonId) {
-        return '/training/' + courseId + '/delete_lesson/' + lessonId;
+        return '/api/training/' + courseId + '/delete_lesson/' + lessonId;
     }
 
     function editCourse(trainingId) {
-        return '/training/edit/' + trainingId;
+        return '/api/training/edit/' + trainingId;
     }
 
     function editLesson(trainingId) {
-        return '/training/' + trainingId + '/edit_lesson';
+        return '/api/training/' + trainingId + '/edit_lesson';
     }
 
     function getApproveList() {
@@ -74,7 +74,7 @@
     }
 
     function getEditedCourse(trainingId) {
-        return '/training/get_edited_course/' + trainingId;
+        return '/api/training/get_edited_course/' + trainingId;
     }
 
     function getFeedbacksOnUser(userId) {
@@ -90,7 +90,7 @@
     }
 
     function getTimetable(courseId) {
-        return '/training/' + courseId + '/get_lessons';
+        return '/api/training/' + courseId + '/get_lessons';
     }
 
     function getWaitingCoursesForUser(userId) {

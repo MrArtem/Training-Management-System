@@ -88,6 +88,10 @@ public class TrainingServiceImpl implements TrainingService {
         return tagList;
     }
 
+    public static <T> Iterable<T> emptyIfNull(Iterable<T> iterable) {
+        return iterable == null ? Collections.<T>emptyList() : iterable;
+    }
+
     private List<ApproveLesson> addLessonListNotRepeating(Training training
             , List<LessonModel> lessonModelList, boolean isConfirmed, boolean createLesson) {
         List<ApproveLesson> approveLessonList = new ArrayList<ApproveLesson>();
@@ -99,7 +103,7 @@ public class TrainingServiceImpl implements TrainingService {
                 lesson.setDate(lessonModel.getDate());
                 lesson.setPlace(lessonModel.getPlace());
                 lessonDAO.addLesson(lesson);
-                for (Listener listener : training.getListenerList()) {
+                for (Listener listener : emptyIfNull( training.getListenerList())) {
                     Attendance attendance = new Attendance();
                     attendance.setLesson(lesson);
                     attendance.setUser(listener.getUser());
@@ -135,7 +139,7 @@ public class TrainingServiceImpl implements TrainingService {
                     lesson.setTraining(training);
                     lesson.setDate(dateLesson);
                     lessonDAO.addLesson(lesson);
-                    for (Listener listener : training.getListenerList()) {
+                    for (Listener listener : emptyIfNull(training.getListenerList())) {
                         Attendance attendance = new Attendance();
                         attendance.setLesson(lesson);
                         attendance.setUser(listener.getUser());

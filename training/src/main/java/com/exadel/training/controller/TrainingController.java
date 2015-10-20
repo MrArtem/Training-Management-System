@@ -70,6 +70,10 @@ public class TrainingController {
                 , addingTrainingModel.getRepeatModel());
 
     }
+    @RequestMapping(value = "/a", method = RequestMethod.GET)
+    AddingTrainingModel add() {
+        return new AddingTrainingModel();
+    }
 
     @RequestMapping(value = "/confirm/{id}", method = RequestMethod.POST)
     void confirmAddTraining(@PathVariable("id") long actionId, @RequestBody AddingTrainingModel addingTrainingModel) {

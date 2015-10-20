@@ -6,7 +6,7 @@
         .controller('ManageCourseController', ManageCourseController);
 
     /** @ngInject */
-    function ManageCourseController($scope, $stateParams, courseAPI) {
+    function ManageCourseController($scope, $stateParams, courseAPI, authService) {
 
         var vm = this;
         vm.courseInfo = {};
@@ -36,6 +36,7 @@
         };
 
         function createCourse() {
+            console.log('course creating');
             if($scope.courseInfo.isRepeating) {
                 for(var i = 0; i < 7; i++) {
                     var date = new Date();
@@ -45,7 +46,7 @@
                     date.setMinutes($scope.tempDates[i].minutes);
                     fictiveDate.setMinutes(0);
                     var time = date.getTime() - fictiveDate.getTime();
-                    $scope.courseInfo.repeatModel.lessonList.push({time: time, place: $scope.tempDates[i].place});
+                    $scope.courseInfo.repeatModel.lessonList.push({date: time, place: $scope.tempDates[i].place});
                     $scope.courseInfo.repeatModel.startDate = (new Date($scope.temp.startDate)).getTime();
                     var endDate = new Date($scope.temp.endDate);
                     endDate.setHours(23);
@@ -53,10 +54,13 @@
                     endDate.setSeconds(59);
                     $scope.courseInfo.repeatModel.endDate = endDate;
 
-                    courseAPI.createCourse(); //some then with alert?
-
                 }
             }
+            $scope.courseInfo.language = parseInt($scope.courseInfo.language);
+            $scope.courseInfo.coachId = authService.getUser().userId;
+            courseAPI.createCourse($scope.courseInfo).then(function(data) {
+                console.log("request success")
+            }); //some then with alert?
 
             console.log($scope.courseInfo);
         }

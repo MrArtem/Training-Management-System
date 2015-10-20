@@ -51,14 +51,11 @@
         //////////
 
         function createCourse(courseData) {
-            var fd = new FormData();
-            fd.append('courseInfo', JSON.stringify(courseData));
-
-            return $http.post(urlProvider.createCourse(), fd, {
+            console.log(courseData);
+            return $http.post(urlProvider.createCourse(), courseData, {
                 headers: {
-                    'Content-Type': undefined
-                },
-                transformRequest: angular.identity
+                    'Content-Type': 'application/json'
+                }
             }).then(function (results) {
                 console.log('Course created successfully!');
                 $state.transitionTo('mycourses');

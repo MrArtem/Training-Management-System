@@ -23,7 +23,9 @@
         }
 
         function addDate() {
-            $scope.courseInfo.lessonList.push((new Date(vm.dateTime.date + " " + vm.dateTime.hours + ":" + vm.dateTime.minutes)).getTime());
+            $scope.courseInfo.lessonList.push({
+                date: (new Date(vm.dateTime.date + " " + vm.dateTime.hours + ":" + vm.dateTime.minutes)).getTime()
+            });
         }
 
         function changeTab() {
