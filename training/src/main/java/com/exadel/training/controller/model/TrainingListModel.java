@@ -1,6 +1,8 @@
 package com.exadel.training.controller.model;
 
 import com.exadel.training.dao.domain.Tag;
+import com.exadel.training.dao.domain.Training;
+import com.exadel.training.dao.domain.User;
 
 import java.util.List;
 
@@ -25,6 +27,19 @@ public class TrainingListModel {
     private Boolean isCoach;
 
     public TrainingListModel() {
+    }
+
+    public TrainingListModel(Training training) {
+        this.id = training.getId();
+        this.title = training.getTitle();
+        this.excerpt = training.getExcerpt();
+        this.coachName = training.getCoach().getLastName() + " " + training.getCoach().getFirstName();
+        this.coachId = training.getCoach().getId();
+        this.tagList = training.getTagList();
+
+        //todo get user
+        User user = new User();
+        this.isCoach = user.getId() == training.getCoach().getId() ? true : false;
     }
 
     public Long getId() {

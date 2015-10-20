@@ -16,4 +16,6 @@ public interface UserService {
 
     List<Training> getListenerTrainingListOfUser(long id);
     List<Training> getCoachTrainingListOfUser(long id);
+    List<Training> visitedTrainings (long idUser);
+    List<Training> actualTrainings(long idUser);
 }
