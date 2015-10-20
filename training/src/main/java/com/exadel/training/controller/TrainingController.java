@@ -15,7 +15,7 @@ import java.util.Date;
 import java.util.List;
 
 @RestController
-@RequestMapping("/training")
+@RequestMapping("/api/training")
 public class TrainingController {
     @Autowired
     private TrainingService trainingService;

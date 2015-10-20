@@ -99,6 +99,12 @@ public class TrainingServiceImpl implements TrainingService {
                 lesson.setDate(lessonModel.getDate());
                 lesson.setPlace(lessonModel.getPlace());
                 lessonDAO.addLesson(lesson);
+                for (Listener listener : training.getListenerList()) {
+                    Attendance attendance = new Attendance();
+                    attendance.setLesson(lesson);
+                    attendance.setUser(listener.getUser());
+                    //todo AttendanceDAO
+                }
             }
             if (!isConfirmed) {
                 ApproveLesson approveLesson = new ApproveLesson();
@@ -129,6 +135,12 @@ public class TrainingServiceImpl implements TrainingService {
                     lesson.setTraining(training);
                     lesson.setDate(dateLesson);
                     lessonDAO.addLesson(lesson);
+                    for (Listener listener : training.getListenerList()) {
+                        Attendance attendance = new Attendance();
+                        attendance.setLesson(lesson);
+                        attendance.setUser(listener.getUser());
+                        //todo AttendanceDAO
+                    }
                 }
                 if (!isConfirmed) {
                     ApproveLesson approveLesson = new ApproveLesson();
