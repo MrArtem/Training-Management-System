@@ -17,6 +17,10 @@ public class Lesson {
     private String place;
 
     @JsonIgnore
+    @OneToOne
+    private ApproveLesson approveLesson;
+
+    @JsonIgnore
     @ManyToOne(cascade = CascadeType.ALL)
     private Training training;
 
@@ -65,5 +69,13 @@ public class Lesson {
 
     public void setAttendanceList(List<Attendance> attendanceList) {
         this.attendanceList = attendanceList;
+    }
+
+    public ApproveLesson getApproveLesson() {
+        return approveLesson;
+    }
+
+    public void setApproveLesson(ApproveLesson approveLesson) {
+        this.approveLesson = approveLesson;
     }
 }

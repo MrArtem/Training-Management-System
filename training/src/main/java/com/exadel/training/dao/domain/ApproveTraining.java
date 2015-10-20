@@ -1,6 +1,7 @@
 package com.exadel.training.dao.domain;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table
@@ -10,8 +11,9 @@ public class ApproveTraining {
     @GeneratedValue
     private Long id;
 
-    @OneToOne
-    private Training training;
+    @OneToMany
+    private List<Tag> tagList;
+
 
     private String title;
 
@@ -26,21 +28,13 @@ public class ApproveTraining {
 
     private Integer maxSize;
 
-    private Boolean isCanceled;
+    private String additionalInfo;
 
     public ApproveTraining() {
     }
 
     public Long getId() {
         return id;
-    }
-
-    public Training getTraining() {
-        return training;
-    }
-
-    public void setTraining(Training training) {
-        this.training = training;
     }
 
     public String getTitle() {
@@ -91,11 +85,19 @@ public class ApproveTraining {
         this.maxSize = maxSize;
     }
 
-    public Boolean getIsCanceled() {
-        return isCanceled;
+    public String getAdditionalInfo() {
+        return additionalInfo;
     }
 
-    public void setIsCanceled(Boolean isCanceled) {
-        this.isCanceled = isCanceled;
+    public void setAdditionalInfo(String additionalInfo) {
+        this.additionalInfo = additionalInfo;
+    }
+
+    public List<Tag> getTagList() {
+        return tagList;
+    }
+
+    public void setTagList(List<Tag> tagList) {
+        this.tagList = tagList;
     }
 }

@@ -24,11 +24,17 @@ public class Comment {
 
     private Integer effective;
 
+    private Boolean creativity;
+
     private Boolean recommendation;
 
     private String other;
 
     private Boolean isDeleted;
+
+    private Boolean isPositive;
+
+    private Long date;
 
     public Comment() {
         isDeleted = false;
@@ -108,5 +114,29 @@ public class Comment {
 
     public void setIsDeleted(Boolean isDeleted) {
         this.isDeleted = isDeleted;
+    }
+
+    public Boolean getIsPositive() {
+        return isPositive;
+    }
+
+    public void setIsPositive(Boolean isPositive) {
+        this.isPositive = isPositive;
+    }
+
+    public Long getDate() {
+        return date;
+    }
+
+    public void setDate(Long date) {
+        this.date = date;
+    }
+
+    public Boolean getCreativity() {
+        return creativity;
+    }
+
+    public void setCreativity(Boolean creativity) {
+        this.creativity = creativity;
     }
 }

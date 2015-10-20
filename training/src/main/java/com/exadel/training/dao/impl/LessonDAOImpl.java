@@ -16,7 +16,7 @@ import java.util.List;
  */
 @Repository
 @Transactional
-public class LessonDAOImpl implements LessonDAO{
+public class LessonDAOImpl implements LessonDAO {
     @Autowired
     SessionFactory sessionFactory;
 
@@ -31,13 +31,18 @@ public class LessonDAOImpl implements LessonDAO{
     }
 
     @Override
+    public void removeLesson(Lesson lesson) {
+        sessionFactory.getCurrentSession().delete(lesson);
+    }
+
+    @Override
     public Lesson getLessonById(long id) {
         return sessionFactory.getCurrentSession().load(Lesson.class, id);
     }
 
     @Override
     public List<Lesson> getLessonListByTraining(long trainingId) {
-        Session session =  sessionFactory.getCurrentSession();
+        Session session = sessionFactory.getCurrentSession();
         Training training = session.load(Training.class, trainingId);
         return training.getLessonList();
     }
@@ -46,17 +51,17 @@ public class LessonDAOImpl implements LessonDAO{
     @SuppressWarnings("unchecked")
     public Long getStartDateByTraining(long trainingId) {
         Session session = sessionFactory.getCurrentSession();
-        Training training = session.load(Training.class,trainingId);
-        return (Long)session.createQuery("select min(les.date) from Lesson les where les.training =:training")
-                .setParameter("training",training).uniqueResult();
+        Training training = session.load(Training.class, trainingId);
+        return (Long) session.createQuery("select min(les.date) from Lesson les where les.training =:training")
+                .setParameter("training", training).uniqueResult();
     }
 
     @Override
     @SuppressWarnings("unchecked")
     public Long getEndDateByTraining(long trainingId) {
         Session session = sessionFactory.getCurrentSession();
-        Training training = session.load(Training.class,trainingId);
-        return (Long)session.createQuery("select max(les.date) from Lesson les where les.training =:training")
-                .setParameter("training",training).uniqueResult();
+        Training training = session.load(Training.class, trainingId);
+        return (Long) session.createQuery("select max(les.date) from Lesson les where les.training =:training")
+                .setParameter("training", training).uniqueResult();
     }
 }
