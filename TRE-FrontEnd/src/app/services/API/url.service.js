@@ -7,31 +7,31 @@
     /* @ngInject */
     function UrlProvider() {
         var urlProvider = {
-            addLesson: addLesson,
+            addParticipant: addParticipant,
             cancelCreate: cancelCreate,
             cancelEdit: cancelEdit,
             confirm: confirm,
             createCourse: createCourse,
-            deleteLesson: deleteLesson,
             editCourse: editCourse,
-            editLesson: editLesson,
             getApproveList: getApproveList,
             getCoursesForUser: getCoursesForUser,
             getCurrentCoursesForUser: getCurrentCoursesForUser,
             getEditedCourse: getEditedCourse,
             getFeedbacksOnUser: getFeedbacksOnUser,
+            getParticipants: getParticipants,
             getPastCoursesForUser: getPastCoursesForUser,
             getProfileInfo: getProfileInfo,
             getTimetable: getTimetable,
             getWaitingCoursesForUser: getWaitingCoursesForUser,
             login: login,
-            logout: logout
+            logout: logout,
+            manageLesson: manageLesson
         };
         return urlProvider;
     }
 
-    function addLesson(courseId) {
-        return '/api/training/' + courseId + '/add_lesson';
+    function addParticipant(courseId) {
+        return '/api/training/' + courseId + '/add_listener';
     }
 
     function cancelCreate(trainingId) {
@@ -50,16 +50,9 @@
         return '/api/training/create';
     }
 
-    function deleteLesson(courseId, lessonId) {
-        return '/api/training/' + courseId + '/delete_lesson/' + lessonId;
-    }
 
     function editCourse(trainingId) {
         return '/api/training/edit/' + trainingId;
-    }
-
-    function editLesson(trainingId) {
-        return '/api/training/' + trainingId + '/edit_lesson';
     }
 
     function getApproveList() {
@@ -79,6 +72,10 @@
 
     function getFeedbacksOnUser(userId) {
         //return;
+    }
+
+    function getParticipants(courseId) {
+        return '/api/training/' + courseId + '/get_listeners';
     }
 
     function getPastCoursesForUser(userId) {
@@ -103,5 +100,9 @@
 
     function logout() {
         return '/api/logout';
+    }
+
+    function manageLesson(courseId) {
+        return '/api/training/' + courseId + '/lessons';
     }
 })();

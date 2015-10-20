@@ -4,9 +4,11 @@
  */
 $topbar-bg-color: #000;
 
+
 $fa-font-path: "../../bower_components/font-awesome/fonts";
 @import '../../bower_components/foundation/scss/foundation/_functions';
 @import '../../src/app/index.customize';
+
 
 /**
  *  The import of foundation is made manually because there is still no links of the

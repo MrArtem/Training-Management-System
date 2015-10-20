@@ -15,23 +15,23 @@
         vm.getLessonId = getLessonId;
         vm.getTimetable = getTimetable;
 
-        vm.getTimetable();
+        //vm.getTimetable();
 
         function addLesson() {
             courseAPI.addLesson($stateParams.courseId, vm.newDate, vm.newPlace).then(function (data) {
-                $scope.$parent.courseInfo.lessonList = angular.copy(data);
+                console.log('lesson added successfully');
             });
         }
 
         function deleteLesson() {
             courseAPI.deleteLesson($stateParams.courseId, vm.editedLessonId).then(function() {      //maybe change without calling server?
-                $scope.$parent.courseInfo.lessonList = angular.copy(data);
+                console.log('lesson deleted successfully');
             });
         }
 
         function editLesson() {
             courseAPI.editLesson($stateParams.courseId, vm.editedLessonId, vm.editedDate, vm.editedPlace).then(function (data) {     //maybe change without calling server?
-                $scope.$parent.courseInfo.lessonList = angular.copy(data);
+                console.log('lesson edited successfully');
             });
         }
 

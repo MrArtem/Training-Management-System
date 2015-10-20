@@ -3,6 +3,9 @@
         <div class="small-12 medium-8 large-8 column">
 
             <h5>Participants</h5>
+            <div class="row">
+                <a class="button round tiny" data-reveal-id="addParticipantModal">Add participant</a>
+            </div>
 
             <div class="scrollable-div">
 
@@ -28,4 +31,39 @@
 
         </div>
     </div>
+</div>
+
+<div id="addParticipantModal" class="reveal-modal tiny" data-reveal aria-labelledby="participantTitle" aria-hidden="true"
+     role="dialog">
+    <h2 id="participantTitle">Add participant</h2>
+
+    <div class="row">
+        <div class="small-12 medium-6 column">
+            <label>First Name:</label>
+            <input type='text' ng-model="participants.participantInfo.firstName">
+        </div>
+    </div>
+    <div class="row">
+        <div class="small-12 medium-6 column">
+            <label>Last Name:</label>
+            <input type='text' ng-model="participants.participantInfo.lastName">
+        </div>
+    </div>
+    <div class="row">
+        <div class="small-12 medium-6 column">
+            <label>Email:</label>
+            <input type='email' ng-model="participants.participantInfo.email">
+        </div>
+    </div>
+    <div class="row">
+        <div class="small-12 medium-6 column">
+            <label>Phone number:</label>
+            <input type='phone' ng-model="participants.participantInfo.phoneNumber">
+        </div>
+    </div>
+
+    <div class="row">
+        <a href="#" class="right button round tiny" close-modal="addParticipantModal" ng-click="participants.addParticipant()">OK</a>
+    </div>
+    <a class="close-reveal-modal" aria-label="Close">&#215;</a>
 </div>

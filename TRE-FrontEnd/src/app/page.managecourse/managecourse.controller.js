@@ -52,7 +52,7 @@
                     endDate.setHours(23);
                     endDate.setMinutes(59);
                     endDate.setSeconds(59);
-                    $scope.courseInfo.repeatModel.endDate = endDate;
+                    $scope.courseInfo.repeatModel.endDate = endDate.getTime();
 
                 }
             }
