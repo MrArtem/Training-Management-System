@@ -2,10 +2,7 @@ package com.exadel.training.service;
 
 import com.exadel.training.controller.model.trainingModels.LessonModel;
 import com.exadel.training.controller.model.trainingModels.RepeatModel;
-import com.exadel.training.dao.domain.ApproveAction;
-import com.exadel.training.dao.domain.ApproveLesson;
-import com.exadel.training.dao.domain.Listener;
-import com.exadel.training.dao.domain.Training;
+import com.exadel.training.dao.domain.*;
 
 import java.util.List;
 

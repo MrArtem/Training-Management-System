@@ -1,6 +1,7 @@
 package com.exadel.training.controller;
 
 import com.exadel.training.controller.model.CommentModel;
+import com.exadel.training.controller.model.TrainingListModel;
 import com.exadel.training.controller.model.trainingModels.*;
 import com.exadel.training.dao.domain.*;
 import com.exadel.training.service.*;
@@ -25,10 +26,6 @@ public class TrainingController {
     private CommentService commentService;
     @Autowired
     private TagService tagService;
-
-    @Autowired
-    private CommentService commentService;
-
     @Autowired
     private UserService userService;
 
