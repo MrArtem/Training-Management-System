@@ -142,7 +142,7 @@ public class TrainingController {
             trainingListModel.setTagList(training.getTagList());
             //todo get user here
             User user = new User();
-            trainingListModel.setIsCoach(userService.isCoach(user.getId(), training.getId()));
+            trainingListModel.setIsCoach( user.getId() == training.getCoach().getId() ? true : false );
             //todo get next date and place
             trainingListModelList.add(trainingListModel);
         }

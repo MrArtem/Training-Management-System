@@ -12,11 +12,11 @@ public interface UserDAO {
     void save(User user);
     void update(User user);
 
-    Boolean isCoachOfCurrentUser (long idCurrentUser, long idCoach);
+    Boolean isCoachOfCurrentUser(long idCurrentUser, long idCoach);
 
-    User getUserByID (long id);
+    User getUserByID(long id);
 
-    List<Training> visitedTrainings (long idUser);
-    List<Training> actualTrainings (long idUser);
-    List<Training> waitingTrainings (long idUser);
+    List<Training> visitedTrainings(long idUser);
+    List<Training> actualTrainings(long idUser);
+    List<Training> waitingTrainings(long idUser);
 }

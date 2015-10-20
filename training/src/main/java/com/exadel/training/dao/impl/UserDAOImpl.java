@@ -1,10 +1,20 @@
 package com.exadel.training.dao.impl;
 
 import com.exadel.training.dao.UserDAO;
+import com.exadel.training.dao.domain.Lesson;
+import com.exadel.training.dao.domain.Training;
 import com.exadel.training.dao.domain.User;
+import org.hibernate.Criteria;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.*;
+import org.hibernate.internal.CriteriaImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import javax.jws.soap.SOAPBinding;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Created by HP on 05.10.2015.
@@ -37,5 +47,35 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public User getUserByID(long id) {
         return sessionFactory.getCurrentSession().load(User.class, id);
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public List<Training> visitedTrainings(long idUser) {
+        return sessionFactory.getCurrentSession()
+                .createQuery("select distinct t from Training as t inner join t.lessonList as lesson inner join t.listenerList as listener where listener.user.id = :idUser and :currentDate > all elements(lesson.date) ")
+                .setParameter("idUser", idUser)
+                .setParameter("currentDate", new Date().getTime())
+                .list();
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public List<Training> actualTrainings(long idUser) {
+        Session session = sessionFactory.getCurrentSession();
+        Criteria criteria = session.createCriteria(Training.class, "training");
+        criteria.createAlias("training.listenerList", "listener");
+        criteria.createAlias("training.lessonList", "lesson");
+
+        criteria.add(Restrictions.eq("listener.user.id", idUser));
+        criteria.add(Restrictions.gt("lesson.date", new Date().getTime()));
+
+        criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+        return criteria.list();
+    }
+
+    @Override
+    public List<Training> waitingTrainings(long idUser) {
+        return null;
     }
 }
