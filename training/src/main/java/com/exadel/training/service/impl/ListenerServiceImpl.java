@@ -50,6 +50,11 @@ public class ListenerServiceImpl implements ListenerService {
         if (listener != null) {
             listener.setState(Listener.State.LEAVE);
             listenerDAO.changeListener(listener);
+            listener = listenerDAO.getNextListenerInWaitList(trainingId);
+            if(listener != null) {
+                listener.setState(Listener.State.WAITING);
+                listenerDAO.changeListener(listener);
+            }
         }
     }
 

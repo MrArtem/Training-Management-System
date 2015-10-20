@@ -71,4 +71,15 @@ public class ListenerDAOImpl implements ListenerDAO {
     public void removeListener(Listener listener) {
         sessionFactory.getCurrentSession().delete(listener);
     }
+
+    @Override
+    public Listener getNextListenerInWaitList(long trainingId) {
+        Session session = sessionFactory.getCurrentSession();
+        Training training = session.load(Training.class, trainingId);
+        return (Listener) session
+                .createQuery("from Listener lis where lis.state = :state and lis.id = (select min(l.id) from Listener l where l.training = :training)")
+                .setParameter("training",training)
+                .setParameter("state", Listener.State.WAITING)
+                .uniqueResult();
+    }
 }

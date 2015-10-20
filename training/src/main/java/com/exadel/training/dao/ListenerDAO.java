@@ -16,4 +16,6 @@ public interface ListenerDAO {
     Listener getListenerByTrainingUser(long trainingId, long userId);
 
     void removeListener(Listener listener);
+
+    Listener getNextListenerInWaitList(long trainingId);
 }
