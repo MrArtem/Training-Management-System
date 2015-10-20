@@ -36,6 +36,7 @@ public class Training {
 
     private int countListenerRating;
 
+    @Enumerated(EnumType.STRING)
     private State state;
 
     private boolean isRepeat;
@@ -62,6 +63,7 @@ public class Training {
     private List<Feedback> feedbackList;
 
     public Training() {
+        this.state = State.NONE;
     }
 
     public Training(String title, String description, int language, int maxSize, boolean isInner, String excerpt, boolean isRepeat, User coach) {

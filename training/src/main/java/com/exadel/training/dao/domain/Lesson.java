@@ -8,6 +8,10 @@ import java.util.List;
 @Entity
 @Table
 public class Lesson {
+
+    public  enum State {
+        NONE, REMOVAL, ADD
+    }
     @Id
     @GeneratedValue
     private long id;
@@ -15,6 +19,9 @@ public class Lesson {
     private long date;
 
     private String place;
+
+    @Enumerated(EnumType.STRING)
+    private State state;
 
     @JsonIgnore
     @OneToOne
@@ -29,6 +36,7 @@ public class Lesson {
     private List<Attendance> attendanceList;
 
     public Lesson() {
+        this.state = State.NONE;
     }
 
     public long getId() {
