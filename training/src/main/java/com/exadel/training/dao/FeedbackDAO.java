@@ -8,7 +8,7 @@ import java.util.List;
  * Created by ayudovin on 06.10.2015.
  */
 public interface FeedbackDAO {
-    Feedback getFeedvackByID(long id);
+    Feedback getFeedback(long id);
 
     void addFeedback(Feedback feedback);
 

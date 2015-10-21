@@ -97,6 +97,11 @@ public class CommentServiceImpl implements CommentService{
     }
 
     @Override
+    public Comment getComment(Long id) {
+        return commentDAO.getComment(id);
+    }
+
+    @Override
     @Transactional
     public List<Comment> getUserCommentList(Long userId) {
         return userDAO.getUserByID(userId).getCommentList();
