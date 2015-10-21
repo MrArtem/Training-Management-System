@@ -13,7 +13,7 @@
         <ul class="left">
             <li><a ui-sref="mycourses">My Courses</a></li>
             <li><a ui-sref="browse">Browse</a></li>
-            <li><a ui-sref="profile">Profile</a></li>
+            <li><a ui-sref="profile({userId: navbar.id})">Profile</a></li>
             <li ng-if="navbar.isAdmin"><a ui-sref="admin">Admin</a></li>
         </ul>
 
@@ -25,7 +25,7 @@
                 <a href="#"><i class="fa fa-user"></i></a>
                 <ul class="dropdown">
                     <li><label>{{navbar.username}}</label></li>
-                    <li><a href="#">Profile</a></li>
+                    <li><a ui-sref="profile({userId: navbar.id})">Profile</a></li>
                     <li><a href="#" ng-click="navbar.logout()">Logout</a></li>
                 </ul>
             </li>

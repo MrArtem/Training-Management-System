@@ -58,12 +58,12 @@
     function getApproveList() {
         //return ;
     }
-    function getCoursesForUser(login) {
-        //return;
+    function getCoursesForUser() {
+        return '/api/training/training_list';
     }
 
     function getCurrentCoursesForUser(userId) {
-        //return;
+        return '/api/user_controller/actualTraining/' + userId;
     }
 
     function getEditedCourse(trainingId) {
@@ -79,11 +79,11 @@
     }
 
     function getPastCoursesForUser(userId) {
-        //return;
+        return '/api/user_controller/visitedTraining/' + userId;
     }
 
     function getProfileInfo(userId) {
-        //return;
+        return '/api/user_controller/user_info/' + userId;
     }
 
     function getTimetable(courseId) {

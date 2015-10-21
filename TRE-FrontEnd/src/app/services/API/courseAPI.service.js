@@ -213,8 +213,14 @@
 
         //////////
 
-        function getCoursesForUser(login) {
-            return $http.get(urlProvider.getCoursesForUser(login)).then(function (results) {
+        function getCoursesForUser(isActual, tagList) {
+            return $http.get(urlProvider.getCoursesForUser(), {
+                params: {
+                    is_actual: isActual,
+                    page: 1,
+                    tag: []
+                }
+            }).then(function (results) {
                 return results.data;
             });
         }

@@ -21,15 +21,23 @@
         function NavbarController(authService) {
             var vm = this;
             vm.isAdmin = isAdmin;
-            vm.logout = logout;
+
             vm.getUsername = getUsername;
+            vm.getUserId = getUserId;
+            vm.logout = logout;
 
             vm.username = getUsername();
+            vm.id = getUserId();
+            console.log(vm.id);
 
             //////
 
             function getUsername() {
                 return authService.getUser().username;
+            }
+
+            function getUserId() {
+                return authService.getUser().userId;
             }
 
             function isAdmin() {

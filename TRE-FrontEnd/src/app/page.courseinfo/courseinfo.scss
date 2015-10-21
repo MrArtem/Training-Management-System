@@ -1,11 +1,37 @@
 .courseinfo {
+  $left-pd: 3rem;
+  $right-pd: 3rem;
 
   .float-left {
     //float: left;
   }
 
+  .courseinfo-short {
+    margin-bottom: 2rem;
+
+    .title {
+      margin-bottom: 1rem;
+    }
+
+    .short-desc {
+      margin-bottom: 2rem;
+    }
+
+    .field, .value {
+      margin-bottom: 0.5rem;
+    }
+
+  }
+
   .icon-bar.large-vertical {
     float: right;
+  }
+
+  .icon-bar {
+    .item {
+      padding-left: $left-pd;
+      padding-right: $right-pd;
+    }
   }
 
 }
