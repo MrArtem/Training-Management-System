@@ -2,9 +2,9 @@
     <div class="row">
         <div class="small-12 medium-8 large-8 column">
             <h5>Timetable</h5>
-            <div class="row">
-                <a class="button round tiny" data-reveal-id="addLessonModal">Add date</a>
-            </div>
+
+            <a class="button round tiny default-btn-blue" data-reveal-id="addLessonModal">Add date</a>
+
 
             <div class="scrollable-div">
 
@@ -68,9 +68,10 @@
             <input type='text' ng-model="timetable.editedPlace" tre-datepicker="">
         </div>
     </div>
+    <a href="#" class="left button round tiny" close-modal="editLessonModal" ng-click="timetable.deleteLesson()">Delete lesson</a>
+    <a href="#" class="right button round tiny default-btn-blue" close-modal="editLessonModal" ng-click="timetable.editLesson()">OK</a>
     <div class="row">
-        <a href="#" class="right button round tiny" close-modal="editLessonModal" ng-click="timetable.deleteLesson()">Delete lesson</a>
-        <a href="#" class="right button round tiny" close-modal="editLessonModal" ng-click="timetable.editLesson()">OK</a>
+
     </div>
     <a class="close-reveal-modal" aria-label="Close">&#215;</a>
 </div>

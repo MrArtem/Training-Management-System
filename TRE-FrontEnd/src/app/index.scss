@@ -4,6 +4,19 @@
  */
 $topbar-bg-color: #000;
 
+$btn-blue: #55acee;
+$btn-blue-border: #55a4e6;
+$btn-blue-hover: #2D88BF;
+$btn-blue-border-hover: #2c83b8;
+
+$btn-green: #57ad68;
+$btn-green-border: #a9d8b2;
+$btn-green-hover: #468c54;
+$btn-green-border-hover: $btn-green;
+
+
+
+
 
 $fa-font-path: "../../bower_components/font-awesome/fonts";
 @import '../../bower_components/foundation/scss/foundation/_functions';
@@ -79,6 +92,35 @@ body {
 
 .nested-view {
   margin: 0.5em;
+}
+
+/* BUTTONS*/
+.default-btn-blue {
+  color: $btn-blue;
+  border-color: $btn-blue-border;
+  background-color: $white;
+}
+
+.default-btn-blue:hover {
+  color: $btn-blue-hover;
+  border-color: $btn-blue-border-hover;
+  background-color: $white;
+}
+
+.default-btn-green {
+  color: $btn-green;
+  border-color: $btn-green-border;
+  background-color: $white;
+}
+
+.default-btn-green:hover {
+  color: $btn-green-hover;
+  border-color: $btn-green-border-hover;
+  background-color: $white;
+}
+
+.accent-btn-blue {
+
 }
 
 /**

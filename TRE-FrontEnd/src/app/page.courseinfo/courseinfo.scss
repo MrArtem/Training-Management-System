@@ -10,14 +10,23 @@
     margin-bottom: 2rem;
 
     .title {
-      margin-bottom: 1rem;
+      margin-bottom: 1.8rem;
     }
 
     .short-desc {
-      margin-bottom: 2rem;
+      margin-bottom: 1.5rem;
     }
 
-    .field, .value {
+    .field {
+      color: $black;
+
+      .info {
+        color: $text-color;
+      }
+
+    }
+
+    .field, .info {
       margin-bottom: 0.5rem;
     }
 
