@@ -136,9 +136,11 @@ public class TrainingController {
         List<TrainingListModel> trainingListModelList = new ArrayList<TrainingListModel>();
         for(Training training : trainingList) {
             TrainingListModel trainingListModel = new TrainingListModel(training);
-            //todo get next lesson
-            trainingListModel.setNextDate(34534L);
-            trainingListModel.setNextPlace("rth");
+            Lesson lesson = lessonService.getNextLesson(training.getId());
+            if (lesson != null) {
+                trainingListModel.setNextDate(lesson.getDate());
+                trainingListModel.setNextPlace(lesson.getPlace());
+            }
         }
         return trainingListModelList;
     }
