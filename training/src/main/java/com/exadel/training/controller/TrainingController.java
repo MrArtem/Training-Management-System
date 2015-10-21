@@ -130,10 +130,12 @@ public class TrainingController {
     @RequestMapping(value = "/training_list", method = RequestMethod.GET)
     public List<TrainingListModel> getTrainingList(@RequestParam("is_actual") Boolean isActual,
                                           @RequestParam("page") Integer page,
-                                                   @RequestParam("tag") List<String> specialtyList) {
+                                                   @RequestParam(value = "tag", required = false) List<String> specialtyList) {
         List<Tag> tagList = new ArrayList<Tag>();
-        for (String specialty : specialtyList) {
-            tagList.add(tagService.getTagBySpecialty(specialty));
+        if (specialtyList != null) {
+            for (String specialty : specialtyList) {
+                tagList.add(tagService.getTagBySpecialty(specialty));
+            }
         }
         List<Training> trainingList;
         trainingList = trainingService.getTrainingListByTagList(page, PAGE_SIZE, isActual, tagList);
