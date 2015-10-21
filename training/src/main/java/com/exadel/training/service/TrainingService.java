@@ -2,10 +2,7 @@ package com.exadel.training.service;
 
 import com.exadel.training.controller.model.trainingModels.LessonModel;
 import com.exadel.training.controller.model.trainingModels.RepeatModel;
-import com.exadel.training.dao.domain.ApproveAction;
-import com.exadel.training.dao.domain.ApproveLesson;
-import com.exadel.training.dao.domain.Listener;
-import com.exadel.training.dao.domain.Training;
+import com.exadel.training.dao.domain.*;
 
 import java.util.List;
 
@@ -25,6 +22,7 @@ public interface TrainingService {
             , Integer language
             , Integer maxSize
             , boolean isInner
+            , String place
             , List<Long> tagIdList
             , String additionalInfo
             , boolean isRepeating
@@ -39,6 +37,7 @@ public interface TrainingService {
             , Integer language
             , Integer maxSize
             , boolean isInner
+            , String place
             , List<Long> tagIdList
             , List<LessonModel> lessonModelList
             , RepeatModel repeatModel
@@ -55,6 +54,7 @@ public interface TrainingService {
             , Integer language
             , Integer maxSize
             , boolean isInner
+            , String place
             , List<Long> tagIdList
             , String additionalInfo
             , List<LessonModel> lessonModelList
@@ -66,4 +66,12 @@ public interface TrainingService {
     List<ApproveLesson> getApproveLessonList(long actionId);
 
     RepeatModel getApproveRepeatModel(long actionId);
+
+    void editLesson(long trainingId, LessonModel lessonModel);
+
+    void addLesson(long trainingId, LessonModel lessonModel);
+
+    void removeLesson(long trainingId, LessonModel lessonModel);
+
+    void confirmEditLesson(long actionId, LessonModel lessonModel);
 }

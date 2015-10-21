@@ -86,4 +86,12 @@ public class Lesson {
     public void setApproveLesson(ApproveLesson approveLesson) {
         this.approveLesson = approveLesson;
     }
+
+    public State getState() {
+        return state;
+    }
+
+    public void setState(State state) {
+        this.state = state;
+    }
 }
