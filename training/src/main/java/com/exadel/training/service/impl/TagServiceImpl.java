@@ -12,6 +12,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
+@Transactional
 public class TagServiceImpl implements TagService{
 
     @Autowired
@@ -19,19 +20,16 @@ public class TagServiceImpl implements TagService{
 
 
     @Override
-    @Transactional
     public void addTag(Tag tag) {
         tagDAO.addTag(tag);
     }
 
     @Override
-    @Transactional
     public List<Tag> getTagList() {
         return tagDAO.getTagList();
     }
 
     @Override
-    @Transactional
     public Tag getTagBySpecialty(String specialty) {
         return tagDAO.getTagBySpecialty(specialty);
     }

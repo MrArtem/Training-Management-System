@@ -76,4 +76,14 @@ public class UserServiceImpl implements UserService {
 
         return userDAO.getUserByID(id).getTrainingsCoach();
     }
+
+    @Override
+    public List<Training> visitedTrainings(long idUser) {
+        return userDAO.visitedTrainings(idUser);
+    }
+
+    @Override
+    public List<Training> actualTrainings(long idUser) {
+        return userDAO.actualTrainings(idUser);
+    }
 }

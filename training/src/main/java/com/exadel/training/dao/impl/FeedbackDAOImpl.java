@@ -20,7 +20,7 @@ public class FeedbackDAOImpl implements FeedbackDAO{
     private SessionFactory sessionFactory;
 
     @Override
-    public Feedback getFeedvackByID(long id) {
+    public Feedback getFeedback(long id) {
         return sessionFactory.getCurrentSession().load(Feedback.class,id);
     }
 
@@ -30,6 +30,7 @@ public class FeedbackDAOImpl implements FeedbackDAO{
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public List<Feedback> getFeedbackListFromTrainingForUser(long idUser, long idTraining) {
       return sessionFactory.getCurrentSession()
               .createQuery("select f from Feedback as f where f.training.id = :idTraining and f.user.id = :idUser")

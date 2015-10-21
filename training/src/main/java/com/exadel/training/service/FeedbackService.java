@@ -8,6 +8,8 @@ import java.util.List;
  * Created by ayudovin on 06.10.2015.
  */
 public interface FeedbackService {
+    Feedback getFeedback(Long id);
+
     List<Feedback> getFeedbackListForUser(long id);
     List<Feedback> getFeedbackListFromTrainingForUser(long idUser, long idTraining);
 }

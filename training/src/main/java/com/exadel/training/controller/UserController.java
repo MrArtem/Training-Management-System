@@ -1,5 +1,6 @@
 package com.exadel.training.controller;
 
+import com.exadel.training.controller.model.TrainingListModel;
 import com.exadel.training.controller.model.userModels.UserModel;
 import com.exadel.training.dao.domain.Training;
 import com.exadel.training.notification.Notification;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,20 +26,38 @@ public class UserController {
 
     @Autowired
     private UserService userService;
-    @Autowired
-    private SearchService searchService;
-    @Autowired
-    private Notification notification;
-    @Autowired
-    private MessageGenerator messageGenerator;
 
     @RequestMapping(value = "/user_info/{idUser}", method = RequestMethod.GET)
     public UserModel getUserInfo(@PathVariable("idUser") long idUser) {
+        //todo get user here
         long idCurrentUser = 1;
         UserModel userModel = new UserModel(userService.getUserById(idCurrentUser), userService.isCoachOfCurrentUser(idCurrentUser, idUser));
 
-        List<Training> trainingList = searchService.searchTraining("art");
         return userModel;
+    }
+
+    @RequestMapping(value = "/visitedTraining/{idUser}", method = RequestMethod.GET)
+    public List<TrainingListModel> getVisitedTraining(@PathVariable("idUser") long idUser) {
+        List<TrainingListModel> trainingListModelList = new ArrayList<TrainingListModel>();
+
+        for(Training training : userService.visitedTrainings(idUser)) {
+            trainingListModelList.add(new TrainingListModel(training));
+        }
+
+        return trainingListModelList;
+    }
+
+    @RequestMapping(value = "/actualTraining/{idUser}", method = RequestMethod.GET)
+    public List<TrainingListModel> getActualTraining(@PathVariable("idUser") long idUser) {
+        List<TrainingListModel> trainingListModelList = new ArrayList<TrainingListModel>();
+
+        for(Training training : userService.actualTrainings(idUser)) {
+            trainingListModelList.add(new TrainingListModel(training));
+            //todo get next date and place
+
+        }
+
+        return trainingListModelList;
     }
 
 }
