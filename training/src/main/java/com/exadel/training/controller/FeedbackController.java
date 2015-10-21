@@ -5,10 +5,7 @@ import com.exadel.training.controller.model.feedbackModels.FeedbackModel;
 import com.exadel.training.dao.domain.Feedback;
 import com.exadel.training.service.FeedbackService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.websocket.server.PathParam;
 import java.util.ArrayList;
@@ -35,14 +32,8 @@ public class FeedbackController {
         return feedbackModelList;
     }
 
-    @RequestMapping(value = "/add_feedback", method = RequestMethod.GET)
-    public void addFeedback() {
-        AddFeedbackModel addFeedbackModel = new AddFeedbackModel();
-        addFeedbackModel.setQuestions(true);
-        addFeedbackModel.setFocusOnResult(true);
-        addFeedbackModel.setTraingID(1);
-        addFeedbackModel.setUserID(1);
-
+    @RequestMapping(value = "/add_feedback", method = RequestMethod.POST)
+    public void addFeedback(@RequestBody AddFeedbackModel addFeedbackModel) {
         feedbackService.addFeedback(addFeedbackModel);
     }
 }
