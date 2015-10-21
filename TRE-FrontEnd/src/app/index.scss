@@ -4,6 +4,9 @@
  */
 $topbar-bg-color: #000;
 
+$tre-light-blue: #55acee;
+$tre-hover-blue: #25709D;
+
 
 $fa-font-path: "../../bower_components/font-awesome/fonts";
 @import '../../bower_components/foundation/scss/foundation/_functions';
@@ -24,6 +27,25 @@ $fa-font-path: "../../bower_components/font-awesome/fonts";
  */
 // bower:scss
 // endbower
+
+body {
+  color: rgba(0,0,0,0.6);
+
+  h1 {
+    color: black !important;
+  }
+
+  a {
+    color: $tre-light-blue;
+    font-weight: 200;
+  }
+
+  a:hover{
+    color: $tre-hover-blue;
+    text-decoration: none;
+  }
+
+}
 
 .browsehappy {
   margin: 0.2em 0;
