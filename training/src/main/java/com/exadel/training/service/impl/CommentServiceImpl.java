@@ -17,6 +17,8 @@ import java.util.List;
 
 @Service
 public class CommentServiceImpl implements CommentService{
+    private final int AVERAGE_EFFECTIVE = 3;
+    private final int BOOLEAN_FIELDS_NUMBER = 5;
 
     @Autowired
     private CommentDAO commentDAO;
@@ -27,9 +29,7 @@ public class CommentServiceImpl implements CommentService{
     @Autowired
     private UserDAO userDAO;
 
-    private final int AVERAGE_EFFECTIVE = 3;
 
-    private final int BOOLEAN_FIELDS_NUMBER = 5;
 
     private Boolean isCommentPositive(Comment comment) {
         int countPositive = 0;
