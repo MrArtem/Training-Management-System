@@ -63,6 +63,7 @@ public class TrainingController {
                 , addingTrainingModel.getLanguage()
                 , addingTrainingModel.getMaxSize()
                 , addingTrainingModel.isInner()
+                , addingTrainingModel.getPlace()
                 , addingTrainingModel.getTagList()
                 , addingTrainingModel.getAdditionalInfo()
                 , addingTrainingModel.getIsRepeating()
@@ -84,6 +85,7 @@ public class TrainingController {
                 , addingTrainingModel.getLanguage()
                 , addingTrainingModel.getMaxSize()
                 , addingTrainingModel.isInner()
+                , addingTrainingModel.getPlace()
                 , addingTrainingModel.getTagList()
                 , addingTrainingModel.getLessonList()
                 , addingTrainingModel.getRepeatModel());
@@ -108,6 +110,7 @@ public class TrainingController {
                 , addingTrainingModel.getLanguage()
                 , addingTrainingModel.getMaxSize()
                 , addingTrainingModel.isInner()
+                , addingTrainingModel.getPlace()
                 , addingTrainingModel.getTagList()
                 , addingTrainingModel.getAdditionalInfo()
                 , addingTrainingModel.getLessonList()
@@ -137,9 +140,11 @@ public class TrainingController {
         List<TrainingListModel> trainingListModelList = new ArrayList<TrainingListModel>();
         for(Training training : trainingList) {
             TrainingListModel trainingListModel = new TrainingListModel(training);
-            //todo get next lesson
-            trainingListModel.setNextDate(34534L);
-            trainingListModel.setNextPlace("rth");
+            Lesson lesson = lessonService.getNextLesson(training.getId());
+            if (lesson != null) {
+                trainingListModel.setNextDate(lesson.getDate());
+                trainingListModel.setNextPlace(lesson.getPlace());
+            }
         }
         return trainingListModelList;
     }
@@ -247,7 +252,7 @@ public class TrainingController {
         ApproveGetTrainingModel approveTrainingModel = new ApproveGetTrainingModel();
         Training training = approveAction.getTraining();
         User coach = training.getCoach();
-
+        //TODO code review
         if (approveTraining != null) {
             approveTrainingModel.setTitle(approveTraining.getTitle());
             approveTrainingModel.setDescription(approveTraining.getDescription());
@@ -286,5 +291,25 @@ public class TrainingController {
 
 
         return approveTrainingModel;
+    }
+
+    @RequestMapping(value = "/{id}/lesson", method = RequestMethod.PUT)
+    void editLesson(@PathVariable("id") long trainingId, @RequestBody LessonModel lessonModel) {
+        trainingService.editLesson(trainingId,lessonModel);
+    }
+
+    @RequestMapping(value = "/{id}/lesson", method = RequestMethod.POST)
+    void addLesson(@PathVariable("id") long trainingId, @RequestBody LessonModel lessonModel) {
+        trainingService.addLesson(trainingId, lessonModel);
+    }
+
+    @RequestMapping(value = "/{id}/lesson", method = RequestMethod.DELETE)
+    void removeLesson(@PathVariable("id") long trainingId, @RequestBody LessonModel lessonModel) {
+        trainingService.removeLesson(trainingId, lessonModel);
+    }
+
+    @RequestMapping(value = "/{id}/confirm/lesson", method = RequestMethod.PUT)
+    void confirmChangeLesson(@PathVariable("id") long actionId, @RequestBody LessonModel lessonModel) {
+
     }
 }

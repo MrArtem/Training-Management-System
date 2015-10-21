@@ -50,14 +50,6 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public User getUserByLogin(String userLogin) {
-        return (User)sessionFactory.getCurrentSession()
-                .createQuery("from User as u where u.login = :userLogin")
-                .setParameter("userLogin", userLogin)
-                .uniqueResult();
-    }
-
-    @Override
     @SuppressWarnings("unchecked")
     public List<Training> visitedTrainings(long idUser) {
         return sessionFactory.getCurrentSession()
@@ -85,5 +77,13 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public List<Training> waitingTrainings(long idUser) {
         return null;
+    }
+
+    @Override
+    public User getUserByLogin(String userLogin) {
+        return (User)sessionFactory.getCurrentSession()
+                .createQuery("from User as u where u.login = :userLogin")
+                .setParameter("userLogin", userLogin)
+                .uniqueResult();
     }
 }

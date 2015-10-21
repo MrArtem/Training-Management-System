@@ -22,6 +22,7 @@ public interface TrainingService {
             , Integer language
             , Integer maxSize
             , boolean isInner
+            , String place
             , List<Long> tagIdList
             , String additionalInfo
             , boolean isRepeating
@@ -36,6 +37,7 @@ public interface TrainingService {
             , Integer language
             , Integer maxSize
             , boolean isInner
+            , String place
             , List<Long> tagIdList
             , List<LessonModel> lessonModelList
             , RepeatModel repeatModel
@@ -52,6 +54,7 @@ public interface TrainingService {
             , Integer language
             , Integer maxSize
             , boolean isInner
+            , String place
             , List<Long> tagIdList
             , String additionalInfo
             , List<LessonModel> lessonModelList
@@ -65,4 +68,12 @@ public interface TrainingService {
     List<ApproveLesson> getApproveLessonList(long actionId);
 
     RepeatModel getApproveRepeatModel(long actionId);
+
+    void editLesson(long trainingId, LessonModel lessonModel);
+
+    void addLesson(long trainingId, LessonModel lessonModel);
+
+    void removeLesson(long trainingId, LessonModel lessonModel);
+
+    void confirmEditLesson(long actionId, LessonModel lessonModel);
 }

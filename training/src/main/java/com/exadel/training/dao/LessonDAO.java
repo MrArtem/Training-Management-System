@@ -20,4 +20,6 @@ public interface LessonDAO {
     Long getStartDateByTraining(long trainingId);
 
     Long getEndDateByTraining(long trainingId);
+
+    Lesson getNextLesson(long trainingId);
 }

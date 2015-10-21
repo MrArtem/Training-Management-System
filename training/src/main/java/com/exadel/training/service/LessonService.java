@@ -12,4 +12,6 @@ public interface LessonService {
     Long getStartDateByTraining(long trainingId);
 
     Long getEndDateByTraining(long trainingId);
+
+    Lesson getNextLesson(long trainingId);
 }
