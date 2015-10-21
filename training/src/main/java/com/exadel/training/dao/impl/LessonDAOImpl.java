@@ -9,7 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.TimeZone;
 
 /**
  * Created by azapolski on 10/6/2015.
@@ -19,6 +22,13 @@ import java.util.List;
 public class LessonDAOImpl implements LessonDAO {
     @Autowired
     SessionFactory sessionFactory;
+
+
+    private Long getTime() {
+        Calendar calendar = new GregorianCalendar();
+        calendar.setTimeZone(TimeZone.getTimeZone("UTC"));
+        return calendar.getTimeInMillis();
+    }
 
     @Override
     public void addLesson(Lesson lesson) {
@@ -42,6 +52,7 @@ public class LessonDAOImpl implements LessonDAO {
 
     @Override
     public List<Lesson> getLessonListByTraining(long trainingId) {
+        //todo lesson state
         Session session = sessionFactory.getCurrentSession();
         Training training = session.load(Training.class, trainingId);
         return training.getLessonList();
@@ -63,5 +74,16 @@ public class LessonDAOImpl implements LessonDAO {
         Training training = session.load(Training.class, trainingId);
         return (Long) session.createQuery("select max(les.date) from Lesson les where les.training =:training")
                 .setParameter("training", training).uniqueResult();
+    }
+
+    @Override
+    public Lesson getNextLesson(long trainingId) {
+        Session session = sessionFactory.getCurrentSession();
+        Training training = session.load(Training.class, trainingId);
+        return (Lesson)session.createQuery("from  Lesson less where less.training = :training and less.data = " +
+                "(select min(l.date) from Lesson l where less.training = :training and less.data >= :curDate )")
+                .setParameter("training",training)
+                .setParameter("curDate", getTime())
+                .uniqueResult();
     }
 }
