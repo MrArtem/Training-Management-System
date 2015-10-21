@@ -26,13 +26,15 @@ public class FeedbackController {
          List<FeedbackModel> feedbackModelList = new ArrayList<FeedbackModel>();
 
         for(Feedback feedback : feedbackService.getFeedbackListForUser(idUser)) {
-            feedbackModelList.add(new FeedbackModel(feedback));
+            FeedbackModel feedbackModel = new FeedbackModel(feedback);
+            feedbackModelList.add(feedbackModel);
+
         }
 
         return feedbackModelList;
     }
 
-    @RequestMapping(value = "/add_feedback", method = RequestMethod.POST)
+    @RequestMapping(value = "/add_feedback", method = RequestMethod.POST, consumes = "application/json")
     public void addFeedback(@RequestBody AddFeedbackModel addFeedbackModel) {
         feedbackService.addFeedback(addFeedbackModel);
     }
