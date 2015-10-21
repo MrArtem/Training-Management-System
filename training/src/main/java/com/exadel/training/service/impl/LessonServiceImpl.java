@@ -30,4 +30,9 @@ public class LessonServiceImpl implements LessonService{
     public Long getEndDateByTraining(long trainingId) {
         return lessonDAO.getEndDateByTraining(trainingId);
     }
+
+    @Override
+    public Lesson getNextLesson(long trainingId) {
+        return lessonDAO.getNextLesson(trainingId);
+    }
 }

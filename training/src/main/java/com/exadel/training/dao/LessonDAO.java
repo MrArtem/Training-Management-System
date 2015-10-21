@@ -5,7 +5,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
 public interface LessonDAO {
 
     void addLesson(Lesson lesson);
@@ -21,4 +20,6 @@ public interface LessonDAO {
     Long getStartDateByTraining(long trainingId);
 
     Long getEndDateByTraining(long trainingId);
+
+    Lesson getNextLesson(long trainingId);
 }

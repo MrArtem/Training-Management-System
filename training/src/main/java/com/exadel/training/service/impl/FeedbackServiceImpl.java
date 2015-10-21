@@ -41,4 +41,9 @@ public class FeedbackServiceImpl implements FeedbackService {
 
         return feedbackDAO.getFeedbackListFromTrainingForUser(idUser, idTraining);
     }
+
+    @Override
+    public Feedback getFeedback(Long id) {
+        return feedbackDAO.getFeedback(id);
+    }
 }

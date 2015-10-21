@@ -10,6 +10,8 @@ public interface CommentService {
 
     void removeComment(Long commentId);
 
+    Comment getComment(Long id);
+
     List<Comment> getTrainingCommentList(Long trainingId);
 
     List<Comment> getCoachCommentList(Long coachId);
