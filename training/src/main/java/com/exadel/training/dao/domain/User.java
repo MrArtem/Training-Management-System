@@ -2,6 +2,7 @@ package com.exadel.training.dao.domain;
 
 import org.apache.lucene.analysis.charfilter.MappingCharFilterFactory;
 import org.apache.lucene.analysis.core.LowerCaseFilterFactory;
+import org.apache.lucene.analysis.core.StopFilterFactory;
 import org.apache.lucene.analysis.core.WhitespaceTokenizerFactory;
 import org.apache.lucene.analysis.miscellaneous.WordDelimiterFilterFactory;
 import org.apache.lucene.analysis.ngram.NGramFilterFactory;
@@ -46,6 +47,22 @@ import java.util.List;
                 @TokenFilterDef(factory = NGramFilterFactory.class, params = {
                         @Parameter(name = "minGramSize", value = "3"),
                         @Parameter(name = "maxGramSize", value = "10")
+                }),
+                @TokenFilterDef(factory = LowerCaseFilterFactory.class),
+                @TokenFilterDef(factory = StopFilterFactory.class, params = {
+                        @Parameter(name = "words", value = "searchSynonyms/synonyms.txt"),
+                        @Parameter(name = "ignoreCase", value = "true"),
+                        @Parameter(name = "enablePositionIncrements", value = "true")
+                }),
+                @TokenFilterDef(factory = SnowballPorterFilterFactory.class, params = {
+                        @Parameter(name = "language", value = "English")
+                }),
+                @TokenFilterDef(factory = SynonymFilterFactory.class, params = {
+                        @Parameter(name = "synonyms", value = "searchSynonyms/synonyms.txt"),
+                        @Parameter(name = "expand", value = "false")
+                }),
+                @TokenFilterDef(factory = SnowballPorterFilterFactory.class, params = {
+                        @Parameter(name = "language", value = "English")
                 })
         })
 public class User {
