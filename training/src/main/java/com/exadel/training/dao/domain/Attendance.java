@@ -24,6 +24,7 @@ public class Attendance {
     private Lesson lesson;
 
     public Attendance(){
+        this.presence = true;
     }
 
     public long getId() {
