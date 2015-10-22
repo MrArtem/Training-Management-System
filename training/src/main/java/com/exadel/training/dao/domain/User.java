@@ -48,22 +48,13 @@ import java.util.List;
                         @Parameter(name = "minGramSize", value = "3"),
                         @Parameter(name = "maxGramSize", value = "10")
                 }),
-                @TokenFilterDef(factory = LowerCaseFilterFactory.class),
-                @TokenFilterDef(factory = StopFilterFactory.class, params = {
-                        @Parameter(name = "words", value = "searchSynonyms/synonyms.txt"),
-                        @Parameter(name = "ignoreCase", value = "true"),
-                        @Parameter(name = "enablePositionIncrements", value = "true")
-                }),
-                @TokenFilterDef(factory = SnowballPorterFilterFactory.class, params = {
-                        @Parameter(name = "language", value = "English")
-                }),
                 @TokenFilterDef(factory = SynonymFilterFactory.class, params = {
-                        @Parameter(name = "synonyms", value = "searchSynonyms/synonyms.txt"),
-                        @Parameter(name = "expand", value = "false")
-                }),
-                @TokenFilterDef(factory = SnowballPorterFilterFactory.class, params = {
-                        @Parameter(name = "language", value = "English")
+                        @Parameter(name = "ignoreCase", value = "true"),
+                        @Parameter(name = "synonyms", value = "/searchSynonyms/synonyms.txt"),
+                        @Parameter(name = "expand", value = "true")
                 })
+
+
         })
 public class User {
 
