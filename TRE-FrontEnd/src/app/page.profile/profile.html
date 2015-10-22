@@ -98,11 +98,13 @@
                     <thead>
                     <tr>
                         <th>Who left</th>
+                        <th>Positive?</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr ng-repeat="fb in profile.feedbacks">
                         <td>{{fb.coachName}}</td>
+                        <td>{{fb.isPositive==true ? '+' : '-'}}</td>
                     </tr>
                     </tbody>
                 </table>

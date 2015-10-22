@@ -7,9 +7,7 @@
 }
 
 nav {
-  #searchModal {
 
-  }
   #searchModal:after {
     content: "";
     display: block;
@@ -21,4 +19,10 @@ nav {
     z-index: 10;
     background-color: rgba(0,0,0,0.5);
   }
+}
+
+.full-modal {
+  background-size: 100% 100% !important;
+  background-repeat: no-repeat !important;
+  height: 100% !important;
 }

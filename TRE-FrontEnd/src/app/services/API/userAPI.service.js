@@ -22,7 +22,9 @@
         }
 
         function getFeedbacksOn(userId) {
-            //return;
+            return $http.get(urlProvider.getFeedbackOnUser(userId)).then(function(result) {
+                return result.data;
+            });
         }
 
         function getPastCourses(userId) {

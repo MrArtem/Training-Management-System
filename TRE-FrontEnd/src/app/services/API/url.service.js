@@ -81,7 +81,7 @@
     }
 
     function getFeedbacksOnUser(userId) {
-        //return;
+        return '/api/feedback_controller/feedbacks_of_user/' + userId;
     }
 
     function getParticipants(courseId) {
