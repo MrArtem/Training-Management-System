@@ -354,15 +354,10 @@ public class TrainingServiceImpl implements TrainingService {
         if (approveAction == null) {
             editTrainingNotPrevApprove(trainingDAO.getTrainingById(trainingId), title, description
                     , shortInfo, language, maxSize, isInner, place, tagIdList
-        if (approveAction == null) {
-            editTrainingNotPrevApprove(trainingDAO.getTrainingById(trainingId), title, description
-                    , shortInfo, language, maxSize, isInner, tagIdList
                     , additionalInfo, lessonModelList, repeatModel);
         } else {
             editTrainingWithPrevApprove(approveAction, title, description
                     , shortInfo, language, maxSize, isInner, place, tagIdList
-            editTrainingWithPrevApprove(approveAction, title, description
-                    , shortInfo, language, maxSize, isInner, tagIdList
                     , additionalInfo, lessonModelList, repeatModel);
         }
     }
