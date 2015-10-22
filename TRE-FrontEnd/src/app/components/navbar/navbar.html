@@ -34,5 +34,15 @@
 
     </section>
 
-
 </nav>
+
+<div id="searchModal" class="reveal-modal tiny" data-reveal aria-labelledby="searchTitle" aria-hidden="true"
+     role="dialog">
+    <h2 id="searchTitle">Search</h2>
+
+    <div class="row">
+        <input type="text" ng-model="searchQuery" ng-change="search()" ng-model-options="{debounce: { 'default': 250} }" placeholder="Search...">
+    </div>
+
+    <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+</div>

@@ -20,11 +20,15 @@
         /** @ngInject */
         function NavbarController(authService) {
             var vm = this;
+            vm.foundTrainings = [];
+            vm.foundUsers = [];
             vm.isAdmin = isAdmin;
+            vm.searchAnswer = "";
 
             vm.getUsername = getUsername;
             vm.getUserId = getUserId;
             vm.logout = logout;
+            vm.search = search;
 
             vm.username = getUsername();
             vm.id = getUserId();
@@ -48,6 +52,26 @@
                 authService.logout();
             }
 
+            function search() {
+                if (vm.searchQuery.length == 0) {
+                    vm.searchAnswer = "";
+                    vm.foundTrainings = [];
+                    vm.foundUsers = [];
+                    return;
+                }
+                if (vm.searchQuery.length < 3) {
+                    vm.searchAnswer = "Please, specify your query";
+                    vm.foundTrainings = [];
+                    vm.foundUsers = [];
+                    return;
+                }
+                if(vm.isAdmin()) {
+
+                }
+                else {
+
+                }
+            }
 
         }
     }
