@@ -18,7 +18,7 @@ import java.util.List;
  * Created by ayudovin on 21.10.2015.
  */
 @RestController
-@RequestMapping("/searchController")
+@RequestMapping("/search_controller")
 public class SearchController {
 
     @Autowired
