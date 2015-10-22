@@ -35,11 +35,11 @@ public class SearchController {
         return userModelList;
     }
 
-    @RequestMapping(value = "/search_training", method = RequestMethod.GET)
-    public List<TrainingListModel> searchTraining() {
+    @RequestMapping(value = "/search_training", method = RequestMethod.POST, consumes = "application/json")
+    public List<TrainingListModel> searchTraining(@RequestBody String searchWord) {
         List<TrainingListModel> trainingListModels = new ArrayList<TrainingListModel>();
 
-         for(Training training : searchService.searchTraining("c-sharp")) {
+         for(Training training : searchService.searchTraining(searchWord)) {
              trainingListModels.add(new TrainingListModel(training));
          }
 
