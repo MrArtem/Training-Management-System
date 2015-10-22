@@ -16,16 +16,20 @@
 
         /////
 
-        function findAnything() {
+        function findAnything(searchQuery) {
 
         }
 
-        function findTrainings() {
-
+        function findTrainings(searchQuery) {
+            return $http.post(urlProvider.findTrainings(searchQuery), searchQuery).then(function(result) {
+                return result.data;
+            });
         }
 
-        function findUsers() {
-
+        function findUsers(searchQuery) {
+            return $http.post(urlProvider.findUsers(searchQuery), searchQuery).then(function(result) {
+                return result.data;
+            });
         }
     }
 

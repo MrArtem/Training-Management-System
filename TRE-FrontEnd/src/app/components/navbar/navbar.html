@@ -14,12 +14,12 @@
             <li><a ui-sref="mycourses">My Courses</a></li>
             <li><a ui-sref="browse">Browse</a></li>
             <li><a ui-sref="profile({userId: navbar.id})">Profile</a></li>
-            <li ng-if="navbar.isAdmin"><a ui-sref="admin">Admin</a></li>
+            <li ng-if="navbar.isAdmin()"><a ui-sref="admin">Admin</a></li>
         </ul>
 
         <!-- Right Nav Section -->
         <ul class="right">
-            <li class=""><a href="#"><i class="fa fa-search"></i></a></li>
+            <li class=""><a href="#" data-reveal-id="searchModal"><i class="fa fa-search"></i></a></li>
             <li class=""><a href="#"><i class="fa fa-globe"></i></a></li>
             <li class="has-dropdown">
                 <a href="#"><i class="fa fa-user"></i></a>
@@ -36,13 +36,25 @@
 
 </nav>
 
-<div id="searchModal" class="reveal-modal tiny" data-reveal aria-labelledby="searchTitle" aria-hidden="true"
-     role="dialog">
-    <h2 id="searchTitle">Search</h2>
+<div class="tre-modal">
+    <div id="searchModal" class="reveal-modal tiny" data-reveal aria-labelledby="searchTitle"  data-options="close_on_background_click:false;" aria-hidden="true"
+         role="dialog">
+        <h2 id="searchTitle">Search</h2>
 
-    <div class="row">
-        <input type="text" ng-model="searchQuery" ng-change="search()" ng-model-options="{debounce: { 'default': 250} }" placeholder="Search...">
+        <div class="row">
+            <input type="text" ng-model="navbar.searchQuery" ng-change="navbar.search()" ng-model-options="{debounce: { 'default': 250} }" placeholder="Search...">
+        </div>
+        <p>{{navbar.searchAnswer}}</p>
+        <div class="row" ng-repeat="training in navbar.foundTrainings">
+            <p>{{training.title}}</p>
+            <p>{{training.excerpt}}</p>
+        </div>
+        <div class="row" ng-repeat="user in navbar.foundUsers">
+            <p>{{user.username}}</p>
+            <p>{{user.email}}</p>
+            <p>{{user.phone}}</p>
+        </div>
+
+        <a class="close-reveal-modal" ng-click="navbar.clearModal()" aria-label="Close">&#215;</a>
     </div>
-
-    <a class="close-reveal-modal" aria-label="Close">&#215;</a>
 </div>

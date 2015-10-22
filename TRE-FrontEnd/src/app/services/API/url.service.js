@@ -13,9 +13,8 @@
             confirm: confirm,
             createCourse: createCourse,
             editCourse: editCourse,
-            findAnything: findAnything,
             findTrainings: findTrainings,
-            findUsers: findUsers
+            findUsers: findUsers,
             getApproveList: getApproveList,
             getCoursesForUser: getCoursesForUser,
             getCurrentCoursesForUser: getCurrentCoursesForUser,
@@ -58,16 +57,12 @@
         return '/api/training/edit/' + trainingId;
     }
 
-    function findAnything() {
-
+    function findTrainings(searchQuery) {
+        return '/api/search_controller/search_training';
     }
 
-    function findTrainings() {
-
-    }
-
-    function findUsers() {
-
+    function findUsers(searchQuery) {
+        return '/api/search_controller/search_user'
     }
 
     function getApproveList() {

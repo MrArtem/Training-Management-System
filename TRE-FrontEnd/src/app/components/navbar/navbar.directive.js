@@ -18,13 +18,14 @@
         return directive;
 
         /** @ngInject */
-        function NavbarController(authService) {
+        function NavbarController(authService, searchAPI) {
             var vm = this;
             vm.foundTrainings = [];
             vm.foundUsers = [];
-            vm.isAdmin = isAdmin;
-            vm.searchAnswer = "";
+            vm.searchAnswer = '';
 
+            vm.isAdmin = isAdmin;
+            vm.clearModal = clearModal;
             vm.getUsername = getUsername;
             vm.getUserId = getUserId;
             vm.logout = logout;
@@ -35,6 +36,13 @@
             console.log(vm.id);
 
             //////
+
+            function clearModal() {
+                vm.foundTrainings = [];
+                vm.foundUsers = [];
+                vm.searchAnswer = '';
+                vm.searchQuery = '';
+            }
 
             function getUsername() {
                 return authService.getUser().username;
@@ -66,10 +74,20 @@
                     return;
                 }
                 if(vm.isAdmin()) {
-
+                    searchAPI.findTrainings(vm.searchQuery).then(function(data) {
+                        vm.foundTrainings = angular.copy(data);
+                        vm.searchAnswer = (data.length == 0) ? 'no trainings found' : '';
+                    });
+                    searchAPI.findUsers(vm.searchQuery).then(function(data) {
+                        vm.foundUsers = angular.copy(data);
+                        vm.searchAnswer = (data.length == 0) ? 'no users found' : '';
+                    });
                 }
                 else {
-
+                    searchAPI.findTrainings(vm.searchQuery).then(function(data) {
+                        vm.foundTrainings = angular.copy(data);
+                        vm.searchAnswer = (data.length == 0) ? 'no trainings found' : '';
+                    });
                 }
             }
 
