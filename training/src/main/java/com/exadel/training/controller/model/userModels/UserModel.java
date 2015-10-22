@@ -14,15 +14,17 @@ public class UserModel {
     private String email;
     private Boolean isCoach;
 
-    public UserModel(){
+    public UserModel() {
     }
+
     public UserModel(User user) {
         this.id = user.getId();
         this.username =  user.getLastName() + " " + user.getFirstName();
         this.phone = user.getPhone();
         this.email = user.getEmail();
     }
-    public UserModel(User user, Boolean isCoach){
+
+    public UserModel(User user, Boolean isCoach) {
         this(user);
 
         this.isCoach = isCoach;

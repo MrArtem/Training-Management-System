@@ -280,6 +280,7 @@ public class TrainingServiceImpl implements TrainingService {
             , Integer language, Integer maxSize, boolean isInner, String place, List<Long> tagIdList
             , String additionalInfo, List<LessonModel> lessonModelList, RepeatModel repeatModel) {
 
+        //TODO tagList &  lessonList !!!
         approveAction.setDate(getTime());
         ApproveTraining approveTraining = approveAction.getApproveTraining();
 
@@ -353,10 +354,15 @@ public class TrainingServiceImpl implements TrainingService {
         if (approveAction == null) {
             editTrainingNotPrevApprove(trainingDAO.getTrainingById(trainingId), title, description
                     , shortInfo, language, maxSize, isInner, place, tagIdList
+        if (approveAction == null) {
+            editTrainingNotPrevApprove(trainingDAO.getTrainingById(trainingId), title, description
+                    , shortInfo, language, maxSize, isInner, tagIdList
                     , additionalInfo, lessonModelList, repeatModel);
         } else {
             editTrainingWithPrevApprove(approveAction, title, description
                     , shortInfo, language, maxSize, isInner, place, tagIdList
+            editTrainingWithPrevApprove(approveAction, title, description
+                    , shortInfo, language, maxSize, isInner, tagIdList
                     , additionalInfo, lessonModelList, repeatModel);
         }
     }
@@ -504,5 +510,22 @@ public class TrainingServiceImpl implements TrainingService {
     @Override
     public List<Training> getTrainingListByTagList(Integer page, Integer pageSize, Boolean isActual, List<Tag> tagList) {
         return trainingDAO.getTrainingListByTagList(page, pageSize, isActual, tagList);
+    }
+
+    @Override
+    public double setRating(long trainingId, int rating, long userId) {
+        Listener listener = listenerDAO.getListenerByTrainingUser(trainingId, userId);
+        if (listener != null && listener.isCanRate()) {
+            Training training = trainingDAO.getTrainingById(trainingId);
+            int sumRating = training.getSumRating() + rating;
+            training.setSumRating(sumRating);
+            int count = training.getCountListenerRating() + 1;
+            training.setCountListenerRating(count);
+            trainingDAO.changeTraining(training);
+            listener.setCanRate(false);
+            listenerDAO.changeListener(listener);
+            return (double) sumRating / count;
+        }
+        return -1;
     }
 }

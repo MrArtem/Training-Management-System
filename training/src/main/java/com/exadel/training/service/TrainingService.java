@@ -76,4 +76,8 @@ public interface TrainingService {
     void removeLesson(long trainingId, LessonModel lessonModel);
 
     void confirmEditLesson(long actionId, LessonModel lessonModel);
+    List<Training> getTrainingListByTagList(Integer page, Integer pageSize, Boolean isActual, List<Tag> tagList);
+
+
+    double setRating(long trainingId, int rating, long userId);
 }
