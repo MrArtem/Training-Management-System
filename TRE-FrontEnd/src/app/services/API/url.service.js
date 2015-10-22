@@ -18,6 +18,7 @@
             getCurrentCoursesForUser: getCurrentCoursesForUser,
             getEditedCourse: getEditedCourse,
             getFeedbacksOnUser: getFeedbacksOnUser,
+            getNewsList: getNewsList,
             getParticipants: getParticipants,
             getPastCoursesForUser: getPastCoursesForUser,
             getProfileInfo: getProfileInfo,
@@ -58,6 +59,11 @@
     function getApproveList() {
         //return ;
     }
+
+    function getNewsList() {
+        //return;
+    }
+
     function getCoursesForUser() {
         return '/api/training/training_list';
     }
