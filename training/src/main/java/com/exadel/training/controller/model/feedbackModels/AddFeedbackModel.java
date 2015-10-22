@@ -1,52 +1,37 @@
-package com.exadel.training.dao.domain;
-
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import java.util.Date;
+package com.exadel.training.controller.model.feedbackModels;
 
 /**
- * Created by ayudovin on 05.10.2015.
+ * Created by ayudovin on 21.10.2015.
  */
-@Entity
-@Table
-public class Feedback {
+public class AddFeedbackModel {
 
-    @Id
-    @GeneratedValue
-    private long id;
-
+    private long userID;
+    private long traingID;
     private boolean attendance;
-
     private boolean attitude;
-
     private boolean commSkills;
-
     private boolean questions;
-
     private boolean motivation;
-
     private boolean focusOnResult;
-
     private String other;
 
-    @NotNull
-    private long date;
-
-    @ManyToOne(cascade = CascadeType.ALL)
-    private User user;
-
-    @ManyToOne(cascade = CascadeType.ALL)
-    private Training training;
-
-    public Feedback(){
+    public AddFeedbackModel() {
     }
 
-    public long getId() {
-        return id;
+    public long getUserID() {
+        return userID;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setUserID(long userID) {
+        this.userID = userID;
+    }
+
+    public long getTraingID() {
+        return traingID;
+    }
+
+    public void setTraingID(long traingID) {
+        this.traingID = traingID;
     }
 
     public boolean isAttendance() {
@@ -103,29 +88,5 @@ public class Feedback {
 
     public void setOther(String other) {
         this.other = other;
-    }
-
-    public long getDate() {
-        return date;
-    }
-
-    public void setDate(long date) {
-        this.date = date;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public Training getTraining() {
-        return training;
-    }
-
-    public void setTraining(Training training) {
-        this.training = training;
     }
 }

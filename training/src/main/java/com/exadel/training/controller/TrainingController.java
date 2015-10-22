@@ -13,7 +13,7 @@ import java.util.Date;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/training")
+@RequestMapping("/training")
 public class TrainingController {
 
     private final Integer PAGE_SIZE = 10;

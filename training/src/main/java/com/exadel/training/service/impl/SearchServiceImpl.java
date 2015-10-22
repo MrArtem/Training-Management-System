@@ -22,7 +22,7 @@ public class SearchServiceImpl implements SearchService {
     private SearchDAO searchDAO;
 
     @Override
-    public List<User> searchService(String searchWord) {
+    public List<User> searchUser(String searchWord) {
         return searchDAO.searchUser(searchWord);
     }
 

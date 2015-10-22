@@ -14,8 +14,10 @@ $btn-green-border: #a9d8b2;
 $btn-green-hover: #468c54;
 $btn-green-border-hover: $btn-green;
 
-
-
+$btn-red: #ef3e36;
+$btn-red-border: $btn-red;
+$btn-red-hover: #a1161b;
+$btn-red-border-hover: $btn-red-hover;
 
 
 $fa-font-path: "../../bower_components/font-awesome/fonts";
@@ -38,8 +40,13 @@ $fa-font-path: "../../bower_components/font-awesome/fonts";
 // bower:scss
 // endbower
 
+html {
+  height: 100% !important;
+}
+
 body {
   color: $text-color;
+  height: 100% !important;
 
   h1 {
     color: black !important;
@@ -55,6 +62,26 @@ body {
     text-decoration: none;
   }
 
+}
+
+/*MODALS*/
+
+.tre-modal {
+  .reveal-modal:after {
+    content: "";
+    display: block;
+    position: fixed; /* could also be absolute */
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 10;
+    background-color: rgba(0,0,0,0.5);
+  }
+}
+
+.no-left-padding {
+  padding-left: 0 !important;
 }
 
 .container {
@@ -116,6 +143,18 @@ body {
 .default-btn-green:hover {
   color: $btn-green-hover;
   border-color: $btn-green-border-hover;
+  background-color: $white;
+}
+
+.default-btn-red {
+  color: $btn-red;
+  border-color: $btn-red-border;
+  background-color: $white;
+}
+
+.default-btn-red:hover {
+  color: $btn-red-hover;
+  border-color: $btn-red-border-hover;
   background-color: $white;
 }
 

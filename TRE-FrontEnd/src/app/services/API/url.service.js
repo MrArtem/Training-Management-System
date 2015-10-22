@@ -13,6 +13,8 @@
             confirm: confirm,
             createCourse: createCourse,
             editCourse: editCourse,
+            findTrainings: findTrainings,
+            findUsers: findUsers,
             getApproveList: getApproveList,
             getCoursesForUser: getCoursesForUser,
             getCurrentCoursesForUser: getCurrentCoursesForUser,
@@ -56,6 +58,14 @@
         return '/api/training/edit/' + trainingId;
     }
 
+    function findTrainings(searchQuery) {
+        return '/api/search_controller/search_training';
+    }
+
+    function findUsers(searchQuery) {
+        return '/api/search_controller/search_user'
+    }
+
     function getApproveList() {
         //return ;
     }
@@ -77,7 +87,7 @@
     }
 
     function getFeedbacksOnUser(userId) {
-        //return;
+        return '/api/feedback_controller/feedbacks_of_user/' + userId;
     }
 
     function getParticipants(courseId) {

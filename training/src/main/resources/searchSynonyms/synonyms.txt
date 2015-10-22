@@ -1,5 +1,3 @@
 js, javascript
 java script => javascript
 c-plus-plus, c++
-c#, c-sharp
-c# => c sharp
