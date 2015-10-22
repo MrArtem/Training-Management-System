@@ -67,6 +67,7 @@ public class Training {
     @OneToMany(mappedBy = "training")
     private List<Comment> commentList;
 
+    @IndexedEmbedded
     @ManyToMany(cascade = CascadeType.ALL)
     private List<Tag> tagList;
 

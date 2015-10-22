@@ -9,6 +9,6 @@ import java.util.List;
  * Created by ayudovin on 09.10.2015.
  */
 public interface SearchService {
-    List<User> searchService(String searchWord);
+    List<User> searchUser(String searchWord);
     List<Training> searchTraining(String searchWord);
 }
