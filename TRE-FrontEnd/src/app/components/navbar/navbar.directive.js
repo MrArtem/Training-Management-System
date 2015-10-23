@@ -18,13 +18,14 @@
         return directive;
 
         /** @ngInject */
-        function NavbarController(authService, searchAPI) {
+        function NavbarController($state, authService, searchAPI) {
             var vm = this;
             vm.foundTrainings = [];
             vm.foundUsers = [];
             vm.searchAnswer = '';
 
             vm.isAdmin = isAdmin;
+            vm.isActive = isActive;
             vm.clearModal = clearModal;
             vm.getUsername = getUsername;
             vm.getUserId = getUserId;
@@ -55,6 +56,10 @@
 
             function isAdmin() {
                 return authService.getAccessRights() == 0 ? true : false;
+            }
+
+            function isActive(state) {
+                return $state.includes(state);
             }
 
             function logout() {

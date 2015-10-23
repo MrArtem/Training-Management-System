@@ -6,8 +6,15 @@
   position: absolute;
 }
 
+.navbar {
+  border-bottom: solid 1px $border-gray;
+}
+
 nav {
 
+  .activelink {
+    border-bottom: solid 2px black;
+  }
 
   #searchModal:after {
     content: "";
