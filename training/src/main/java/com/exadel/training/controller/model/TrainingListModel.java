@@ -39,7 +39,7 @@ public class TrainingListModel {
         this.coachId = training.getCoach().getId();
         this.tagList = training.getTagList();
         CustomUser user = (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        this.isCoach = user.getUserId() == training.getCoach().getId() ? true : false;
+        this.isCoach = user.getUserId() == training.getCoach().getId();
     }
 
     public Long getId() {

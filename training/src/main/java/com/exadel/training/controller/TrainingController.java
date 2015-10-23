@@ -147,6 +147,7 @@ public class TrainingController {
                 trainingListModel.setNextDate(lesson.getDate());
                 trainingListModel.setNextPlace(lesson.getPlace());
             }
+            trainingListModelList.add(trainingListModel);
         }
         return trainingListModelList;
     }

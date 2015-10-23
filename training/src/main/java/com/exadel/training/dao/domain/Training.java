@@ -46,7 +46,7 @@ public class Training {
 
     private int countListenerRating;
 
-    @Enumerated(EnumType.STRING)
+    @Enumerated(value = EnumType.STRING)
     private State state;
 
     private boolean isRepeat;
