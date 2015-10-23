@@ -32,6 +32,7 @@
             vm.search = search;
 
             vm.username = getUsername();
+            console.log(vm.username);
             vm.id = getUserId();
             console.log(vm.id);
 

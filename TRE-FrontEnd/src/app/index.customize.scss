@@ -1,14 +1,14 @@
 // Foundation by ZURB
 // foundation.zurb.com
 // Licensed under MIT Open Source
-@import url(https://fonts.googleapis.com/css?family=Ledger&subset=latin,cyrillic);
 
 @font-face {
- font-family: myFirstFont;
- src: url('components/merriweather/Merriweather Light.ttf');
+ font-family: Merriweather;
+ src: url('assets/fonts/merriweather/Merriweather Light.ttf');
 }
 
-$tre-font-family: myFirstFont;
+$tre-font-family: Merriweather;
+$tre-header-font: 'Open Sans', sans-serif;
 
 // Table of Contents
 // Foundation Settings
@@ -101,7 +101,7 @@ $font-family-sans-serif: $tre-font-family;
 // $font-weight-normal: normal;
 // $font-weight-bold: bold;
 
-// $white       : #FFFFFF;
+$white: #FFFFFF;
 // $ghost       : #FAFAFA;
 // $snow        : #F9F9F9;
 $vapor: #F6F6F6;
@@ -123,6 +123,7 @@ $black: #4c4c4c;
 $gray: #a1a1a1;
 $text-color: rgba(0, 0, 0, 0.6);
 $light-gray: #f6f6f6;
+
 $blue: #4A90E2;
 $tre-light-blue: #55acee;
 $tre-hover-blue: #25709D;
@@ -1372,31 +1373,31 @@ $icon-bar-icon-color-hover: $tre-hover-blue;
 // $include-html-top-bar-classes: $include-html-classes;
 
 // Background color for the top bar
-// $topbar-bg-color: $oil;
-// $topbar-bg: $topbar-bg-color;
+ $topbar-bg-color: $white;
+ $topbar-bg: $white;
 
 // Height and margin
-// $topbar-height: rem-calc(45);
-// $topbar-margin-bottom: 0;
+ $topbar-height: rem-calc(68);
+//$topbar-margin-bottom: 0;
 
 // Controlling the styles for the title in the top bar
 // $topbar-title-weight: $font-weight-normal;
 // $topbar-title-font-size: rem-calc(17);
 
 // Set the link colors and styles for top-level nav
-// $topbar-link-color: $white;
-// $topbar-link-color-hover: $white;
+ $topbar-link-color: $black;
+ $topbar-link-color-hover: $black;
 // $topbar-link-color-active: $white;
 // $topbar-link-color-active-hover: $white;
 // $topbar-link-weight: $font-weight-normal;
 // $topbar-link-font-size: rem-calc(13);
 // $topbar-link-hover-lightness: -10%; // Darken by 10%
 // $topbar-link-bg: $topbar-bg;
-// $topbar-link-bg-hover: $jet;
-// $topbar-link-bg-color-hover: $charcoal;
+ $topbar-link-bg-hover: $white;
+ $topbar-link-bg-color-hover: $white;
 // $topbar-link-bg-active: $primary-color;
 // $topbar-link-bg-active-hover: scale-color($primary-color, $lightness: -14%);
-// $topbar-link-font-family: $body-font-family;
+ $topbar-link-font-family: $tre-header-font;
 // $topbar-link-text-transform: none;
 // $topbar-link-padding: ($topbar-height / 3);
 // $topbar-back-link-size: rem-calc(18);
@@ -1441,7 +1442,7 @@ $icon-bar-icon-color-hover: $tre-hover-blue;
 // $topbar-input-height: rem-calc(28);
 
 // Divider Styles
-// $topbar-divider-border-bottom: solid 1px scale-color($topbar-bg-color, $lightness: 13%);
+ $topbar-divider-border-bottom: solid 3px scale-color($black, $lightness: 100%);
 // $topbar-divider-border-top: solid 1px scale-color($topbar-bg-color, $lightness: -50%);
 
 // Sticky Class

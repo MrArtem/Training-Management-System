@@ -1,7 +1,7 @@
 <nav class="top-bar" data-topbar role="navigation">
     <ul class="title-area">
         <li class="name">
-            <h1><a ui-sref="mycourses">My Site</a></h1>
+            <h1><a ui-sref="mycourses"><img alt="Exadel" ng-src="app/assets/images/ExadelLogo.png"></a></h1>
         </li>
         <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
         <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
@@ -11,10 +11,10 @@
 
         <!-- Left Nav Section -->
         <ul class="left">
-            <li><a ui-sref="mycourses">My Courses</a></li>
-            <li><a ui-sref="browse">Browse</a></li>
-            <li><a ui-sref="profile({userId: navbar.id})">Profile</a></li>
-            <li ng-if="navbar.isAdmin()"><a ui-sref="admin">Admin</a></li>
+            <li><a ui-sref="mycourses">MY COURSES</a></li>
+            <li><a ui-sref="browse">BROWSE</a></li>
+            <li><a ui-sref="profile({userId: navbar.id})">PROFILE</a></li>
+            <li ng-if="navbar.isAdmin()"><a ui-sref="admin">ADMIN</a></li>
         </ul>
 
         <!-- Right Nav Section -->

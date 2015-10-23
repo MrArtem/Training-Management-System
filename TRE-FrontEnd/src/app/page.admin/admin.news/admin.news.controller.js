@@ -11,6 +11,8 @@
 		vm.newsList = [];
 		vm.getNews = getNews;
 
+		vm.getNews();
+
 		function getNews() {
 			adminAPI.getNewsList().then(function(data) {
 				vm.newsList = angular.copy(data);

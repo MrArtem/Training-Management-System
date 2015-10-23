@@ -67,11 +67,11 @@
     }
 
     function getApproveList() {
-        //return ;
+        return '/api/approve_list';
     }
 
     function getNewsList() {
-        //return;
+        return '/api/news';
     }
 
     function getCoursesForUser() {
