@@ -4,6 +4,7 @@ import com.exadel.training.controller.model.trainingModels.LessonModel;
 import com.exadel.training.controller.model.trainingModels.RepeatModel;
 import com.exadel.training.dao.*;
 import com.exadel.training.dao.domain.*;
+import com.exadel.training.service.NewsService;
 import com.exadel.training.service.TrainingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,6 +35,8 @@ public class TrainingServiceImpl implements TrainingService {
     private LessonDAO lessonDAO;
     @Autowired
     private TagDAO tagDAO;
+    @Autowired
+    private NewsService newsService;
 
     private Long getTime() {
         Calendar calendar = new GregorianCalendar();
@@ -218,6 +221,8 @@ public class TrainingServiceImpl implements TrainingService {
         approveAction.setApproveLessonList(approveLessonList);
         approveAction.setType(ApproveAction.Type.CREATE);
         approveActionDAO.addApproveAction(approveAction);
+        //todo
+        newsService.addNews(coach, News.TableName.TRAINING, News.ActionType.CREATE, training.getId());
     }
 
     private void removeApproveLessonList(ApproveAction approveAction, boolean removeLesson) {

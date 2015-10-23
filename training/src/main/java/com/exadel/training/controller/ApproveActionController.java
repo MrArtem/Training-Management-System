@@ -17,8 +17,6 @@ import java.util.List;
 @RestController
 public class ApproveActionController {
 
-    private final Integer PAGE_SIZE = 10;
-
     private final String trainingTableName = "APPROVE_TRAINING";
 
     private final String lessonTableName = "APPROVE_LESSON";
@@ -27,9 +25,11 @@ public class ApproveActionController {
     private ApproveActionService approveActionService;
 
     @RequestMapping(value = "/approve_list", method = RequestMethod.GET)
-    public List<ApproveActionModel> getApproveActionList(@RequestParam("page") Integer page) {
+    public List<ApproveActionModel> getApproveActionList(@RequestParam("page") Integer page,
+                                                         @RequestParam("page_size")
+                                                         Integer pageSize) {
         List<ApproveActionModel> approveActionModelList = new ArrayList<ApproveActionModel>();
-        for (ApproveAction approveAction : approveActionService.getActionList(page, PAGE_SIZE)) {
+        for (ApproveAction approveAction : approveActionService.getActionList(page, pageSize)) {
             ApproveActionModel approveActionModel = new ApproveActionModel();
             approveActionModel.setDate(approveAction.getDate());
             approveActionModel.setType(approveAction.getType());

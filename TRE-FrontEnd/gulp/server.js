@@ -10,7 +10,11 @@ var browserSyncSpa = require('browser-sync-spa');
 var util = require('util');
 
 var proxyMiddleware = require('http-proxy-middleware');
-var proxy = proxyMiddleware('/api', {target: 'http://localhost:8080', changeOrigin: true});
+var proxy = proxyMiddleware('/api',
+    {target: 'http://localhost:8080',
+    pathRewrite: {
+        "/api" : ""
+    }});
 
 function browserSyncInit(baseDir, browser) {
     browser = browser === undefined ? 'default' : browser;

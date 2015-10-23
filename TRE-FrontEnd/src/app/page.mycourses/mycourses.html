@@ -39,11 +39,11 @@
 
     <section class="course-list row">
         <div class="course-item column" ng-repeat="course in mycourses.userCourses | filter:{isCoach: mycourses.filter.isCoach}">
-            <h1 class="course-title">{{course.trainingTitle}}</h1>
+            <h1 class="course-title">{{course.title}}</h1>
 
-            <h2 class="course-lesson-number">Lesson #{{course.nextLesson}}</h2>
+            <!--<h2 class="course-lesson-number">Lesson #{{course.nextLesson}}</h2>-->
 
-            <p class="course-excerpt">{{course.shortInfo}}</p>
+            <p class="course-excerpt">{{course.excerpt}}</p>
 
             <div class="course-meta">
                 <h3 class="course-date">When: <span class="value">{{course.nextDate}}</span></h3>

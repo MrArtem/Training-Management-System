@@ -7,31 +7,34 @@
     /* @ngInject */
     function UrlProvider() {
         var urlProvider = {
-            addLesson: addLesson,
+            addParticipant: addParticipant,
             cancelCreate: cancelCreate,
             cancelEdit: cancelEdit,
             confirm: confirm,
             createCourse: createCourse,
-            deleteLesson: deleteLesson,
             editCourse: editCourse,
-            editLesson: editLesson,
+            findTrainings: findTrainings,
+            findUsers: findUsers,
             getApproveList: getApproveList,
             getCoursesForUser: getCoursesForUser,
             getCurrentCoursesForUser: getCurrentCoursesForUser,
             getEditedCourse: getEditedCourse,
             getFeedbacksOnUser: getFeedbacksOnUser,
+            getNewsList: getNewsList,
+            getParticipants: getParticipants,
             getPastCoursesForUser: getPastCoursesForUser,
             getProfileInfo: getProfileInfo,
             getTimetable: getTimetable,
             getWaitingCoursesForUser: getWaitingCoursesForUser,
             login: login,
-            logout: logout
+            logout: logout,
+            manageLesson: manageLesson
         };
         return urlProvider;
     }
 
-    function addLesson(courseId) {
-        return '/api/training/' + courseId + '/add_lesson';
+    function addParticipant(courseId) {
+        return '/api/training/' + courseId + '/add_listener';
     }
 
     function cancelCreate(trainingId) {
@@ -50,27 +53,33 @@
         return '/api/training/create';
     }
 
-    function deleteLesson(courseId, lessonId) {
-        return '/api/training/' + courseId + '/delete_lesson/' + lessonId;
-    }
 
     function editCourse(trainingId) {
         return '/api/training/edit/' + trainingId;
     }
 
-    function editLesson(trainingId) {
-        return '/api/training/' + trainingId + '/edit_lesson';
+    function findTrainings(searchQuery) {
+        return '/api/search_controller/search_training';
+    }
+
+    function findUsers(searchQuery) {
+        return '/api/search_controller/search_user'
     }
 
     function getApproveList() {
-        //return ;
+        return '/api/approve_list';
     }
-    function getCoursesForUser(login) {
-        //return;
+
+    function getNewsList() {
+        return '/api/news';
+    }
+
+    function getCoursesForUser() {
+        return '/api/training/training_list';
     }
 
     function getCurrentCoursesForUser(userId) {
-        //return;
+        return '/api/user_controller/actualTraining/' + userId;
     }
 
     function getEditedCourse(trainingId) {
@@ -78,15 +87,19 @@
     }
 
     function getFeedbacksOnUser(userId) {
-        //return;
+        return '/api/feedback_controller/feedbacks_of_user/' + userId;
+    }
+
+    function getParticipants(courseId) {
+        return '/api/training/' + courseId + '/get_listeners';
     }
 
     function getPastCoursesForUser(userId) {
-        //return;
+        return '/api/user_controller/visitedTraining/' + userId;
     }
 
     function getProfileInfo(userId) {
-        //return;
+        return '/api/user_controller/user_info/' + userId;
     }
 
     function getTimetable(courseId) {
@@ -103,5 +116,9 @@
 
     function logout() {
         return '/api/logout';
+    }
+
+    function manageLesson(courseId) {
+        return '/api/training/' + courseId + '/lessons';
     }
 })();

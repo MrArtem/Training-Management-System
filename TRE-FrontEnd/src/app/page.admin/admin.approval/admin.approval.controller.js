@@ -13,13 +13,7 @@
         vm.getApproveList = getApproveList;
         vm.makeText = makeText;
 
-        vm.approveList.push({
-            coachName: 'John Smith',
-            date: '14.05.2015',
-            tableName: 'APPROVE_TRAINING',
-            trainingName: 'Java for beginners',
-            type: 'CREATE'
-        });
+        vm.getApproveList();
 
         function getApproveList() {
             adminAPI.getApproveList().then(function(data) {
