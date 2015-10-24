@@ -26,13 +26,12 @@ import java.util.List;
 @RequestMapping("/user_controller")
 public class UserController {
 
-    CustomUser customUser =  (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
     @Autowired
     private UserService userService;
 
     @RequestMapping(value = "/user_info/{idUser}", method = RequestMethod.GET)
     public UserModel getUserInfo(@PathVariable("idUser") long idUser) {
+        CustomUser customUser =  (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         long idCurrentUser = customUser.getUserId();
         UserModel userModel = new UserModel(userService.getUserById(idCurrentUser), userService.isCoachOfCurrentUser(idCurrentUser, idUser));
 
