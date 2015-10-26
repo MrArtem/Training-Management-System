@@ -18,24 +18,24 @@
         return directive;
 
         /** @ngInject */
-        function NavbarController($state, authService, searchAPI) {
+        function NavbarController($state, $q, authService, searchAPI) {
             var vm = this;
+            var userPromise = $q.defer();
+
+            vm.user = {};
             vm.foundTrainings = [];
             vm.foundUsers = [];
             vm.searchAnswer = '';
 
+            vm.clearModal = clearModal;
+            vm.getUser = getUser;
             vm.isAdmin = isAdmin;
             vm.isActive = isActive;
-            vm.clearModal = clearModal;
-            vm.getUsername = getUsername;
-            vm.getUserId = getUserId;
             vm.logout = logout;
             vm.search = search;
 
-            vm.username = getUsername();
-            console.log(vm.username);
-            vm.id = getUserId();
-            console.log(vm.id);
+            vm.getUser();
+
 
             //////
 
@@ -46,12 +46,11 @@
                 vm.searchQuery = '';
             }
 
-            function getUsername() {
-                return authService.getUser().username;
-            }
-
-            function getUserId() {
-                return authService.getUser().userId;
+            function getUser() {
+                authService.getLoginPromise().then(function(data) {
+                    vm.user = data;
+                    console.log(vm.user.userId);
+                });
             }
 
             function isAdmin() {

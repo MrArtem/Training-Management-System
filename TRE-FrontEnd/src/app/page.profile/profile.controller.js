@@ -9,6 +9,7 @@
     function ProfileController($stateParams, userAPI) {
         var vm = this;
         var userId = $stateParams.userId;
+        console.log(userId);
         vm.profileInfo = {};
 
         vm.currentCourses = [];

@@ -2,21 +2,20 @@
     'use strict';
     angular
         .module('tmsAPI')
-        .factory('authAPI', userAPI);
+        .factory('authAPI', authAPI);
 
     /* @ngInject */
-    function userAPI($http, urlProvider) {
-        var userAPI = {
+    function authAPI($http, urlProvider) {
+        var authAPI = {
             login: login,
             logout: logout
         }
 
-        return userAPI;
+        return authAPI;
 
         /////
 
         function login(login, password) {
-            console.log(login, password);
             var headers = {'Content-Type': 'application/x-www-form-urlencoded'};
             return $http.post(urlProvider.login(), "username=" + login + "&password=" + password, {headers: headers}).then(function(result) {
                 return result.data;

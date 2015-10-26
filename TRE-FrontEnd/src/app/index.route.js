@@ -59,6 +59,7 @@
                 controllerAs: 'managecourse',
                 params: {
                     courseId: null,
+                    edit: null,
                     type: null
                 },
                 auth: true,

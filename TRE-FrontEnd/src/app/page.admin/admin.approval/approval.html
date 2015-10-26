@@ -20,7 +20,7 @@
                         <td>{{item.coachName}}</td>
                         <td>{{approval.makeText(item.type, item.tableName)}} {{item.trainingName}}</td>
                         <td>{{item.date}}</td>
-                        <td>See details</td>
+                        <td><a ui-sref="managecourse.step1({courseId: item.trainingId, type: item.type})">See details</a></td>
                     </tr>
                     </tbody>
                 </table>

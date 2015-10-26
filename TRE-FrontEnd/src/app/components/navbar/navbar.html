@@ -14,7 +14,7 @@
             <ul class="left">
                 <li><a ui-sref="mycourses" ng-class="{activelink: navbar.isActive('mycourses')}">MY COURSES</a></li>
                 <li><a ui-sref="browse" ng-class="{activelink: navbar.isActive('browse')}">BROWSE</a></li>
-                <li><a ui-sref="profile({userId: navbar.id})" ng-class="{activelink: navbar.isActive('profile')}">PROFILE</a></li>
+                <li><a ui-sref="profile({userId: navbar.user.userId})" ng-class="{activelink: navbar.isActive('profile')}">PROFILE</a></li>
                 <li ng-if="navbar.isAdmin()"><a ui-sref="admin" ng-class="{activelink: navbar.isActive('admin')}">ADMIN</a></li>
             </ul>
 
@@ -25,8 +25,8 @@
                 <li class="has-dropdown">
                     <a href="#"><i class="fa fa-user"></i></a>
                     <ul class="dropdown">
-                        <li><label>{{navbar.username}}</label></li>
-                        <li><a ui-sref="profile({userId: navbar.id})">Profile</a></li>
+                        <li><label>{{navbar.user.username}}</label></li>
+                        <li><a ui-sref="profile({userId: navbar.user.userId})">Profile</a></li>
                         <li><a href="#" ng-click="navbar.logout()">Logout</a></li>
                     </ul>
                 </li>
