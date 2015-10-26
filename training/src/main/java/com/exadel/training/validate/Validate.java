@@ -73,9 +73,11 @@ public class Validate {
     @Before("@annotation(com.exadel.training.validate.annotation.LegalID)")
     public void idCheck(JoinPoint joinPoint) {
         MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
-        for (MethodArgument argument : MethodArgument.of(joinPoint))
-            if (argument.hasAnnotation(LegalID.class) && (Long)argument.getValue() == 0)
+        for (MethodArgument argument : MethodArgument.of(joinPoint)) {
+            if (argument.hasAnnotation(LegalID.class) && (Long) argument.getValue() == 0) {
                 throw new NullPointerException("id == 0 in" + methodSignature.getName());
+            }
+        }
     }
 
 }
