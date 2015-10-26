@@ -23,4 +23,6 @@ public interface LessonDAO {
     Long getEndDateByTraining(long trainingId);
 
     Lesson getNextLesson(long trainingId);
+
+    List<Lesson> getLessonListByTrainingAndState(long trainingId, Lesson.State state);
 }
