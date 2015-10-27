@@ -118,8 +118,8 @@ public class TrainingController {
     }
 
     @RequestMapping(value = "/add_tag", method = RequestMethod.POST)
-    public void addTag(@RequestBody Tag tag) {
-        tagService.addTag(tag);
+    public Long addTag(@RequestBody Tag tag) {
+        return tagService.addTag(tag);
     }
 
     @RequestMapping(value = "/tag_list", method = RequestMethod.GET)
