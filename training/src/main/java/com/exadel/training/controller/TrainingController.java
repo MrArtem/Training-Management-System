@@ -5,6 +5,7 @@ import com.exadel.training.controller.model.TrainingListModel;
 import com.exadel.training.controller.model.trainingModels.*;
 import com.exadel.training.dao.domain.*;
 import com.exadel.training.service.*;
+import org.apache.tools.ant.taskdefs.Get;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -152,7 +153,7 @@ public class TrainingController {
         return trainingListModelList;
     }
 
-    @RequestMapping(value = "/training/{id}/add_comment")
+    @RequestMapping(value = "/training/{id}/add_comment", method = RequestMethod.POST)
     public void addComment(@PathVariable("id") Long trainingId, @RequestBody CommentModel commentModel) {
         Comment comment = new Comment();
         comment.setClear(commentModel.getClear());
@@ -170,13 +171,13 @@ public class TrainingController {
         commentService.addComment(comment);
     }
 
-    @RequestMapping(value = "training/{trainingId}/remove_comment/{commentId}")
+    @RequestMapping(value = "training/{trainingId}/remove_comment/{commentId}", method = RequestMethod.PUT)
     public void removeComment(@PathVariable("trainingId") Long trainingId,
                               @PathVariable("commentId") Long commentId) {
         commentService.removeComment(commentId);
     }
 
-    @RequestMapping(value = "/training/{id}/comment_list")
+    @RequestMapping(value = "/training/{id}/comment_list", method = RequestMethod.GET)
     public List<CommentModel> getTrainingCommentList(@PathVariable("id") Long trainingId) {
         List<Comment> commentList = commentService.getTrainingCommentList(trainingId);
         List<CommentModel> commentModelList = new ArrayList<CommentModel>();
@@ -200,7 +201,7 @@ public class TrainingController {
         return commentModelList;
     }
 
-    @RequestMapping(value = "/user/{id}/coach_comment_list")
+    @RequestMapping(value = "/user/{id}/coach_comment_list", method = RequestMethod.GET)
     public List<CommentModel> getCoachCommentList(@PathVariable("id") Long coachId) {
         List<Comment> commentList = commentService.getCoachCommentList(coachId);
         List<CommentModel> commentModelList = new ArrayList<CommentModel>();
@@ -224,7 +225,7 @@ public class TrainingController {
         return commentModelList;
     }
 
-    @RequestMapping(value = "/user/{id}/comment_list")
+    @RequestMapping(value = "/user/{id}/comment_list", method = RequestMethod.GET)
     public List<CommentModel> getUserCommentList(@PathVariable("id") Long userId) {
         List<Comment> commentList = commentService.getUserCommentList(userId);
         List<CommentModel> commentModelList = new ArrayList<CommentModel>();
