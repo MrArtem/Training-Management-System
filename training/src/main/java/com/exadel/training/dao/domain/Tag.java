@@ -24,8 +24,6 @@ public class Tag {
     @Column(unique=true)
     private String specialty;
 
-    private String colour;
-
     public Tag() {
     }
 
@@ -49,11 +47,4 @@ public class Tag {
         this.specialty = specialty;
     }
 
-    public String getColour() {
-        return colour;
-    }
-
-    public void setColour(String colour) {
-        this.colour = colour;
-    }
 }

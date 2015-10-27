@@ -13,9 +13,13 @@ import org.hibernate.search.annotations.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.Parameter;
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotBlank;
+
 import java.util.List;
 
 /**
@@ -67,23 +71,23 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-
-    @NotNull
+    @NotBlank
     private String login;
 
-    @NotNull
+    @NotBlank
     @Field(index = Index.YES, analyze = Analyze.YES, store = Store.YES)
     @Analyzer(definition = "customAnalyzer")
     private String firstName;
 
-    @NotNull
+    @NotBlank
     @Field(index = Index.YES, analyze = Analyze.YES, store = Store.YES)
     @Analyzer(definition = "customAnalyzer")
     private String lastName;
 
-    @NotNull
+    @NotBlank
     @Field(index = Index.YES, analyze = Analyze.YES, store = Store.YES)
     @Analyzer(definition = "customAnalyzer")
+    @Email
     private String email;
 
     @Field(index = Index.YES, analyze = Analyze.YES, store = Store.YES)
