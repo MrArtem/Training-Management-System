@@ -8,6 +8,8 @@
     /** @ngInject */
     function runBlock($log, $rootScope, $state, authService) {
         $log.debug('runBlock end');
+
+        $rootScope.isLoginPage = isLoginPage;
         
         //try login with creds
         authService.credsLogin();
@@ -45,6 +47,12 @@
                 }
             }
         });
+
+
+
+        function isLoginPage() {
+            return $state.includes('login');
+        }
     }
 
 })();

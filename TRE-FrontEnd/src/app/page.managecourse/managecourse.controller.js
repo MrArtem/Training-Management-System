@@ -24,9 +24,9 @@
         }
         else {
             $scope.isEdited = false;
-            $scope.courseInfo.lessonList = [];
-            $scope.courseInfo.tagList = [];
-            $scope.courseInfo.repeatModel = {
+            vm.courseInfo.lessonList = [];
+            vm.courseInfo.tagList = [];
+            vm.courseInfo.repeatModel = {
                 lessonList: []
             };
         }
