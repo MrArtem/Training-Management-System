@@ -9,18 +9,26 @@
     function ManageCourseController($scope, $stateParams, courseAPI, authService) {
 
         var vm = this;
+        vm.approveCourse = approveCourse;
         vm.courseInfo = {};
         vm.createCourse = createCourse;
         vm.getEditedCourse = getEditedCourse;
+        vm.isAdmin = isAdmin;
 
         if($stateParams.edit) {
             vm.courseId = $stateParams.courseId;
-            vm.isEdited = true;
+            vm.actionId = $stateParams.id;
+            $scope.isEdited = true;
             vm.isDraft = ($stateParams.type == 'CREATE') ? true : false;
             vm.getEditedCourse();
         }
         else {
-            vm.isEdited = false;
+            $scope.isEdited = false;
+            $scope.courseInfo.lessonList = [];
+            $scope.courseInfo.tagList = [];
+            $scope.courseInfo.repeatModel = {
+                lessonList: []
+            };
         }
 
         $scope.tempDates = [];
@@ -29,11 +37,13 @@
             endDate: ""
         };
         $scope.courseInfo = vm.courseInfo;
-        $scope.courseInfo.lessonList = [];
-        $scope.courseInfo.tagList = [];
-        $scope.courseInfo.repeatModel = {
-            lessonList: []
-        };
+
+        function approveCourse() {
+            courseAPI.approveCourse(vm.actionId, $scope.courseInfo).then(function(result){
+                    //do something;
+                }
+            );
+        }
 
         function createCourse() {
             console.log('course creating');
@@ -66,11 +76,15 @@
         }
 
         function getEditedCourse() {
-            courseAPI.getEditedCourse(vm.courseId).then(function(data) {
+            courseAPI.getEditedCourse(vm.actionId).then(function(data) {
                     $scope.courseInfo = angular.copy(data);
                     console.log($scope.courseInfo);
                 }
             );
+        }
+
+        function isAdmin() {
+            return authService.getAccessRights() == 0 ? true : false;
         }
     }
 })();

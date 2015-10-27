@@ -4,7 +4,8 @@
         <h1>.....</h1>
     </div>
     <div class="row">
-        <a href="" class="button medium" ng-click="managecourse.createCourse()">Create course</a>
+        <a ng-if="!isEdited" href="" class="left button round default-btn-blue" ng-click="managecourse.createCourse()">Create course</a>
+        <a ng-if="managecourse.isAdmin() && isEdited" href="" class="left button round default-btn-green" ng-click="managecourse.approveCourse()">Approve course</a>
     </div>
 
     <div ui-view></div>

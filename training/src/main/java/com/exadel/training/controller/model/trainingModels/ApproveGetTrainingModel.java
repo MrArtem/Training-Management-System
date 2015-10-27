@@ -4,18 +4,18 @@ import java.util.List;
 
 public class ApproveGetTrainingModel extends TrainingModel {
 
-    private List<LessonModel> lessonModelList;
+    private List<LessonModel> lessonList;
 
     private RepeatModel repeatModel;
 
     private String additionalInfo;
 
-    public List<LessonModel> getLessonModelList() {
-        return lessonModelList;
+    public List<LessonModel> getLessonList() {
+        return lessonList;
     }
 
-    public void setLessonModelList(List<LessonModel> lessonModelList) {
-        this.lessonModelList = lessonModelList;
+    public void setLessonList(List<LessonModel> lessonList) {
+        this.lessonList = lessonList;
     }
 
     public String getAdditionalInfo() {

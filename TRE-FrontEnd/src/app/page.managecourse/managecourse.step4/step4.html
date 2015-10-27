@@ -2,17 +2,13 @@
 
     <div class="row">
 
-        <div class="small-1 column"><a ui-sref="managecourse.step3">Previous</a></div>
+        <div class="small-1 column"><a ui-sref="step3">Previous</a></div>
 
         <div class="small-10 column">
 
             <div class="row">
 
-                <!--<ul class="tabs" data-tab>-->
-                    <!--<li class="tab-title" ui-sref-active="active"><a ui-sref=".manual">Add dates manually</a></li>-->
-                    <!--<li class="tab-title" ui-sref-active="active"><a ui-sref=".repeat">Set repeat model</a></li>-->
-                <!--</ul>-->
-                <div class="switch round">
+                <div ng-if="!isEdited" class="switch round">
                     <p>Do you want to set repeat model?</p>
                     <input id="on-off" type="checkbox" ng-model="courseInfo.isRepeating" ng-change="step4.changeTab()">
                     <label for="on-off">
@@ -20,7 +16,6 @@
                         <span class="switch-off">No</span>
                     </label>
                 </div>
-
 
                 <div ui-view></div>
 

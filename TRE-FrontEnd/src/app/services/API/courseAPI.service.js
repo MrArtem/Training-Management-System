@@ -9,6 +9,7 @@
         var courseAPI = {
             addLesson: addLesson,
             addParticipant: addParticipant,
+            approveCourse: approveCourse,
             cancelCreate: cancelCreate,
             cancelEdit: cancelEdit,
             createCourse: createCourse,
@@ -52,6 +53,19 @@
         }
 
         //////////
+
+        function approveCourse(actionId, courseData) {
+            console.log(courseData);
+            return $http.post(urlProvider.approveCourse(actionId), courseData, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(function(results) {
+                console.log('Course approved successfully!');
+                $state.transitionTo('admin');
+                return results.data;
+            });
+        }
 
         function createCourse(courseData) {
             console.log(courseData);

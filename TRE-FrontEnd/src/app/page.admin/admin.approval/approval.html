@@ -19,8 +19,8 @@
                     <tr ng-repeat="item in approval.approveList">
                         <td>{{item.coachName}}</td>
                         <td>{{approval.makeText(item.type, item.tableName)}} {{item.trainingName}}</td>
-                        <td>{{item.date}}</td>
-                        <td><a ui-sref="managecourse.step1({courseId: item.trainingId, type: item.type})">See details</a></td>
+                        <td>{{item.date | date: "MMM d, y h:mm a"}}</td>
+                        <td><a ui-sref="step1({courseId: item.trainingId, type: item.type, edit: true, id: item.id})">See details</a></td>
                     </tr>
                     </tbody>
                 </table>

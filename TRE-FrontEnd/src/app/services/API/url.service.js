@@ -8,6 +8,7 @@
     function UrlProvider() {
         var urlProvider = {
             addParticipant: addParticipant,
+            approveCourse: approveCourse,
             cancelCreate: cancelCreate,
             cancelEdit: cancelEdit,
             confirm: confirm,
@@ -35,6 +36,10 @@
 
     function addParticipant(courseId) {
         return '/api/training/' + courseId + '/add_listener';
+    }
+
+    function approveCourse(actionId) {
+        return '/api/training/confirm/' + actionId;
     }
 
     function cancelCreate(trainingId) {
@@ -83,7 +88,7 @@
     }
 
     function getEditedCourse(trainingId) {
-        return '/api/training/get_edited_course/' + trainingId;
+        return '/api/training/getApproveTraining/' + trainingId;
     }
 
     function getFeedbacksOnUser(userId) {

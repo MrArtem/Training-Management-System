@@ -14,8 +14,10 @@
             <ul class="left">
                 <li><a ui-sref="mycourses" ng-class="{activelink: navbar.isActive('mycourses')}">MY COURSES</a></li>
                 <li><a ui-sref="browse" ng-class="{activelink: navbar.isActive('browse')}">BROWSE</a></li>
-                <li><a ui-sref="profile({userId: navbar.user.userId})" ng-class="{activelink: navbar.isActive('profile')}">PROFILE</a></li>
-                <li ng-if="navbar.isAdmin()"><a ui-sref="admin" ng-class="{activelink: navbar.isActive('admin')}">ADMIN</a></li>
+                <li><a ui-sref="profile({userId: navbar.user.userId})"
+                       ng-class="{activelink: navbar.isActive('profile')}">PROFILE</a></li>
+                <li ng-if="navbar.isAdmin()"><a ui-sref="admin"
+                                                ng-class="{activelink: navbar.isActive('admin')}">ADMIN</a></li>
             </ul>
 
             <!-- Right Nav Section -->
@@ -39,21 +41,26 @@
 </div>
 
 <div class="tre-modal">
-    <div id="searchModal" class="reveal-modal large full-modal" data-reveal aria-labelledby="searchTitle"  data-options="close_on_background_click:false;" aria-hidden="true"
-         role="dialog">
+    <div id="searchModal" class="reveal-modal large full-modal" data-reveal aria-labelledby="searchTitle"
+         data-options="close_on_background_click:false;" aria-hidden="true" role="dialog">
         <h2 id="searchTitle">Search</h2>
 
         <div class="row">
-            <input type="text" ng-model="navbar.searchQuery" ng-change="navbar.search()" ng-model-options="{debounce: { 'default': 250} }" placeholder="Search...">
+            <input type="text" ng-model="navbar.searchQuery" ng-change="navbar.search()"
+                   ng-model-options="{debounce: { 'default': 250} }" placeholder="Search...">
         </div>
         <p>{{navbar.searchAnswer}}</p>
+
         <div class="row" ng-repeat="training in navbar.foundTrainings">
             <p>{{training.title}}</p>
+
             <p>{{training.excerpt}}</p>
         </div>
         <div class="row" ng-repeat="user in navbar.foundUsers">
             <p>{{user.username}}</p>
+
             <p>{{user.email}}</p>
+
             <p>{{user.phone}}</p>
         </div>
 

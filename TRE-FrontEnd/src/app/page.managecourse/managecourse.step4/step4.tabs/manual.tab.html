@@ -32,7 +32,7 @@
                 <div class="scrollable-div">
                     <table>
                         <tr ng-repeat="lesson in courseInfo.lessonList track by $index">
-                            <td>{{lesson |  date: "MMM d, y h:mm a"}}</td>
+                            <td>{{lesson.date |  date: "MMM d, y h:mm a"}}</td>
                         </tr>
                     </table>
                 </div>

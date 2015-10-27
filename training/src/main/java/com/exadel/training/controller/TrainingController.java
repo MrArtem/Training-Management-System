@@ -77,7 +77,7 @@ public class TrainingController {
     }
 
     @RequestMapping(value = "/confirm/{id}", method = RequestMethod.POST)
-    void confirmAddTraining(@PathVariable("id") long actionId, @RequestBody AddingTrainingModel addingTrainingModel) {
+    void confirmTraining(@PathVariable("id") long actionId, @RequestBody AddingTrainingModel addingTrainingModel) {
         trainingService.confirmTraining(actionId
                 , addingTrainingModel.getTitle()
                 , addingTrainingModel.getDescription()
@@ -266,6 +266,7 @@ public class TrainingController {
             approveTrainingModel.setTagList(approveTraining.getTagList());
             approveTrainingModel.setCoachId(coach.getId());
             approveTrainingModel.setCoachName(coach.getFirstName() + " " + coach.getLastName());
+            approveTrainingModel.setLanguage(approveTraining.getLanguage());
         } else {
             approveTrainingModel.setTitle(training.getTitle());
             approveTrainingModel.setDescription(training.getDescription());
@@ -275,6 +276,7 @@ public class TrainingController {
             approveTrainingModel.setCoachId(coach.getId());
             approveTrainingModel.setCoachName(coach.getFirstName() + " " + coach.getLastName());
             approveTrainingModel.setTagList(training.getTagList());
+            approveTrainingModel.setLanguage(training.getLanguage());
         }
         approveTrainingModel.setIsRepeating(training.isRepeat());
 
@@ -289,7 +291,7 @@ public class TrainingController {
                 lessonModel.setDate(approveLesson.getDate());
                 lessonModelList.add(lessonModel);
             }
-            approveTrainingModel.setLessonModelList(lessonModelList);
+            approveTrainingModel.setLessonList(lessonModelList);
         }
 
 
