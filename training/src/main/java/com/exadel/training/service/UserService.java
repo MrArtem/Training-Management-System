@@ -1,5 +1,6 @@
 package com.exadel.training.service;
 
+import com.exadel.training.controller.model.userModels.ExUserModel;
 import com.exadel.training.dao.domain.Listener;
 import com.exadel.training.dao.domain.Training;
 import com.exadel.training.dao.domain.User;
