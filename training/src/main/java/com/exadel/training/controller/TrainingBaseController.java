@@ -4,9 +4,13 @@ import com.exadel.training.controller.model.*;
 import com.exadel.training.controller.model.trainingModels.*;
 import com.exadel.training.controller.model.userModels.UserModel;
 import com.exadel.training.dao.domain.*;
+import com.exadel.training.security.User.CustomUser;
 import com.exadel.training.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+import sun.plugin.liveconnect.SecurityContextHelper;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -32,6 +36,7 @@ public class TrainingBaseController {
     @Autowired
     private ListenerService listenerService;
 
+    @Secured({"ADMIN", "USER", "EX_COACH", "EX_USER"})
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     GetTrainingModel getTrainingMadel(@PathVariable("id") long trainingId) {
         GetTrainingModel getTrainingModel = new GetTrainingModel();
@@ -42,11 +47,13 @@ public class TrainingBaseController {
         return getTrainingModel;
     }
 
+    @Secured({"ADMIN", "USER", "EX_COACH", "EX_USER"})
     @RequestMapping(value = "/{id}/lesson_list", method = RequestMethod.GET)
     List<Lesson> getLessonListByTraining(@PathVariable("id") long trainingId) {
         return lessonService.getLessonByTraining(trainingId);
     }
 
+    @Secured({"ADMIN", "USER", "EX_COACH"})
     @RequestMapping(value = "/{id}/listener_list")
     List<ListenerModel> getListenerList(@PathVariable("id") long trainingId) {
         List<User> listenerList = listenerService.getListenerListAccepted(trainingId);
@@ -64,16 +71,19 @@ public class TrainingBaseController {
         return listenerModelList;
     }
 
+    @Secured({"ADMIN", "USER"})
     @RequestMapping(value = "/add_tag", method = RequestMethod.POST)
     public void addTag(@RequestBody Tag tag) {
         tagService.addTag(tag);
     }
 
+    @Secured({"ADMIN", "USER"})
     @RequestMapping(value = "/tag_list", method = RequestMethod.GET)
     public List<Tag> getTagList() {
         return tagService.getTagList();
     }
 
+    @Secured({"ADMIN", "USER"})
     @RequestMapping(value = "/training_list", method = RequestMethod.GET)
     public List<TrainingListModel> getTrainingList(@RequestParam("is_actual") Boolean isActual,
                                           @RequestParam("page") Integer page,
@@ -105,6 +115,7 @@ public class TrainingBaseController {
         return trainingListModelList;
     }
 
+    @Secured({"ADMIN", "USER", "EX_COACH"})
     @RequestMapping(value = "/training/{id}/add_comment")
     public void addComment(@PathVariable("id") Long trainingId, @RequestBody CommentModel commentModel) {
         Comment comment = new Comment();
@@ -123,12 +134,14 @@ public class TrainingBaseController {
         commentService.addComment(comment);
     }
 
+    @Secured({"ADMIN", "USER", "EX_COACH"})
     @RequestMapping(value = "training/{trainingId}/remove_comment/{commentId}")
     public void removeComment(@PathVariable("trainingId") Long trainingId,
                               @PathVariable("commentId") Long commentId) {
         commentService.removeComment(commentId);
     }
 
+    @Secured({"ADMIN", "USER", "EX_COACH", "EX_USER"})
     @RequestMapping(value = "/training/{id}/comment_list")
     public List<CommentModel> getTrainingCommentList(@PathVariable("id") Long trainingId) {
         List<Comment> commentList = commentService.getTrainingCommentList(trainingId);
@@ -153,6 +166,7 @@ public class TrainingBaseController {
         return commentModelList;
     }
 
+    @Secured({"ADMIN", "USER"})
     @RequestMapping(value = "/user/{id}/coach_comment_list")
     public List<CommentModel> getCoachCommentList(@PathVariable("id") Long coachId) {
         List<Comment> commentList = commentService.getCoachCommentList(coachId);
@@ -177,6 +191,7 @@ public class TrainingBaseController {
         return commentModelList;
     }
 
+    @Secured({"ADMIN", "USER"})
     @RequestMapping(value = "/user/{id}/comment_list")
     public List<CommentModel> getUserCommentList(@PathVariable("id") Long userId) {
         List<Comment> commentList = commentService.getUserCommentList(userId);
@@ -203,36 +218,40 @@ public class TrainingBaseController {
 
 
 
-
+    @Secured({"ADMIN", "USER"})
     @RequestMapping(value = "{id}/addListener", method = RequestMethod.POST)
     void addListener(@PathVariable("id") long trainingId) {
-        //todo security
-        long userId = 1;
+        CustomUser customUser =  (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        long userId = customUser.getUserId();
         listenerService.addListener(trainingId, userId);
     }
 
+    @Secured({"ADMIN", "USER"})
     @RequestMapping(value = "{id}/leave/{userId}", method = RequestMethod.PUT)
     void leaveListener(@PathVariable("id") long trainingId, @PathVariable("userId") Long userId) {
         listenerService.leaveListener(trainingId, userId);
 
     }
 
+    @Secured({"ADMIN", "USER"})
     @RequestMapping(value = "{id}/leave", method = RequestMethod.PUT)
     void leaveListener(@PathVariable("id") long trainingId) {
-        //todo security
-        Long userId = 1L;
+        CustomUser customUser =  (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Long userId = customUser.getUserId();
         listenerService.leaveListener(trainingId, userId);
     }
 
-    @RequestMapping(value = "{id}/add", method = RequestMethod.POST)
+    @Secured({"ADMIN"})
+    @RequestMapping(value = "{id}/addExListener", method = RequestMethod.POST)
     void addListener(@PathVariable("id") long trainingId,@RequestBody UserModel userModel) {
         //todo add ex_user
     }
 
+    @Secured({"ADMIN", "USER"})
     @RequestMapping(value = "{id}/set_rating/{rating}")
     RatingModel setRating(@PathVariable("id") long trainingId, @PathVariable("rating") int rating) {
-        //todo security
-        long userId = 1L;
+        CustomUser customUser =  (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        long userId = customUser.getUserId();
         return new RatingModel(trainingService.setRating(trainingId, rating, userId));
     }
 }

@@ -5,20 +5,30 @@ import com.exadel.training.controller.model.trainingModels.ApproveGetTrainingMod
 import com.exadel.training.controller.model.trainingModels.LessonModel;
 import com.exadel.training.dao.domain.*;
 import com.exadel.training.service.TrainingService;
+import com.exadel.training.validate.AddingTrainingModelValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/training")
+@RequestMapping("/training")
 public class TrainingCRUDController {
     @Autowired
     private TrainingService trainingService;
 
+    @InitBinder
+    protected void initBinder(WebDataBinder binder) {
+        binder.setValidator(new AddingTrainingModelValidator());
+    }
+
+    @Secured({"ADMIN", "USER"})
     @RequestMapping(value = "/create", method = RequestMethod.POST)
-    void createTraining(@RequestBody AddingTrainingModel addingTrainingModel) {
+    void createTraining(@Valid @RequestBody AddingTrainingModel addingTrainingModel) {
         trainingService.createTraining(addingTrainingModel.getCoachId()
                 , addingTrainingModel.getTitle()
                 , addingTrainingModel.getDescription()
@@ -35,6 +45,7 @@ public class TrainingCRUDController {
 
     }
 
+    @Secured({"ADMIN"})
     @RequestMapping(value = "/confirm/{id}", method = RequestMethod.POST)
     void confirmAddTraining(@PathVariable("id") long actionId, @RequestBody AddingTrainingModel addingTrainingModel) {
         trainingService.confirmTraining(actionId
@@ -50,16 +61,19 @@ public class TrainingCRUDController {
                 , addingTrainingModel.getRepeatModel());
     }
 
+    @Secured({"ADMIN"})
     @RequestMapping(value = "cancel_create/{id}", method = RequestMethod.PUT)
     void cancelCreate(@PathVariable("id") Long actionId) {
         trainingService.cancelCreate(actionId);
     }
 
+    @Secured({"ADMIN"})
     @RequestMapping(value = "cancel_change/{id}", method = RequestMethod.PUT)
     void cancelChange(@PathVariable("id") Long actionId) {
         trainingService.cancelChange(actionId);
     }
 
+    @Secured({"ADMIN", "USER", "EX_COACH"})
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.PUT)
     void editTraining(@PathVariable("id") long trainingId, @RequestBody AddingTrainingModel addingTrainingModel) {
         trainingService.editTraining(trainingId
@@ -76,6 +90,7 @@ public class TrainingCRUDController {
                 , addingTrainingModel.getRepeatModel());
     }
 
+    @Secured({"ADMIN", "USER"})
     @RequestMapping(value = "/getApproveTraining/{id}", method = RequestMethod.GET)
     public ApproveGetTrainingModel getApproveTrainingModel(@PathVariable("id") long actionId) {
         ApproveAction approveAction = trainingService.getApproveAction(actionId);
@@ -124,24 +139,27 @@ public class TrainingCRUDController {
         return approveTrainingModel;
     }
 
-
+    @Secured({"ADMIN", "USER", "EX_COACH"})
     @RequestMapping(value = "/{id}/lesson", method = RequestMethod.PUT)
     void editLesson(@PathVariable("id") long trainingId, @RequestBody LessonModel lessonModel) {
         trainingService.editLesson(trainingId,lessonModel);
     }
 
+    @Secured({"ADMIN", "USER", "EX_COACH"})
     @RequestMapping(value = "/{id}/lesson", method = RequestMethod.POST)
     void addLesson(@PathVariable("id") long trainingId, @RequestBody LessonModel lessonModel) {
         trainingService.addLesson(trainingId, lessonModel);
     }
 
+    @Secured({"ADMIN", "USER", "EX_COACH"})
     @RequestMapping(value = "/{id}/lesson", method = RequestMethod.DELETE)
     void removeLesson(@PathVariable("id") long trainingId, @RequestBody LessonModel lessonModel) {
         trainingService.removeLesson(trainingId, lessonModel);
     }
 
+    @Secured({"ADMIN", "USER", "EX_COACH", "EX_USER"})
     @RequestMapping(value = "/{id}/confirm/lesson", method = RequestMethod.PUT)
     void confirmChangeLesson(@PathVariable("id") long actionId, @RequestBody LessonModel lessonModel) {
-
+        //todo
     }
 }

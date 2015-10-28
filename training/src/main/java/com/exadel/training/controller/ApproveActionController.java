@@ -6,6 +6,7 @@ import com.exadel.training.dao.domain.Training;
 import com.exadel.training.dao.domain.User;
 import com.exadel.training.service.ApproveActionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,6 +25,7 @@ public class ApproveActionController {
     @Autowired
     private ApproveActionService approveActionService;
 
+    @Secured("ADMIN")
     @RequestMapping(value = "/approve_list", method = RequestMethod.GET)
     public List<ApproveActionModel> getApproveActionList(@RequestParam("page") Integer page,
                                                          @RequestParam("page_size")

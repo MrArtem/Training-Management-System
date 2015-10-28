@@ -10,6 +10,7 @@ import com.exadel.training.service.SearchService;
 import com.exadel.training.service.UserService;
 import com.exadel.training.validate.annotation.LegalID;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,6 +31,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Secured({"ADMIN", "USER", "EX_COACH"})
     @RequestMapping(value = "/user_info/{idUser}", method = RequestMethod.GET)
     @LegalID
     public UserModel getUserInfo(@PathVariable("idUser") long idUser) {
@@ -40,6 +42,7 @@ public class UserController {
         return userModel;
     }
 
+    @Secured({"ADMIN", "USER"})
     @RequestMapping(value = "/visitedTraining/{idUser}", method = RequestMethod.GET)
     @LegalID
     public List<TrainingListModel> getVisitedTraining(@PathVariable("idUser") long idUser) {
@@ -52,6 +55,7 @@ public class UserController {
         return trainingListModelList;
     }
 
+    @Secured({"ADMIN", "USER"})
     @RequestMapping(value = "/actualTraining/{idUser}", method = RequestMethod.GET)
     @LegalID
     public List<TrainingListModel> getActualTraining(@PathVariable("idUser") long idUser) {
