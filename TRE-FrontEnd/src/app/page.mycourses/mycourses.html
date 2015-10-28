@@ -1,6 +1,5 @@
 <div class="container">
 
-    <a ui-sref="courseinfo">courseinfo</a>
     <a ui-sref="step1">create course!</a>
 
     <div class="tools-header row">
@@ -39,14 +38,14 @@
 
     <section class="course-list row">
         <div class="course-item column" ng-repeat="course in mycourses.userCourses | filter:{isCoach: mycourses.filter.isCoach}">
-            <h1 class="course-title">{{course.title}}</h1>
+            <h1 class="course-title"><a ui-sref="courseinfo({courseId: course.id})">{{course.title}}</a></h1>
 
             <!--<h2 class="course-lesson-number">Lesson #{{course.nextLesson}}</h2>-->
 
             <p class="course-excerpt">{{course.excerpt}}</p>
 
             <div class="course-meta">
-                <h3 class="course-date">When: <span class="value">{{course.nextDate}}</span></h3>
+                <h3 class="course-date">When: <span class="value">{{course.nextDate | date: "MMM d, y h:mm a"}}</span></h3>
 
                 <h3 class="course-place">Where: <span class="value">{{course.nextPlace}}</span></h3>
 

@@ -22,7 +22,8 @@
             getParticipants: getParticipants,
             getShortInfo: getShortInfo,
             getTimetable: getTimetable,
-            editLesson: editLesson
+            editLesson: editLesson,
+            uploadFile: uploadFile
         }
         return courseAPI;
 
@@ -223,6 +224,12 @@
             return $http.post(urlProvider.addParticipant(courseId), participantInfo).then(function(result) {
                 return result.data;
             });
+        }
+
+        //////////
+
+        function uploadFile(file) {
+            return $http.post(urlProvider.uploadFile(), )
         }
 
         //////////
