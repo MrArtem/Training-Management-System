@@ -234,14 +234,16 @@ public class TrainingServiceImpl implements TrainingService {
 
     private void removeApproveLessonList(ApproveAction approveAction, boolean removeLesson) {
         Training training = approveAction.getTraining();
-        for (Lesson lesson : training.getLessonList()) {
-
+        List<Lesson> lessonList = training.getLessonList();
+        for (Lesson lesson : emptyIfNull(lessonList)) {
             lessonApproveDAO.removeApprove(lesson.getApproveLesson());
-            if (removeLesson) {
+            if ( removeLesson) {
                 lessonDAO.removeLesson(lesson);
             }
         }
-        training.setState(Training.State.REMOVE);
+        if(removeLesson && lessonList != null) {
+            lessonList.clear();
+        }
         trainingDAO.changeTraining(training);
         approveActionDAO.removeApproveAction(approveAction);
     }
