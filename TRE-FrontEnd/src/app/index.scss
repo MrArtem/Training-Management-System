@@ -66,6 +66,10 @@ body {
 
 }
 
+.error {
+  color: red !important;
+}
+
 .no-left-padding {
   padding-left: 0 !important;
 }
@@ -146,6 +150,27 @@ body {
 
 .accent-btn-blue {
 
+}
+
+.btn-file {
+  position: relative;
+  overflow: hidden;
+  font-size: rem-calc(15);
+}
+
+.btn-file input[type=file] {
+  position: absolute;
+  top: 0;
+  right: 0;
+  min-width: 100%;
+  min-height: 100%;
+  text-align: center;
+  filter: alpha(opacity=0);
+  opacity: 0;
+  outline: none;
+  background: white;
+  cursor: inherit;
+  display: block;
 }
 
 /**

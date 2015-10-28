@@ -201,44 +201,18 @@ public class TrainingBaseController {
         return commentModelList;
     }
 
+=======
+
 <<<<<<< .mine
-    @RequestMapping(value = "/getApproveTraining/{id}", method = RequestMethod.GET)
-    public ApproveGetTrainingModel getApproveTrainingModel(@PathVariable("id") long actionId) {
-        ApproveAction approveAction = trainingService.getApproveAction(actionId);
-        ApproveTraining approveTraining = approveAction.getApproveTraining();
-        ApproveGetTrainingModel approveTrainingModel = new ApproveGetTrainingModel();
-        Training training = approveAction.getTraining();
-        User coach = training.getCoach();
-        //TODO code review
-        if (approveTraining != null) {
-            approveTrainingModel.setTitle(approveTraining.getTitle());
-            approveTrainingModel.setDescription(approveTraining.getDescription());
-            approveTrainingModel.setAdditionalInfo(approveTraining.getAdditionalInfo());
-            approveTrainingModel.setMaxSize(approveTraining.getMaxSize());
-            approveTrainingModel.setTagList(approveTraining.getTagList());
-            approveTrainingModel.setShortInfo(approveTraining.getExcerpt());
-            approveTrainingModel.setTagList(approveTraining.getTagList());
-            approveTrainingModel.setCoachId(coach.getId());
-            approveTrainingModel.setCoachName(coach.getFirstName() + " " + coach.getLastName());
-            approveTrainingModel.setLanguage(approveTraining.getLanguage());
-        } else {
-            approveTrainingModel.setTitle(training.getTitle());
-            approveTrainingModel.setDescription(training.getDescription());
-            approveTrainingModel.setMaxSize(training.getMaxSize());
-            approveTrainingModel.setTagList(training.getTagList());
-            approveTrainingModel.setShortInfo(training.getExcerpt());
-            approveTrainingModel.setCoachId(coach.getId());
-            approveTrainingModel.setCoachName(coach.getFirstName() + " " + coach.getLastName());
-            approveTrainingModel.setTagList(training.getTagList());
-            approveTrainingModel.setLanguage(training.getLanguage());
-        }
-        approveTrainingModel.setIsRepeating(training.isRepeat());
+
+
+
 =======
 
 
 
-
-
+>>>>>>> .theirs
+<<<<<<< .mine
 
 
 
@@ -282,7 +256,51 @@ public class TrainingBaseController {
             approveTrainingModel.setLessonList(lessonModelList);
         }
 =======
+=======
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+>>>>>>> .theirs
 
 
 

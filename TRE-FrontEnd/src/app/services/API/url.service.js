@@ -29,7 +29,8 @@
             getWaitingCoursesForUser: getWaitingCoursesForUser,
             login: login,
             logout: logout,
-            manageLesson: manageLesson
+            manageLesson: manageLesson,
+            uploadFile: uploadFile
         };
         return urlProvider;
     }
@@ -125,5 +126,9 @@
 
     function manageLesson(courseId) {
         return '/api/training/' + courseId + '/lessons';
+    }
+
+    function uploadFile() {
+        return '/api/file_controller/';
     }
 })();

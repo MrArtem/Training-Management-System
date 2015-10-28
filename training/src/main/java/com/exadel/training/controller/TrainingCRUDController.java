@@ -117,7 +117,7 @@ public class TrainingCRUDController {
                 lessonModel.setDate(approveLesson.getDate());
                 lessonModelList.add(lessonModel);
             }
-            approveTrainingModel.setLessonModelList(lessonModelList);
+            approveTrainingModel.setLessonList(lessonModelList);
         }
 
 
