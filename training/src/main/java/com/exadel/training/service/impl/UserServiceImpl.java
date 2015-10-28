@@ -1,5 +1,7 @@
 package com.exadel.training.service.impl;
 
+import com.exadel.training.controller.model.userModels.ExUserModel;
+import com.exadel.training.controller.model.userModels.UserModel;
 import com.exadel.training.dao.TrainingDAO;
 import com.exadel.training.dao.domain.Listener;
 import com.exadel.training.dao.domain.Training;
@@ -25,6 +27,20 @@ public class UserServiceImpl implements UserService {
     private UserDAO userDAO;
     @Autowired
     private TrainingDAO trainingDAO;
+
+    @Override
+    public long addExternalUser(ExUserModel exUserModel) {
+        User user = new User();
+
+        user.setLogin(exUserModel.getLogin());
+        user.setEmail(exUserModel.getEmail());
+        user.setFirstName(exUserModel.getFirstName());
+        user.setLastName(exUserModel.getLastName());
+        user.setPhone(exUserModel.getPhone());
+
+        userDAO.save(user);
+        return user.getId();
+    }
 
     @Override
     public Boolean isCoach(long idUser, long idTraining) {
