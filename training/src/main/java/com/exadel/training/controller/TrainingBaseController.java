@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/training")
-public class TrainingController {
+public class TrainingBaseController {
 
     private final Integer PAGE_SIZE = 10;
 

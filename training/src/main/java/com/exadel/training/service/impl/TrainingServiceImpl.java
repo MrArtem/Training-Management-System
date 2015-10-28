@@ -483,6 +483,7 @@ public class TrainingServiceImpl implements TrainingService {
         ApproveAction approveAction = approveActionDAO.getApproveAction(actionId);
         ApproveLesson approveLesson = approveAction.getApproveLessonList().get(0);
         Lesson lesson = approveLesson.getLesson();
+        Training training = approveAction.getTraining();
         if(lesson.getState() == Lesson.State.REMOVAL) {
             lesson.setPlace(lessonModel.getPlace());
             lesson.setDate(lessonModel.getDate());
