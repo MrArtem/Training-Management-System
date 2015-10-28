@@ -1,8 +1,8 @@
 package com.exadel.training.controller;
 
-import com.exadel.training.controller.model.CommentModel;
-import com.exadel.training.controller.model.TrainingListModel;
+import com.exadel.training.controller.model.*;
 import com.exadel.training.controller.model.trainingModels.*;
+import com.exadel.training.controller.model.userModels.UserModel;
 import com.exadel.training.dao.domain.*;
 import com.exadel.training.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/training")
-public class TrainingController {
+public class TrainingBaseController {
 
     private final Integer PAGE_SIZE = 10;
 
@@ -26,8 +26,11 @@ public class TrainingController {
     private CommentService commentService;
     @Autowired
     private TagService tagService;
+
     @Autowired
     private UserService userService;
+    @Autowired
+    private ListenerService listenerService;
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     GetTrainingModel getTrainingMadel(@PathVariable("id") long trainingId) {
@@ -46,75 +49,19 @@ public class TrainingController {
 
     @RequestMapping(value = "/{id}/listener_list")
     List<ListenerModel> getListenerList(@PathVariable("id") long trainingId) {
-        List<Listener> listenerList = trainingService.getListenerListRecord(trainingId);
+        List<User> listenerList = listenerService.getListenerListAccepted(trainingId);
         List<ListenerModel> listenerModelList = new ArrayList<ListenerModel>();
-        for (Listener listener : listenerList) {
-            listenerModelList.add(new ListenerModel(listener));
+        for (User user : listenerList) {
+            ListenerModel listenerModel = new ListenerModel();
+            listenerModel.setUserId(user.getId());
+            listenerModel.setUsername(user.getFirstName() + " " + user.getLastName());
+            listenerModel.setEmail(user.getEmail());
+            if (user.getRole() == User.Role.EX_USER) {
+                listenerModel.setIsExternal(true);
+            }
+            listenerModelList.add(listenerModel);
         }
         return listenerModelList;
-    }
-
-    @RequestMapping(value = "/create", method = RequestMethod.POST)
-    void createTraining(@RequestBody AddingTrainingModel addingTrainingModel) {
-        trainingService.createTraining(addingTrainingModel.getCoachId()
-                , addingTrainingModel.getTitle()
-                , addingTrainingModel.getDescription()
-                , addingTrainingModel.getShortInfo()
-                , addingTrainingModel.getLanguage()
-                , addingTrainingModel.getMaxSize()
-                , addingTrainingModel.isInner()
-                , addingTrainingModel.getPlace()
-                , addingTrainingModel.getTagList()
-                , addingTrainingModel.getAdditionalInfo()
-                , addingTrainingModel.getIsRepeating()
-                , addingTrainingModel.getLessonList()
-                , addingTrainingModel.getRepeatModel());
-
-    }
-    @RequestMapping(value = "/a", method = RequestMethod.GET)
-    AddingTrainingModel add() {
-        return new AddingTrainingModel();
-    }
-
-    @RequestMapping(value = "/confirm/{id}", method = RequestMethod.POST)
-    void confirmTraining(@PathVariable("id") long actionId, @RequestBody AddingTrainingModel addingTrainingModel) {
-        trainingService.confirmTraining(actionId
-                , addingTrainingModel.getTitle()
-                , addingTrainingModel.getDescription()
-                , addingTrainingModel.getShortInfo()
-                , addingTrainingModel.getLanguage()
-                , addingTrainingModel.getMaxSize()
-                , addingTrainingModel.isInner()
-                , addingTrainingModel.getPlace()
-                , addingTrainingModel.getTagList()
-                , addingTrainingModel.getLessonList()
-                , addingTrainingModel.getRepeatModel());
-    }
-
-    @RequestMapping(value = "cancel_create/{id}", method = RequestMethod.PUT)
-    void cancelCreate(@PathVariable("id") Long actionId) {
-        trainingService.cancelCreate(actionId);
-    }
-
-    @RequestMapping(value = "cancel_change/{id}", method = RequestMethod.PUT)
-    void cancelChange(@PathVariable("id") Long actionId) {
-        trainingService.cancelChange(actionId);
-    }
-
-    @RequestMapping(value = "/edit/{id}", method = RequestMethod.PUT)
-    void editTraining(@PathVariable("id") long trainingId, @RequestBody AddingTrainingModel addingTrainingModel) {
-        trainingService.editTraining(trainingId
-                , addingTrainingModel.getTitle()
-                , addingTrainingModel.getDescription()
-                , addingTrainingModel.getShortInfo()
-                , addingTrainingModel.getLanguage()
-                , addingTrainingModel.getMaxSize()
-                , addingTrainingModel.isInner()
-                , addingTrainingModel.getPlace()
-                , addingTrainingModel.getTagList()
-                , addingTrainingModel.getAdditionalInfo()
-                , addingTrainingModel.getLessonList()
-                , addingTrainingModel.getRepeatModel());
     }
 
     @RequestMapping(value = "/add_tag", method = RequestMethod.POST)
@@ -140,13 +87,19 @@ public class TrainingController {
         List<Training> trainingList;
         trainingList = trainingService.getTrainingListByTagList(page, PAGE_SIZE, isActual, tagList);
         List<TrainingListModel> trainingListModelList = new ArrayList<TrainingListModel>();
-        for(Training training : trainingList) {
-            TrainingListModel trainingListModel = new TrainingListModel(training);
-            Lesson lesson = lessonService.getNextLesson(training.getId());
-            if (lesson != null) {
-                trainingListModel.setNextDate(lesson.getDate());
-                trainingListModel.setNextPlace(lesson.getPlace());
-            }
+        for (Training training : trainingList) {
+            TrainingListModel trainingListModel = new TrainingListModel();
+            trainingListModel.setId(training.getId());
+            trainingListModel.setTitle(training.getTitle());
+            trainingListModel.setExcerpt(training.getExcerpt());
+            trainingListModel.setCoachId(training.getCoach().getId());
+            trainingListModel.setCoachName(training.getCoach().getFirstName() +
+                    " " + training.getCoach().getLastName());
+            trainingListModel.setTagList(training.getTagList());
+            //todo get user here
+            User user = new User();
+            trainingListModel.setIsCoach(userService.isCoach(user.getId(), training.getId()));
+            //todo get next date and place
             trainingListModelList.add(trainingListModel);
         }
         return trainingListModelList;
@@ -248,6 +201,7 @@ public class TrainingController {
         return commentModelList;
     }
 
+<<<<<<< .mine
     @RequestMapping(value = "/getApproveTraining/{id}", method = RequestMethod.GET)
     public ApproveGetTrainingModel getApproveTrainingModel(@PathVariable("id") long actionId) {
         ApproveAction approveAction = trainingService.getApproveAction(actionId);
@@ -279,7 +233,41 @@ public class TrainingController {
             approveTrainingModel.setLanguage(training.getLanguage());
         }
         approveTrainingModel.setIsRepeating(training.isRepeat());
+=======
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+>>>>>>> .theirs
+
+<<<<<<< .mine
         if (training.isRepeat()) {
             approveTrainingModel.setRepeatModel(trainingService.getApproveRepeatModel(actionId));
         } else {
@@ -293,28 +281,52 @@ public class TrainingController {
             }
             approveTrainingModel.setLessonList(lessonModelList);
         }
+=======
 
 
-        return approveTrainingModel;
+
+
+
+
+
+
+
+
+
+
+
+>>>>>>> .theirs
+
+
+    @RequestMapping(value = "{id}/addListener", method = RequestMethod.POST)
+    void addListener(@PathVariable("id") long trainingId) {
+        //todo security
+        long userId = 1;
+        listenerService.addListener(trainingId, userId);
     }
 
-    @RequestMapping(value = "/{id}/lesson", method = RequestMethod.PUT)
-    void editLesson(@PathVariable("id") long trainingId, @RequestBody LessonModel lessonModel) {
-        trainingService.editLesson(trainingId,lessonModel);
+    @RequestMapping(value = "{id}/leave/{userId}", method = RequestMethod.PUT)
+    void leaveListener(@PathVariable("id") long trainingId, @PathVariable("userId") Long userId) {
+        listenerService.leaveListener(trainingId, userId);
+
     }
 
-    @RequestMapping(value = "/{id}/lesson", method = RequestMethod.POST)
-    void addLesson(@PathVariable("id") long trainingId, @RequestBody LessonModel lessonModel) {
-        trainingService.addLesson(trainingId, lessonModel);
+    @RequestMapping(value = "{id}/leave", method = RequestMethod.PUT)
+    void leaveListener(@PathVariable("id") long trainingId) {
+        //todo security
+        Long userId = 1L;
+        listenerService.leaveListener(trainingId, userId);
     }
 
-    @RequestMapping(value = "/{id}/lesson", method = RequestMethod.DELETE)
-    void removeLesson(@PathVariable("id") long trainingId, @RequestBody LessonModel lessonModel) {
-        trainingService.removeLesson(trainingId, lessonModel);
+    @RequestMapping(value = "{id}/add", method = RequestMethod.POST)
+    void addListener(@PathVariable("id") long trainingId,@RequestBody UserModel userModel) {
+        //todo add ex_user
     }
 
-    @RequestMapping(value = "/{id}/confirm/lesson", method = RequestMethod.PUT)
-    void confirmChangeLesson(@PathVariable("id") long actionId, @RequestBody LessonModel lessonModel) {
-
+    @RequestMapping(value = "{id}/set_rating/{rating}")
+    RatingModel setRating(@PathVariable("id") long trainingId, @PathVariable("rating") int rating) {
+        //todo security
+        long userId = 1L;
+        return new RatingModel(trainingService.setRating(trainingId, rating, userId));
     }
 }

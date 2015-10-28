@@ -1,5 +1,7 @@
 package com.exadel.training.controller.model.feedbackModels;
 
+import com.exadel.training.validate.annotation.LegalID;
+
 /**
  * Created by ayudovin on 21.10.2015.
  */

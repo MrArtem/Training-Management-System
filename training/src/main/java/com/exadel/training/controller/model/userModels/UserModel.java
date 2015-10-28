@@ -2,27 +2,31 @@ package com.exadel.training.controller.model.userModels;
 
 
 import com.exadel.training.dao.domain.User;
+import com.exadel.training.validate.annotation.LegalID;
 
 /**
  * Created by ayudovin on 12.10.2015.
  */
 
 public class UserModel {
+
     private long id;
     private String username;
     private String phone;
     private String email;
     private Boolean isCoach;
 
-    public UserModel(){
+    public UserModel() {
     }
+
     public UserModel(User user) {
         this.id = user.getId();
         this.username =  user.getLastName() + " " + user.getFirstName();
         this.phone = user.getPhone();
         this.email = user.getEmail();
     }
-    public UserModel(User user, Boolean isCoach){
+
+    public UserModel(User user, Boolean isCoach) {
         this(user);
 
         this.isCoach = isCoach;

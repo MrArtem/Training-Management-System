@@ -16,6 +16,7 @@ import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 
 
+import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
 import java.util.List;
 
@@ -23,13 +24,13 @@ import java.util.List;
  * Created by ayudovin on 08.10.2015.
  */
 @Repository
-public class SearchDAOImpl implements SearchDAO, InitializingBean {
+public class SearchDAOImpl implements SearchDAO{
 
 
     @Autowired
     SessionFactory sessionFactory;
 
-    @Override
+    @PostConstruct
     public void afterPropertiesSet() throws Exception {
         Session session = sessionFactory.openSession();
         FullTextSession fullTextSession = org.hibernate.search.Search.getFullTextSession(session);
