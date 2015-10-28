@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -38,5 +39,10 @@ public class AttendanceServiceImpl implements AttendanceService{
     @Override
     public List<Attendance> getAllAttendanceByLessonID(long idLesson) {
         return lessonService.getLessonByID(idLesson).getAttendanceList();
+    }
+
+    @Override
+    public List<Attendance> getAllAttendanceByUserIDBetweenDates(long idUser, Date from, Date to) {
+        return attendanceDAO.getAllAttendanceByUserIDBetweenDates(idUser, from, to);
     }
 }

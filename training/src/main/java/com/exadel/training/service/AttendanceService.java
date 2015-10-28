@@ -3,6 +3,7 @@ package com.exadel.training.service;
 import com.exadel.training.controller.model.attendanceModels.AttendanceModel;
 import com.exadel.training.dao.domain.Attendance;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -12,4 +13,5 @@ public interface AttendanceService {
     void updateAttendance(AttendanceModel attendanceModel);
 
     List<Attendance> getAllAttendanceByLessonID(long idLesson);
+    List<Attendance> getAllAttendanceByUserIDBetweenDates(long idUser, Date from, Date to);
 }

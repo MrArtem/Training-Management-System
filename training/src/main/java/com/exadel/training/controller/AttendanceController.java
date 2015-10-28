@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -30,8 +31,6 @@ public class AttendanceController {
             attendanceModelList.add(new AttendanceModel(attendance));
         }
 
-        attendanceModelList.get(0).setPresence(false);
-        attendanceService.updateAttendance(attendanceModelList.get(0));
         return attendanceModelList;
     }
 
