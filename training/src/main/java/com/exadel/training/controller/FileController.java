@@ -12,9 +12,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/file_controller")
 public class FileController {
-
-    @RequestMapping(value = "/", method = RequestMethod.POST, headers=("content-type=multipart/*"))
-    public void uploadFile( @RequestBody MultipartFile file) {
+// https://spring.io/guides/gs/uploading-files/
+    @RequestMapping(value = "/", method = RequestMethod.POST)
+    public void uploadFile(/*@RequestParam("name") String nmae ,*/@RequestParam("file") MultipartFile file) {
         MultipartFile multipartFile = file;
     }
 }

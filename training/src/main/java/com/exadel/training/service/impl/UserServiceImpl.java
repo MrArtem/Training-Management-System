@@ -8,7 +8,6 @@ import com.exadel.training.dao.domain.Training;
 import com.exadel.training.dao.UserDAO;
 import com.exadel.training.dao.domain.User;
 import com.exadel.training.service.UserService;
-import com.exadel.training.validate.annotation.LegalID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -86,5 +85,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<Training> actualTrainings(long idUser) {
         return userDAO.actualTrainings(idUser);
+    }
+
+    @Override
+    public List<Training> getUserTrainingsByState(long idUser, Listener.State state) {
+        return userDAO.getUserTrainingsByState(idUser, state);
     }
 }

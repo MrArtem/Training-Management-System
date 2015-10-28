@@ -2,6 +2,7 @@ package com.exadel.training.dao.impl;
 
 import com.exadel.training.dao.UserDAO;
 import com.exadel.training.dao.domain.Lesson;
+import com.exadel.training.dao.domain.Listener;
 import com.exadel.training.dao.domain.Training;
 import com.exadel.training.dao.domain.User;
 import org.hibernate.Criteria;
@@ -75,9 +76,15 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public List<Training> waitingTrainings(long idUser) {
-        return null;
+    @SuppressWarnings("unchecked")
+    public List<Training> getUserTrainingsByState(long idUser, Listener.State state) {
+        return sessionFactory.getCurrentSession()
+                .createQuery("select t from Training as t inner join t.listenerList as l where l.user.id = :idUser and l.state = :state ")
+                .setParameter("idUser", idUser)
+                .setParameter("state", state)
+                .list();
     }
+
 
     @Override
     public User getUserByLogin(String userLogin) {
