@@ -10,7 +10,7 @@ public class Listener {
     }
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
 
     @ManyToOne(cascade = CascadeType.ALL)
@@ -21,6 +21,12 @@ public class Listener {
 
     @Enumerated(value = EnumType.STRING)
     private State state;
+
+    private boolean canRate;
+
+    public Listener() {
+        canRate = true;
+    }
 
     public long getId() {
         return id;
@@ -52,5 +58,13 @@ public class Listener {
 
     public void setState(State state) {
         this.state = state;
+    }
+
+    public boolean isCanRate() {
+        return canRate;
+    }
+
+    public void setCanRate(boolean canRate) {
+        this.canRate = canRate;
     }
 }

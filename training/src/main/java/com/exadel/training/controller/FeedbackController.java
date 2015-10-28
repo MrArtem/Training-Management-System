@@ -4,6 +4,7 @@ import com.exadel.training.controller.model.feedbackModels.AddFeedbackModel;
 import com.exadel.training.controller.model.feedbackModels.FeedbackModel;
 import com.exadel.training.dao.domain.Feedback;
 import com.exadel.training.service.FeedbackService;
+import com.exadel.training.validate.annotation.LegalID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,6 +23,7 @@ public class FeedbackController {
     FeedbackService feedbackService;
 
     @RequestMapping(value = "/feedbacks_of_user/{idUser}", method = RequestMethod.GET)
+    @LegalID
     public List<FeedbackModel> getFeedbacListOfUser(@PathVariable("idUser") long idUser) {
          List<FeedbackModel> feedbackModelList = new ArrayList<FeedbackModel>();
 

@@ -5,16 +5,15 @@
             <h5>Attachments</h5>
 
             <a class="button round tiny default-btn-blue" data-reveal-id="uploadModal" >Add file</a>
-            <div ng-controller="UploadController">
-                <a class="button round btn-file default-btn-blue">
-                    <i class="fa fa-plus"></i></i> Add file
-                    <input type="file" ng-file-select="onFileSelect($files)">
-                </a>
-                <a href="#" class="right button round tiny" ng-click="attachments.addFiles()">Upload</a>
-            </div>
-            <a class="button round btn-file default-btn-blue">
-                <i class="fa fa-plus"></i></i> Upload file
-            </a>
+            <input type="file" ng-file-select="onFileSelect($files)">
+            <a href="#" class="right button round tiny" ng-click="attachments.addFile()">Upload</a>
+            <!--<div ng-controller="UploadController as upload">-->
+                <!--<a href="#" class="button round btn-file default-btn-blue">-->
+                    <!--<i class="fa fa-plus"></i></i> Add file-->
+
+                <!--</a>-->
+                <!---->
+            <!--</div>-->
 
             <div class="scrollable-div">
 

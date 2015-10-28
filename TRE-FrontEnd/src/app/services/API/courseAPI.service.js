@@ -61,7 +61,7 @@
                 headers: {
                     'Content-Type': 'application/json'
                 }
-            }).then(function(results) {
+            }).then(function (results) {
                 console.log('Course approved successfully!');
                 $state.transitionTo('admin');
                 return results.data;
@@ -196,7 +196,7 @@
                 date: newDate,
                 place: newPlace
             };
-            return $http.post(urlProvider.manageLesson(courseId), lessonInfo).then(function(result) {
+            return $http.post(urlProvider.manageLesson(courseId), lessonInfo).then(function (result) {
                 return result.data;
             });
         }
@@ -221,7 +221,7 @@
         //////////
 
         function addParticipant(courseId, participantInfo) {
-            return $http.post(urlProvider.addParticipant(courseId), participantInfo).then(function(result) {
+            return $http.post(urlProvider.addParticipant(courseId), participantInfo).then(function (result) {
                 return result.data;
             });
         }
@@ -229,7 +229,17 @@
         //////////
 
         function uploadFile(file) {
-            return $http.post(urlProvider.uploadFile(), )
+            var formData = new FormData();
+            formData.append("file", file.data);
+            return $http.post(urlProvider.uploadFile(), {
+                headers: {
+                    'Content-Type': undefined
+                },
+                transformRequest: angular.identity,
+                params: {
+                    name: file.name
+                }
+            });
         }
 
         //////////

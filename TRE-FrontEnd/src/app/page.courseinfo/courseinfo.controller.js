@@ -6,16 +6,19 @@
         .controller('CourseInfoController', CourseInfoController);
 
     /** @ngInject */
-    function CourseInfoController(courseAPI) {
+    function CourseInfoController($scope, courseAPI) {
         var vm = this;
 
         vm.courseInfo = {};
+        vm.courseInfo.file = {};
 
         vm.getShortInfo = getShortInfo;
         vm.saveAttachments = saveAttachments;
         vm.saveComments = saveComments;
         vm.saveParticipants = saveParticipants;
         vm.saveTimetable = saveTimetable;
+
+        $scope.courseInfo = vm.courseInfo;
 
         vm.getShortInfo();
 

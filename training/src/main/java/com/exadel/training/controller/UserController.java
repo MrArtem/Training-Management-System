@@ -5,14 +5,17 @@ import com.exadel.training.controller.model.userModels.UserModel;
 import com.exadel.training.dao.domain.Training;
 import com.exadel.training.notification.Notification;
 import com.exadel.training.notification.help.MessageGenerator;
+import com.exadel.training.security.User.CustomUser;
 import com.exadel.training.service.SearchService;
 import com.exadel.training.service.UserService;
+import com.exadel.training.validate.annotation.LegalID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,15 +31,17 @@ public class UserController {
     private UserService userService;
 
     @RequestMapping(value = "/user_info/{idUser}", method = RequestMethod.GET)
+    @LegalID
     public UserModel getUserInfo(@PathVariable("idUser") long idUser) {
-        //todo get user here
-        long idCurrentUser = 1;
+        CustomUser customUser =  (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        long idCurrentUser = customUser.getUserId();
         UserModel userModel = new UserModel(userService.getUserById(idCurrentUser), userService.isCoachOfCurrentUser(idCurrentUser, idUser));
 
         return userModel;
     }
 
     @RequestMapping(value = "/visitedTraining/{idUser}", method = RequestMethod.GET)
+    @LegalID
     public List<TrainingListModel> getVisitedTraining(@PathVariable("idUser") long idUser) {
         List<TrainingListModel> trainingListModelList = new ArrayList<TrainingListModel>();
 
@@ -48,6 +53,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/actualTraining/{idUser}", method = RequestMethod.GET)
+    @LegalID
     public List<TrainingListModel> getActualTraining(@PathVariable("idUser") long idUser) {
         List<TrainingListModel> trainingListModelList = new ArrayList<TrainingListModel>();
 

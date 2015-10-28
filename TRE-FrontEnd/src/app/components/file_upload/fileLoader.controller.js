@@ -5,6 +5,7 @@
         .module('tmsApp')
         .controller('AddFileUploadController', AddFileUploadController)
         .controller('FileUploadController', FileUploadController)
+        .controller('UploadController', UploadController);
 
 
     /** @ngInject */
