@@ -6,16 +6,20 @@
         .controller('ParticipantsController', ParticipantsController);
 
     /** @ngInject */
-    function ParticipantsController($scope, courseAPI) {
+    function ParticipantsController($scope, $stateParams, courseAPI) {
         var vm = this;
+        vm.participantInfo = {};
+
         vm.addParticipant = addParticipant;
         vm.deleteParticipant = deleteParticipant;
         vm.getParticipants = getParticipants;
 
-        vm.getParticipants();
+        //vm.getParticipants();
 
         function addParticipant() {
-
+            courseAPI.addParticipant($stateParams.courseId, vm.participantInfo).then(function(data) {
+                console.log('participant added successfully');
+            });
         }
 
         function deleteParticipant() {
@@ -23,9 +27,9 @@
         }
 
         function getParticipants() {
-            //courseAPI.getParticipants().then(function(data) {
-            //    $scope.$parent.saveParticipants(data);
-            //});
+            courseAPI.getParticipants($stateParams.courseId).then(function(data) {
+                $scope.$parent.saveParticipants(data);
+            });
         }
 
     }

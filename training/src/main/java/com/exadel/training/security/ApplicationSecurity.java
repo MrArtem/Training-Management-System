@@ -30,10 +30,10 @@ public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests().antMatchers("/training/**").authenticated();
         http.csrf().disable();
-        http.formLogin().loginPage("/api/login").permitAll();
+        http.formLogin().loginPage("/login").permitAll();
         http.formLogin().successHandler(customSuccessHandler);
         http.formLogin().failureHandler(customFailureHandler);
-        http.logout().logoutRequestMatcher(new AntPathRequestMatcher("/api/logout")).logoutSuccessUrl("/login").permitAll();
+        http.logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login").permitAll();
         http.exceptionHandling().authenticationEntryPoint(customEntryPoint);
     }
 

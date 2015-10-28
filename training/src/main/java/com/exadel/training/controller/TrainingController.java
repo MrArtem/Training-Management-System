@@ -13,7 +13,7 @@ import java.util.Date;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/training")
+@RequestMapping("/training")
 public class TrainingController {
 
     private final Integer PAGE_SIZE = 10;
@@ -123,21 +123,9 @@ public class TrainingController {
                 , addingTrainingModel.getRepeatModel());
     }
 
-    @RequestMapping(value = "/getAdd", method = RequestMethod.GET)
-    AddingTrainingModel getAdd() {
-        AddingTrainingModel addingTrainingModel = new AddingTrainingModel();
-        List<LessonModel> lessonList = new ArrayList<LessonModel>();
-        lessonList.add(new LessonModel());
-        addingTrainingModel.setLessonList(lessonList);
-        RepeatModel repeatModel = new RepeatModel();
-        repeatModel.setLessonList(new LessonModel[7]);
-        addingTrainingModel.setRepeatModel(repeatModel);
-        return addingTrainingModel;
-    }
-
     @RequestMapping(value = "/add_tag", method = RequestMethod.POST)
-    public void addTag(@RequestBody Tag tag) {
-        tagService.addTag(tag);
+    public Long addTag(@RequestBody Tag tag) {
+        return tagService.addTag(tag);
     }
 
     @RequestMapping(value = "/tag_list", method = RequestMethod.GET)
@@ -147,11 +135,13 @@ public class TrainingController {
 
     @RequestMapping(value = "/training_list", method = RequestMethod.GET)
     public List<TrainingListModel> getTrainingList(@RequestParam("is_actual") Boolean isActual,
-                                                   @RequestParam("page") Integer page,
-                                                   @RequestParam("tag") List<String> specialtyList) {
+                                          @RequestParam("page") Integer page,
+                                                   @RequestParam(value = "tag", required = false) List<String> specialtyList) {
         List<Tag> tagList = new ArrayList<Tag>();
-        for (String specialty : specialtyList) {
-            tagList.add(tagService.getTagBySpecialty(specialty));
+        if (specialtyList != null) {
+            for (String specialty : specialtyList) {
+                tagList.add(tagService.getTagBySpecialty(specialty));
+            }
         }
         List<Training> trainingList;
         trainingList = trainingService.getTrainingListByTagList(page, PAGE_SIZE, isActual, tagList);

@@ -20,8 +20,13 @@ public class TagServiceImpl implements TagService{
 
 
     @Override
-    public void addTag(Tag tag) {
-        tagDAO.addTag(tag);
+    public Long addTag(Tag tag) {
+        Tag DBTag = tagDAO.getTagBySpecialty(tag.getSpecialty());
+        if (DBTag == null) {
+            tagDAO.addTag(tag);
+            return tag.getId();
+        }
+        return DBTag.getId();
     }
 
     @Override

@@ -18,7 +18,6 @@ import java.util.List;
  */
 @Service
 public class FeedbackServiceImpl implements FeedbackService {
-    public static final long ILLEGAL_ID = 0;
     private static final int AVERAGE_EFFECTIVE = 3;
 
     @Autowired
@@ -78,20 +77,12 @@ public class FeedbackServiceImpl implements FeedbackService {
     @Transactional
     @Override
     public List<Feedback> getFeedbackListForUser(long id) {
-        if (id == ILLEGAL_ID) {
-           throw new IllegalArgumentException("id can't be 0");
-        }
-
         return userDAO.getUserByID(id).getFeedbackList();
     }
 
     @Transactional
     @Override
     public List<Feedback> getFeedbackListFromTrainingForUser(long idUser, long idTraining) {
-        if (idUser == ILLEGAL_ID || idTraining == ILLEGAL_ID) {
-            throw new IllegalArgumentException("id can't be 0");
-        }
-
         return feedbackDAO.getFeedbackListFromTrainingForUser(idUser, idTraining);
     }
 

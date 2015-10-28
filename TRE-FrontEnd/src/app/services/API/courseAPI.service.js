@@ -8,6 +8,7 @@
     function courseAPI($state, $http, urlProvider) {
         var courseAPI = {
             addLesson: addLesson,
+            addParticipant: addParticipant,
             cancelCreate: cancelCreate,
             cancelEdit: cancelEdit,
             createCourse: createCourse,
@@ -34,8 +35,10 @@
 
         }
 
-        function getParticipants() {
-
+        function getParticipants(courseId) {
+            return $http.get(urlProvider.getParticipants(courseId)).then(function (result) {
+                return result.data;
+            });
         }
 
         function getShortInfo() {
@@ -178,7 +181,7 @@
                 date: newDate,
                 place: newPlace
             };
-            return $http.post(urlProvider.addLesson(courseId), lessonInfo).then(function(result) {
+            return $http.post(urlProvider.manageLesson(courseId), lessonInfo).then(function(result) {
                 return result.data;
             });
         }
@@ -189,21 +192,35 @@
                 newDate: newDate,
                 newPlace: newPlace
             };
-            return $http.post(urlProvider.editLesson(courseId), lessonInfo).then(function (result) {
+            return $http.put(urlProvider.manageLesson(courseId), lessonInfo).then(function (result) {
                 return result.data;
             });
         }
 
         function deleteLesson(courseId, lessonId) {
-            return $http.post(urlProvider.deleteLesson(courseId, lessonId)).then(function (result) {
+            return $http.delete(urlProvider.manageLesson(courseId), {prevLessonId: lessonId}).then(function (result) {
                 return result.data;
             });
         }
 
         //////////
 
-        function getCoursesForUser(login) {
-            return $http.get(urlProvider.getCoursesForUser(login)).then(function (results) {
+        function addParticipant(courseId, participantInfo) {
+            return $http.post(urlProvider.addParticipant(courseId), participantInfo).then(function(result) {
+                return result.data;
+            });
+        }
+
+        //////////
+
+        function getCoursesForUser(isActual, tagList) {
+            return $http.get(urlProvider.getCoursesForUser(), {
+                params: {
+                    is_actual: isActual,
+                    page: 1,
+                    tag: []
+                }
+            }).then(function (results) {
                 return results.data;
             });
         }

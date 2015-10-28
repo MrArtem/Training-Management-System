@@ -35,4 +35,9 @@ public class LessonServiceImpl implements LessonService{
     public Lesson getNextLesson(long trainingId) {
         return lessonDAO.getNextLesson(trainingId);
     }
+
+    @Override
+    public Lesson getLessonByID(long lessonId) {
+        return lessonDAO.getLessonById(lessonId);
+    }
 }

@@ -1,9 +1,9 @@
 <div class="container profile">
 
     <div class="row">
-        <h3>Profile page</h3>
-        <p>Email: <span>someemail@gmail.com</span></p>
-        <p>Phone number: <span>+ ... somenumber</span></p>
+        <h3>{{profile.profileInfo.username}}</h3>
+        <p>Email: <span>{{profile.profileInfo.email}}</span></p>
+        <p>Phone number: <span>{{profile.profileInfo.phone}}</span></p>
     </div>
 
     <div class="row">
@@ -23,7 +23,7 @@
                     <tbody>
                     <tr ng-repeat="course in profile.pastCourses">
                         <td>{{course.coachName}}</td>
-                        <td>{{course.trainingTitle}}</td>
+                        <td>{{course.title}}</td>
                     </tr>
                     </tbody>
                 </table>
@@ -50,7 +50,7 @@
                     <tbody>
                     <tr ng-repeat="course in profile.currentCourses">
                         <td>{{course.coachName}}</td>
-                        <td>{{course.trainingTitle}}</td>
+                        <td>{{course.title}}</td>
                     </tr>
                     </tbody>
                 </table>
@@ -98,11 +98,13 @@
                     <thead>
                     <tr>
                         <th>Who left</th>
+                        <th>Positive?</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr ng-repeat="fb in profile.feedbacks">
                         <td>{{fb.coachName}}</td>
+                        <td>{{fb.isPositive==true ? '+' : '-'}}</td>
                     </tr>
                     </tbody>
                 </table>

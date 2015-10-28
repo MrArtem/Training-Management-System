@@ -8,6 +8,7 @@ import com.exadel.training.notification.help.MessageGenerator;
 import com.exadel.training.security.User.CustomUser;
 import com.exadel.training.service.SearchService;
 import com.exadel.training.service.UserService;
+import com.exadel.training.validate.annotation.LegalID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,6 +31,7 @@ public class UserController {
     private UserService userService;
 
     @RequestMapping(value = "/user_info/{idUser}", method = RequestMethod.GET)
+    @LegalID
     public UserModel getUserInfo(@PathVariable("idUser") long idUser) {
         CustomUser customUser =  (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         long idCurrentUser = customUser.getUserId();
@@ -39,6 +41,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/visitedTraining/{idUser}", method = RequestMethod.GET)
+    @LegalID
     public List<TrainingListModel> getVisitedTraining(@PathVariable("idUser") long idUser) {
         List<TrainingListModel> trainingListModelList = new ArrayList<TrainingListModel>();
 
@@ -50,6 +53,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/actualTraining/{idUser}", method = RequestMethod.GET)
+    @LegalID
     public List<TrainingListModel> getActualTraining(@PathVariable("idUser") long idUser) {
         List<TrainingListModel> trainingListModelList = new ArrayList<TrainingListModel>();
 

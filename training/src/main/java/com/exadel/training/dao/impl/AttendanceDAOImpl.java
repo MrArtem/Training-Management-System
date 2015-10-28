@@ -5,10 +5,12 @@ import com.exadel.training.dao.domain.Attendance;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 /**
  * Created by ayudovin on 06.10.2015.
  */
+@Repository
 public class AttendanceDAOImpl implements AttendanceDAO {
 
     @Autowired
@@ -37,4 +39,5 @@ public class AttendanceDAOImpl implements AttendanceDAO {
         return sessionFactory.getCurrentSession()
                 .load(Attendance.class, id);
     }
+
 }
