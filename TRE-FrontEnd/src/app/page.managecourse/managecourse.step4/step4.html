@@ -10,7 +10,7 @@
 
                 <div ng-if="!isEdited" class="switch round">
                     <p>Do you want to set repeat model?</p>
-                    <input id="on-off" type="checkbox" ng-model="courseInfo.isRepeating" ng-change="step4.changeTab()">
+                    <input id="on-off" name="isRepeating" type="checkbox" ng-model="courseInfo.isRepeating" ng-change="step4.changeTab()">
                     <label for="on-off">
                         <span class="switch-on">Yes</span>
                         <span class="switch-off">No</span>
