@@ -37,6 +37,8 @@ public class TrainingServiceImpl implements TrainingService {
     private TagDAO tagDAO;
     @Autowired
     private NewsService newsService;
+    @Autowired
+    private AttendanceDAO attendanceDAO;
 
     private Long getTime() {
         Calendar calendar = new GregorianCalendar();
@@ -114,7 +116,7 @@ public class TrainingServiceImpl implements TrainingService {
                     Attendance attendance = new Attendance();
                     attendance.setLesson(lesson);
                     attendance.setUser(listener.getUser());
-                    //todo AttendanceDAO
+                    attendanceDAO.save(attendance);
                 }
             }
             if (!isConfirmed) {
@@ -160,7 +162,7 @@ public class TrainingServiceImpl implements TrainingService {
                         Attendance attendance = new Attendance();
                         attendance.setLesson(lesson);
                         attendance.setUser(listener.getUser());
-                        //todo AttendanceDAO
+                        attendanceDAO.save(attendance);
                     }
                 }
                 if (!isConfirmed) {
@@ -284,8 +286,6 @@ public class TrainingServiceImpl implements TrainingService {
             , String description, String shortInfo
             , Integer language, Integer maxSize, boolean isInner, String place, List<Long> tagIdList
             , String additionalInfo, List<LessonModel> lessonModelList, RepeatModel repeatModel) {
-
-        //TODO tagList &  lessonList !!!
         approveAction.setDate(getTime());
         ApproveTraining approveTraining = approveAction.getApproveTraining();
 
@@ -488,19 +488,31 @@ public class TrainingServiceImpl implements TrainingService {
             lesson.setDate(lessonModel.getDate());
             lesson.setState(Lesson.State.ADD);
             lessonDAO.changeLesson(lesson);
-            //todo Attendance
+            for( Listener listener : emptyIfNull(training.getListenerList())) {
+                Attendance attendance = new Attendance();
+                attendance.setUser(listener.getUser());
+                attendance.setLesson(lesson);
+                attendanceDAO.save(attendance);
+            }
         }
         if(lesson.getState() == Lesson.State.NONE) {
             lesson.setState(Lesson.State.REMOVAL);
+            for( Attendance attendance : emptyIfNull(lesson.getAttendanceList()) ) {
+                attendanceDAO.delete(attendance);
+            }
             if( approveLesson.getDate() != null) {
-                Training training = approveAction.getTraining();
                 Lesson newLesson = new Lesson();
                 newLesson.setDate(lessonModel.getDate());
                 newLesson.setPlace(lessonModel.getPlace());
                 newLesson.setTraining(training);
                 newLesson.setState(Lesson.State.ADD);
                 lessonDAO.addLesson(newLesson);
-                //todo Attendance
+                for( Listener listener : emptyIfNull(training.getListenerList())) {
+                    Attendance attendance = new Attendance();
+                    attendance.setUser(listener.getUser());
+                    attendance.setLesson(lesson);
+                    attendanceDAO.save(attendance);
+                }
             }
         }
         lessonApproveDAO.removeApprove(approveLesson);

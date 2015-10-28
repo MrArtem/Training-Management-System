@@ -1,8 +1,10 @@
 package com.exadel.training.service.impl;
 
+import com.exadel.training.dao.AttendanceDAO;
 import com.exadel.training.dao.ListenerDAO;
 import com.exadel.training.dao.TrainingDAO;
 import com.exadel.training.dao.UserDAO;
+import com.exadel.training.dao.domain.Attendance;
 import com.exadel.training.dao.domain.Listener;
 import com.exadel.training.dao.domain.Training;
 import com.exadel.training.dao.domain.User;
@@ -23,6 +25,8 @@ public class ListenerServiceImpl implements ListenerService {
     private TrainingDAO trainingDAO;
     @Autowired
     private UserDAO userDAO;
+    @Autowired
+    private AttendanceDAO attendanceDAO;
 
     @Override
     public void addListener(long trainingId, long userId) {
@@ -42,6 +46,7 @@ public class ListenerServiceImpl implements ListenerService {
         listener.setTraining(training);
         listener.setUser(user);
         listenerDAO.addListener(listener);
+        //todo attendance
     }
 
     @Override
@@ -56,6 +61,7 @@ public class ListenerServiceImpl implements ListenerService {
                 listenerDAO.changeListener(listener);
             }
         }
+        //todo attendance
     }
 
     @Override
