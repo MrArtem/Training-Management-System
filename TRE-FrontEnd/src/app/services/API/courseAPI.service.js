@@ -43,8 +43,10 @@
             });
         }
 
-        function getShortInfo() {
-
+        function getShortInfo(courseId) {
+            return $http.get(urlProvider.getShortInfo(courseId)).then(function(result) {
+                return result.data;
+            });
         }
 
         function getTimetable(courseId) {
@@ -231,7 +233,7 @@
         function uploadFiles(files) {
             console.log(files);
             var formData = new FormData();
-            formData.append("files", files);
+            formData.append("files", JSON.stringify(files));
             console.log(formData);
             return $http.post(urlProvider.uploadFiles(), formData, {
                 headers: {

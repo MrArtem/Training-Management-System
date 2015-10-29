@@ -25,6 +25,7 @@
             getParticipants: getParticipants,
             getPastCoursesForUser: getPastCoursesForUser,
             getProfileInfo: getProfileInfo,
+            getShortInfo: getShortInfo,
             getTimetable: getTimetable,
             getWaitingCoursesForUser: getWaitingCoursesForUser,
             login: login,
@@ -106,6 +107,10 @@
 
     function getProfileInfo(userId) {
         return '/api/user_controller/user_info/' + userId;
+    }
+
+    function getShortInfo(courseId) {
+        return '/api/training/' + courseId;
     }
 
     function getTimetable(courseId) {
