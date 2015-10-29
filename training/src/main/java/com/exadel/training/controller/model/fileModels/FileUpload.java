@@ -9,6 +9,8 @@ import java.util.List;
  */
 public class FileUpload {
 
+    private String name;
+    private String link;
     private List<MultipartFile> multipartFileList;
 
     FileUpload() {

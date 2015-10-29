@@ -231,7 +231,10 @@
         function uploadFiles(files) {
             console.log(files);
             var formData = new FormData();
-            formData.append("files", files);
+            for(var i in files) {
+                formData.append('files', angular.toJson(files[i].data));
+            }
+
             console.log(formData);
             return $http.post(urlProvider.uploadFiles(), formData, {
                 headers: {
