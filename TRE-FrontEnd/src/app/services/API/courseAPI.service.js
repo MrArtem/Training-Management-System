@@ -231,7 +231,7 @@
         function uploadFiles(files) {
             console.log(files);
             var formData = new FormData();
-            formData.append("files", JSON.stringify(files));
+            formData.append("files", files);
             console.log(formData);
             return $http.post(urlProvider.uploadFiles(), formData, {
                 headers: {
