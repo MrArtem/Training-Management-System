@@ -30,7 +30,7 @@
             login: login,
             logout: logout,
             manageLesson: manageLesson,
-            uploadFile: uploadFile
+            uploadFiles: uploadFiles
         };
         return urlProvider;
     }
@@ -128,7 +128,7 @@
         return '/api/training/' + courseId + '/lessons';
     }
 
-    function uploadFile() {
+    function uploadFiles() {
         return '/api/file_controller/';
     }
 })();

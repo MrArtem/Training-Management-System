@@ -7,43 +7,22 @@
 
     /** @ngInject */
     function AttachmentsController($scope, courseAPI, fileReader) {
+        //debugger;
         var vm = this;
-        vm.attachFiles = attachFiles;
-        vm.addFile = addFile;
+        $scope.filesToUpload = [];
+
         vm.deleteFile = deleteFile;
         vm.getAttachments = getAttachments;
+        vm.uploadFiles = uploadFiles;
 
-        $scope.progress = 0;
-        $scope.getFile = function () {
-            $scope.progress = 0;
-            fileReader.readAsDataUrl($scope.file, $scope).then(function (result) {
-                $scope.$parent.courseInfo.file.data = result;
-                //$scope.courseInfo.file.link = "";
-                $scope.courseInfo.file.name = ($scope.file.webkitRelativePath || $scope.file.name);
-            });
-        };
-        $scope.$on("fileProgress", function (e, progress) {
-            $scope.progress = progress.loaded / progress.total;
-        });
-
-        $scope.nullProgress = function () {
-            $scope.progress = 0;
-        };
-
-
-
-        function addFile() {
-            console.log($scope.courseInfo.file)
-            courseAPI.uploadFile($scope.courseInfo.file).then(function(result) {
-                console.log('File uploaded successfully');
+        function uploadFiles() {
+            console.log($scope.filesToUpload);
+            courseAPI.uploadFiles($scope.filesToUpload).then(function(result) {
+                console.log($scope.$parent.courseInfo.files);
             });
         }
 
-        function attachFiles() {
-
-        }
-
-        function deleteFile() {
+        function deleteFile(index) {
 
         }
 

@@ -66,6 +66,33 @@ body {
 
 }
 
+table {
+  tr.rowWithSecret:hover {
+    background-color: #f9f9f9;
+  }
+
+  tr.rowWithSecret {
+    .hiddenCell {
+      visibility: hidden;
+    }
+  }
+  tr.rowWithSecret:hover {
+    background-color: #f9f9f9;
+    .hiddenCell {
+      visibility: visible;
+    }
+  }
+
+  .hiddenCell .fa-times {
+    color: #ef3e36 !important;
+  }
+
+  .hiddenCell .fa-times:hover {
+    color: #a1161b !important;
+    cursor: pointer;
+  }
+}
+
 .error {
   color: red !important;
 }
