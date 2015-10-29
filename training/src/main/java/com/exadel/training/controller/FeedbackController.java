@@ -6,6 +6,7 @@ import com.exadel.training.dao.domain.Feedback;
 import com.exadel.training.service.FeedbackService;
 import com.exadel.training.validate.annotation.LegalID;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import javax.websocket.server.PathParam;
@@ -22,6 +23,7 @@ public class FeedbackController {
     @Autowired
     FeedbackService feedbackService;
 
+    @Secured({"ADMIN", "USER"})
     @RequestMapping(value = "/feedbacks_of_user/{idUser}", method = RequestMethod.GET)
     @LegalID
     public List<FeedbackModel> getFeedbacListOfUser(@PathVariable("idUser") long idUser) {
@@ -36,6 +38,7 @@ public class FeedbackController {
         return feedbackModelList;
     }
 
+    @Secured({"ADMIN", "USER", "EX_COACH"})
     @RequestMapping(value = "/add_feedback", method = RequestMethod.POST, consumes = "application/json")
     public void addFeedback(@RequestBody AddFeedbackModel addFeedbackModel) {
         feedbackService.addFeedback(addFeedbackModel);
