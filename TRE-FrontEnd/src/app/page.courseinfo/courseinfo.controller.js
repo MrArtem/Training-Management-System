@@ -41,7 +41,7 @@
         }
 
         function saveTimetable(timetable) {
-            vm.courseInfo.lessonList = angular.copy(timetable);
+            $scope.courseInfo.lessonList = angular.copy(timetable);
         }
 
     }

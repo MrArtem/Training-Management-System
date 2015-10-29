@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/training")
+@RequestMapping("/training")
 public class TrainingCRUDController {
     @Autowired
     private TrainingService trainingService;

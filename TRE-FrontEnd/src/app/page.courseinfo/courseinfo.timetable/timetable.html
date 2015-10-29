@@ -18,9 +18,9 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr ng-repeat="i in [1, 2, 3]">
+                    <tr ng-repeat="lesson in courseInfo.lessonList">
                         <td>{{$index + 1}}</td>
-                        <td>{{lesson.date}}</td>
+                        <td>{{lesson.date | date: "MMM d, y h:mm a"}}</td>
                         <td>{{lesson.place}}</td>
                         <td><a data-reveal-id="editLessonModal" ng-click="timetable.getLessonId($index)">Edit</a></td>
                     </tr>
@@ -46,7 +46,7 @@
             </div>
             <div class="small-12 medium-6 column">
                 <label>New place</label>
-                <input type='text' ng-model="timetable.newPlace" tre-datepicker="">
+                <input type='text' ng-model="timetable.newPlace">
             </div>
         </div>
         <div class="row">
@@ -68,7 +68,7 @@
             </div>
             <div class="small-12 medium-6 column">
                 <label>New place</label>
-                <input type='text' ng-model="timetable.editedPlace" tre-datepicker="">
+                <input type='text' ng-model="timetable.editedPlace">
             </div>
         </div>
         <a href="#" class="left button round tiny default-btn-red" close-modal="editLessonModal" ng-click="timetable.deleteLesson()">Delete lesson</a>

@@ -28,7 +28,7 @@
 
         function getParticipants() {
             courseAPI.getParticipants($stateParams.courseId).then(function(data) {
-                $scope.$parent.saveParticipants(data);
+                $scope.$parent.courseInfo.participantsList = angular.copy(data);
             });
         }
 

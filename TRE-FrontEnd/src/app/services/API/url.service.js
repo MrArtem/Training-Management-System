@@ -114,7 +114,7 @@
     }
 
     function getTimetable(courseId) {
-        return '/api/training/' + courseId + '/get_lessons';
+        return '/api/training/' + courseId + '/lesson_list';
     }
 
     function getWaitingCoursesForUser(userId) {
@@ -130,7 +130,7 @@
     }
 
     function manageLesson(courseId) {
-        return '/api/training/' + courseId + '/lessons';
+        return '/api/training/' + courseId + '/lesson';
     }
 
     function uploadFiles() {

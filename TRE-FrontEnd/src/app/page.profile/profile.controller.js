@@ -24,8 +24,6 @@
         vm.getWaitingCourses = getWaitingCourses;
 
         vm.getProfileInfo();
-        vm.getCurrentCourses();
-        vm.getPastCourses();
 
         function getCurrentCourses() {
             userAPI.getCurrentCourses(userId).then(function(data) {

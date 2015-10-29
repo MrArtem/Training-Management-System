@@ -3,8 +3,8 @@
         <div class="row courseinfo-short">
             <h1 class="title">{{courseInfo.title}}</h1>
             <h3 class="short-desc">{{courseInfo.shortInfo}}</h3>
+            <p class="field">Start date: <span class="info">{{courseInfo.startDate | date: "MMM d, y h:mm a"}}</span></p>
             <p class="field">Coach: <a ui-sref="profile({userId: courseInfo.coachId})" class="info">{{courseInfo.coachName}}</a></p>
-
             <p class="field">Language: <span class="info">{{courseInfo.language}}</span></p>
         </div>
 
