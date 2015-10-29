@@ -2,6 +2,7 @@ package com.exadel.training.controller;
 
 import com.exadel.training.controller.model.*;
 import com.exadel.training.controller.model.trainingModels.*;
+import com.exadel.training.controller.model.userModels.ExUserModel;
 import com.exadel.training.controller.model.userModels.UserModel;
 import com.exadel.training.dao.domain.*;
 import com.exadel.training.security.User.CustomUser;
@@ -267,8 +268,9 @@ public class TrainingBaseController {
     @LegalID
     @Secured({"ADMIN"})
     @RequestMapping(value = "{id}/addExListener", method = RequestMethod.POST)
-    void addListener(@PathVariable("id") long trainingId,@RequestBody UserModel userModel) {
-        //todo add ex_user
+    void addListener(@PathVariable("id") long trainingId,@RequestBody ExUserModel exUserModel) {
+        Long userId = userService.addExternalUser(exUserModel);
+        listenerService.addListener(trainingId,userId);
     }
 
     @LegalID
