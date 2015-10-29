@@ -14,7 +14,7 @@
         vm.deleteParticipant = deleteParticipant;
         vm.getParticipants = getParticipants;
 
-        //vm.getParticipants();
+        vm.getParticipants();
 
         function addParticipant() {
             courseAPI.addParticipant($stateParams.courseId, vm.participantInfo).then(function(data) {
@@ -28,6 +28,7 @@
 
         function getParticipants() {
             courseAPI.getParticipants($stateParams.courseId).then(function(data) {
+                console.log("got participants");
                 $scope.$parent.courseInfo.participantsList = angular.copy(data);
             });
         }

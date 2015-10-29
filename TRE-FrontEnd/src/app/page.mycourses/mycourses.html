@@ -49,7 +49,7 @@
 
                 <h3 class="course-place">Where: <span class="value">{{course.nextPlace}}</span></h3>
 
-                <h3 class="course-coach">Who: <span class="value">{{course.coachName}}</span></h3>
+                <h3 class="course-coach">Who: <a ui-sref="profile({userId: course.coachId})" class="value">{{course.coachName}}</a></h3>
                 <a class="course-goto"><i class="fa fa-arrow-right"></i></a>
             </div>
         </div>

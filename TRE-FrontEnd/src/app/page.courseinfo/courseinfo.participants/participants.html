@@ -17,10 +17,10 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr ng-repeat="i in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]">
-                        <td>No</td>
-                        <td>John Doe</td>
-                        <td>jdoe@somemail.com</td>
+                    <tr ng-repeat="participant in courseInfo.participantsList track by $index">
+                        <td>{{$index + 1}}</td>
+                        <td>{{participant.username}}</td>
+                        <td>{{participant.email}}</td>
                     </tr>
                     </tbody>
                 </table>

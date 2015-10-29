@@ -30,6 +30,7 @@
         }
 
         function editLesson() {
+            console.log(vm.editedLessonId +  vm.editedDate + vm.editedPlace);
             courseAPI.editLesson($stateParams.courseId, vm.editedLessonId, vm.editedDate, vm.editedPlace).then(function (data) {     //maybe change without calling server?
                 console.log('lesson edited successfully');
             });

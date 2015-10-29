@@ -13,6 +13,7 @@
             cancelEdit: cancelEdit,
             confirm: confirm,
             createCourse: createCourse,
+            deleteLesson: deleteLesson,
             editCourse: editCourse,
             findTrainings: findTrainings,
             findUsers: findUsers,
@@ -60,6 +61,9 @@
         return '/api/training/create';
     }
 
+    function deleteLesson(courseId, lessonId) {
+        return '/api/training/' + courseId + '/lesson/' + lessonId;
+    }
 
     function editCourse(trainingId) {
         return '/api/training/edit/' + trainingId;
@@ -98,7 +102,7 @@
     }
 
     function getParticipants(courseId) {
-        return '/api/training/' + courseId + '/get_listeners';
+        return '/api/training/' + courseId + '/listener_list';
     }
 
     function getPastCoursesForUser(userId) {

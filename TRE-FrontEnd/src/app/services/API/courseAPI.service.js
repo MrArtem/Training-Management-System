@@ -205,9 +205,9 @@
 
         function editLesson(courseId, lessonId, newDate, newPlace) {
             var lessonInfo = {
-                id: lessonId,
-                newDate: newDate,
-                newPlace: newPlace
+                prevLessonId: lessonId,
+                date: (new Date(newDate)).getTime(),
+                place: newPlace
             };
             return $http.put(urlProvider.manageLesson(courseId), lessonInfo).then(function (result) {
                 return result.data;
@@ -215,7 +215,7 @@
         }
 
         function deleteLesson(courseId, lessonId) {
-            return $http.delete(urlProvider.manageLesson(courseId), {prevLessonId: lessonId}).then(function (result) {
+            return $http.delete(urlProvider.deleteLesson(courseId, lessonId)).then(function (result) {
                 return result.data;
             });
         }

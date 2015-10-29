@@ -135,8 +135,10 @@ public class TrainingCRUDController {
         trainingService.addLesson(trainingId, lessonModel);
     }
 
-    @RequestMapping(value = "/{id}/lesson", method = RequestMethod.DELETE)
-    void removeLesson(@PathVariable("id") long trainingId, @RequestBody LessonModel lessonModel) {
+    @RequestMapping(value = "/{id}/lesson/{lessonId}", method = RequestMethod.DELETE)
+    void removeLesson(@PathVariable("id") long trainingId, @PathVariable("lessonId") Long lessonId) {
+        LessonModel lessonModel = new LessonModel();
+        lessonModel.setPrevLessonId(lessonId);
         trainingService.removeLesson(trainingId, lessonModel);
     }
 
