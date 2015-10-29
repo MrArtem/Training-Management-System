@@ -6,12 +6,16 @@ import com.exadel.training.controller.model.userModels.UserModel;
 import com.exadel.training.dao.domain.*;
 import com.exadel.training.security.User.CustomUser;
 import com.exadel.training.service.*;
+import com.exadel.training.validate.TagValidator;
+import com.exadel.training.validate.annotation.LegalID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import sun.plugin.liveconnect.SecurityContextHelper;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -36,6 +40,16 @@ public class TrainingBaseController {
     @Autowired
     private ListenerService listenerService;
 
+
+    @Autowired
+    private TagValidator tagValidator;
+
+    @InitBinder
+    private void initBinder(WebDataBinder webDataBinder) {
+        webDataBinder.setValidator(tagValidator);
+    }
+
+    @LegalID
     @Secured({"ADMIN", "USER", "EX_COACH", "EX_USER"})
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     GetTrainingModel getTrainingMadel(@PathVariable("id") long trainingId) {
@@ -47,12 +61,14 @@ public class TrainingBaseController {
         return getTrainingModel;
     }
 
+    @LegalID
     @Secured({"ADMIN", "USER", "EX_COACH", "EX_USER"})
     @RequestMapping(value = "/{id}/lesson_list", method = RequestMethod.GET)
     List<Lesson> getLessonListByTraining(@PathVariable("id") long trainingId) {
         return lessonService.getLessonByTraining(trainingId);
     }
 
+    @LegalID
     @Secured({"ADMIN", "USER", "EX_COACH"})
     @RequestMapping(value = "/{id}/listener_list")
     List<ListenerModel> getListenerList(@PathVariable("id") long trainingId) {
@@ -73,7 +89,7 @@ public class TrainingBaseController {
 
     @Secured({"ADMIN", "USER"})
     @RequestMapping(value = "/add_tag", method = RequestMethod.POST)
-    public void addTag(@RequestBody Tag tag) {
+    public void addTag(@Valid @RequestBody Tag tag) {
         tagService.addTag(tag);
     }
 
@@ -115,6 +131,7 @@ public class TrainingBaseController {
         return trainingListModelList;
     }
 
+    @LegalID
     @Secured({"ADMIN", "USER", "EX_COACH"})
     @RequestMapping(value = "/training/{id}/add_comment")
     public void addComment(@PathVariable("id") Long trainingId, @RequestBody CommentModel commentModel) {
@@ -134,6 +151,7 @@ public class TrainingBaseController {
         commentService.addComment(comment);
     }
 
+    @LegalID
     @Secured({"ADMIN", "USER", "EX_COACH"})
     @RequestMapping(value = "training/{trainingId}/remove_comment/{commentId}")
     public void removeComment(@PathVariable("trainingId") Long trainingId,
@@ -141,6 +159,7 @@ public class TrainingBaseController {
         commentService.removeComment(commentId);
     }
 
+    @LegalID
     @Secured({"ADMIN", "USER", "EX_COACH", "EX_USER"})
     @RequestMapping(value = "/training/{id}/comment_list")
     public List<CommentModel> getTrainingCommentList(@PathVariable("id") Long trainingId) {
@@ -166,6 +185,7 @@ public class TrainingBaseController {
         return commentModelList;
     }
 
+    @LegalID
     @Secured({"ADMIN", "USER"})
     @RequestMapping(value = "/user/{id}/coach_comment_list")
     public List<CommentModel> getCoachCommentList(@PathVariable("id") Long coachId) {
@@ -191,6 +211,7 @@ public class TrainingBaseController {
         return commentModelList;
     }
 
+    @LegalID
     @Secured({"ADMIN", "USER"})
     @RequestMapping(value = "/user/{id}/comment_list")
     public List<CommentModel> getUserCommentList(@PathVariable("id") Long userId) {
@@ -217,7 +238,7 @@ public class TrainingBaseController {
     }
 
 
-
+    @LegalID
     @Secured({"ADMIN", "USER"})
     @RequestMapping(value = "{id}/addListener", method = RequestMethod.POST)
     void addListener(@PathVariable("id") long trainingId) {
@@ -226,6 +247,7 @@ public class TrainingBaseController {
         listenerService.addListener(trainingId, userId);
     }
 
+    @LegalID
     @Secured({"ADMIN", "USER"})
     @RequestMapping(value = "{id}/leave/{userId}", method = RequestMethod.PUT)
     void leaveListener(@PathVariable("id") long trainingId, @PathVariable("userId") Long userId) {
@@ -233,6 +255,7 @@ public class TrainingBaseController {
 
     }
 
+    @LegalID
     @Secured({"ADMIN", "USER"})
     @RequestMapping(value = "{id}/leave", method = RequestMethod.PUT)
     void leaveListener(@PathVariable("id") long trainingId) {
@@ -241,12 +264,14 @@ public class TrainingBaseController {
         listenerService.leaveListener(trainingId, userId);
     }
 
+    @LegalID
     @Secured({"ADMIN"})
     @RequestMapping(value = "{id}/addExListener", method = RequestMethod.POST)
     void addListener(@PathVariable("id") long trainingId,@RequestBody UserModel userModel) {
         //todo add ex_user
     }
 
+    @LegalID
     @Secured({"ADMIN", "USER"})
     @RequestMapping(value = "{id}/set_rating/{rating}")
     RatingModel setRating(@PathVariable("id") long trainingId, @PathVariable("rating") int rating) {

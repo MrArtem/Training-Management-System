@@ -1,6 +1,5 @@
 package com.exadel.training.controller.model.trainingModels;
 
-
 import java.util.List;
 
 public class AddingTrainingModel {
@@ -29,7 +28,7 @@ public class AddingTrainingModel {
 
     private RepeatModel repeatModel;
 
-    private boolean isInner;
+    private Boolean isInner;
 
     public Long getCoachId() {
         return coachId;
@@ -127,11 +126,11 @@ public class AddingTrainingModel {
         this.repeatModel = repeatModel;
     }
 
-    public boolean isInner() {
+    public Boolean isInner() {
         return isInner;
     }
 
-    public void setIsInner(boolean isInner) {
+    public void setIsInner(Boolean isInner) {
         this.isInner = isInner;
     }
 }
