@@ -28,7 +28,7 @@ public class Lesson {
     private ApproveLesson approveLesson;
 
     @JsonIgnore
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private Training training;
 
     @JsonIgnore

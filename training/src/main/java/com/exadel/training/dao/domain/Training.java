@@ -61,7 +61,7 @@ public class Training {
     @OneToMany(mappedBy = "training")
     private List<Listener> listenerList;
 
-    @OneToMany(mappedBy = "training")
+    @OneToMany(mappedBy = "training", orphanRemoval=true)
     private List<Lesson> lessonList;
 
     @OneToMany(mappedBy = "training")
