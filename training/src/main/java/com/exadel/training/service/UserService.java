@@ -1,7 +1,7 @@
 package com.exadel.training.service;
 
 import com.exadel.training.controller.model.userModels.ExUserModel;
-import com.exadel.training.controller.model.userModels.UserModel;
+import com.exadel.training.dao.domain.Listener;
 import com.exadel.training.dao.domain.Training;
 import com.exadel.training.dao.domain.User;
 
@@ -23,4 +23,5 @@ public interface UserService {
     List<Training> getCoachTrainingListOfUser(long id);
     List<Training> visitedTrainings (long idUser);
     List<Training> actualTrainings(long idUser);
+    List<Training> getUserTrainingsByState(long idUser, Listener.State state);
 }
