@@ -200,10 +200,6 @@ public class TrainingBaseController {
         }
         return commentModelList;
     }
-
-
-
-
     @RequestMapping(value = "{id}/addListener", method = RequestMethod.POST)
     void addListener(@PathVariable("id") long trainingId) {
         //todo security
