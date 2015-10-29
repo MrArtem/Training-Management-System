@@ -76,4 +76,6 @@ public interface TrainingService {
     void removeLesson(long trainingId, LessonModel lessonModel);
 
     void confirmEditLesson(long actionId, LessonModel lessonModel);
+
+    double setRating(long trainingId, int rating, long userId);
 }

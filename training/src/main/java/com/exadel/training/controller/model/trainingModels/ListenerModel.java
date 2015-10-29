@@ -1,33 +1,31 @@
 package com.exadel.training.controller.model.trainingModels;
 
 
-import com.exadel.training.dao.domain.Listener;
-import com.exadel.training.dao.domain.User;
-
 public class ListenerModel {
-    private Long participantId;
-    private String name;
+    private Long userId;
+    private String username;
     private String email;
-    private boolean isInternal;
+    private boolean isExternal;
     private boolean isWaiting;
 
     public ListenerModel() {
+        isExternal = false;
     }
 
-    public Long getParticipantId() {
-        return participantId;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setParticipantId(Long participantId) {
-        this.participantId = participantId;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
-    public String getName() {
-        return name;
+    public String getUsername() {
+        return username;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getEmail() {
@@ -38,12 +36,12 @@ public class ListenerModel {
         this.email = email;
     }
 
-    public boolean isInternal() {
-        return isInternal;
+    public boolean isExternal() {
+        return isExternal;
     }
 
-    public void setIsInternal(boolean isInternal) {
-        this.isInternal = isInternal;
+    public void setIsExternal(boolean isExternal) {
+        this.isExternal = isExternal;
     }
 
     public boolean isWaiting() {
@@ -52,21 +50,5 @@ public class ListenerModel {
 
     public void setIsWaiting(boolean isWaiting) {
         this.isWaiting = isWaiting;
-    }
-
-    public ListenerModel(Listener listener) {
-        User user = listener.getUser();
-        name = user.getFirstName() + " " + user.getLastName();
-        isInternal = true;
-        if(user.getRole() == User.Role.EX_USER) {
-            isInternal = false;
-        }
-        participantId = listener.getId();
-        if (listener.getState() == Listener.State.WAITING) {
-            isWaiting = true;
-        }
-        else {
-            isWaiting = false;
-        }
     }
 }

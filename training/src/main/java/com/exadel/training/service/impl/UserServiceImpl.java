@@ -1,12 +1,13 @@
 package com.exadel.training.service.impl;
 
+import com.exadel.training.controller.model.userModels.ExUserModel;
+import com.exadel.training.controller.model.userModels.UserModel;
 import com.exadel.training.dao.TrainingDAO;
 import com.exadel.training.dao.domain.Listener;
 import com.exadel.training.dao.domain.Training;
 import com.exadel.training.dao.UserDAO;
 import com.exadel.training.dao.domain.User;
 import com.exadel.training.service.UserService;
-import com.exadel.training.validate.annotation.LegalID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +26,20 @@ public class UserServiceImpl implements UserService {
     private UserDAO userDAO;
     @Autowired
     private TrainingDAO trainingDAO;
+
+    @Override
+    public long addExternalUser(ExUserModel exUserModel) {
+        User user = new User();
+
+        user.setLogin(exUserModel.getLogin());
+        user.setEmail(exUserModel.getEmail());
+        user.setFirstName(exUserModel.getFirstName());
+        user.setLastName(exUserModel.getLastName());
+        user.setPhone(exUserModel.getPhone());
+
+        userDAO.save(user);
+        return user.getId();
+    }
 
     @Override
     public Boolean isCoach(long idUser, long idTraining) {
@@ -70,5 +85,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<Training> actualTrainings(long idUser) {
         return userDAO.actualTrainings(idUser);
+    }
+
+    @Override
+    public List<Training> getUserTrainingsByState(long idUser, Listener.State state) {
+        return userDAO.getUserTrainingsByState(idUser, state);
     }
 }
