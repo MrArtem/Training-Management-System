@@ -34,6 +34,7 @@
         }
 
         function getFeedbacks() {
+
             userAPI.getFeedbacksOn(userId).then(function(feedbacks) {
                 vm.feedbacks = angular.copy(feedbacks);
             });

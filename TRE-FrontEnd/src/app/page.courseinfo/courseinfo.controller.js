@@ -6,11 +6,10 @@
         .controller('CourseInfoController', CourseInfoController);
 
     /** @ngInject */
-    function CourseInfoController($scope, courseAPI) {
+    function CourseInfoController($scope, $stateParams, courseAPI) {
         var vm = this;
 
         vm.courseInfo = {};
-        vm.courseInfo.file = {};
 
         vm.getShortInfo = getShortInfo;
         vm.saveAttachments = saveAttachments;
@@ -23,23 +22,10 @@
         vm.getShortInfo();
 
         function getShortInfo() {
-            //courseAPI.getShortInfo().then(function(data) {
-            //    vm.courseInfo.title = data.title;
-            //    vm.courseInfo.shortInfo = data.shortInfo;
-            //    vm.courseInfo.description = data.description;
-            //    vm.courseInfo.coachName = data.coachName;
-            //    vm.courseInfo.startDate = data.startDate;
-            //    vm.courseInfo.endDate = data.endDate;
-            //    vm.courseInfo.language = data.language;
-            //    vm.courseInfo.rating = data.rating;
-            //    vm.courseInfo.canSubscribe = data.canSubscribe;
-            //    vm.courseInfo.canComment = data.canComment;
-            //    vm.courseInfo.canRate = data.canRate;
-            //    vm.courseInfo.isCoach = data.isCoach;
-            //    vm.courseInfo.trainingId = data.trainingId;
-            //    vm.courseInfo.coachId = data.coachId;
-            //    vm.courseInfo.tagList = angular.copy(data.tagList);
-            //});
+            courseAPI.getShortInfo($stateParams.courseId).then(function(data) {
+                $scope.courseInfo = angular.copy(data);
+                console.log($scope.courseInfo);
+            });
         }
 
         function saveAttachments(attachments) {

@@ -43,8 +43,10 @@
             });
         }
 
-        function getShortInfo() {
-
+        function getShortInfo(courseId) {
+            return $http.get(urlProvider.getShortInfo(courseId)).then(function(result) {
+                return result.data;
+            });
         }
 
         function getTimetable(courseId) {
