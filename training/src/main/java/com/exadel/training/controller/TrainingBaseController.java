@@ -1,20 +1,22 @@
 package com.exadel.training.controller;
 
-import com.exadel.training.controller.model.*;
-import com.exadel.training.controller.model.trainingModels.*;
+import com.exadel.training.controller.model.CommentModel;
+import com.exadel.training.controller.model.RatingModel;
+import com.exadel.training.controller.model.TrainingListModel;
+import com.exadel.training.controller.model.trainingModels.GetTrainingModel;
+import com.exadel.training.controller.model.trainingModels.ListenerModel;
 import com.exadel.training.controller.model.userModels.ExUserModel;
-import com.exadel.training.controller.model.userModels.UserModel;
 import com.exadel.training.dao.domain.*;
 import com.exadel.training.security.User.CustomUser;
 import com.exadel.training.service.*;
-import com.exadel.training.validate.TagValidator;
 import com.exadel.training.validate.annotation.LegalID;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.validation.Validator;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
-import sun.plugin.liveconnect.SecurityContextHelper;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
@@ -43,7 +45,8 @@ public class TrainingBaseController {
 
 
     @Autowired
-    private TagValidator tagValidator;
+    @Qualifier("tagValidator")
+    private Validator tagValidator;
 
     @InitBinder
     private void initBinder(WebDataBinder webDataBinder) {
