@@ -23,7 +23,7 @@
             getShortInfo: getShortInfo,
             getTimetable: getTimetable,
             editLesson: editLesson,
-            uploadFile: uploadFile
+            uploadFiles: uploadFiles
         }
         return courseAPI;
 
@@ -228,17 +228,16 @@
 
         //////////
 
-        function uploadFile(file) {
+        function uploadFiles(files) {
+            console.log(files);
             var formData = new FormData();
-            formData.append("file", file.data);
-            return $http.post(urlProvider.uploadFile(), {
+            formData.append("files", JSON.stringify(files));
+            console.log(formData);
+            return $http.post(urlProvider.uploadFiles(), formData, {
                 headers: {
                     'Content-Type': undefined
                 },
-                transformRequest: angular.identity,
-                params: {
-                    name: file.name
-                }
+                transformRequest: angular.identity
             });
         }
 
