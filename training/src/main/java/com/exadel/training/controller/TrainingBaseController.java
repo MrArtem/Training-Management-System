@@ -7,7 +7,6 @@ import com.exadel.training.controller.model.userModels.UserModel;
 import com.exadel.training.dao.domain.*;
 import com.exadel.training.security.User.CustomUser;
 import com.exadel.training.service.*;
-
 import com.exadel.training.validate.TagValidator;
 import com.exadel.training.validate.annotation.LegalID;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,13 +42,13 @@ public class TrainingBaseController {
     private ListenerService listenerService;
 
 
-    @Autowired
-    private TagValidator tagValidator;
-
-    @InitBinder
-    private void initBinder(WebDataBinder webDataBinder) {
-        webDataBinder.setValidator(tagValidator);
-    }
+//    @Autowired
+//    private TagValidator tagValidator;
+//
+//    @InitBinder
+//    private void initBinder(WebDataBinder webDataBinder) {
+//        webDataBinder.setValidator(tagValidator);
+//    }
 
     @LegalID
     @Secured({"ADMIN", "USER", "EX_COACH", "EX_USER"})
@@ -116,63 +115,46 @@ public class TrainingBaseController {
         trainingList = trainingService.getTrainingListByTagList(page, PAGE_SIZE, isActual, tagList);
         List<TrainingListModel> trainingListModelList = new ArrayList<TrainingListModel>();
         for (Training training : trainingList) {
-            TrainingListModel trainingListModel = new TrainingListModel(training);
-            Lesson nextLesson = lessonService.getNextLesson(training.getId());
-            trainingListModel.setNextPlace(nextLesson.getPlace());
-            trainingListModel.setNextDate(nextLesson.getDate());
+            TrainingListModel trainingListModel = new TrainingListModel();
+            trainingListModel.setId(training.getId());
+            trainingListModel.setTitle(training.getTitle());
+            trainingListModel.setExcerpt(training.getExcerpt());
+            trainingListModel.setCoachId(training.getCoach().getId());
+            trainingListModel.setCoachName(training.getCoach().getFirstName() +
+                    " " + training.getCoach().getLastName());
+            trainingListModel.setTagList(training.getTagList());
+            //todo get user here
+            User user = new User();
+            trainingListModel.setIsCoach(userService.isCoach(user.getId(), training.getId()));
+            //todo get next date and place
             trainingListModelList.add(trainingListModel);
         }
         return trainingListModelList;
     }
-    @LegalID
+
+    //@LegalID
+    @RequestMapping(value = "/{id}/add_comment")
     @Secured({"ADMIN", "USER", "EX_COACH"})
-    @RequestMapping(value = "/training/{id}/add_comment", method = RequestMethod.POST)
     public void addComment(@PathVariable("id") Long trainingId, @RequestBody CommentModel commentModel) {
-        Comment comment = new Comment();
-        comment.setClear(commentModel.getClear());
-        comment.setCreativity(commentModel.getCreativity());
-        comment.setEffective(commentModel.getEffective());
-        comment.setInteresting(commentModel.getInteresting());
-        comment.setNewMaterial(commentModel.getNewMaterial());
-        comment.setRecommendation(commentModel.getRecommendation());
-        comment.setOther(commentModel.getOther());
-        comment.setDate(new Date().getTime());
-        //Get current user
-        User user = new User();
-        comment.setUser(user);
-        comment.setTraining(trainingService.getTraining(trainingId));
-        commentService.addComment(comment);
+        commentService.addComment(commentModel, trainingId);
     }
 
     @LegalID
+    @RequestMapping(value = "/{trainingId}/remove_comment/{commentId}")
     @Secured({"ADMIN", "USER", "EX_COACH"})
-    @RequestMapping(value = "training/{trainingId}/remove_comment/{commentId}", method = RequestMethod.PUT)
     public void removeComment(@PathVariable("trainingId") Long trainingId,
                               @PathVariable("commentId") Long commentId) {
         commentService.removeComment(commentId);
     }
 
+    @RequestMapping(value = "/{id}/comment_list")
     @LegalID
     @Secured({"ADMIN", "USER", "EX_COACH", "EX_USER"})
-    @RequestMapping(value = "/training/{id}/comment_list", method = RequestMethod.GET)
     public List<CommentModel> getTrainingCommentList(@PathVariable("id") Long trainingId) {
         List<Comment> commentList = commentService.getTrainingCommentList(trainingId);
         List<CommentModel> commentModelList = new ArrayList<CommentModel>();
         for (Comment comment : commentList) {
-            CommentModel commentModel = new CommentModel();
-            commentModel.setClear(comment.getClear());
-            commentModel.setCreativity(comment.getCreativity());
-            commentModel.setEffective(comment.getEffective());
-            commentModel.setInteresting(comment.getInteresting());
-            commentModel.setNewMaterial(comment.getNewMaterial());
-            commentModel.setRecommendation(comment.getRecommendation());
-            commentModel.setOther(comment.getOther());
-            commentModel.setDate(comment.getDate());
-            commentModel.setIsPositive(comment.getIsPositive());
-            commentModel.setIsDeleted(comment.getIsDeleted());
-            commentModel.setId(comment.getId());
-            commentModel.setUserId(comment.getUser().getId());
-            commentModel.setUserName(comment.getUser().getFirstName() + " " + comment.getUser().getLastName());
+            CommentModel commentModel = new CommentModel(comment);
             commentModelList.add(commentModel);
         }
         return commentModelList;
@@ -180,25 +162,12 @@ public class TrainingBaseController {
 
     @LegalID
     @Secured({"ADMIN", "USER"})
-    @RequestMapping(value = "/user/{id}/coach_comment_list", method = RequestMethod.GET)
+    @RequestMapping(value = "/user/{id}/coach_comment_list")
     public List<CommentModel> getCoachCommentList(@PathVariable("id") Long coachId) {
         List<Comment> commentList = commentService.getCoachCommentList(coachId);
         List<CommentModel> commentModelList = new ArrayList<CommentModel>();
         for (Comment comment : commentList) {
-            CommentModel commentModel = new CommentModel();
-            commentModel.setClear(comment.getClear());
-            commentModel.setCreativity(comment.getCreativity());
-            commentModel.setEffective(comment.getEffective());
-            commentModel.setInteresting(comment.getInteresting());
-            commentModel.setNewMaterial(comment.getNewMaterial());
-            commentModel.setRecommendation(comment.getRecommendation());
-            commentModel.setOther(comment.getOther());
-            commentModel.setDate(comment.getDate());
-            commentModel.setIsPositive(comment.getIsPositive());
-            commentModel.setIsDeleted(comment.getIsDeleted());
-            commentModel.setId(comment.getId());
-            commentModel.setUserId(comment.getUser().getId());
-            commentModel.setUserName(comment.getUser().getFirstName() + " " + comment.getUser().getLastName());
+            CommentModel commentModel = new CommentModel(comment);
             commentModelList.add(commentModel);
         }
         return commentModelList;
@@ -206,31 +175,16 @@ public class TrainingBaseController {
 
     @LegalID
     @Secured({"ADMIN", "USER"})
-    @RequestMapping(value = "/user/{id}/comment_list", method = RequestMethod.GET)
+    @RequestMapping(value = "/user/{id}/comment_list")
     public List<CommentModel> getUserCommentList(@PathVariable("id") Long userId) {
         List<Comment> commentList = commentService.getUserCommentList(userId);
         List<CommentModel> commentModelList = new ArrayList<CommentModel>();
         for (Comment comment : commentList) {
-            CommentModel commentModel = new CommentModel();
-            commentModel.setClear(comment.getClear());
-            commentModel.setCreativity(comment.getCreativity());
-            commentModel.setEffective(comment.getEffective());
-            commentModel.setInteresting(comment.getInteresting());
-            commentModel.setNewMaterial(comment.getNewMaterial());
-            commentModel.setRecommendation(comment.getRecommendation());
-            commentModel.setOther(comment.getOther());
-            commentModel.setDate(comment.getDate());
-            commentModel.setIsPositive(comment.getIsPositive());
-            commentModel.setIsDeleted(comment.getIsDeleted());
-            commentModel.setId(comment.getId());
-            commentModel.setUserId(comment.getUser().getId());
-            commentModel.setUserName(comment.getUser().getFirstName() + " " + comment.getUser().getLastName());
+            CommentModel commentModel = new CommentModel(comment);
             commentModelList.add(commentModel);
         }
         return commentModelList;
     }
-
-
     @LegalID
     @Secured({"ADMIN", "USER"})
     @RequestMapping(value = "{id}/addListener", method = RequestMethod.POST)

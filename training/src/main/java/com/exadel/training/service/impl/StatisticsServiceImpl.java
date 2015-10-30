@@ -10,10 +10,13 @@ import com.itextpdf.text.pdf.PdfWriter;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
 
 import javax.transaction.Transactional;
 import java.io.ByteArrayOutputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -137,7 +140,7 @@ public class StatisticsServiceImpl implements StatisticsService {
                 title = attendance.getUser().getFirstName() + " " + attendance.getUser().getLastName();
             }
             drawMainInfo(document, title
-                    + ", " + Long.toString(attendance.getLesson().getDate()), attendance.getComment());
+                    + ", " + Long.toString(attendance.getLesson().getDate()) + ": ", attendance.getComment());
         }
     }
 
@@ -169,7 +172,69 @@ public class StatisticsServiceImpl implements StatisticsService {
 
     private void drawFeedbacks(Document document, List<Feedback> feedbackList, Boolean isUserStatistics)
             throws DocumentException {
+        for (Feedback feedback : feedbackList) {
+            String title;
+            if (isUserStatistics) {
+                title = feedback.getTraining().getTitle();
+            } else {
+                title = feedback.getUser().getFirstName() + " " + feedback.getUser().getLastName();
+            }
+            String feedbackData = "\n";
+            //todo questions
+            drawMainInfo(document, title
+                    + ", " + Long.toString(feedback.getDate()) + ": ", feedbackData);
+        }
+    }
 
+    private void drawComments(Document document, List<Comment> commentList, Boolean isUserStatistics)
+            throws DocumentException {
+        for (Comment comment : commentList) {
+            String title;
+            if (isUserStatistics) {
+                title = comment.getTraining().getTitle();
+            } else {
+                title = comment.getUser().getFirstName() + " " + comment.getUser().getLastName();
+            }
+            StringBuffer commentData = new StringBuffer("\n");
+            commentData.append("Was it interesting? ");
+            if (comment.getInteresting()) {
+                commentData.append("Yes\n");
+            } else {
+                commentData.append("No\n");
+            }
+            commentData.append("Was it clear? ");
+            if (comment.getClear()) {
+                commentData.append("Yes\n");
+            } else {
+                commentData.append("No\n");
+            }
+            commentData.append("Did you learn something new? ");
+            if (comment.getNewMaterial()) {
+                commentData.append("Yes\n");
+            } else {
+                commentData.append("No\n");
+            }
+            commentData.append("Was the coach creative? ");
+            if (comment.getCreativity()) {
+                commentData.append("Yes\n");
+            } else {
+                commentData.append("No\n");
+            }
+            commentData.append("Would you recommend this course? ");
+            if (comment.getRecommendation()) {
+                commentData.append("Yes\n");
+            } else {
+                commentData.append("No\n");
+            }
+            commentData.append("The effectiveness rating: ");
+            commentData.append(comment.getEffective());
+            if (StringUtils.isNotBlank(comment.getOther())) {
+                commentData.append("Something else: ");
+                commentData.append(comment.getOther());
+            }
+            drawMainInfo(document, title
+                    + ", " + Long.toString(comment.getDate()) + ": ", commentData.toString());
+        }
     }
 //    private void drawTrainingTable(Document document, List<Attendance> attendanceList) throws DocumentException {
 //        Integer columnNumber = attendanceList.size() + 1;
@@ -218,7 +283,6 @@ public class StatisticsServiceImpl implements StatisticsService {
                 drawTrainingShortInfo(document, training);
             }
         }
-        List<Training> acceptedTrainingList = userService.getUserTrainingsByState(id, Listener.State.ACCEPTED);
         drawUserTrainings(document, userService.getUserTrainingsByState(id, Listener.State.ACCEPTED),
                 "User's accepted courses", true, id, startDate, endDate);
         drawUserTrainings(document, userService.getUserTrainingsByState(id, Listener.State.WAITING),
@@ -227,11 +291,26 @@ public class StatisticsServiceImpl implements StatisticsService {
                 "User's courses he/she left", true, id, startDate, endDate);
         List<Feedback> feedbackList = user.getFeedbackList();
         if (feedbackList.size() != 0) {
-            drawTitle(document, "Feedbacks");
+            drawTitle(document, "Feedbacks on this user");
             drawFeedbacks(document, feedbackList, true);
+        }
+        List<Comment> commentList = user.getCommentList();
+        if(commentList.size() != 0) {
+            drawTitle(document, "Comments from this user");
+            drawComments(document, commentList, true);
         }
         document.close();
         String encodedBytes = encoder.encode(outputStream.toByteArray());
+
+        try {
+            BASE64Decoder decoder = new BASE64Decoder();
+            byte[] decodedBytes = decoder.decodeBuffer(encodedBytes);
+            FileOutputStream fos = new FileOutputStream("test.pdf");
+            fos.write(decodedBytes);
+            fos.close();
+        } catch (IOException e) {
+            System.out.println(":(");
+        }
         return encodedBytes;
     }
 
