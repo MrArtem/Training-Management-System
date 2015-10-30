@@ -5,7 +5,6 @@ import com.exadel.training.dao.FeedbackDAO;
 import com.exadel.training.dao.TrainingDAO;
 import com.exadel.training.dao.UserDAO;
 import com.exadel.training.dao.domain.Feedback;
-import com.exadel.training.dao.domain.User;
 import com.exadel.training.service.FeedbackService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -68,7 +67,7 @@ public class FeedbackServiceImpl implements FeedbackService {
         feedback.setMotivation(addFeedbackModel.isMotivation());
         feedback.setQuestions(addFeedbackModel.isQuestions());
 
-        feedback.setTraining(trainingDAO.getTrainingById(addFeedbackModel.getTraingID()));
+        feedback.setTraining(trainingDAO.getTrainingById(addFeedbackModel.getTrainingID()));
         feedback.setUser(userDAO.getUserByID(addFeedbackModel.getUserID()));
 
         return feedback;

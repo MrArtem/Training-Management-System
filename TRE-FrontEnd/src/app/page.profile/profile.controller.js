@@ -6,43 +6,22 @@
         .controller('ProfileController', ProfileController);
 
     /** @ngInject */
-    function ProfileController($stateParams, userAPI) {
+    function ProfileController($scope, $stateParams, userAPI) {
         var vm = this;
         var userId = $stateParams.userId;
         console.log(userId);
         vm.profileInfo = {};
 
-        vm.currentCourses = [];
-        vm.feedbacks = [];
-        vm.pastCourses = [];
-        vm.waitingCourses = [];
+        vm.profileInfo.currentCourses = [];
+        vm.profileInfo.feedbacks = [];
+        vm.profileInfo.pastCourses = [];
+        vm.profileInfo.waitingCourses = [];
 
-        vm.getCurrentCourses = getCurrentCourses;
-        vm.getFeedbacks = getFeedbacks;
-        vm.getPastCourses = getPastCourses;
+        $scope.profileInfo = vm.profileInfo;
+
         vm.getProfileInfo = getProfileInfo;
-        vm.getWaitingCourses = getWaitingCourses;
 
         vm.getProfileInfo();
-
-        function getCurrentCourses() {
-            userAPI.getCurrentCourses(userId).then(function(data) {
-                vm.currentCourses = angular.copy(data);
-            });
-        }
-
-        function getFeedbacks() {
-
-            userAPI.getFeedbacksOn(userId).then(function(feedbacks) {
-                vm.feedbacks = angular.copy(feedbacks);
-            });
-        }
-
-        function getPastCourses() {
-            userAPI.getPastCourses(userId).then(function(data) {
-                vm.pastCourses = angular.copy(data);
-            });
-        }
 
         function getProfileInfo() {
             userAPI.getProfileInfo(userId).then(function(user) {

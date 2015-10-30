@@ -1,14 +1,12 @@
 package com.exadel.training.controller.model.feedbackModels;
 
-import com.exadel.training.validate.annotation.LegalID;
-
 /**
  * Created by ayudovin on 21.10.2015.
  */
 public class AddFeedbackModel {
 
     private long userID;
-    private long traingID;
+    private long trainingID;
     private boolean attendance;
     private boolean attitude;
     private boolean commSkills;
@@ -28,12 +26,12 @@ public class AddFeedbackModel {
         this.userID = userID;
     }
 
-    public long getTraingID() {
-        return traingID;
+    public long getTrainingID() {
+        return trainingID;
     }
 
-    public void setTraingID(long traingID) {
-        this.traingID = traingID;
+    public void setTrainingID(long trainingID) {
+        this.trainingID = trainingID;
     }
 
     public boolean isAttendance() {
