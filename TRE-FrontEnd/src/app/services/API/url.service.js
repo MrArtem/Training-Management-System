@@ -8,6 +8,7 @@
     function UrlProvider() {
         var urlProvider = {
             addComment: addComment,
+            addFeedback: addFeedback,
             addParticipant: addParticipant,
             approveCourse: approveCourse,
             cancelCreate: cancelCreate,
@@ -42,6 +43,10 @@
 
     function addComment(courseId) {
         return '/api/training/' + courseId + '/add_comment';
+    }
+
+    function addFeedback() {
+        return '/api/feedback_controller/add_feedback';
     }
 
     function addParticipant(courseId) {

@@ -7,6 +7,7 @@
     /* @ngInject */
     function userAPI($http, urlProvider) {
         var userAPI = {
+            addFeedbackOnUser: addFeedbackOnUser,
             getCurrentCourses: getCurrentCourses,
             getFeedbacksOn: getFeedbacksOn,
             getPastCourses: getPastCourses,
@@ -15,6 +16,14 @@
         };
         return userAPI;
 
+        function addFeedbackOnUser(courseId, userId, fbInfo) {
+            fbInfo.userID = userId;
+            fbInfo.trainingID = courseId;
+            return $http.post(urlProvider.addFeedback(), fbInfo).then(function(result) {
+                return result.data;
+            });
+        }
+
         function getCurrentCourses(userId) {
             return $http.get(urlProvider.getCurrentCoursesForUser(userId)).then(function(result) {
                 return result.data;
@@ -22,7 +31,7 @@
         }
 
         function getFeedbacksOn(userId) {
-            return $http.get(urlProvider.getFeedbackOnUser(userId)).then(function(result) {
+            return $http.get(urlProvider.getFeedbacksOnUser(userId)).then(function(result) {
                 return result.data;
             });
         }

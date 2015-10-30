@@ -6,15 +6,34 @@
         .controller('ParticipantsController', ParticipantsController);
 
     /** @ngInject */
-    function ParticipantsController($scope, $stateParams, courseAPI) {
+    function ParticipantsController($scope, $stateParams, courseAPI, userAPI) {
         var vm = this;
+        vm.fbInfo = {
+            attendance: false,
+            attitude: false,
+            commSkills: false,
+            questions: false,
+            motivation: false,
+            focusOnResult: false,
+            other: ""
+        };
         vm.participantInfo = {};
 
+        vm.addFeedbackOnUser = addFeedbackOnUser;
         vm.addParticipant = addParticipant;
         vm.deleteParticipant = deleteParticipant;
         vm.getParticipants = getParticipants;
+        vm.getUserId = getUserId;
 
         vm.getParticipants();
+
+        function addFeedbackOnUser() {
+            console.log('Feedback to be added:');
+            console.log(vm.fbInfo);
+            userAPI.addFeedbackOnUser($stateParams.courseId, 2, vm.fbInfo).then(function(data) {
+                console.log('feedback added successfully');
+            });
+        }
 
         function addParticipant() {
             console.log("Participant to be added: ");
@@ -37,6 +56,10 @@
                 console.log("got participants");
                 $scope.$parent.courseInfo.participantsList = angular.copy(data);
             });
+        }
+
+        function getUserId(index) {
+            vm.selectedUserId = $scope.$parent.courseInfo.participantsList[index].id;
         }
 
     }

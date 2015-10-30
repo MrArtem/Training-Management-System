@@ -3,7 +3,7 @@
         <div class="small-12 medium-8 large-8 column">
 
             <h5>Comments</h5>
-            <a class="button round tiny default-btn-blue" data-reveal-id="addCommentModal">Add comment</a>
+            <a class="button round tiny default-btn-blue" data-reveal-id="addCommentModal"><i class="fa fa-pencil"></i>Add comment</a>
 
             <div class="scrollable-div">
 
@@ -70,10 +70,8 @@
                     <input type="checkbox" id="recommendation" ng-model="comments.commentInfo.recommendation"><label for="recommendation">Would you recommend this course?</label>
                 </div>
             </div>
-
             <div class="row">
-                <p>Please, rate the effectiveness:</p>
-
+                <label>Please, rate the effectiveness:</label>
                 <div class="small-12 medium-6 no-left-padding column">
                     <select name="effectiveness" ng-model="comments.commentInfo.effective" required>
                         <option>1</option>
@@ -82,6 +80,13 @@
                         <option>4</option>
                         <option>5</option>
                     </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="small-12 medium-6 no-left-padding column">
+                    <label>Anything else?
+                        <textarea type="text" name="other" placeholder="Do you have something else to say?" ng-model="courseInfo.commentInfo.other" ng-maxlength="10000"></textarea>
+                    </label>
                 </div>
             </div>
 
