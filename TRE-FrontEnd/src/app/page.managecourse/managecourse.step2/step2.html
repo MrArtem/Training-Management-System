@@ -2,28 +2,29 @@
 
     <div class="row">
 
-        <div class="small-1 column"><a ui-sref="managecourse.step1">Previous</a></div>
+        <div class="small-1 column"><a ui-sref="step1">Previous</a></div>
 
         <div class="small-10 column">
             <div class="row">
                 <div class="small-12 column">
                     <label>Description
-                        <textarea type="text" placeholder="title" ng-model="courseInfo.description"></textarea>
+                        <textarea type="text" name="description" placeholder="title" ng-model="courseInfo.description" ng-maxlength="10000" required></textarea>
                     </label>
+                    <small ng-show="courseForm.description.$invalid && courseForm.description.$touched" class="error">This field is required.</small>
                 </div>
             </div>
 
             <div class="row">
                 <div class="small-12 column">
                     <label>Tags will be added here
-                        <textarea type="text" placeholder="how???"></textarea>
+                        <textarea type="text" name="taglist" placeholder="how???"></textarea>
                     </label>
                 </div>
             </div>
 
         </div>
 
-        <div class="small-1 column"><a ui-sref="managecourse.step3">Next</a></div>
+        <div class="small-1 column"><a ui-sref="step3">Next</a></div>
 
     </div>
 

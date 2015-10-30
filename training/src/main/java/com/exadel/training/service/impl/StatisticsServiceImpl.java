@@ -47,6 +47,8 @@ public class StatisticsServiceImpl implements StatisticsService {
 
     private static Integer HORISONTAL_ROTATION = 0;
 
+    private static Format format = new SimpleDateFormat("dd-MM-yyyy");
+
     @Autowired
     private UserService userService;
 
@@ -76,8 +78,8 @@ public class StatisticsServiceImpl implements StatisticsService {
     private void drawTrainingShortInfo(Document document, Training training) throws DocumentException {
         drawMainInfo(document, "Title", training.getTitle());
         drawMainInfo(document, "Excerpt", training.getExcerpt());
-        drawMainInfo(document, "Start date", lessonService.getStartDateByTraining(training.getId()).toString());
-        drawMainInfo(document, "End date", lessonService.getEndDateByTraining(training.getId()).toString());
+        drawMainInfo(document, "Start date", format.format(lessonService.getStartDateByTraining(training.getId())));
+        drawMainInfo(document, "End date", format.format(lessonService.getEndDateByTraining(training.getId())));
         switch(training.getState()) {
             case CREATE:
                 drawMainInfo(document, "State", "waiting for creation approve");
@@ -108,7 +110,6 @@ public class StatisticsServiceImpl implements StatisticsService {
         } else {
             rotation = VERTICAL_ROTATION;
         }
-        Format format = new SimpleDateFormat("dd-MM-yyyy");
         addHeaderCell(table, "", rotation);
         for (Attendance attendance : attendanceList) {
             addHeaderCell(table, format.format(attendance.getLesson().getDate()), rotation);
@@ -119,9 +120,15 @@ public class StatisticsServiceImpl implements StatisticsService {
                 attendancesWithComments.add(attendance);
             }
             if (attendance.isPresence()) {
-                table.addCell(new PdfPCell(new Paragraph("", CELL_FONT)));
+                PdfPCell cell = new PdfPCell(new Paragraph("", CELL_FONT));
+                cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+                table.addCell(cell);
             } else {
-                table.addCell(new PdfPCell(new Paragraph("-", CELL_FONT)));
+                PdfPCell cell = new PdfPCell(new Paragraph("-", CELL_FONT));
+                cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+                table.addCell(cell);
             }
         }
         table.setHeaderRows(1);
@@ -140,7 +147,7 @@ public class StatisticsServiceImpl implements StatisticsService {
                 title = attendance.getUser().getFirstName() + " " + attendance.getUser().getLastName();
             }
             drawMainInfo(document, title
-                    + ", " + Long.toString(attendance.getLesson().getDate()) + ": ", attendance.getComment());
+                    + ", " + format.format(attendance.getLesson().getDate()), attendance.getComment());
         }
     }
 
@@ -158,8 +165,11 @@ public class StatisticsServiceImpl implements StatisticsService {
                                     training.getId(), new Date(startDate), new Date(endDate));
                     do {
                         attendancesWithComments.addAll(
-                                drawUserTable(document, attendanceList.subList(0, MAX_COLUMN_NUBMER)));
-                        attendanceList = attendanceList.subList(MAX_COLUMN_NUBMER, attendanceList.size());
+                                drawUserTable(document, attendanceList.subList(0,
+                                        (attendanceList.size() > MAX_COLUMN_NUBMER)
+                                                ? MAX_COLUMN_NUBMER : attendanceList.size())));
+                        attendanceList = attendanceList.subList((attendanceList.size() > MAX_COLUMN_NUBMER)
+                                ? MAX_COLUMN_NUBMER : attendanceList.size(), attendanceList.size());
                     } while (attendanceList.size() > MAX_COLUMN_NUBMER);
                     if (attendancesWithComments.size() != 0){
                         drawTitle(document, "Comments to presence");
@@ -182,7 +192,7 @@ public class StatisticsServiceImpl implements StatisticsService {
             String feedbackData = "\n";
             //todo questions
             drawMainInfo(document, title
-                    + ", " + Long.toString(feedback.getDate()) + ": ", feedbackData);
+                    + ", " + format.format(feedback.getDate()), feedbackData);
         }
     }
 
@@ -227,13 +237,13 @@ public class StatisticsServiceImpl implements StatisticsService {
                 commentData.append("No\n");
             }
             commentData.append("The effectiveness rating: ");
-            commentData.append(comment.getEffective());
+            commentData.append(comment.getEffective() + "\n");
             if (StringUtils.isNotBlank(comment.getOther())) {
                 commentData.append("Something else: ");
                 commentData.append(comment.getOther());
             }
             drawMainInfo(document, title
-                    + ", " + Long.toString(comment.getDate()) + ": ", commentData.toString());
+                    + ", " + format.format(comment.getDate()), commentData.toString());
         }
     }
 //    private void drawTrainingTable(Document document, List<Attendance> attendanceList) throws DocumentException {
@@ -322,7 +332,7 @@ public class StatisticsServiceImpl implements StatisticsService {
     @Override
     public String getStatistics(StatisticsModel statisticsModel) {
         try {
-            if (statisticsModel.getStatisticsType() == StatisticsModel.StatisticsType.TRAINING) {
+            if (statisticsModel.getStatisticsType() == StatisticsModel.StatisticsType.USER) {
                 return getUserStatistics(statisticsModel.getId(),
                         statisticsModel.getStartDate(), statisticsModel.getEndDate());
             } else {

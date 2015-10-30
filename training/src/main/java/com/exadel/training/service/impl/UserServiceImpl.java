@@ -43,7 +43,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Boolean isCoach(long idUser, long idTraining) {
-        return trainingDAO.getTrainingById(idTraining).getCoach().getId() == idUser ? true : false;
+        return trainingDAO.getTrainingById(idTraining).getCoach().getId() == idUser;
     }
 
     @Override

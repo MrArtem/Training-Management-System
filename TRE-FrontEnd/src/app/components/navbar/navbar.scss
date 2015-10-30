@@ -6,8 +6,15 @@
   position: absolute;
 }
 
+.navbar {
+  border-bottom: solid 1px $border-gray;
+}
+
 nav {
 
+  .activelink {
+    border-bottom: solid 2px black;
+  }
 
   #searchModal:after {
     content: "";
@@ -26,4 +33,8 @@ nav {
   background-size: 100% 100% !important;
   background-repeat: no-repeat !important;
   height: 100% !important;
+}
+
+div#searchModal {
+  top: 0 !important;
 }

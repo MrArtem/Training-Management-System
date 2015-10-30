@@ -5,7 +5,8 @@
         .factory('authService', authService);
 
     /* @ngInject */
-    function authService($cookies, $state, authAPI) {
+    function authService($cookies, $state, $q, authAPI) {
+        var loginPromise = $q.defer();
         var accessRights = {
             accessRightsFromString: accessRightsFromString,
             admin: 0,
@@ -25,6 +26,7 @@
         var authService = {
             credsLogin: credsLogin,
             getAccessRights: getAccessRights,
+            getLoginPromise: getLoginPromise,
             getUser: getUser,
             isLogged: getIsLogged,
             login: login,
@@ -52,14 +54,13 @@
                 if (isRemember) {
                     putUserCreds(user);
                 }
+                loginPromise.resolve(user);
                 $state.go('mycourses');
-
             }, function () {
 
             });
 
             return true;
-            //return success promise
 
             //error:
             //return error promise
@@ -80,11 +81,16 @@
             if (userCreds) {
                 user = userCreds;
                 isLogged = true;
+                loginPromise.resolve(user);
             }
         }
 
         function getUser() {
             return angular.copy(user);
+        }
+
+        function getLoginPromise() {
+            return loginPromise.promise;
         }
 
         function getAccessRights() {

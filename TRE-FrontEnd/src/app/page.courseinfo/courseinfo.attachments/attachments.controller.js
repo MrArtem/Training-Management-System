@@ -6,17 +6,23 @@
         .controller('AttachmentsController', AttachmentsController);
 
     /** @ngInject */
-    function AttachmentsController() {
+    function AttachmentsController($scope, courseAPI, fileReader) {
+        //debugger;
         var vm = this;
-        vm.attachFiles = attachFiles;
+        $scope.filesToUpload = [];
+
         vm.deleteFile = deleteFile;
         vm.getAttachments = getAttachments;
+        vm.uploadFiles = uploadFiles;
 
-        function attachFiles() {
-
+        function uploadFiles() {
+            console.log($scope.filesToUpload);
+            courseAPI.uploadFiles($scope.filesToUpload).then(function(result) {
+                console.log($scope.$parent.courseInfo.files);
+            });
         }
 
-        function deleteFile() {
+        function deleteFile(index) {
 
         }
 

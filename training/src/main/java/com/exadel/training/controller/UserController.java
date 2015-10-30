@@ -38,7 +38,7 @@ public class UserController {
     public UserModel getUserInfo(@PathVariable("idUser") long idUser) {
         CustomUser customUser =  (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         long idCurrentUser = customUser.getUserId();
-        UserModel userModel = new UserModel(userService.getUserById(idCurrentUser), userService.isCoachOfCurrentUser(idCurrentUser, idUser));
+        UserModel userModel = new UserModel(userService.getUserById(idUser), userService.isCoachOfCurrentUser(idCurrentUser, idUser));
 
         return userModel;
     }

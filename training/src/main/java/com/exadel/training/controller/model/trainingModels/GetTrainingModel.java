@@ -69,7 +69,7 @@ public class GetTrainingModel extends TrainingModel {
         this.rating = rating;
     }
 
-    public boolean isCoach() {
+    public boolean getIsCoach() {
         return isCoach;
     }
 

@@ -1,7 +1,6 @@
 <div class="container">
 
-    <a ui-sref="courseinfo">courseinfo</a>
-    <a ui-sref="managecourse.step1">create course!</a>
+    <a ui-sref="step1">create course!</a>
 
     <div class="tools-header row">
         <div class="medium-6 medium-offset-3  hide-for-small-only columns">
@@ -39,18 +38,19 @@
 
     <section class="course-list row">
         <div class="course-item column" ng-repeat="course in mycourses.userCourses | filter:{isCoach: mycourses.filter.isCoach}">
-            <h1 class="course-title">{{course.title}}</h1>
+            <h1 class="course-title"><a ui-sref="courseinfo({courseId: course.id})">{{course.title}}</a></h1>
 
+            <!-- it is not returned -->
             <!--<h2 class="course-lesson-number">Lesson #{{course.nextLesson}}</h2>-->
 
             <p class="course-excerpt">{{course.excerpt}}</p>
 
             <div class="course-meta">
-                <h3 class="course-date">When: <span class="value">{{course.nextDate}}</span></h3>
+                <h3 class="course-date">When: <span class="value">{{course.nextDate | date: "MMM d, y h:mm a"}}</span></h3>
 
                 <h3 class="course-place">Where: <span class="value">{{course.nextPlace}}</span></h3>
 
-                <h3 class="course-coach">Who: <span class="value">{{course.coachName}}</span></h3>
+                <h3 class="course-coach">Who: <a ui-sref="profile({userId: course.coachId})" class="value">{{course.coachName}}</a></h3>
                 <a class="course-goto"><i class="fa fa-arrow-right"></i></a>
             </div>
         </div>

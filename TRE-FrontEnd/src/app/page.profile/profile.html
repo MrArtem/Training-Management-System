@@ -1,117 +1,36 @@
 <div class="container profile">
 
-    <div class="row">
-        <h3>{{profile.profileInfo.username}}</h3>
-        <p>Email: <span>{{profile.profileInfo.email}}</span></p>
-        <p>Phone number: <span>{{profile.profileInfo.phone}}</span></p>
+    <div class="row profile-short">
+        <h3 class="title">{{profile.profileInfo.username}}</h3>
+
+        <p class="field">Email: <span class="info">{{profile.profileInfo.email}}</span></p>
+
+        <p class="field">Phone number: <span class="info">{{profile.profileInfo.phone}}</span></p>
     </div>
 
     <div class="row">
-        <div class="small-12 medium-8 large-8 column">
 
-            <h5>Attended trainings</h5>
-
-            <div class="scrollable-div">
-
-                <table class="fullwidth-table">
-                    <thead>
-                    <tr>
-                        <th>Coach</th>
-                        <th>Training</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr ng-repeat="course in profile.pastCourses">
-                        <td>{{course.coachName}}</td>
-                        <td>{{course.title}}</td>
-                    </tr>
-                    </tbody>
-                </table>
-
-            </div>
-
+        <div class="icon-bar four-up small-horizontal large-vertical">
+            <a class="item" ui-sref="profile.attended">
+                <i class="fa fa-book"></i>
+                <label>Current courses</label>
+            </a>
+            <a class="item" ui-sref="profile.current">
+                <i class="fa fa-book"></i>
+                <label>Attended courses</label>
+            </a>
+            <a class="item" ui-sref="profile.waiting">
+                <i class="fa fa-hourglass-half"></i>
+                <label>Waiting for courses</label>
+            </a>
+            <a class="item" ui-sref="profile.feedbacks">
+                <i class="fa fa-comments-o"></i>
+                <label>Feedbacks</label>
+            </a>
         </div>
-    </div>
 
-    <div class="row">
-        <div class="small-12 medium-8 large-8 column">
-
-            <h5>Current trainings</h5>
-
-            <div class="scrollable-div">
-
-                <table class="fullwidth-table">
-                    <thead>
-                    <tr>
-                        <th>Coach</th>
-                        <th>Training</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr ng-repeat="course in profile.currentCourses">
-                        <td>{{course.coachName}}</td>
-                        <td>{{course.title}}</td>
-                    </tr>
-                    </tbody>
-                </table>
-
-            </div>
-
+        <div ui-view>
         </div>
+
     </div>
-
-    <div class="row">
-        <div class="small-12 medium-8 large-8 column">
-
-            <h5>Waiting for trainings</h5>
-
-            <div class="scrollable-div">
-
-                <table class="fullwidth-table">
-                    <thead>
-                    <tr>
-                        <th>Coach</th>
-                        <th>Training</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr ng-repeat="course in profile.waitingCourses">
-                        <td>{{course.coachName}}</td>
-                        <td>{{course.trainingTitle}}</td>
-                    </tr>
-                    </tbody>
-                </table>
-
-            </div>
-
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="small-12 medium-8 large-8 column">
-
-            <h5>Feedbacks</h5>
-
-            <div class="scrollable-div">
-
-                <table class="fullwidth-table">
-                    <thead>
-                    <tr>
-                        <th>Who left</th>
-                        <th>Positive?</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr ng-repeat="fb in profile.feedbacks">
-                        <td>{{fb.coachName}}</td>
-                        <td>{{fb.isPositive==true ? '+' : '-'}}</td>
-                    </tr>
-                    </tbody>
-                </table>
-
-            </div>
-
-        </div>
-    </div>
-
 </div>

@@ -15,7 +15,7 @@
         vm.getLessonId = getLessonId;
         vm.getTimetable = getTimetable;
 
-        //vm.getTimetable();
+        vm.getTimetable();
 
         function addLesson() {
             courseAPI.addLesson($stateParams.courseId, vm.newDate, vm.newPlace).then(function (data) {
@@ -30,6 +30,7 @@
         }
 
         function editLesson() {
+            console.log(vm.editedLessonId +  vm.editedDate + vm.editedPlace);
             courseAPI.editLesson($stateParams.courseId, vm.editedLessonId, vm.editedDate, vm.editedPlace).then(function (data) {     //maybe change without calling server?
                 console.log('lesson edited successfully');
             });
@@ -37,11 +38,13 @@
 
         function getLessonId(index) {
             vm.editedLessonId = $scope.$parent.courseInfo.lessonList[index].id;
+            console.log(vm.editedLessonId);
         }
 
         function getTimetable() {
             courseAPI.getTimetable($stateParams.courseId).then(function (data) {
-                    $scope.$parent.saveTimetable(data);
+                    $scope.$parent.courseInfo.lessonList = angular.copy(data);
+                    console.log(data);
                 }
             );
         }

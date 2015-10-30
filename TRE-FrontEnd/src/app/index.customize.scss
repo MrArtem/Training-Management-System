@@ -123,7 +123,7 @@ $black: #4c4c4c;
 $gray: #a1a1a1;
 $text-color: rgba(0, 0, 0, 0.6);
 $light-gray: #f6f6f6;
-
+$border-gray: #e7e7e7;
 $blue: #4A90E2;
 $tre-light-blue: #55acee;
 $tre-hover-blue: #25709D;
@@ -1391,7 +1391,7 @@ $icon-bar-icon-color-hover: $tre-hover-blue;
 // $topbar-link-color-active-hover: $white;
 // $topbar-link-weight: $font-weight-normal;
 // $topbar-link-font-size: rem-calc(13);
-// $topbar-link-hover-lightness: -10%; // Darken by 10%
+// $topbar-link    browserSyncInit([path.join(conf.paths.tmp, '/serve'), conf.paths.src],3000);
 // $topbar-link-bg: $topbar-bg;
  $topbar-link-bg-hover: $white;
  $topbar-link-bg-color-hover: $white;

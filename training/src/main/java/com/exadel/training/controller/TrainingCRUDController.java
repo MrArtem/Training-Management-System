@@ -141,7 +141,7 @@ public class TrainingCRUDController {
                 lessonModel.setDate(approveLesson.getDate());
                 lessonModelList.add(lessonModel);
             }
-            approveTrainingModel.setLessonModelList(lessonModelList);
+            approveTrainingModel.setLessonList(lessonModelList);
         }
 
 
@@ -164,8 +164,10 @@ public class TrainingCRUDController {
 
     @LegalID
     @Secured({"ADMIN", "USER", "EX_COACH"})
-    @RequestMapping(value = "/{id}/lesson", method = RequestMethod.DELETE)
-    void removeLesson(@PathVariable("id") long trainingId, @RequestBody LessonModel lessonModel) {
+    @RequestMapping(value = "/{id}/lesson/{lessonId}", method = RequestMethod.DELETE)
+    void removeLesson(@PathVariable("id") long trainingId, @PathVariable("lessonId") Long lessonId) {
+        LessonModel lessonModel = new LessonModel();
+        lessonModel.setPrevLessonId(lessonId);
         trainingService.removeLesson(trainingId, lessonModel);
     }
 

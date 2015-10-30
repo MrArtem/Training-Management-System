@@ -20,7 +20,7 @@ public class TrainingModel {
 
     private long coachId;
 
-    private int language;
+    private long language;
 
     private long maxSize;
 
@@ -82,7 +82,7 @@ public class TrainingModel {
         this.coachId = coachId;
     }
 
-    public int getLanguage() {
+    public long getLanguage() {
         return language;
     }
 
@@ -98,7 +98,7 @@ public class TrainingModel {
         this.maxSize = maxSize;
     }
 
-    public boolean isRepeating() {
+    public boolean getIsRepeating() {
         return isRepeating;
     }
 

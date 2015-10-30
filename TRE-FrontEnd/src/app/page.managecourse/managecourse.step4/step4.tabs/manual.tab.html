@@ -10,20 +10,20 @@
 
                 <div class="small-4 column">
                     <label>Date</label>
-                        <input type='text' ng-model="step4.dateTime.date" tre-datepicker="">
+                        <input type='text' name="manualdate" ng-model="step4.dateTime.date" tre-datepicker="">
                 </div>
                 <div class="small-2 small-offset-1 column">
                     <label>Hour</label>
-                        <input type='number' ng-model="step4.dateTime.hours">
+                        <input type='number' name="manualhours" ng-model="step4.dateTime.hours">
 
                 </div>
                 <div class="small-2 small-offset-1 column">
                     <label>Minutes</label>
-                        <input type='number' id="minutes" ng-model="step4.dateTime.minutes">
+                        <input type='number' name="manualminutes" id="minutes" ng-model="step4.dateTime.minutes">
                 </div>
                 <div class="small-2 column">
                     <label>.</label>
-                    <a href="" class="button tiny" ng-click="step4.addDate()">Add date</a>
+                    <a href="" class="button round tiny default-btn-blue" ng-click="step4.addDate()">Add date</a>
                 </div>
 
             </div>
@@ -32,7 +32,7 @@
                 <div class="scrollable-div">
                     <table>
                         <tr ng-repeat="lesson in courseInfo.lessonList track by $index">
-                            <td>{{lesson |  date: "MMM d, y h:mm a"}}</td>
+                            <td>{{lesson.date |  date: "MMM d, y h:mm a"}}</td>
                         </tr>
                     </table>
                 </div>

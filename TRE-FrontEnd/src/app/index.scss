@@ -66,20 +66,39 @@ body {
 
 }
 
-/*MODALS*/
-
-.tre-modal {
-  .reveal-modal:after {
-    content: "";
-    display: block;
-    position: fixed; /* could also be absolute */
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    z-index: 10;
-    background-color: rgba(0,0,0,0.5);
+table {
+  tr.rowWithSecret:hover {
+    background-color: #f9f9f9;
   }
+
+  tr.rowWithSecret {
+    .hiddenCell {
+      visibility: hidden;
+    }
+  }
+  tr.rowWithSecret:hover {
+    background-color: #f9f9f9;
+    .hiddenCell {
+      visibility: visible;
+    }
+  }
+
+  .hiddenCell .fa-times {
+    color: #ef3e36 !important;
+  }
+
+  .hiddenCell .fa-times:hover {
+    color: #a1161b !important;
+    cursor: pointer;
+  }
+}
+
+.fa {
+  margin-right: rem-calc(6);
+}
+
+.error {
+  color: red !important;
 }
 
 .no-left-padding {
@@ -162,6 +181,27 @@ body {
 
 .accent-btn-blue {
 
+}
+
+.btn-file {
+  position: relative;
+  overflow: hidden;
+  font-size: rem-calc(15);
+}
+
+.btn-file input[type=file] {
+  position: absolute;
+  top: 0;
+  right: 0;
+  min-width: 100%;
+  min-height: 100%;
+  text-align: center;
+  filter: alpha(opacity=0);
+  opacity: 0;
+  outline: none;
+  background: white;
+  cursor: inherit;
+  display: block;
 }
 
 /**

@@ -1,11 +1,13 @@
 <div class="row">
     <div class="container courseinfo">
         <div class="row courseinfo-short">
-            <h1 class="title">Title</h1>
-            <h3 class="short-desc">Short description</h3>
-            <p class="field">Coach: <span class="info">Coach Name</span></p>
+            <h1 class="title">{{courseInfo.title}}</h1>
+            <h3 class="short-desc">{{courseInfo.shortInfo}}</h3>
+            <p class="field">Start date: <span class="info">{{courseInfo.startDate | date: "MMM d, y h:mm a"}}</span></p>
+            <p class="field">Coach: <a ui-sref="profile({userId: courseInfo.coachId})" class="info">{{courseInfo.coachName}}</a></p>
+            <p class="field">Language: <span class="info">{{courseInfo.language}}</span></p>
 
-            <p class="field">Language: <span class="info">language</span></p>
+            <a ng-if="courseInfo.canSubscribe" href="" class="right button round tiny default-btn-blue" ng-click="courseinfo.subscribe()">OK</a>
         </div>
 
         <div class="row">

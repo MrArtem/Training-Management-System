@@ -16,7 +16,7 @@ var proxy = proxyMiddleware('/api',
         "/api" : ""
     }});
 
-function browserSyncInit(baseDir, browser) {
+function browserSyncInit(baseDir,browser) {
     browser = browser === undefined ? 'default' : browser;
 
     var routes = null;
@@ -28,7 +28,7 @@ function browserSyncInit(baseDir, browser) {
 
     var server = {
         baseDir: baseDir,
-        //port: 3000,
+        //port: port,
         routes: routes,
         middleware: [proxy],
         open: false

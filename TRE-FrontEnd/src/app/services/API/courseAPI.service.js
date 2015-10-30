@@ -7,12 +7,15 @@
     /* @ngInject */
     function courseAPI($state, $http, urlProvider) {
         var courseAPI = {
+            addComment: addComment,
             addLesson: addLesson,
             addParticipant: addParticipant,
+            approveCourse: approveCourse,
             cancelCreate: cancelCreate,
             cancelEdit: cancelEdit,
             createCourse: createCourse,
             deleteLesson: deleteLesson,
+            deleteParticipant: deleteParticipant,
             editCourse: editCourse,
             getAttachments: getAttachments,
             getComments: getComments,
@@ -21,7 +24,8 @@
             getParticipants: getParticipants,
             getShortInfo: getShortInfo,
             getTimetable: getTimetable,
-            editLesson: editLesson
+            editLesson: editLesson,
+            uploadFiles: uploadFiles
         }
         return courseAPI;
 
@@ -31,8 +35,10 @@
 
         }
 
-        function getComments() {
-
+        function getComments(courseId) {
+            return $http.get(urlProvider.getComments(courseId)).then(function (result) {
+                return result.data;
+            });
         }
 
         function getParticipants(courseId) {
@@ -41,8 +47,10 @@
             });
         }
 
-        function getShortInfo() {
-
+        function getShortInfo(courseId) {
+            return $http.get(urlProvider.getShortInfo(courseId)).then(function(result) {
+                return result.data;
+            });
         }
 
         function getTimetable(courseId) {
@@ -52,6 +60,19 @@
         }
 
         //////////
+
+        function approveCourse(actionId, courseData) {
+            console.log(courseData);
+            return $http.post(urlProvider.approveCourse(actionId), courseData, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(function (results) {
+                console.log('Course approved successfully!');
+                $state.transitionTo('admin');
+                return results.data;
+            });
+        }
 
         function createCourse(courseData) {
             console.log(courseData);
@@ -181,16 +202,16 @@
                 date: newDate,
                 place: newPlace
             };
-            return $http.post(urlProvider.manageLesson(courseId), lessonInfo).then(function(result) {
+            return $http.post(urlProvider.manageLesson(courseId), lessonInfo).then(function (result) {
                 return result.data;
             });
         }
 
         function editLesson(courseId, lessonId, newDate, newPlace) {
             var lessonInfo = {
-                id: lessonId,
-                newDate: newDate,
-                newPlace: newPlace
+                prevLessonId: lessonId,
+                date: (new Date(newDate)).getTime(),
+                place: newPlace
             };
             return $http.put(urlProvider.manageLesson(courseId), lessonInfo).then(function (result) {
                 return result.data;
@@ -198,7 +219,7 @@
         }
 
         function deleteLesson(courseId, lessonId) {
-            return $http.delete(urlProvider.manageLesson(courseId), {prevLessonId: lessonId}).then(function (result) {
+            return $http.delete(urlProvider.deleteLesson(courseId, lessonId)).then(function (result) {
                 return result.data;
             });
         }
@@ -206,8 +227,40 @@
         //////////
 
         function addParticipant(courseId, participantInfo) {
-            return $http.post(urlProvider.addParticipant(courseId), participantInfo).then(function(result) {
+            return $http.post(urlProvider.addParticipant(courseId), participantInfo).then(function (result) {
                 return result.data;
+            });
+        }
+
+        function deleteParticipant(courseId, userId) {
+            return $http.put(urlProvider.deleteParticipant(courseId, userId)).then(function(result) {
+                return result.data;
+            });
+        }
+
+        //////////
+
+        function addComment(courseId, commentInfo) {
+            return $http.post(urlProvider.addComment(courseId), commentInfo).then(function(result) {
+                return result.data;
+            });
+        }
+
+        //////////
+
+        function uploadFiles(files) {
+            console.log(files);
+            var formData = new FormData();
+            for(var i in files) {
+                formData.append('files', angular.toJson(files[i].data));
+            }
+
+            console.log(formData);
+            return $http.post(urlProvider.uploadFiles(), formData, {
+                headers: {
+                    'Content-Type': undefined
+                },
+                transformRequest: angular.identity
             });
         }
 

@@ -129,6 +129,9 @@ public class TrainingServiceImpl implements TrainingService {
                     approveLesson.setPlace(place);
                 }
                 lessonApproveDAO.addApprove(approveLesson);
+                if(lesson != null) {
+                    lesson.setApproveLesson(approveLesson);
+                }
                 approveLessonList.add(approveLesson);
             }
         }
@@ -169,12 +172,16 @@ public class TrainingServiceImpl implements TrainingService {
                     ApproveLesson approveLesson = new ApproveLesson();
                     approveLesson.setLesson(lesson);
                     approveLesson.setDate(dateLesson);
-                    lessonApproveDAO.addApprove(approveLesson);
-                    approveLessonList.add(approveLesson);
                     if (place == null) {
                         approveLesson.setPlace(lessonModelList[i].getPlace());
                     } else {
                         approveLesson.setPlace(place);
+                    }
+                    lessonApproveDAO.addApprove(approveLesson);
+                    approveLessonList.add(approveLesson);
+
+                    if(lesson != null) {
+                        lesson.setApproveLesson(approveLesson);
                     }
                 }
             }
@@ -229,13 +236,16 @@ public class TrainingServiceImpl implements TrainingService {
 
     private void removeApproveLessonList(ApproveAction approveAction, boolean removeLesson) {
         Training training = approveAction.getTraining();
-        for (Lesson lesson : training.getLessonList()) {
+        List<Lesson> lessonList = training.getLessonList();
+        for (Lesson lesson : emptyIfNull(lessonList)) {
             lessonApproveDAO.removeApprove(lesson.getApproveLesson());
-            if (removeLesson) {
+            if ( removeLesson) {
                 lessonDAO.removeLesson(lesson);
             }
         }
-        training.setState(Training.State.REMOVE);
+        if(removeLesson && lessonList != null) {
+            lessonList.clear();
+        }
         trainingDAO.changeTraining(training);
         approveActionDAO.removeApproveAction(approveAction);
     }

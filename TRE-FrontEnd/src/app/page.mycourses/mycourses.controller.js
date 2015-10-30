@@ -6,7 +6,7 @@
         .controller('MyCoursesController', MyCoursesController);
 
     /** @ngInject */
-    function MyCoursesController(authService, courseAPI) {
+    function MyCoursesController(courseAPI) {
         var vm = this;
 
         vm.userCourses = [];
