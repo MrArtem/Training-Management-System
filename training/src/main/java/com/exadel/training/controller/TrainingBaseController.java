@@ -1,20 +1,29 @@
 package com.exadel.training.controller;
 
-import com.exadel.training.controller.model.CommentModel;
-import com.exadel.training.controller.model.TrainingListModel;
+import com.exadel.training.controller.model.*;
 import com.exadel.training.controller.model.trainingModels.*;
+import com.exadel.training.controller.model.userModels.ExUserModel;
+import com.exadel.training.controller.model.userModels.UserModel;
 import com.exadel.training.dao.domain.*;
+import com.exadel.training.security.User.CustomUser;
 import com.exadel.training.service.*;
+import com.exadel.training.validate.TagValidator;
+import com.exadel.training.validate.annotation.LegalID;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import sun.plugin.liveconnect.SecurityContextHelper;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @RestController
 @RequestMapping("/training")
-public class TrainingController {
+public class TrainingBaseController {
 
     private final Integer PAGE_SIZE = 10;
 
@@ -26,9 +35,23 @@ public class TrainingController {
     private CommentService commentService;
     @Autowired
     private TagService tagService;
+
     @Autowired
     private UserService userService;
+    @Autowired
+    private ListenerService listenerService;
 
+
+    @Autowired
+    private TagValidator tagValidator;
+
+    @InitBinder
+    private void initBinder(WebDataBinder webDataBinder) {
+        webDataBinder.setValidator(tagValidator);
+    }
+
+    @LegalID
+    @Secured({"ADMIN", "USER", "EX_COACH", "EX_USER"})
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     GetTrainingModel getTrainingMadel(@PathVariable("id") long trainingId) {
         GetTrainingModel getTrainingModel = new GetTrainingModel();
@@ -39,94 +62,45 @@ public class TrainingController {
         return getTrainingModel;
     }
 
+    @LegalID
+    @Secured({"ADMIN", "USER", "EX_COACH", "EX_USER"})
     @RequestMapping(value = "/{id}/lesson_list", method = RequestMethod.GET)
     List<Lesson> getLessonListByTraining(@PathVariable("id") long trainingId) {
         return lessonService.getLessonByTraining(trainingId);
     }
 
+    @LegalID
+    @Secured({"ADMIN", "USER", "EX_COACH"})
     @RequestMapping(value = "/{id}/listener_list")
     List<ListenerModel> getListenerList(@PathVariable("id") long trainingId) {
-        List<Listener> listenerList = trainingService.getListenerListRecord(trainingId);
+        List<User> listenerList = listenerService.getListenerListAccepted(trainingId);
         List<ListenerModel> listenerModelList = new ArrayList<ListenerModel>();
-        for (Listener listener : listenerList) {
-            listenerModelList.add(new ListenerModel(listener));
+        for (User user : listenerList) {
+            ListenerModel listenerModel = new ListenerModel();
+            listenerModel.setUserId(user.getId());
+            listenerModel.setUsername(user.getFirstName() + " " + user.getLastName());
+            listenerModel.setEmail(user.getEmail());
+            if (user.getRole() == User.Role.EX_USER) {
+                listenerModel.setIsExternal(true);
+            }
+            listenerModelList.add(listenerModel);
         }
         return listenerModelList;
     }
 
-    @RequestMapping(value = "/create", method = RequestMethod.POST)
-    void createTraining(@RequestBody AddingTrainingModel addingTrainingModel) {
-        trainingService.createTraining(addingTrainingModel.getCoachId()
-                , addingTrainingModel.getTitle()
-                , addingTrainingModel.getDescription()
-                , addingTrainingModel.getShortInfo()
-                , addingTrainingModel.getLanguage()
-                , addingTrainingModel.getMaxSize()
-                , addingTrainingModel.isInner()
-                , addingTrainingModel.getPlace()
-                , addingTrainingModel.getTagList()
-                , addingTrainingModel.getAdditionalInfo()
-                , addingTrainingModel.getIsRepeating()
-                , addingTrainingModel.getLessonList()
-                , addingTrainingModel.getRepeatModel());
-
-    }
-    @RequestMapping(value = "/a", method = RequestMethod.GET)
-    AddingTrainingModel add() {
-        return new AddingTrainingModel();
-    }
-
-    @RequestMapping(value = "/confirm/{id}", method = RequestMethod.POST)
-    void confirmAddTraining(@PathVariable("id") long actionId, @RequestBody AddingTrainingModel addingTrainingModel) {
-        trainingService.confirmTraining(actionId
-                , addingTrainingModel.getTitle()
-                , addingTrainingModel.getDescription()
-                , addingTrainingModel.getShortInfo()
-                , addingTrainingModel.getLanguage()
-                , addingTrainingModel.getMaxSize()
-                , addingTrainingModel.isInner()
-                , addingTrainingModel.getPlace()
-                , addingTrainingModel.getTagList()
-                , addingTrainingModel.getLessonList()
-                , addingTrainingModel.getRepeatModel());
-    }
-
-    @RequestMapping(value = "cancel_create/{id}", method = RequestMethod.PUT)
-    void cancelCreate(@PathVariable("id") Long actionId) {
-        trainingService.cancelCreate(actionId);
-    }
-
-    @RequestMapping(value = "cancel_change/{id}", method = RequestMethod.PUT)
-    void cancelChange(@PathVariable("id") Long actionId) {
-        trainingService.cancelChange(actionId);
-    }
-
-    @RequestMapping(value = "/edit/{id}", method = RequestMethod.PUT)
-    void editTraining(@PathVariable("id") long trainingId, @RequestBody AddingTrainingModel addingTrainingModel) {
-        trainingService.editTraining(trainingId
-                , addingTrainingModel.getTitle()
-                , addingTrainingModel.getDescription()
-                , addingTrainingModel.getShortInfo()
-                , addingTrainingModel.getLanguage()
-                , addingTrainingModel.getMaxSize()
-                , addingTrainingModel.isInner()
-                , addingTrainingModel.getPlace()
-                , addingTrainingModel.getTagList()
-                , addingTrainingModel.getAdditionalInfo()
-                , addingTrainingModel.getLessonList()
-                , addingTrainingModel.getRepeatModel());
-    }
-
+    @Secured({"ADMIN", "USER"})
     @RequestMapping(value = "/add_tag", method = RequestMethod.POST)
-    public Long addTag(@RequestBody Tag tag) {
-        return tagService.addTag(tag);
+    public void addTag(@Valid @RequestBody Tag tag) {
+        tagService.addTag(tag);
     }
 
+    @Secured({"ADMIN", "USER"})
     @RequestMapping(value = "/tag_list", method = RequestMethod.GET)
     public List<Tag> getTagList() {
         return tagService.getTagList();
     }
 
+    @Secured({"ADMIN", "USER"})
     @RequestMapping(value = "/training_list", method = RequestMethod.GET)
     public List<TrainingListModel> getTrainingList(@RequestParam("is_actual") Boolean isActual,
                                           @RequestParam("page") Integer page,
@@ -140,18 +114,26 @@ public class TrainingController {
         List<Training> trainingList;
         trainingList = trainingService.getTrainingListByTagList(page, PAGE_SIZE, isActual, tagList);
         List<TrainingListModel> trainingListModelList = new ArrayList<TrainingListModel>();
-        for(Training training : trainingList) {
-            TrainingListModel trainingListModel = new TrainingListModel(training);
-            Lesson lesson = lessonService.getNextLesson(training.getId());
-            if (lesson != null) {
-                trainingListModel.setNextDate(lesson.getDate());
-                trainingListModel.setNextPlace(lesson.getPlace());
-            }
+        for (Training training : trainingList) {
+            TrainingListModel trainingListModel = new TrainingListModel();
+            trainingListModel.setId(training.getId());
+            trainingListModel.setTitle(training.getTitle());
+            trainingListModel.setExcerpt(training.getExcerpt());
+            trainingListModel.setCoachId(training.getCoach().getId());
+            trainingListModel.setCoachName(training.getCoach().getFirstName() +
+                    " " + training.getCoach().getLastName());
+            trainingListModel.setTagList(training.getTagList());
+            //todo get user here
+            User user = new User();
+            trainingListModel.setIsCoach(userService.isCoach(user.getId(), training.getId()));
+            //todo get next date and place
             trainingListModelList.add(trainingListModel);
         }
         return trainingListModelList;
     }
 
+    @LegalID
+    @Secured({"ADMIN", "USER", "EX_COACH"})
     @RequestMapping(value = "/training/{id}/add_comment")
     public void addComment(@PathVariable("id") Long trainingId, @RequestBody CommentModel commentModel) {
         Comment comment = new Comment();
@@ -170,12 +152,16 @@ public class TrainingController {
         commentService.addComment(comment);
     }
 
+    @LegalID
+    @Secured({"ADMIN", "USER", "EX_COACH"})
     @RequestMapping(value = "training/{trainingId}/remove_comment/{commentId}")
     public void removeComment(@PathVariable("trainingId") Long trainingId,
                               @PathVariable("commentId") Long commentId) {
         commentService.removeComment(commentId);
     }
 
+    @LegalID
+    @Secured({"ADMIN", "USER", "EX_COACH", "EX_USER"})
     @RequestMapping(value = "/training/{id}/comment_list")
     public List<CommentModel> getTrainingCommentList(@PathVariable("id") Long trainingId) {
         List<Comment> commentList = commentService.getTrainingCommentList(trainingId);
@@ -200,6 +186,8 @@ public class TrainingController {
         return commentModelList;
     }
 
+    @LegalID
+    @Secured({"ADMIN", "USER"})
     @RequestMapping(value = "/user/{id}/coach_comment_list")
     public List<CommentModel> getCoachCommentList(@PathVariable("id") Long coachId) {
         List<Comment> commentList = commentService.getCoachCommentList(coachId);
@@ -224,6 +212,8 @@ public class TrainingController {
         return commentModelList;
     }
 
+    @LegalID
+    @Secured({"ADMIN", "USER"})
     @RequestMapping(value = "/user/{id}/comment_list")
     public List<CommentModel> getUserCommentList(@PathVariable("id") Long userId) {
         List<Comment> commentList = commentService.getUserCommentList(userId);
@@ -248,71 +238,47 @@ public class TrainingController {
         return commentModelList;
     }
 
-    @RequestMapping(value = "/getApproveTraining/{id}", method = RequestMethod.GET)
-    public ApproveGetTrainingModel getApproveTrainingModel(@PathVariable("id") long actionId) {
-        ApproveAction approveAction = trainingService.getApproveAction(actionId);
-        ApproveTraining approveTraining = approveAction.getApproveTraining();
-        ApproveGetTrainingModel approveTrainingModel = new ApproveGetTrainingModel();
-        Training training = approveAction.getTraining();
-        User coach = training.getCoach();
-        //TODO code review
-        if (approveTraining != null) {
-            approveTrainingModel.setTitle(approveTraining.getTitle());
-            approveTrainingModel.setDescription(approveTraining.getDescription());
-            approveTrainingModel.setAdditionalInfo(approveTraining.getAdditionalInfo());
-            approveTrainingModel.setMaxSize(approveTraining.getMaxSize());
-            approveTrainingModel.setTagList(approveTraining.getTagList());
-            approveTrainingModel.setShortInfo(approveTraining.getExcerpt());
-            approveTrainingModel.setTagList(approveTraining.getTagList());
-            approveTrainingModel.setCoachId(coach.getId());
-            approveTrainingModel.setCoachName(coach.getFirstName() + " " + coach.getLastName());
-        } else {
-            approveTrainingModel.setTitle(training.getTitle());
-            approveTrainingModel.setDescription(training.getDescription());
-            approveTrainingModel.setMaxSize(training.getMaxSize());
-            approveTrainingModel.setTagList(training.getTagList());
-            approveTrainingModel.setShortInfo(training.getExcerpt());
-            approveTrainingModel.setCoachId(coach.getId());
-            approveTrainingModel.setCoachName(coach.getFirstName() + " " + coach.getLastName());
-            approveTrainingModel.setTagList(training.getTagList());
-        }
-        approveTrainingModel.setIsRepeating(training.isRepeat());
 
-        if (training.isRepeat()) {
-            approveTrainingModel.setRepeatModel(trainingService.getApproveRepeatModel(actionId));
-        } else {
-            List<ApproveLesson> approveLessonList = trainingService.getApproveLessonList(actionId);
-            List<LessonModel> lessonModelList = new ArrayList<LessonModel>();
-            for (ApproveLesson approveLesson : approveLessonList) {
-                LessonModel lessonModel = new LessonModel();
-                lessonModel.setPlace(approveLesson.getPlace());
-                lessonModel.setDate(approveLesson.getDate());
-                lessonModelList.add(lessonModel);
-            }
-            approveTrainingModel.setLessonModelList(lessonModelList);
-        }
-
-
-        return approveTrainingModel;
+    @LegalID
+    @Secured({"ADMIN", "USER"})
+    @RequestMapping(value = "{id}/addListener", method = RequestMethod.POST)
+    void addListener(@PathVariable("id") long trainingId) {
+        CustomUser customUser =  (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        long userId = customUser.getUserId();
+        listenerService.addListener(trainingId, userId);
     }
 
-    @RequestMapping(value = "/{id}/lesson", method = RequestMethod.PUT)
-    void editLesson(@PathVariable("id") long trainingId, @RequestBody LessonModel lessonModel) {
-        trainingService.editLesson(trainingId,lessonModel);
+    @LegalID
+    @Secured({"ADMIN", "USER"})
+    @RequestMapping(value = "{id}/leave/{userId}", method = RequestMethod.PUT)
+    void leaveListener(@PathVariable("id") long trainingId, @PathVariable("userId") Long userId) {
+        listenerService.leaveListener(trainingId, userId);
+
     }
 
-    @RequestMapping(value = "/{id}/lesson", method = RequestMethod.POST)
-    void addLesson(@PathVariable("id") long trainingId, @RequestBody LessonModel lessonModel) {
-        trainingService.addLesson(trainingId, lessonModel);
+    @LegalID
+    @Secured({"ADMIN", "USER"})
+    @RequestMapping(value = "{id}/leave", method = RequestMethod.PUT)
+    void leaveListener(@PathVariable("id") long trainingId) {
+        CustomUser customUser =  (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Long userId = customUser.getUserId();
+        listenerService.leaveListener(trainingId, userId);
     }
 
-    @RequestMapping(value = "/{id}/lesson", method = RequestMethod.DELETE)
-    void removeLesson(@PathVariable("id") long trainingId, @RequestBody LessonModel lessonModel) {
-        trainingService.removeLesson(trainingId, lessonModel);
+    @LegalID
+    @Secured({"ADMIN"})
+    @RequestMapping(value = "{id}/addExListener", method = RequestMethod.POST)
+    void addListener(@PathVariable("id") long trainingId,@RequestBody ExUserModel exUserModel) {
+        Long userId = userService.addExternalUser(exUserModel);
+        listenerService.addListener(trainingId,userId);
     }
 
-    @RequestMapping(value = "/{id}/confirm/lesson", method = RequestMethod.PUT)
-    void confirmChangeLesson(@PathVariable("id") long actionId, @RequestBody LessonModel lessonModel) {
-
+    @LegalID
+    @Secured({"ADMIN", "USER"})
+    @RequestMapping(value = "{id}/set_rating/{rating}")
+    RatingModel setRating(@PathVariable("id") long trainingId, @PathVariable("rating") int rating) {
+        CustomUser customUser =  (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        long userId = customUser.getUserId();
+        return new RatingModel(trainingService.setRating(trainingId, rating, userId));
     }
 }

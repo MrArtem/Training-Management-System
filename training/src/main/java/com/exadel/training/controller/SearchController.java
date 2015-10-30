@@ -6,6 +6,7 @@ import com.exadel.training.dao.domain.Training;
 import com.exadel.training.dao.domain.User;
 import com.exadel.training.service.SearchService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -24,6 +25,7 @@ public class SearchController {
     @Autowired
     SearchService searchService;
 
+    @Secured({"ADMIN", "USER"})
     @RequestMapping(value = "/search_user", method = RequestMethod.POST, consumes = "application/json")
     public List<UserModel> searchUser(@RequestBody String searchWord) {
         List<UserModel> userModelList = new ArrayList<UserModel>();
@@ -35,6 +37,7 @@ public class SearchController {
         return userModelList;
     }
 
+    @Secured({"ADMIN", "USER"})
     @RequestMapping(value = "/search_training", method = RequestMethod.POST, consumes = "application/json")
     public List<TrainingListModel> searchTraining(@RequestBody String searchWord) {
         List<TrainingListModel> trainingListModels = new ArrayList<TrainingListModel>();

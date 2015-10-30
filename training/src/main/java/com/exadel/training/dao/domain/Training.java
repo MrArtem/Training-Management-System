@@ -25,13 +25,14 @@ public class Training {
     @NotNull
     @Field(index = org.hibernate.search.annotations.Index.YES, analyze = Analyze.YES, store = Store.YES)
     @Analyzer(definition = "customAnalyzer")
+    @Column(length = 50)
     private String title;
 
     @Field(index = Index.YES, analyze = Analyze.YES, store = Store.YES)
     @Analyzer(definition = "customAnalyzer")
+    @Column(length = 10000)
     private String description;
 
-    @Column(length = 5000)
     private int language;
 
     private int maxSize;

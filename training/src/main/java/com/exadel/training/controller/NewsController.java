@@ -10,6 +10,7 @@ import com.exadel.training.service.FeedbackService;
 import com.exadel.training.service.NewsService;
 import com.exadel.training.service.TrainingService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -33,6 +34,7 @@ public class NewsController {
     @Autowired
     private FeedbackService feedbackService;
 
+    @Secured({"ADMIN"})
     @RequestMapping(value = "/news", method = RequestMethod.GET)
     List<NewsModel> getNewsList(@RequestParam("page") Integer page,
                                 @RequestParam("page_size") Integer pageSize) {
