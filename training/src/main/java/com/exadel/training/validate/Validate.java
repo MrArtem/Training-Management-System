@@ -39,11 +39,17 @@ public class Validate {
             this.value = value;
         }
 
-        public int getIndex() { return index; }
+        public int getIndex() {
+            return index;
+        }
 
-        public String getName() { return name; }
+        public String getName() {
+            return name;
+        }
 
-        public List<Annotation> getAnnotations() { return annotations; }
+        public List<Annotation> getAnnotations() {
+            return annotations;
+        }
 
         public boolean hasAnnotation(Class<? extends Annotation> type) {
             for (Annotation annotation : annotations)
@@ -52,7 +58,9 @@ public class Validate {
             return false;
         }
 
-        public Object getValue() { return value; }
+        public Object getValue() {
+            return value;
+        }
 
         public static List<MethodArgument> of(JoinPoint joinPoint) {
             List<MethodArgument> arguments = new ArrayList<MethodArgument>();
@@ -74,15 +82,13 @@ public class Validate {
     public void idCheck(JoinPoint joinPoint) {
         MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
         for (MethodArgument argument : MethodArgument.of(joinPoint)) {
-<<<<<<< HEAD
             if (argument.hasAnnotation(LegalID.class) && (Long) argument.getValue() == 0) {
-                    throw new IllegalArgumentException("id == 0 in" + methodSignature.getName());
-=======
+                throw new IllegalArgumentException("id == 0 in" + methodSignature.getName());
+            }
             if ((Long) argument.getValue() == 0) {
                 throw new IllegalArgumentException("id == 0 in" + methodSignature.getName());
->>>>>>> develop-backend
+
             }
         }
     }
-
 }
