@@ -42,13 +42,13 @@ public class TrainingBaseController {
     private ListenerService listenerService;
 
 
-    @Autowired
-    private TagValidator tagValidator;
-
-    @InitBinder
-    private void initBinder(WebDataBinder webDataBinder) {
-        webDataBinder.setValidator(tagValidator);
-    }
+//    @Autowired
+//    private TagValidator tagValidator;
+//
+//    @InitBinder
+//    private void initBinder(WebDataBinder webDataBinder) {
+//        webDataBinder.setValidator(tagValidator);
+//    }
 
     @LegalID
     @Secured({"ADMIN", "USER", "EX_COACH", "EX_USER"})
@@ -132,7 +132,7 @@ public class TrainingBaseController {
         return trainingListModelList;
     }
 
-    @LegalID
+    //@LegalID
     @RequestMapping(value = "/{id}/add_comment")
     @Secured({"ADMIN", "USER", "EX_COACH"})
     public void addComment(@PathVariable("id") Long trainingId, @RequestBody CommentModel commentModel) {
