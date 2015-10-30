@@ -8,7 +8,7 @@
 
             <div class="scrollable-div">
 
-                <table class="fullwidth-table">
+                <table ng-show="courseInfo.files.length != 0" class="fullwidth-table">
                     <thead>
                     <tr>
                         <th>#</th>
@@ -22,7 +22,7 @@
                     </tr>
                     </tbody>
                 </table>
-
+                <p ng-show="courseInfo.files.length == 0">No files attached yet</p>
             </div>
 
         </div>

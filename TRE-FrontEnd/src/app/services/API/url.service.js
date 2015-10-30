@@ -7,6 +7,7 @@
     /* @ngInject */
     function UrlProvider() {
         var urlProvider = {
+            addComment: addComment,
             addParticipant: addParticipant,
             approveCourse: approveCourse,
             cancelCreate: cancelCreate,
@@ -14,10 +15,12 @@
             confirm: confirm,
             createCourse: createCourse,
             deleteLesson: deleteLesson,
+            deleteParticipant: deleteParticipant,
             editCourse: editCourse,
             findTrainings: findTrainings,
             findUsers: findUsers,
             getApproveList: getApproveList,
+            getComments: getComments,
             getCoursesForUser: getCoursesForUser,
             getCurrentCoursesForUser: getCurrentCoursesForUser,
             getEditedCourse: getEditedCourse,
@@ -37,8 +40,12 @@
         return urlProvider;
     }
 
+    function addComment(courseId) {
+        return '/api/training/' + courseId + '/add_comment';
+    }
+
     function addParticipant(courseId) {
-        return '/api/training/' + courseId + '/add_listener';
+        return '/api/training/' + courseId + '/add_listener'; //!!! CHECK
     }
 
     function approveCourse(actionId) {
@@ -65,6 +72,10 @@
         return '/api/training/' + courseId + '/lesson/' + lessonId;
     }
 
+    function deleteParticipant(courseId, userId) {
+        return '/api/training/' + courseId + '/leave/' + userId; //CHECK
+    }
+
     function editCourse(trainingId) {
         return '/api/training/edit/' + trainingId;
     }
@@ -81,8 +92,8 @@
         return '/api/approve_list';
     }
 
-    function getNewsList() {
-        return '/api/news';
+    function getComments(courseId) {
+        return '/api/training/' + courseId + '/comment_list';
     }
 
     function getCoursesForUser() {
@@ -99,6 +110,10 @@
 
     function getFeedbacksOnUser(userId) {
         return '/api/feedback_controller/feedbacks_of_user/' + userId;
+    }
+
+    function getNewsList() {
+        return '/api/news';
     }
 
     function getParticipants(courseId) {

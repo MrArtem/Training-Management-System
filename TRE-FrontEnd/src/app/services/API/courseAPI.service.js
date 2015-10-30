@@ -7,6 +7,7 @@
     /* @ngInject */
     function courseAPI($state, $http, urlProvider) {
         var courseAPI = {
+            addComment: addComment,
             addLesson: addLesson,
             addParticipant: addParticipant,
             approveCourse: approveCourse,
@@ -14,6 +15,7 @@
             cancelEdit: cancelEdit,
             createCourse: createCourse,
             deleteLesson: deleteLesson,
+            deleteParticipant: deleteParticipant,
             editCourse: editCourse,
             getAttachments: getAttachments,
             getComments: getComments,
@@ -33,8 +35,10 @@
 
         }
 
-        function getComments() {
-
+        function getComments(courseId) {
+            return $http.get(urlProvider.getComments(courseId)).then(function (result) {
+                return result.data;
+            });
         }
 
         function getParticipants(courseId) {
@@ -224,6 +228,20 @@
 
         function addParticipant(courseId, participantInfo) {
             return $http.post(urlProvider.addParticipant(courseId), participantInfo).then(function (result) {
+                return result.data;
+            });
+        }
+
+        function deleteParticipant(courseId, userId) {
+            return $http.put(urlProvider.deleteParticipant(courseId, userId)).then(function(result) {
+                return result.data;
+            });
+        }
+
+        //////////
+
+        function addComment(courseId, commentInfo) {
+            return $http.post(urlProvider.addComment(courseId), commentInfo).then(function(result) {
                 return result.data;
             });
         }

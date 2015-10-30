@@ -8,7 +8,7 @@
 
             <div class="scrollable-div">
 
-                <table class="fullwidth-table">
+                <table ng-show="courseInfo.timetable.length != 0" class="fullwidth-table">
                     <thead>
                     <tr>
                         <th>Lesson</th>
@@ -26,7 +26,7 @@
                     </tr>
                     </tbody>
                 </table>
-
+                <p ng-show="courseInfo.timetable.length == 0">This training hasno lessons.</p>
             </div>
 
         </div>

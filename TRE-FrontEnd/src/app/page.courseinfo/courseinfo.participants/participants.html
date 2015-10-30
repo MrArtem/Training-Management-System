@@ -7,7 +7,7 @@
 
             <div class="scrollable-div">
 
-                <table class="fullwidth-table">
+                <table ng-show="courseInfo.participantsList.length != 0" class="fullwidth-table">
                     <thead>
                     <tr>
                         <th>#</th>
@@ -17,14 +17,15 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr ng-repeat="participant in courseInfo.participantsList track by $index">
+                    <tr ng-repeat="participant in courseInfo.participantsList track by $index" class="rowWithSecret">
                         <td>{{$index + 1}}</td>
                         <td>{{participant.username}}</td>
                         <td>{{participant.email}}</td>
+                        <td class="hiddenCell" ng-click="participants.deleteParticipant($index)"><i class="fa fa-times"></i></td>
                     </tr>
                     </tbody>
                 </table>
-
+                <p ng-show="courseInfo.participantsList.length == 0">Nobody subscribed yet</p>
             </div>
 
         </div>
@@ -32,38 +33,52 @@
 </div>
 
 <div class="tre-modal">
-    <div id="addParticipantModal" class="reveal-modal tiny" data-reveal aria-labelledby="participantTitle" aria-hidden="true"
+    <div id="addParticipantModal" class="reveal-modal tiny" data-reveal aria-labelledby="participantTitle"
+         aria-hidden="true"
          role="dialog">
         <h2 id="participantTitle">Add participant</h2>
 
-        <div class="row">
-            <div class="small-12 medium-6 no-left-padding column">
-                <label>First Name:</label>
-                <input type='text' ng-model="participants.participantInfo.firstName">
-            </div>
-        </div>
-        <div class="row">
-            <div class="small-12 medium-6 no-left-padding column">
-                <label>Last Name:</label>
-                <input type='text' ng-model="participants.participantInfo.lastName">
-            </div>
-        </div>
-        <div class="row">
-            <div class="small-12 medium-6 no-left-padding column">
-                <label>Email:</label>
-                <input type='email' ng-model="participants.participantInfo.email">
-            </div>
-        </div>
-        <div class="row">
-            <div class="small-12 medium-6 no-left-padding column">
-                <label>Phone number:</label>
-                <input type='text' ng-model="participants.participantInfo.phoneNumber">
-            </div>
-        </div>
+        <form name="participantForm" novalidate>
 
-        <div class="row">
-            <a href="#" class="right button round tiny default-btn-blue" close-modal="addParticipantModal" ng-click="participants.addParticipant()">OK</a>
-        </div>
+            <div class="row">
+                <div class="small-12 medium-6 no-left-padding column">
+                    <label>First Name:</label>
+                    <input type='text' name="firstName" ng-model="participants.participantInfo.firstName" required>
+                    <small ng-show="participantForm.firstName.$invalid && participantForm.firstName.$touched" class="error">This
+                        field is required.
+                    </small>
+                </div>
+            </div>
+            <div class="row">
+                <div class="small-12 medium-6 no-left-padding column">
+                    <label>Last Name:</label>
+                    <input type='text' name="lastName" ng-model="participants.participantInfo.lastName" required>
+                    <small ng-show="participantForm.lastName.$invalid && participantForm.lastName.$touched" class="error">This
+                        field is required.
+                    </small>
+                </div>
+            </div>
+            <div class="row">
+                <div class="small-12 medium-6 no-left-padding column">
+                    <label>Email:</label>
+                    <input type='email' name="email" ng-model="participants.participantInfo.email" required>
+                    <small ng-show="participantForm.email.$invalid && participantForm.email.$touched" class="error">This
+                        field is required.
+                    </small>
+                </div>
+            </div>
+            <div class="row">
+                <div class="small-12 medium-6 no-left-padding column">
+                    <label>Phone number:</label>
+                    <input type='text' ng-model="participants.participantInfo.phoneNumber">
+                </div>
+            </div>
+
+            <div class="row">
+                <a href="#" class="right button round tiny default-btn-blue" close-modal="addParticipantModal" ng-disabled="participantForm.$invalid"
+                   ng-click="participants.addParticipant()">OK</a>
+            </div>
+        </form>
         <a class="close-reveal-modal" aria-label="Close">&#215;</a>
     </div>
 </div>

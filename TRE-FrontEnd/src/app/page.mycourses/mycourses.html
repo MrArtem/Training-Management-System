@@ -40,6 +40,7 @@
         <div class="course-item column" ng-repeat="course in mycourses.userCourses | filter:{isCoach: mycourses.filter.isCoach}">
             <h1 class="course-title"><a ui-sref="courseinfo({courseId: course.id})">{{course.title}}</a></h1>
 
+            <!-- it is not returned -->
             <!--<h2 class="course-lesson-number">Lesson #{{course.nextLesson}}</h2>-->
 
             <p class="course-excerpt">{{course.excerpt}}</p>

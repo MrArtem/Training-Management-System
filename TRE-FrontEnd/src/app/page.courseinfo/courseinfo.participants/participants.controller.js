@@ -17,13 +17,19 @@
         vm.getParticipants();
 
         function addParticipant() {
+            console.log("Participant to be added: ");
+            console.log(vm.participantInfo);
             courseAPI.addParticipant($stateParams.courseId, vm.participantInfo).then(function(data) {
                 console.log('participant added successfully');
             });
         }
 
-        function deleteParticipant() {
-
+        function deleteParticipant(index) {
+            var userId = $scope.$parent.courseInfo.participantsList[index].id;
+            courseAPI.deleteParticipant($stateParams.courseId, userId).then(function(data) {
+                //save new participants list
+                console.log("Participant with id " + userId + " deleted successfully");
+            });
         }
 
         function getParticipants() {

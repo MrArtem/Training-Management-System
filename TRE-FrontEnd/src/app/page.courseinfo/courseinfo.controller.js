@@ -10,12 +10,12 @@
         var vm = this;
 
         vm.courseInfo = {};
+        vm.courseInfo.files = [];
+        vm.courseInfo.commentList = [];
+        vm.courseInfo.participantsList = [];
+        vm.courseInfo.timetable = [];
 
         vm.getShortInfo = getShortInfo;
-        vm.saveAttachments = saveAttachments;
-        vm.saveComments = saveComments;
-        vm.saveParticipants = saveParticipants;
-        vm.saveTimetable = saveTimetable;
 
         $scope.courseInfo = vm.courseInfo;
 
@@ -26,22 +26,6 @@
                 $scope.courseInfo = angular.copy(data);
                 console.log($scope.courseInfo);
             });
-        }
-
-        function saveAttachments(attachments) {
-            vm.courseInfo.attachments = angular.copy(attachments);
-        }
-
-        function saveComments(comments) {
-            vm.courseInfo.comments = angular.copy(comments);
-        }
-
-        function saveParticipants(participants) {
-            vm.courseInfo.participants = angular.copy(participants);
-        }
-
-        function saveTimetable(timetable) {
-            $scope.courseInfo.lessonList = angular.copy(timetable);
         }
 
     }

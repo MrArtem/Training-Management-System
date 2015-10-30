@@ -4,8 +4,10 @@ import com.exadel.training.controller.model.*;
 import com.exadel.training.controller.model.trainingModels.*;
 import com.exadel.training.controller.model.userModels.UserModel;
 import com.exadel.training.dao.domain.*;
+import com.exadel.training.security.User.CustomUser;
 import com.exadel.training.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -105,7 +107,7 @@ public class TrainingBaseController {
         return trainingListModelList;
     }
 
-    @RequestMapping(value = "/training/{id}/add_comment")
+    @RequestMapping(value = "/{id}/add_comment")
     public void addComment(@PathVariable("id") Long trainingId, @RequestBody CommentModel commentModel) {
         Comment comment = new Comment();
         comment.setClear(commentModel.getClear());
@@ -116,20 +118,20 @@ public class TrainingBaseController {
         comment.setRecommendation(commentModel.getRecommendation());
         comment.setOther(commentModel.getOther());
         comment.setDate(new Date().getTime());
-        //Get current user
-        User user = new User();
+        CustomUser customUser = (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = userService.getUserById(customUser.getUserId());
         comment.setUser(user);
         comment.setTraining(trainingService.getTraining(trainingId));
         commentService.addComment(comment);
     }
 
-    @RequestMapping(value = "training/{trainingId}/remove_comment/{commentId}")
+    @RequestMapping(value = "/{trainingId}/remove_comment/{commentId}")
     public void removeComment(@PathVariable("trainingId") Long trainingId,
                               @PathVariable("commentId") Long commentId) {
         commentService.removeComment(commentId);
     }
 
-    @RequestMapping(value = "/training/{id}/comment_list")
+    @RequestMapping(value = "/{id}/comment_list")
     public List<CommentModel> getTrainingCommentList(@PathVariable("id") Long trainingId) {
         List<Comment> commentList = commentService.getTrainingCommentList(trainingId);
         List<CommentModel> commentModelList = new ArrayList<CommentModel>();
