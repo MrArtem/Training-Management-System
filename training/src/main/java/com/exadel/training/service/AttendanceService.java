@@ -13,5 +13,5 @@ public interface AttendanceService {
     void updateAttendance(AttendanceModel attendanceModel);
 
     List<Attendance> getAllAttendanceByLessonID(long idLesson);
-    List<Attendance> getAllAttendanceByUserIDBetweenDates(long idUser, Date from, Date to);
+    List<Attendance> getAllAttendanceByUserIDBetweenDates(long idUser, long idTraining, Date from, Date to);
 }

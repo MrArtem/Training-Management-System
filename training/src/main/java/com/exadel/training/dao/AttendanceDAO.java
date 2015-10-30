@@ -14,5 +14,5 @@ public interface AttendanceDAO {
     void update(Attendance attendance);
 
     Attendance getAttendanceByID(long id);
-    List<Attendance> getAllAttendanceByUserIDBetweenDates(long idUser, Date from, Date to);
+    List<Attendance> getAllAttendanceByUserIDBetweenDates(long idUser, long idTraining, Date from, Date to);
 }

@@ -42,7 +42,7 @@ public class AttendanceServiceImpl implements AttendanceService{
     }
 
     @Override
-    public List<Attendance> getAllAttendanceByUserIDBetweenDates(long idUser, Date from, Date to) {
-        return attendanceDAO.getAllAttendanceByUserIDBetweenDates(idUser, from, to);
+    public List<Attendance> getAllAttendanceByUserIDBetweenDates(long idUser, long idTraining, Date from, Date to) {
+        return attendanceDAO.getAllAttendanceByUserIDBetweenDates(idUser, idTraining, from, to);
     }
 }

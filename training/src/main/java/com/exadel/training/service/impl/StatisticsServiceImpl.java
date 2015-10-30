@@ -1,17 +1,13 @@
 package com.exadel.training.service.impl;
 
 import com.exadel.training.controller.model.StatisticsModel;
-import com.exadel.training.dao.domain.Attendance;
-import com.exadel.training.dao.domain.Training;
-import com.exadel.training.dao.domain.User;
-import com.exadel.training.service.LessonService;
-import com.exadel.training.service.StatisticsService;
-import com.exadel.training.service.TrainingService;
-import com.exadel.training.service.UserService;
+import com.exadel.training.dao.domain.*;
+import com.exadel.training.service.*;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import sun.misc.BASE64Encoder;
@@ -20,6 +16,8 @@ import javax.transaction.Transactional;
 import java.io.ByteArrayOutputStream;
 import java.text.Format;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -55,6 +53,9 @@ public class StatisticsServiceImpl implements StatisticsService {
     @Autowired
     private TrainingService trainingService;
 
+    @Autowired
+    private AttendanceService attendanceService;
+
     private void drawMainInfo(Document document, String title, String text)  throws DocumentException {
         Paragraph paragraph = new Paragraph();
         paragraph.add(new Chunk(title + ": ", INFO_TITLE_FONT));
@@ -85,7 +86,7 @@ public class StatisticsServiceImpl implements StatisticsService {
         document.add(Chunk.NEWLINE);
     }
 
-    private static void addHeaderCell(PdfPTable table, String text, Integer rotation) {
+    private void addHeaderCell(PdfPTable table, String text, Integer rotation) {
         PdfPCell cell = new PdfPCell(new Phrase(text, CELL_BOLD_FONT));
         cell.setRotation(rotation);
         cell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -93,10 +94,11 @@ public class StatisticsServiceImpl implements StatisticsService {
         table.addCell(cell);
     }
 
-    private static void drawUserTable(Document document, List<Attendance> attendanceList) throws DocumentException {
+    private List<Attendance> drawUserTable(Document document, List<Attendance> attendanceList) throws DocumentException {
         Integer columnNumber = attendanceList.size() + 1;
         PdfPTable table = new PdfPTable(columnNumber);
         table.setWidthPercentage(100);
+        List<Attendance> attendancesWithComments = new ArrayList<Attendance>();
         Integer rotation;
         if (columnNumber <= OPTIMAL_COLUMN_NUBMER) {
             rotation = HORISONTAL_ROTATION;
@@ -110,8 +112,11 @@ public class StatisticsServiceImpl implements StatisticsService {
         }
         addHeaderCell(table, attendanceList.get(0).getLesson().getTraining().getTitle(), rotation);
         for (Attendance attendance : attendanceList) {
+            if(StringUtils.isNotBlank(attendance.getComment())) {
+                attendancesWithComments.add(attendance);
+            }
             if (attendance.isPresence()) {
-                table.addCell(new PdfPCell(new Paragraph("+", CELL_FONT)));
+                table.addCell(new PdfPCell(new Paragraph("", CELL_FONT)));
             } else {
                 table.addCell(new PdfPCell(new Paragraph("-", CELL_FONT)));
             }
@@ -119,9 +124,54 @@ public class StatisticsServiceImpl implements StatisticsService {
         table.setHeaderRows(1);
         document.add(table);
         document.add(Chunk.NEWLINE);
+        return attendancesWithComments;
     }
 
-//    private static void drawTrainingTable(Document document, List<Attendance> attendanceList) throws DocumentException {
+    private void drawPresenceComments(Document document,List<Attendance> attendancesWithComments,
+                                      Boolean isUserStatistics) throws DocumentException {
+        for (Attendance attendance : attendancesWithComments) {
+            String title;
+            if(isUserStatistics){
+                title = attendance.getLesson().getTraining().getTitle();
+            } else {
+                title = attendance.getUser().getFirstName() + " " + attendance.getUser().getLastName();
+            }
+            drawMainInfo(document, title
+                    + ", " + Long.toString(attendance.getLesson().getDate()), attendance.getComment());
+        }
+    }
+
+    private void drawUserTrainings(Document document, List<Training> trainingList,
+                                   String title, Boolean drawTable, Long id, Long startDate, Long endDate)
+            throws DocumentException{
+        if (trainingList.size() != 0) {
+            drawTitle(document, title);
+            for (Training training : trainingList) {
+                drawTrainingShortInfo(document, training);
+                if (drawTable) {
+                    List<Attendance> attendancesWithComments = new ArrayList<Attendance>();
+                    List<Attendance> attendanceList = attendanceService
+                            .getAllAttendanceByUserIDBetweenDates(id,
+                                    training.getId(), new Date(startDate), new Date(endDate));
+                    do {
+                        attendancesWithComments.addAll(
+                                drawUserTable(document, attendanceList.subList(0, MAX_COLUMN_NUBMER)));
+                        attendanceList = attendanceList.subList(MAX_COLUMN_NUBMER, attendanceList.size());
+                    } while (attendanceList.size() > MAX_COLUMN_NUBMER);
+                    if (attendancesWithComments.size() != 0){
+                        drawTitle(document, "Comments to presence");
+                        drawPresenceComments(document, attendancesWithComments, true);
+                    }
+                }
+            }
+        }
+    }
+
+    private void drawFeedbacks(Document document, List<Feedback> feedbackList, Boolean isUserStatistics)
+            throws DocumentException {
+
+    }
+//    private void drawTrainingTable(Document document, List<Attendance> attendanceList) throws DocumentException {
 //        Integer columnNumber = attendanceList.size() + 1;
 //        Integer rowNumber = 2;
 //        PdfPTable table = new PdfPTable(columnNumber);
@@ -168,13 +218,17 @@ public class StatisticsServiceImpl implements StatisticsService {
                 drawTrainingShortInfo(document, training);
             }
         }
-        List<List<Attendance>> attendances;
-        for (int i = 0; i < attendances.size(); i++) {
-            List<Attendance> attendanceList = attendances.get(i);
-            do {
-                drawUserTable(document, attendanceList.subList(0, MAX_COLUMN_NUBMER));
-                attendanceList = attendanceList.subList(MAX_COLUMN_NUBMER, attendanceList.size());
-            } while(attendanceList.size() > MAX_COLUMN_NUBMER);
+        List<Training> acceptedTrainingList = userService.getUserTrainingsByState(id, Listener.State.ACCEPTED);
+        drawUserTrainings(document, userService.getUserTrainingsByState(id, Listener.State.ACCEPTED),
+                "User's accepted courses", true, id, startDate, endDate);
+        drawUserTrainings(document, userService.getUserTrainingsByState(id, Listener.State.WAITING),
+                "User's courses he/she is waiting for", false, id, startDate, endDate);
+        drawUserTrainings(document, userService.getUserTrainingsByState(id, Listener.State.LEAVE),
+                "User's courses he/she left", true, id, startDate, endDate);
+        List<Feedback> feedbackList = user.getFeedbackList();
+        if (feedbackList.size() != 0) {
+            drawTitle(document, "Feedbacks");
+            drawFeedbacks(document, feedbackList, true);
         }
         document.close();
         String encodedBytes = encoder.encode(outputStream.toByteArray());
