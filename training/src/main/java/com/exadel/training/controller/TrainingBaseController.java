@@ -134,29 +134,9 @@ public class TrainingBaseController {
 
     //@LegalID
     @RequestMapping(value = "/{id}/add_comment")
-//    @Secured({"ADMIN", "USER", "EX_COACH"})
-//    public void addComment(@PathVariable("id") Long trainingId, @RequestBody CommentModel commentModel) {
-        public void addComment(@PathVariable("id") Long trainingId) {
-        Comment comment = new Comment();
-//        comment.setClear(commentModel.getClear());
-//        comment.setCreativity(commentModel.getCreativity());
-//        comment.setEffective(commentModel.getEffective());
-//        comment.setInteresting(commentModel.getInteresting());
-//        comment.setNewMaterial(commentModel.getNewMaterial());
-//        comment.setRecommendation(commentModel.getRecommendation());
-//        comment.setOther(commentModel.getOther());
-//        CustomUser customUser = (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//        User user = userService.getUserById(customUser.getUserId());
-        comment.setClear(true);
-        comment.setCreativity(false);
-        comment.setEffective(0);
-        comment.setInteresting(false);
-        comment.setNewMaterial(true);
-        comment.setRecommendation(false);
-        comment.setOther("kjghk");
-        comment.setUser(userService.getUserById(1));
-        comment.setTraining(trainingService.getTraining(trainingId));
-        commentService.addComment(comment);
+    @Secured({"ADMIN", "USER", "EX_COACH"})
+    public void addComment(@PathVariable("id") Long trainingId, @RequestBody CommentModel commentModel) {
+        commentService.addComment(commentModel, trainingId);
     }
 
     @LegalID
