@@ -16,6 +16,7 @@ public class GetTrainingModel extends TrainingModel {
 
     private boolean isCoach;
 
+
     public GetTrainingModel() {
     }
 
