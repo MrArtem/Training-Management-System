@@ -1,5 +1,7 @@
 package com.exadel.training.controller.model;
 
+import com.exadel.training.dao.domain.Comment;
+
 public class CommentModel {
 
     private Long id;
@@ -29,6 +31,22 @@ public class CommentModel {
     private Long date;
 
     public CommentModel() {
+    }
+
+    public CommentModel(Comment comment) {
+        this.setClear(comment.getClear());
+        this.setCreativity(comment.getCreativity());
+        this.setEffective(comment.getEffective());
+        this.setInteresting(comment.getInteresting());
+        this.setNewMaterial(comment.getNewMaterial());
+        this.setRecommendation(comment.getRecommendation());
+        this.setOther(comment.getOther());
+        this.setDate(comment.getDate());
+        this.setIsPositive(comment.getIsPositive());
+        this.setIsDeleted(comment.getIsDeleted());
+        this.setId(comment.getId());
+        this.setUserId(comment.getUser().getId());
+        this.setUserName(comment.getUser().getFirstName() + " " + comment.getUser().getLastName());
     }
 
     public Long getId() {
