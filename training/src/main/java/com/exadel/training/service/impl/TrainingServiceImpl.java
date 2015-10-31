@@ -48,9 +48,12 @@ public class TrainingServiceImpl implements TrainingService {
     }
 
     @Override
-    public boolean canRate(long id) {
-        //todo
-        return false;
+    public boolean canRate(long trainingId, long userId) {
+        Listener listener = listenerDAO.getListenerByTrainingAndUser(trainingId, userId);
+        if( listener == null) {
+            return false;
+        }
+        return listener.isCanRate();
     }
 
     @Override
@@ -209,8 +212,6 @@ public class TrainingServiceImpl implements TrainingService {
         approveAction.setApproveLessonList(approveLessonList);
         approveAction.setType(ApproveAction.Type.CREATE);
         approveActionDAO.addApproveAction(approveAction);
-        //todo
-        newsService.addNews(coach, News.TableName.TRAINING, News.ActionType.CREATE, training.getId());
     }
 
     private void removeApproveLessonList(ApproveAction approveAction, boolean removeLesson) {
@@ -231,22 +232,34 @@ public class TrainingServiceImpl implements TrainingService {
             , Integer language, Integer maxSize, boolean isInner, String place, List<Long> tagIdList
             , List<LessonModel> lessonModelList, RepeatModel repeatModel) {
         ApproveAction approveAction = approveActionDAO.getApproveAction(actionId);
+        ApproveAction.Type type = approveAction.getType();
         removeApproveLessonList(approveAction, true);
         Training training = approveAction.getTraining();
-        training.setTitle(title);
-        training.setDescription(description);
-        training.setExcerpt(shortInfo);
-        training.setLanguage(language);
-        training.setMaxSize(maxSize);
-        training.setIsInner(isInner);
-        training.setTagList(getTagList(tagIdList));
-        if (training.isRepeat()) {
-            addLessonListRepeating(training, repeatModel, true, true, place);
+
+        if( type != ApproveAction.Type.REMOVE ) {
+            training.setTitle(title);
+            training.setDescription(description);
+            training.setExcerpt(shortInfo);
+            training.setLanguage(language);
+            training.setMaxSize(maxSize);
+            training.setIsInner(isInner);
+            training.setTagList(getTagList(tagIdList));
+            if (training.isRepeat()) {
+                addLessonListRepeating(training, repeatModel, true, true, place);
+            } else {
+                addLessonListNotRepeating(training, lessonModelList, true, true, place);
+            }
+            training.setState(Training.State.NONE);
+            trainingDAO.changeTraining(training);
+            newsService.addNews(training.getCoach()
+                    , News.TableName.TRAINING
+                    , (type == ApproveAction.Type.EDIT)? News.ActionType.EDIT : News.ActionType.CREATE
+                    , training.getId());
         } else {
-            addLessonListNotRepeating(training, lessonModelList, true, true, place);
+            training.setState(Training.State.REMOVE);
+            trainingDAO.changeTraining(training);
+            newsService.addNews(training.getCoach(), News.TableName.TRAINING, News.ActionType.REMOVE, training.getId());
         }
-        training.setState(Training.State.NONE);
-        trainingDAO.changeTraining(training);
     }
 
     @Override
@@ -351,6 +364,27 @@ public class TrainingServiceImpl implements TrainingService {
                     , shortInfo, language, maxSize, isInner, place, tagIdList
                     , additionalInfo, lessonModelList, repeatModel);
         }
+    }
+
+    @Override
+    public void removeTraining(Long trainingId) {
+        ApproveAction approveAction = approveActionDAO.getApproveActionByTrainingId(trainingId);
+        Training training = trainingDAO.getTrainingById(trainingId);
+        if( approveAction != null) {
+            ApproveTraining approveTraining = approveAction.getApproveTraining();
+            if(approveTraining != null) {
+                trainingApproveDAO.removeApprove(approveTraining);
+            }
+            for (ApproveLesson approveLesson : Utils.emptyIfNull(approveAction.getApproveLessonList())) {
+                lessonApproveDAO.removeApprove(approveLesson);
+            }
+            approveActionDAO.removeApproveAction(approveAction);
+        }
+        approveAction = new ApproveAction();
+        approveAction.setType(ApproveAction.Type.REMOVE);
+        approveAction.setTraining(training);
+        approveAction.setDate(Utils.getTime());
+        approveActionDAO.addApproveAction(approveAction);
     }
 
     @Override
@@ -504,6 +538,7 @@ public class TrainingServiceImpl implements TrainingService {
         }
         lessonApproveDAO.removeApprove(approveLesson);
         approveActionDAO.removeApproveAction(approveAction);
+        newsService.addNews(training.getCoach(), News.TableName.TRAINING, News.ActionType.EDIT, training.getId());
     }
 
     @Override
@@ -523,6 +558,8 @@ public class TrainingServiceImpl implements TrainingService {
             trainingDAO.changeTraining(training);
             listener.setCanRate(false);
             listenerDAO.changeListener(listener);
+            User user = userDAO.getUserByID(userId);
+            newsService.addNews(user, News.TableName.TRAINING, News.ActionType.RATE, trainingId);
             return (double) sumRating / count;
         }
         return -1;

@@ -51,11 +51,14 @@ public class LessonDAOImpl implements LessonDAO {
     }
 
     @Override
-    public List<Lesson> getLessonListByTraining(long trainingId) {
-        //todo lesson state
+    @SuppressWarnings("unchecked")
+    public List<Lesson> getLessonListActualByTraining(long trainingId) {
         Session session = sessionFactory.getCurrentSession();
         Training training = session.load(Training.class, trainingId);
-        return training.getLessonList();
+        return session.createQuery("from Lesson less where less.training = :training and less.state != :state")
+                .setParameter("training", training)
+                .setParameter("state", Lesson.State.REMOVAL)
+                .list();
     }
 
     @Override
@@ -106,6 +109,19 @@ public class LessonDAOImpl implements LessonDAO {
                 .setParameter("state", Lesson.State.REMOVAL)
                 .setParameter("endDate", endDate)
                 .setParameter("startDate", startDate)
+                .list();
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public List<Lesson> getLessonListActualFrom(long trainingId, long startDate) {
+        Session session = sessionFactory.getCurrentSession();
+        Training training = session.load(Training.class, trainingId);
+        return sessionFactory.getCurrentSession(). createQuery(" from Lesson less where less.date >= :startDate and " +
+                " less.state != :state and less.training = :training")
+                .setParameter("state", Lesson.State.REMOVAL)
+                .setParameter("startDate", startDate)
+                .setParameter("training", training)
                 .list();
     }
 }

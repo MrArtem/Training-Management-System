@@ -62,6 +62,9 @@ public class TrainingBaseController {
         getTrainingModel.setTraining(training);
         getTrainingModel.setStartDate(lessonService.getStartDateByTraining(trainingId));
         getTrainingModel.setEndDate(lessonService.getEndDateByTraining(trainingId));
+        CustomUser customUser = (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        getTrainingModel.setCanRate(trainingService.canRate(trainingId, customUser.getUserId()));
+        getTrainingModel.setCanSubscribe(listenerService.canSubscribe(trainingId, customUser.getUserId()));
         return getTrainingModel;
     }
 
@@ -69,7 +72,7 @@ public class TrainingBaseController {
     @Secured({"ADMIN", "USER", "EX_COACH", "EX_USER"})
     @RequestMapping(value = "/{id}/lesson_list", method = RequestMethod.GET)
     List<Lesson> getLessonListByTraining(@PathVariable("id") long trainingId) {
-        return lessonService.getLessonByTraining(trainingId);
+        return lessonService.getLessonByTrainingActual(trainingId);
     }
 
     @LegalID

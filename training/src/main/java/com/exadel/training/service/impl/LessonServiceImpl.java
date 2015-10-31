@@ -17,8 +17,8 @@ public class LessonServiceImpl implements LessonService{
     private LessonDAO lessonDAO;
 
     @Override
-    public List<Lesson> getLessonByTraining(long trainingId) {
-        return lessonDAO.getLessonListByTraining(trainingId);
+    public List<Lesson> getLessonByTrainingActual(long trainingId) {
+        return lessonDAO.getLessonListActualByTraining(trainingId);
     }
 
     @Override

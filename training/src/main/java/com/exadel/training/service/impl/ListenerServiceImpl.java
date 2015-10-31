@@ -1,19 +1,16 @@
 package com.exadel.training.service.impl;
 
-import com.exadel.training.dao.AttendanceDAO;
-import com.exadel.training.dao.ListenerDAO;
-import com.exadel.training.dao.TrainingDAO;
-import com.exadel.training.dao.UserDAO;
-import com.exadel.training.dao.domain.Attendance;
-import com.exadel.training.dao.domain.Listener;
-import com.exadel.training.dao.domain.Training;
-import com.exadel.training.dao.domain.User;
+import com.exadel.training.dao.*;
+import com.exadel.training.dao.domain.*;
 import com.exadel.training.service.ListenerService;
+import com.exadel.training.service.NewsService;
+import com.exadel.training.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -27,6 +24,10 @@ public class ListenerServiceImpl implements ListenerService {
     private UserDAO userDAO;
     @Autowired
     private AttendanceDAO attendanceDAO;
+    @Autowired
+    private LessonDAO lessonDAO;
+    @Autowired
+    private NewsService newsService;
 
     @Override
     public void addListener(long trainingId, long userId) {
@@ -46,7 +47,14 @@ public class ListenerServiceImpl implements ListenerService {
         listener.setTraining(training);
         listener.setUser(user);
         listenerDAO.addListener(listener);
-        //todo attendance
+        List<Lesson> lessonList = lessonDAO.getLessonListActualFrom(trainingId, Utils.getTime());
+        for(Lesson lesson : Utils.emptyIfNull(lessonList)) {
+            Attendance attendance = new Attendance();
+            attendance.setLesson(lesson);
+            attendance.setUser(user);
+            attendanceDAO.save(attendance);
+        }
+        newsService.addNews(user, News.TableName.TRAINING, News.ActionType.JOIN, trainingId);
     }
 
     @Override
@@ -61,7 +69,12 @@ public class ListenerServiceImpl implements ListenerService {
                 listenerDAO.changeListener(listener);
             }
         }
-        //todo attendance
+        List<Attendance> attendanceList  = attendanceDAO.getAllAttendanceByUserIDfromDate(userId, new Date(Utils.getTime()));
+        for(Attendance attendance : Utils.emptyIfNull(attendanceList)) {
+            attendanceDAO.delete(attendance);
+        }
+        User user = userDAO.getUserByID(userId);
+        newsService.addNews(user, News.TableName.TRAINING, News.ActionType.LEAVE, trainingId);
     }
 
     @Override
@@ -80,5 +93,17 @@ public class ListenerServiceImpl implements ListenerService {
             userList.add(listener.getUser());
         }
         return userList;
+    }
+
+    @Override
+    public boolean canSubscribe(long trainingId, long userId) {
+        Listener listener = listenerDAO.getListenerByTrainingAndUser(trainingId, userId);
+        if(listener == null) {
+            return true;
+        }
+        if( listener.getState() == Listener.State.LEAVE ) {
+            return true;
+        }
+        return false;
     }
 }
