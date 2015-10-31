@@ -17,7 +17,7 @@ public class FeedbackModel {
 
     public FeedbackModel(Feedback feedback) {
         this.coachID = feedback.getTraining().getCoach().getId();
-        this.feedbackID = feedbackID;
+        this.feedbackID = feedback.getId();
         this.coachName = feedback.getTraining().getCoach().getLastName() + " " + feedback.getTraining().getCoach().getFirstName();
     }
 
