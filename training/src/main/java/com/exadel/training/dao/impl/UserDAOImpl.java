@@ -84,7 +84,7 @@ public class UserDAOImpl implements UserDAO {
         criteria.add(Restrictions.between("lesson.date", startDate, endDate));
         criteria.add(Restrictions.eq("training.coach.id", idCoach));
 
-        return null;
+        return criteria.list();
     }
 
     @Override
