@@ -43,7 +43,6 @@ public class FeedbackController {
         for(Feedback feedback : feedbackService.getFeedbackListForUser(idUser)) {
             FeedbackModel feedbackModel = new FeedbackModel(feedback);
             feedbackModelList.add(feedbackModel);
-
         }
 
         return feedbackModelList;
