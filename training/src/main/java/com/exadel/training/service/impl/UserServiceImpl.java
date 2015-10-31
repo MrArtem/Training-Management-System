@@ -78,6 +78,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<Training> getCoachTrainignList(long idCoach, long startDate, long endDate) {
+        return userDAO.getCoachTrainingsBetweenDates(idCoach, startDate, endDate);
+    }
+
+    @Override
     public List<Training> visitedTrainings(long idUser) {
         return userDAO.visitedTrainings(idUser);
     }

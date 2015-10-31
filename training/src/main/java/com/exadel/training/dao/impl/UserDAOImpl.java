@@ -76,13 +76,13 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public List<Training> getCoachTrainingsBetweenDates(long idUser, long startDate, long endDate) {
+    public List<Training> getCoachTrainingsBetweenDates(long idCoach, long startDate, long endDate) {
         Session session = sessionFactory.getCurrentSession();
         Criteria criteria = session.createCriteria(Training.class, "training");
 
         criteria.createAlias("training.lessonList", "lesson");
         criteria.add(Restrictions.between("lesson.date", startDate, endDate));
-        criteria.add(Restrictions.eq("training.coach.id", idUser));
+        criteria.add(Restrictions.eq("training.coach.id", idCoach));
 
         return null;
     }
