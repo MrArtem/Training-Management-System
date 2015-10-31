@@ -40,7 +40,6 @@ public class TrainingDAOImpl implements TrainingDAO {
         return sessionFactory.getCurrentSession().load(Training.class,id);
     }
 
-    //todo
     @Override
     @SuppressWarnings("unchecked")
     public List<Training> getTrainingListByTagList(Integer page, Integer pageSize, Boolean isActual, List<Tag> tagList) {

@@ -9,4 +9,6 @@ public interface ApproveActionService {
     Integer getActionNumber();
 
     List<ApproveAction> getActionList(Integer page, Integer pageSize);
+
+    void addApproveAction(ApproveAction approveAction);
 }

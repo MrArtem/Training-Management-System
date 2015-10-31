@@ -108,7 +108,6 @@ public class TrainingCRUDController {
         ApproveGetTrainingModel approveTrainingModel = new ApproveGetTrainingModel();
         Training training = approveAction.getTraining();
         User coach = training.getCoach();
-        //TODO code review
         if (approveTraining != null) {
             approveTrainingModel.setTitle(approveTraining.getTitle());
             approveTrainingModel.setDescription(approveTraining.getDescription());

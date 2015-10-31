@@ -2,8 +2,10 @@ package com.exadel.training.controller;
 
 import com.exadel.training.controller.model.trainingModels.TrainingListModel;
 import com.exadel.training.controller.model.userModels.UserModel;
+import com.exadel.training.dao.domain.Lesson;
 import com.exadel.training.dao.domain.Training;
 import com.exadel.training.security.User.CustomUser;
+import com.exadel.training.service.LessonService;
 import com.exadel.training.service.UserService;
 import com.exadel.training.validate.annotation.LegalID;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +28,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private LessonService lessonService;
 
     @Secured({"ADMIN", "USER", "EX_COACH"})
     @RequestMapping(value = "/user_info/{idUser}", method = RequestMethod.GET)
@@ -58,9 +63,11 @@ public class UserController {
         List<TrainingListModel> trainingListModelList = new ArrayList<TrainingListModel>();
 
         for(Training training : userService.actualTrainings(idUser)) {
-            trainingListModelList.add(new TrainingListModel(training));
-            //todo get next date and place
-
+            TrainingListModel trainingListModel = new TrainingListModel(training);
+            Lesson nextLesson = lessonService.getNextLesson(training.getId());
+            trainingListModel.setNextDate(nextLesson.getDate());
+            trainingListModel.setNextPlace(nextLesson.getPlace());
+            trainingListModelList.add(trainingListModel);
         }
 
         return trainingListModelList;

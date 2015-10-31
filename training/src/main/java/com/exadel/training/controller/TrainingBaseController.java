@@ -117,24 +117,16 @@ public class TrainingBaseController {
         trainingList = trainingService.getTrainingListByTagList(page, PAGE_SIZE, isActual, tagList);
         List<TrainingListModel> trainingListModelList = new ArrayList<TrainingListModel>();
         for (Training training : trainingList) {
-            TrainingListModel trainingListModel = new TrainingListModel();
-            trainingListModel.setId(training.getId());
-            trainingListModel.setTitle(training.getTitle());
-            trainingListModel.setExcerpt(training.getExcerpt());
-            trainingListModel.setCoachId(training.getCoach().getId());
-            trainingListModel.setCoachName(training.getCoach().getFirstName() +
-                    " " + training.getCoach().getLastName());
-            trainingListModel.setTagList(training.getTagList());
-            //todo get user here
-            User user = new User();
-            trainingListModel.setIsCoach(userService.isCoach(user.getId(), training.getId()));
-            //todo get next date and place
+            TrainingListModel trainingListModel = new TrainingListModel(training);
+            Lesson nextLesson = lessonService.getNextLesson(training.getId());
+            trainingListModel.setNextDate(nextLesson.getDate());
+            trainingListModel.setNextPlace(nextLesson.getPlace());
             trainingListModelList.add(trainingListModel);
         }
         return trainingListModelList;
     }
 
-    //@LegalID
+    @LegalID
     @RequestMapping(value = "/{id}/add_comment")
     @Secured({"ADMIN", "USER", "EX_COACH"})
     public void addComment(@PathVariable("id") Long trainingId, @RequestBody CommentModel commentModel) {

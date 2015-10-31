@@ -10,7 +10,10 @@ import com.exadel.training.service.FeedbackService;
 import com.exadel.training.service.NewsService;
 import com.exadel.training.service.TrainingService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.ArrayList;
 import java.util.List;
 
-@RestController
+@Controller
 public class NewsController {
 
     @Autowired
@@ -35,8 +38,9 @@ public class NewsController {
     private FeedbackService feedbackService;
 
     @Secured({"ADMIN"})
-    @RequestMapping(value = "/news", method = RequestMethod.GET)
-    List<NewsModel> getNewsList(@RequestParam("page") Integer page,
+    @MessageMapping("/news")
+    @SendTo("/pipe/news")
+    public List<NewsModel> getNewsList(@RequestParam("page") Integer page,
                                 @RequestParam("page_size") Integer pageSize) {
         List<NewsModel> newsModelList = new ArrayList<NewsModel>();
         for(News news : newsService.getNewsList(page, pageSize)) {
