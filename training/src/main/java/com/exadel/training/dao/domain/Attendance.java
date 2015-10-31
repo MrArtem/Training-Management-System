@@ -17,6 +17,8 @@ public class Attendance {
 
     private boolean presence;
 
+    private boolean isSubscribe;
+
     @ManyToOne(cascade = CascadeType.ALL)
     private User user;
 
@@ -29,6 +31,14 @@ public class Attendance {
 
     public long getId() {
         return id;
+    }
+
+    public boolean isSubscribe() {
+        return isSubscribe;
+    }
+
+    public void setIsSubscribe(boolean isSubscribe) {
+        this.isSubscribe = isSubscribe;
     }
 
     public void setId(long id) {
