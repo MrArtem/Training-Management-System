@@ -19,8 +19,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.Format;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
+import java.util.*;
 import java.util.List;
 
 @Service
@@ -39,13 +38,13 @@ public class StatisticsServiceImpl implements StatisticsService {
 
     private static Font CELL_BOLD_FONT = new Font(Font.FontFamily.COURIER, 9, Font.BOLD);
 
-    private static Integer MAX_COLUMN_NUBMER = 30;
+    private static Integer MAX_COLUMN_NUMBER = 30;
 
-    private static Integer OPTIMAL_COLUMN_NUBMER = 6;
+    private static Integer OPTIMAL_COLUMN_NUMBER = 6;
 
     private static Integer VERTICAL_ROTATION = 90;
 
-    private static Integer HORISONTAL_ROTATION = 0;
+    private static Integer HORIZONTAL_ROTATION = 0;
 
     private static Format format = new SimpleDateFormat("dd-MM-yyyy");
 
@@ -72,6 +71,36 @@ public class StatisticsServiceImpl implements StatisticsService {
         Paragraph paragraph = new Paragraph(title, TITLE_FONT);
         paragraph.setAlignment(Element.ALIGN_CENTER);
         document.add(paragraph);
+        document.add(Chunk.NEWLINE);
+    }
+
+    private void drawTrainingInfo(Document document, Training training) throws DocumentException {
+        drawMainInfo(document, "Title", training.getTitle());
+        drawMainInfo(document, "Coach name", training.getCoach().getFirstName()
+                + " " + training.getCoach().getLastName());
+        drawMainInfo(document, "Excerpt", training.getExcerpt());
+        drawMainInfo(document, "Description", training.getDescription());
+        drawMainInfo(document, "Language", (training.getLanguage() == 1) ? "English" : "Russian");
+        StringBuffer tags = new StringBuffer();
+        List<Tag> tagList = training.getTagList();
+        for (int i = 0; i < tagList.size() - 1; i++) {
+            tags.append(tagList.get(i).getSpecialty() + ", ");
+        }
+        tags.append(tagList.get(tagList.size() - 1).getSpecialty());
+        drawMainInfo(document, "Tags", tags.toString());
+        drawMainInfo(document, "Start date", format.format(lessonService.getStartDateByTraining(training.getId())));
+        drawMainInfo(document, "End date", format.format(lessonService.getEndDateByTraining(training.getId())));
+        drawMainInfo(document, "Maximum number of listeners", Long.toString(training.getMaxSize()));
+        drawMainInfo(document, "Rating",
+                Double.toString((double) training.getSumRating() / training.getCountListenerRating()));
+        switch(training.getState()) {
+            case CREATE:
+                drawMainInfo(document, "State", "waiting for creation approve");
+                break;
+            case REMOVE:
+                drawMainInfo(document, "State", "removed");
+                break;
+        }
         document.add(Chunk.NEWLINE);
     }
 
@@ -105,8 +134,8 @@ public class StatisticsServiceImpl implements StatisticsService {
         table.setWidthPercentage(100);
         List<Attendance> attendancesWithComments = new ArrayList<Attendance>();
         Integer rotation;
-        if (columnNumber <= OPTIMAL_COLUMN_NUBMER) {
-            rotation = HORISONTAL_ROTATION;
+        if (columnNumber <= OPTIMAL_COLUMN_NUMBER) {
+            rotation = HORIZONTAL_ROTATION;
         } else {
             rotation = VERTICAL_ROTATION;
         }
@@ -166,11 +195,11 @@ public class StatisticsServiceImpl implements StatisticsService {
                     do {
                         attendancesWithComments.addAll(
                                 drawUserTable(document, attendanceList.subList(0,
-                                        (attendanceList.size() > MAX_COLUMN_NUBMER)
-                                                ? MAX_COLUMN_NUBMER : attendanceList.size())));
-                        attendanceList = attendanceList.subList((attendanceList.size() > MAX_COLUMN_NUBMER)
-                                ? MAX_COLUMN_NUBMER : attendanceList.size(), attendanceList.size());
-                    } while (attendanceList.size() > MAX_COLUMN_NUBMER);
+                                        (attendanceList.size() > MAX_COLUMN_NUMBER)
+                                                ? MAX_COLUMN_NUMBER : attendanceList.size())));
+                        attendanceList = attendanceList.subList((attendanceList.size() > MAX_COLUMN_NUMBER)
+                                ? MAX_COLUMN_NUMBER : attendanceList.size(), attendanceList.size());
+                    } while (attendanceList.size() > MAX_COLUMN_NUMBER);
                     if (attendancesWithComments.size() != 0){
                         drawTitle(document, "Comments to presence");
                         drawPresenceComments(document, attendancesWithComments, true);
@@ -189,10 +218,49 @@ public class StatisticsServiceImpl implements StatisticsService {
             } else {
                 title = feedback.getUser().getFirstName() + " " + feedback.getUser().getLastName();
             }
-            String feedbackData = "\n";
-            //todo questions
+            StringBuffer feedbackData = new StringBuffer("\n");
+            feedbackData.append("Has he/she attended the lectures? ");
+            if (feedback.isAttendance()) {
+                feedbackData.append("Yes\n");
+            } else {
+                feedbackData.append("No\n");
+            }
+            feedbackData.append("Is he/she willing to learn? ");
+            if (feedback.isAttitude()) {
+                feedbackData.append("Yes\n");
+            } else {
+                feedbackData.append("No\n");
+            }
+            feedbackData.append("Was the student communicative? ");
+            if (feedback.isCommSkills()) {
+                feedbackData.append("Yes\n");
+            } else {
+                feedbackData.append("No\n");
+            }
+            feedbackData.append("Is the student motivated? ");
+            if (feedback.isMotivation()) {
+                feedbackData.append("Yes\n");
+            } else {
+                feedbackData.append("No\n");
+            }
+            feedbackData.append("Was the student focused on the result? ");
+            if (feedback.isFocusOnResult()) {
+                feedbackData.append("Yes\n");
+            } else {
+                feedbackData.append("No\n");
+            }
+            feedbackData.append("Was the student asking questions? ");
+            if (feedback.isQuestions()) {
+                feedbackData.append("Yes\n");
+            } else {
+                feedbackData.append("No\n");
+            }
+            if (StringUtils.isNotBlank(feedback.getOther())) {
+                feedbackData.append("Something else: ");
+                feedbackData.append(feedback.getOther());
+            }
             drawMainInfo(document, title
-                    + ", " + format.format(feedback.getDate()), feedbackData);
+                    + ", " + format.format(feedback.getDate()), feedbackData.toString());
         }
     }
 
@@ -246,32 +314,61 @@ public class StatisticsServiceImpl implements StatisticsService {
                     + ", " + format.format(comment.getDate()), commentData.toString());
         }
     }
-//    private void drawTrainingTable(Document document, List<Attendance> attendanceList) throws DocumentException {
-//        Integer columnNumber = attendanceList.size() + 1;
-//        Integer rowNumber = 2;
-//        PdfPTable table = new PdfPTable(columnNumber);
-//        table.setWidthPercentage(100);
-//        Integer rotation;
-//        if (columnNumber <= OPTIMAL_COLUMN_NUBMER) {
-//            rotation = HORISONTAL_ROTATION;
-//        } else {
-//            rotation = VERTICAL_ROTATION;
-//        }
-//        Format format = new SimpleDateFormat("dd-MM-yyyy");
-//        addHeaderCell(table, "", rotation);
-//        for (Attendance attendance : attendanceList) {
-//            addHeaderCell(table, format.format(attendance.getLesson().getDate()), rotation);
-//        }
-//        for (Integer j = 0; j < rowNumber; j++) {
-//            addHeaderCell(table, j.toString() + "left", rotation);
-//            for (Integer i = 0; i < columnNumber - 1; i++) {
-//                table.addCell(new PdfPCell(new Paragraph(i.toString() + " cell", CELL_FONT)));
-//            }
-//        }
-//        table.setHeaderRows(1);
-//        document.add(table);
-//        document.add(Chunk.NEWLINE);
-//    }
+
+    private void drawListeners(Document document, List<User> userList, String title) throws DocumentException {
+        if (userList.size() != 0) {
+            StringBuffer users = new StringBuffer("\n");
+            for (User user : userList) {
+                users.append(user.getFirstName() + " " + user.getLastName() + "\n");
+            }
+            drawMainInfo(document, title, users.toString());
+        }
+    }
+    private void drawTrainingTable(Document document, List<Lesson> lessonList) throws DocumentException {
+        Integer columnNumber = lessonList.size() + 1;
+        Set<User> users = new HashSet<User>();
+        for (Lesson lesson : lessonList) {
+            for (Attendance attendance : lesson.getAttendanceList()) {
+                users.add(attendance.getUser());
+            }
+        }
+        List<User> userList = new ArrayList<User>(users);
+        Integer rowNumber = users.size() + 1;
+        PdfPTable table = new PdfPTable(columnNumber);
+        table.setWidthPercentage(100);
+        Integer rotation;
+        if (columnNumber <= OPTIMAL_COLUMN_NUMBER) {
+            rotation = HORIZONTAL_ROTATION;
+        } else {
+            rotation = VERTICAL_ROTATION;
+        }
+        Format format = new SimpleDateFormat("dd-MM-yyyy");
+        addHeaderCell(table, "", rotation);
+        for (Lesson lesson : lessonList) {
+            addHeaderCell(table, format.format(lesson.getDate()), rotation);
+        }
+        for (Integer j = 0; j < rowNumber; j++) {
+            User user = userList.get(j);
+            addHeaderCell(table, user.getFirstName() + " " + user.getLastName(), rotation);
+            for (Integer i = 0; i < columnNumber - 1; i++) {
+                Lesson lesson = lessonList.get(i);
+                Attendance attendance = attendanceService.getAttendanceByUserIDAndLessonID;
+                String data = "";
+                if (attendance == null) {
+                    data = "X";
+                } else if (!attendance.isPresence()) {
+                    data = "-";
+                    PdfPCell cell = new PdfPCell(new Paragraph(data, CELL_FONT));
+                    cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                    cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+                    table.addCell(cell);
+                }
+            }
+        }
+        table.setHeaderRows(1);
+        document.add(table);
+        document.add(Chunk.NEWLINE);
+    }
 
     @Transactional
     private String getUserStatistics(Long id, Long startDate, Long endDate) throws DocumentException {
@@ -325,7 +422,20 @@ public class StatisticsServiceImpl implements StatisticsService {
     }
 
     @Transactional
-    private String getTrainingStatistics(Long id, Long startDate, Long endDate) {
+    private String getTrainingStatistics(Long id, Long startDate, Long endDate) throws DocumentException {
+        BASE64Encoder encoder = new BASE64Encoder();
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        Document document = new Document();
+        PdfWriter.getInstance(document, outputStream);
+        document.open();
+        drawTitle(document, "Training Statistics");
+        Training training = trainingService.getTraining(id);
+        drawTrainingInfo(document, training);
+        //drawListeners(document, trainingService.);
+        drawTrainingTable(document, training.getLessonList());
+        drawComments(document, training.getCommentList(), false);
+        drawFeedbacks(document, training.getFeedbackList(), false);
+
         return null;
     }
 
