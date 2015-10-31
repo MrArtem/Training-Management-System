@@ -69,7 +69,7 @@ public class ListenerServiceImpl implements ListenerService {
                 listenerDAO.changeListener(listener);
             }
         }
-        List<Attendance> attendanceList  = attendanceDAO.getAllAttendanceByUserIDfromDate(userId, new Date(Utils.getTime()));
+        List<Attendance> attendanceList  = attendanceDAO.getAllAttendanceByUserIDFromDate(userId, new Date(Utils.getTime()));
         for(Attendance attendance : Utils.emptyIfNull(attendanceList)) {
             attendanceDAO.delete(attendance);
         }
