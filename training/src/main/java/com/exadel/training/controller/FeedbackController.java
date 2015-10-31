@@ -6,10 +6,13 @@ import com.exadel.training.dao.domain.Feedback;
 import com.exadel.training.service.FeedbackService;
 import com.exadel.training.validate.annotation.LegalID;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.validation.Validator;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
-import javax.websocket.server.PathParam;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +25,14 @@ public class FeedbackController {
 
     @Autowired
     FeedbackService feedbackService;
+    @Autowired
+    @Qualifier("addFeedbackModelValidator")
+    Validator addFeedbackModelValidator;
+
+    @InitBinder
+    private void initBinder(WebDataBinder webDataBinder) {
+        webDataBinder.setValidator(addFeedbackModelValidator);
+    }
 
     @Secured({"ADMIN", "USER"})
     @RequestMapping(value = "/feedbacks_of_user/{idUser}", method = RequestMethod.GET)
@@ -40,7 +51,7 @@ public class FeedbackController {
 
     @Secured({"ADMIN", "USER", "EX_COACH"})
     @RequestMapping(value = "/add_feedback", method = RequestMethod.POST, consumes = "application/json")
-    public void addFeedback(@RequestBody AddFeedbackModel addFeedbackModel) {
+    public void addFeedback(@Validated @RequestBody AddFeedbackModel addFeedbackModel) {
         feedbackService.addFeedback(addFeedbackModel);
     }
 }

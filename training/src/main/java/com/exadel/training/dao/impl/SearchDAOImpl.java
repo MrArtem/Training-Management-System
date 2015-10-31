@@ -4,27 +4,22 @@ import com.exadel.training.dao.SearchDAO;
 import com.exadel.training.dao.domain.Training;
 import com.exadel.training.dao.domain.User;
 import org.apache.lucene.search.Query;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.search.FullTextQuery;
 import org.hibernate.search.FullTextSession;
-import org.hibernate.search.jpa.Search;
 import org.hibernate.search.query.dsl.QueryBuilder;
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 
-
 import javax.annotation.PostConstruct;
-import javax.transaction.Transactional;
 import java.util.List;
 
 /**
  * Created by ayudovin on 08.10.2015.
  */
 @Repository
-public class SearchDAOImpl implements SearchDAO{
+public class  SearchDAOImpl implements SearchDAO{
 
 
     @Autowired
