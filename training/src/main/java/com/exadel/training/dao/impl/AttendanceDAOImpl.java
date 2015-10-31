@@ -46,6 +46,16 @@ public class AttendanceDAOImpl implements AttendanceDAO {
     }
 
     @Override
+    public Attendance getAttendanceByUserIDAndLessonID(long idUser, long idLesson) {
+        return (Attendance)sessionFactory.getCurrentSession()
+                .createQuery("select a from Attendance as a where a.user.id = :idUser and a.lesson.id = :idLesson")
+                .setParameter("idUser", idUser)
+                .setParameter("idLesson", idLesson)
+                .uniqueResult();
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
     public List<Attendance> getAllAttendanceByUserIDBetweenDates(long idUser, Date from, Date to) {
         Session session = sessionFactory.getCurrentSession();
         Criteria criteria = session.createCriteria(Attendance.class, "attendance");
@@ -56,6 +66,21 @@ public class AttendanceDAOImpl implements AttendanceDAO {
         criteria.createAlias("attendance.lesson", "lesson");
         criteria.add(Restrictions.gt("lesson.date", from.getTime()));
         criteria.add(Restrictions.lt("lesson.date", to.getTime()));
+
+        return criteria.list();
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public List<Attendance> getAllAttendanceByUserIDfromDate(long idUser, Date from) {
+        Session session = sessionFactory.getCurrentSession();
+        Criteria criteria = session.createCriteria(Attendance.class, "attendance");
+
+        criteria.createAlias("attendance.user", "user");
+        criteria.add(Restrictions.eq("user.id", idUser));
+
+        criteria.createAlias("attendance.lesson", "lesson");
+        criteria.add(Restrictions.gt("lesson.date", from.getTime()));
 
         return criteria.list();
     }

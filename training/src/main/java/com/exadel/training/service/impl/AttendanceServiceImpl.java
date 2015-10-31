@@ -37,8 +37,18 @@ public class AttendanceServiceImpl implements AttendanceService{
     }
 
     @Override
+    public Attendance getAttendanceByUserIDAndLessonID(long idUser, long idLesson) {
+        return attendanceDAO.getAttendanceByUserIDAndLessonID(idUser, idLesson);
+    }
+
+    @Override
     public List<Attendance> getAllAttendanceByLessonID(long idLesson) {
         return lessonService.getLessonByID(idLesson).getAttendanceList();
+    }
+
+    @Override
+    public List<Attendance> getAllAttendanceByUserIDfromDate(long idUser, Date from) {
+        return attendanceDAO.getAllAttendanceByUserIDfromDate(idUser, from);
     }
 
     @Override
