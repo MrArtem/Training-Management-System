@@ -1,11 +1,13 @@
 package com.exadel.training.service.impl;
 
+import com.exadel.training.controller.model.trainingModels.ApproveLessonModel;
 import com.exadel.training.controller.model.trainingModels.LessonModel;
 import com.exadel.training.controller.model.trainingModels.RepeatModel;
 import com.exadel.training.dao.*;
 import com.exadel.training.dao.domain.*;
 import com.exadel.training.service.NewsService;
 import com.exadel.training.service.TrainingService;
+import com.exadel.training.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -39,19 +41,6 @@ public class TrainingServiceImpl implements TrainingService {
     private NewsService newsService;
     @Autowired
     private AttendanceDAO attendanceDAO;
-
-    private Long getTime() {
-        Calendar calendar = new GregorianCalendar();
-        calendar.setTimeZone(TimeZone.getTimeZone("UTC"));
-        return calendar.getTimeInMillis();
-    }
-
-    private int getDayOfWeek(Long millis) {
-        Calendar calendar = new GregorianCalendar();
-        calendar.setTimeZone(TimeZone.getTimeZone("UTC"));
-        calendar.setTimeInMillis(millis);
-        return (calendar.get(Calendar.DAY_OF_WEEK) + 5) % DAY_OF_WEEK;
-    }
 
     @Override
     public Training getTraining(long id) {
@@ -93,9 +82,6 @@ public class TrainingServiceImpl implements TrainingService {
         return tagList;
     }
 
-    public static <T> Iterable<T> emptyIfNull(Iterable<T> iterable) {
-        return iterable == null ? Collections.<T>emptyList() : iterable;
-    }
 
     private List<ApproveLesson> addLessonListNotRepeating(Training training
             , List<LessonModel> lessonModelList, boolean isConfirmed, boolean createLesson, String place) {
@@ -112,7 +98,7 @@ public class TrainingServiceImpl implements TrainingService {
                     lesson.setPlace(place);
                 }
                 lessonDAO.addLesson(lesson);
-                for (Listener listener : emptyIfNull( training.getListenerList())) {
+                for (Listener listener : Utils.emptyIfNull(training.getListenerList())) {
                     Attendance attendance = new Attendance();
                     attendance.setLesson(lesson);
                     attendance.setUser(listener.getUser());
@@ -139,7 +125,7 @@ public class TrainingServiceImpl implements TrainingService {
             , boolean isConfirmed, boolean createLesson, String place) {
         List<ApproveLesson> approveLessonList = new ArrayList<ApproveLesson>();
         LessonModel[] lessonModelList = repeatModel.getLessonList();
-        int dayOfWeekStart = getDayOfWeek(repeatModel.getStartDate());
+        int dayOfWeekStart = Utils. getDayOfWeek(repeatModel.getStartDate());
         for (int i = 0; i < 7; i++) {
             if (lessonModelList[i] == null) {
                 continue;
@@ -158,7 +144,7 @@ public class TrainingServiceImpl implements TrainingService {
                         lesson.setPlace(place);
                     }
                     lessonDAO.addLesson(lesson);
-                    for (Listener listener : emptyIfNull(training.getListenerList())) {
+                    for (Listener listener : Utils.emptyIfNull(training.getListenerList())) {
                         Attendance attendance = new Attendance();
                         attendance.setLesson(lesson);
                         attendance.setUser(listener.getUser());
@@ -211,7 +197,7 @@ public class TrainingServiceImpl implements TrainingService {
         approveTraining.setTagList(tagList);
         trainingApproveDAO.addApprove(approveTraining);
         ApproveAction approveAction = new ApproveAction();
-        approveAction.setDate(getTime());
+        approveAction.setDate(Utils.getTime());
         approveAction.setType(ApproveAction.Type.CREATE);
         approveAction.setTraining(training);
         List<ApproveLesson> approveLessonList = null;
@@ -229,7 +215,7 @@ public class TrainingServiceImpl implements TrainingService {
 
     private void removeApproveLessonList(ApproveAction approveAction, boolean removeLesson) {
         Training training = approveAction.getTraining();
-        for (Lesson lesson : training.getLessonList()) {
+        for (Lesson lesson : Utils.emptyIfNull(training.getLessonList())) {
             lessonApproveDAO.removeApprove(lesson.getApproveLesson());
             if (removeLesson) {
                 lessonDAO.removeLesson(lesson);
@@ -286,7 +272,7 @@ public class TrainingServiceImpl implements TrainingService {
             , String description, String shortInfo
             , Integer language, Integer maxSize, boolean isInner, String place, List<Long> tagIdList
             , String additionalInfo, List<LessonModel> lessonModelList, RepeatModel repeatModel) {
-        approveAction.setDate(getTime());
+        approveAction.setDate(Utils.getTime());
         ApproveTraining approveTraining = approveAction.getApproveTraining();
 
         Training training = approveAction.getTraining();
@@ -335,7 +321,7 @@ public class TrainingServiceImpl implements TrainingService {
                 , additionalInfo
                 , isInner);
         ApproveAction approveAction = new ApproveAction();
-        approveAction.setDate(getTime());
+        approveAction.setDate(Utils.getTime());
         approveAction.setTraining(training);
         approveAction.setApproveTraining(approveTraining);
         approveAction.setType(ApproveAction.Type.EDIT);
@@ -386,8 +372,8 @@ public class TrainingServiceImpl implements TrainingService {
         LessonModel[] lessonModelList = new LessonModel[7];
         Long startDate = null;
         Long endDate = null;
-        for (ApproveLesson approveLesson : approveLessonList) {
-            int dayOfWeek = getDayOfWeek(approveLesson.getDate());
+        for (ApproveLesson approveLesson : Utils.emptyIfNull(approveLessonList)) {
+            int dayOfWeek = Utils.getDayOfWeek(approveLesson.getDate());
             LessonModel lessonModel = new LessonModel();
             lessonModel.setDate(approveLesson.getDate());
             lessonModel.setPlace(approveLesson.getPlace());
@@ -413,7 +399,7 @@ public class TrainingServiceImpl implements TrainingService {
     public void editLesson(long trainingId, LessonModel lessonModel) {
         Training training = trainingDAO.getTrainingById(trainingId);
         ApproveAction approveAction = new ApproveAction();
-        approveAction.setDate(getTime());
+        approveAction.setDate(Utils.getTime());
         approveAction.setTraining(training);
         approveAction.setType(ApproveAction.Type.EDIT);
 
@@ -448,7 +434,7 @@ public class TrainingServiceImpl implements TrainingService {
 
         ApproveAction approveAction = new ApproveAction();
         approveAction.setTraining(training);
-        approveAction.setDate(getTime());
+        approveAction.setDate(Utils.getTime());
         approveAction.setType(ApproveAction.Type.EDIT);
 
         List<ApproveLesson> approveLessonList = new ArrayList<ApproveLesson>();
@@ -469,7 +455,7 @@ public class TrainingServiceImpl implements TrainingService {
 
         ApproveAction approveAction = new ApproveAction();
         approveAction.setTraining(training);
-        approveAction.setDate(getTime());
+        approveAction.setDate(Utils.getTime());
         approveAction.setType(ApproveAction.Type.EDIT);
 
         List<ApproveLesson> approveLessonList = new ArrayList<ApproveLesson>();
@@ -479,17 +465,17 @@ public class TrainingServiceImpl implements TrainingService {
     }
 
     @Override
-    public void confirmEditLesson(long actionId, LessonModel lessonModel) {
+    public void confirmLesson(long actionId, ApproveLessonModel approveLessonModel) {
         ApproveAction approveAction = approveActionDAO.getApproveAction(actionId);
         ApproveLesson approveLesson = approveAction.getApproveLessonList().get(0);
         Lesson lesson = approveLesson.getLesson();
         Training training = approveAction.getTraining();
         if(lesson.getState() == Lesson.State.REMOVAL) {
-            lesson.setPlace(lessonModel.getPlace());
-            lesson.setDate(lessonModel.getDate());
+            lesson.setPlace(approveLessonModel.getNewPlace());
+            lesson.setDate(approveLessonModel.getNewDate());
             lesson.setState(Lesson.State.ADD);
             lessonDAO.changeLesson(lesson);
-            for( Listener listener : emptyIfNull(training.getListenerList())) {
+            for( Listener listener : Utils.emptyIfNull(training.getListenerList())) {
                 Attendance attendance = new Attendance();
                 attendance.setUser(listener.getUser());
                 attendance.setLesson(lesson);
@@ -498,17 +484,17 @@ public class TrainingServiceImpl implements TrainingService {
         }
         if(lesson.getState() == Lesson.State.NONE) {
             lesson.setState(Lesson.State.REMOVAL);
-            for( Attendance attendance : emptyIfNull(lesson.getAttendanceList()) ) {
+            for( Attendance attendance : Utils.emptyIfNull(lesson.getAttendanceList()) ) {
                 attendanceDAO.delete(attendance);
             }
             if( approveLesson.getDate() != null) {
                 Lesson newLesson = new Lesson();
-                newLesson.setDate(lessonModel.getDate());
-                newLesson.setPlace(lessonModel.getPlace());
+                newLesson.setDate(approveLessonModel.getNewDate());
+                newLesson.setPlace(approveLessonModel.getNewPlace());
                 newLesson.setTraining(training);
                 newLesson.setState(Lesson.State.ADD);
                 lessonDAO.addLesson(newLesson);
-                for( Listener listener : emptyIfNull(training.getListenerList())) {
+                for( Listener listener : Utils.emptyIfNull(training.getListenerList())) {
                     Attendance attendance = new Attendance();
                     attendance.setUser(listener.getUser());
                     attendance.setLesson(lesson);
@@ -540,5 +526,26 @@ public class TrainingServiceImpl implements TrainingService {
             return (double) sumRating / count;
         }
         return -1;
+    }
+
+    @Override
+    public ApproveLesson getApproveLesson(long actionId) {
+        ApproveAction approveAction = approveActionDAO.getApproveAction(actionId);
+        return  approveAction.getApproveLessonList().get(0);
+    }
+
+    @Override
+    public void canceledLesson(long actionId) {
+        ApproveAction approveAction = approveActionDAO.getApproveAction(actionId);
+        ApproveLesson approveLesson = approveAction.getApproveLessonList().get(0);
+        Lesson lesson = approveLesson.getLesson();
+        lessonApproveDAO.removeApprove(approveLesson);
+        approveActionDAO.removeApproveAction(approveAction);
+        if(lesson.getState() == Lesson.State.REMOVAL) {
+            lessonDAO.removeLesson(lesson);
+        } else {
+            lesson.setState(Lesson.State.NONE);
+            lessonDAO.changeLesson(lesson);
+        }
     }
 }

@@ -18,4 +18,6 @@ public interface ListenerDAO {
     void removeListener(Listener listener);
 
     Listener getNextListenerInWaitList(long trainingId);
+
+    List<Listener> getListenerListByTrainingAndState(long trainingId, Listener.State state);
 }
