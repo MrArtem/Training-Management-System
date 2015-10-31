@@ -101,6 +101,13 @@ public class TrainingCRUDController {
 
     @LegalID
     @Secured({"ADMIN", "USER"})
+    @RequestMapping(value = "/{id}/remove", method = RequestMethod.DELETE)
+    void removeTraining(@PathVariable("id") long trainingId) {
+
+    }
+
+    @LegalID
+    @Secured({"ADMIN", "USER"})
     @RequestMapping(value = "/getApproveTraining/{id}", method = RequestMethod.GET)
     public ApproveGetTrainingModel getApproveTrainingModel(@PathVariable("id") long actionId) {
         ApproveAction approveAction = trainingService.getApproveAction(actionId);

@@ -12,7 +12,7 @@ public interface TrainingService {
 
     Training getTraining(long id);
 
-    boolean canRate(long id);
+    boolean canRate(long trainingId, long userId);
 
     List<Listener> getListenerListRecord(long trainingId);
 
@@ -61,6 +61,8 @@ public interface TrainingService {
             , List<LessonModel> lessonModelList
             , RepeatModel repeatModel
     );
+
+    void removeTraining(Long trainingId);
 
     List<Training> getTrainingListByTagList(Integer page, Integer pageSize,Boolean isActual, List<Tag> tagList);
 

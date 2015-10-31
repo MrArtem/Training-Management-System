@@ -1,20 +1,26 @@
 package com.exadel.training.controller.model.fileModels;
 
 import com.exadel.training.dao.domain.FileStorage;
-import org.springframework.web.multipart.MultipartFile;
 import sun.misc.BASE64Encoder;
 
-import java.util.List;
-
 /**
- * Created by ayudovin on 26.10.2015.
+ * Created by ayudovin on 31.10.2015.
  */
-public class FileUpload {
+public class FileDownload {
+
+    private BASE64Encoder encoder = new BASE64Encoder();
+
     private long idTraining;
     private String name;
-    private List<String> files;
+    private String file;
 
-    public FileUpload() {
+    public FileDownload() {
+    }
+
+    public FileDownload(FileStorage fileStorage) {
+        this.idTraining = fileStorage.getTraining().getId();
+        this.name = fileStorage.getName();
+        this.file = encoder.encode(fileStorage.getFile());
     }
 
     public long getIdTraining() {
@@ -33,11 +39,11 @@ public class FileUpload {
         this.name = name;
     }
 
-    public List<String> getFiles() {
-        return files;
+    public String getFile() {
+        return file;
     }
 
-    public void setFiles(List<String> files) {
-        this.files = files;
+    public void setFile(String file) {
+        this.file = file;
     }
 }

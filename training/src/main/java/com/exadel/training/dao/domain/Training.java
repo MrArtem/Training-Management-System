@@ -75,6 +75,9 @@ public class Training {
     @OneToMany(mappedBy = "training")
     private List<Feedback> feedbackList;
 
+    @OneToMany(mappedBy = "training")
+    private List<FileStorage> fileStorageList;
+
     public Training() {
         this.state = State.NONE;
     }
@@ -236,5 +239,13 @@ public class Training {
 
     public void setApproveAction(ApproveAction approveAction) {
         this.approveAction = approveAction;
+    }
+
+    public List<FileStorage> getFileStorageList() {
+        return fileStorageList;
+    }
+
+    public void setFileStorageList(List<FileStorage> fileStorageList) {
+        this.fileStorageList = fileStorageList;
     }
 }
