@@ -76,6 +76,18 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
+    public List<Training> getCoachTrainingsBetweenDates(long idUser, long startDate, long endDate) {
+        Session session = sessionFactory.getCurrentSession();
+        Criteria criteria = session.createCriteria(Training.class, "training");
+
+        criteria.createAlias("training.lessonList", "lesson");
+        criteria.add(Restrictions.between("lesson.date", startDate, endDate));
+        criteria.add(Restrictions.eq("training.coach.id", idUser));
+
+        return null;
+    }
+
+    @Override
     @SuppressWarnings("unchecked")
     public List<Training> getUserTrainingsByState(long idUser, Listener.State state) {
         return sessionFactory.getCurrentSession()
@@ -83,6 +95,22 @@ public class UserDAOImpl implements UserDAO {
                 .setParameter("idUser", idUser)
                 .setParameter("state", state)
                 .list();
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public List<Training> getUserTrainingsByState(long idUser, Listener.State state, long startDate, long endDate) {
+        Session session = sessionFactory.getCurrentSession();
+        Criteria criteria = session.createCriteria(Training.class, "training");
+
+        criteria.createAlias("training.lessonList", "lesson");
+        criteria.createAlias("training.listenerList", "listener");
+
+        criteria.add(Restrictions.between("lesson.date", startDate, endDate));
+        criteria.add(Restrictions.eq("listener.state", state));
+        criteria.add(Restrictions.eq("listener.user.id", idUser));
+
+        return criteria.list();
     }
 
 

@@ -62,10 +62,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<Training> getListenerTrainingListOfUser(long id) {
+    public List<Training> getListenerTrainingListOfUser(long idUser) {
         List<Training> trainingList = new ArrayList<Training>();
 
-        for (Listener listener : userDAO.getUserByID(id).getTrainingListListener()) {
+        for (Listener listener : userDAO.getUserByID(idUser).getTrainingListListener()) {
             trainingList.add(listener.getTraining());
         }
 
@@ -73,8 +73,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<Training> getCoachTrainingListOfUser(long id) {
-        return userDAO.getUserByID(id).getTrainingsCoach();
+    public List<Training> getCoachTrainingList(long idUser) {
+        return userDAO.getUserByID(idUser).getTrainingsCoach();
     }
 
     @Override
@@ -90,5 +90,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<Training> getUserTrainingsByState(long idUser, Listener.State state) {
         return userDAO.getUserTrainingsByState(idUser, state);
+    }
+
+    @Override
+    public List<Training> getUserTrainingsByState(long idUser, Listener.State state, long startDate, long endDate) {
+        return userDAO.getUserTrainingsByState(idUser, state, startDate, endDate);
     }
 }
