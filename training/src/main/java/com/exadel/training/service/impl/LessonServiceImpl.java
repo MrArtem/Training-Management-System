@@ -40,4 +40,9 @@ public class LessonServiceImpl implements LessonService{
     public Lesson getLessonByID(long lessonId) {
         return lessonDAO.getLessonById(lessonId);
     }
+
+    @Override
+    public List<Lesson> getLessonListActual(long startDate, long endDate) {
+        return lessonDAO.getLessonListActual(startDate, endDate);
+    }
 }

@@ -9,18 +9,34 @@ import java.util.List;
  */
 public class FileUpload {
 
+    private long idTraining;
     private String name;
-    private String link;
-    private List<MultipartFile> multipartFileList;
+    private List<String> multipartFileList;
 
-    FileUpload() {
+    public FileUpload() {
     }
 
-    public List<MultipartFile> getMultipartFileList() {
+    public long getIdTraining() {
+        return idTraining;
+    }
+
+    public void setIdTraining(long idTraining) {
+        this.idTraining = idTraining;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public List<String> getMultipartFileList() {
         return multipartFileList;
     }
 
-    public void setMultipartFileList(List<MultipartFile> multipartFileList) {
+    public void setMultipartFileList(List<String> multipartFileList) {
         this.multipartFileList = multipartFileList;
     }
 }

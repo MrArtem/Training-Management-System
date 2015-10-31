@@ -79,10 +79,20 @@ public class FeedbackServiceImpl implements FeedbackService {
         return userDAO.getUserByID(id).getFeedbackList();
     }
 
+    @Override
+    public List<Feedback> getFeedbackListAboutUser(long idUser, long startDate, long endDate) {
+        return feedbackDAO.getFeedbackListAboutUser(idUser, startDate, endDate);
+    }
+
     @Transactional
     @Override
     public List<Feedback> getFeedbackListFromTrainingForUser(long idUser, long idTraining) {
         return feedbackDAO.getFeedbackListFromTrainingForUser(idUser, idTraining);
+    }
+
+    @Override
+    public List<Feedback> getFeedbackListFromTraining(long idTraining, long startDate, long endDate) {
+        return feedbackDAO.getFeedbackListFromTraining(idTraining, startDate, endDate);
     }
 
     @Transactional

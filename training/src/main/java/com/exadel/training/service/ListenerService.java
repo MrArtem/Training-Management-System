@@ -12,4 +12,6 @@ public interface ListenerService {
     void leaveListener(long trainingId, long userId);
 
     List<User> getListenerListAccepted(long trainingId);
+
+    List<User> getListenerListByTrainingAndState(long trainingId, Listener.State state);
 }

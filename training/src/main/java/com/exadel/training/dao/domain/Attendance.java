@@ -1,5 +1,7 @@
 package com.exadel.training.dao.domain;
 
+import org.springframework.beans.factory.annotation.Value;
+
 import javax.persistence.*;
 
 /**
@@ -15,7 +17,10 @@ public class Attendance {
 
     private String comment;
 
+    @Value("${attendance.presence:true}")
     private boolean presence;
+
+    private boolean isSubscribe;
 
     @ManyToOne(cascade = CascadeType.ALL)
     private User user;
@@ -29,6 +34,14 @@ public class Attendance {
 
     public long getId() {
         return id;
+    }
+
+    public boolean isSubscribe() {
+        return isSubscribe;
+    }
+
+    public void setIsSubscribe(boolean isSubscribe) {
+        this.isSubscribe = isSubscribe;
     }
 
     public void setId(long id) {

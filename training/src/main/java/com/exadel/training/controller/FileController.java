@@ -22,8 +22,7 @@ import java.util.Objects;
 public class FileController {
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
-    public void uploadFile(@RequestParam(value="file", required=false) MultipartFile file,
-                           @RequestParam(value="files") Object data) throws IOException {
+    public void uploadFile(@RequestParam(value="file", required=false) MultipartFile file, @RequestParam(value="files") Object data) throws IOException {
 
         BASE64Decoder decoder = new BASE64Decoder();
         byte[] decodedBytes = decoder.decodeBuffer(data.toString());

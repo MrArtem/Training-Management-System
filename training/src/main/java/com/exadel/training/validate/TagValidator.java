@@ -1,10 +1,12 @@
 package com.exadel.training.validate;
 
 import com.exadel.training.dao.domain.Tag;
+import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
+@Component
 public class TagValidator implements Validator {
 
     @Override

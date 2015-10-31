@@ -9,6 +9,7 @@ public class FeedbackModel {
 
     private String coachName;
     private long coachID;
+    private long feedbackID;
     private boolean isPositive;
 
     public FeedbackModel() {
@@ -16,7 +17,16 @@ public class FeedbackModel {
 
     public FeedbackModel(Feedback feedback) {
         this.coachID = feedback.getTraining().getCoach().getId();
+        this.feedbackID = feedback.getId();
         this.coachName = feedback.getTraining().getCoach().getLastName() + " " + feedback.getTraining().getCoach().getFirstName();
+    }
+
+    public long getFeedbackID() {
+        return feedbackID;
+    }
+
+    public void setFeedbackID(long feedbackID) {
+        this.feedbackID = feedbackID;
     }
 
     public String getCoachName() {

@@ -13,4 +13,6 @@ public interface FeedbackDAO {
     void addFeedback(Feedback feedback);
 
     List<Feedback> getFeedbackListFromTrainingForUser(long idUser, long idTraining);
+    List<Feedback> getFeedbackListAboutUser(long idUser, long startDate, long endDate);
+    List<Feedback> getFeedbackListFromTraining(long idTraining, long startDate, long endDate);
 }

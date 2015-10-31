@@ -209,20 +209,4 @@ public class MessageGeneratorHTML implements MessageGenerator {
         }
         return writer.toString();
     }
-
-    public String getTextSMSForHour(String title, String place, long time) {
-        StringWriter writer = new StringWriter();
-        Date date = new Date(time);
-        try {
-            Template template = cfg.getTemplate("/smsForHour.ftl");
-            Map<String, Object> data = new HashMap<String, Object>();
-            data.put("time", formatTime.format(date));
-            data.put("title", title);
-            data.put("place",place);
-            template.process(data, writer);
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        return writer.toString();
-    }
 }

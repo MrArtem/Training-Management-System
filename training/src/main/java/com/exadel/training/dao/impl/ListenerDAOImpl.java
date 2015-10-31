@@ -82,4 +82,15 @@ public class ListenerDAOImpl implements ListenerDAO {
                 .setParameter("state", Listener.State.WAITING)
                 .uniqueResult();
     }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public List<Listener> getListenerListByTrainingAndState(long trainingId, Listener.State state) {
+        Session session = sessionFactory.getCurrentSession();
+        Training training = session.load(Training.class, trainingId);
+        return session.createQuery("from Listener lis where lis.state = :state and lis.training = :training")
+                .setParameter("training", training)
+                .setParameter("state", state)
+                .list();
+    }
 }

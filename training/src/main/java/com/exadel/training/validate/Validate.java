@@ -82,10 +82,7 @@ public class Validate {
     public void idCheck(JoinPoint joinPoint) {
         MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
         for (MethodArgument argument : MethodArgument.of(joinPoint)) {
-            if (argument.hasAnnotation(LegalID.class) && (Long) argument.getValue() == 0) {
-                throw new IllegalArgumentException("id == 0 in" + methodSignature.getName());
-            }
-            if ((Long) argument.getValue() == 0) {
+            if (argument.getValue() instanceof Long && (Long) argument.getValue() == 0) {
                 throw new IllegalArgumentException("id == 0 in" + methodSignature.getName());
 
             }

@@ -19,9 +19,11 @@ public interface UserService {
     User getUserById(long id);
     User getUserByLogin(String login);
 
-    List<Training> getListenerTrainingListOfUser(long id);
-    List<Training> getCoachTrainingListOfUser(long id);
+    List<Training> getListenerTrainingListOfUser(long idUser);
+    List<Training> getCoachTrainingList(long idUser);
+    List<Training> getCoachTrainignList(long idCoach, long startDate, long endDate);
     List<Training> visitedTrainings (long idUser);
     List<Training> actualTrainings(long idUser);
     List<Training> getUserTrainingsByState(long idUser, Listener.State state);
+    List<Training> getUserTrainingsByState(long idUser, Listener.State state, long startDate, long endDate);
 }
