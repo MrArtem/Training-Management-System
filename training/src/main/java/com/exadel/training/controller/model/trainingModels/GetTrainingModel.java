@@ -16,6 +16,8 @@ public class GetTrainingModel extends TrainingModel {
 
     private boolean isCoach;
 
+    private boolean canRate;
+
 
     public GetTrainingModel() {
     }
@@ -75,5 +77,13 @@ public class GetTrainingModel extends TrainingModel {
 
     public void setIsCoach(boolean isCoach) {
         this.isCoach = isCoach;
+    }
+
+    public boolean getCanRate() {
+        return canRate;
+    }
+
+    public void setCanRate(boolean canRate) {
+        this.canRate = canRate;
     }
 }

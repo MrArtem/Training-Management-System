@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface LessonService {
 
-    List<Lesson> getLessonByTraining(long trainingId);
+    List<Lesson> getLessonByTrainingActual(long trainingId);
 
     Long getStartDateByTraining(long trainingId);
 

@@ -20,4 +20,6 @@ public interface ListenerDAO {
     Listener getNextListenerInWaitList(long trainingId);
 
     List<Listener> getListenerListByTrainingAndState(long trainingId, Listener.State state);
+
+    Listener getListenerByTrainingAndUser(long trainingId, long userId);
 }

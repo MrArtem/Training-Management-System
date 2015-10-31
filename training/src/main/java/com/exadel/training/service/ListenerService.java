@@ -14,4 +14,6 @@ public interface ListenerService {
     List<User> getListenerListAccepted(long trainingId);
 
     List<User> getListenerListByTrainingAndState(long trainingId, Listener.State state);
+
+    boolean canSubscribe(long trainingId, long userId);
 }
