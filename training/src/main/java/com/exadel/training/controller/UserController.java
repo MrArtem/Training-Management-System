@@ -1,6 +1,6 @@
 package com.exadel.training.controller;
 
-import com.exadel.training.controller.model.TrainingListModel;
+import com.exadel.training.controller.model.trainingModels.TrainingListModel;
 import com.exadel.training.controller.model.userModels.UserModel;
 import com.exadel.training.dao.domain.Training;
 import com.exadel.training.security.User.CustomUser;

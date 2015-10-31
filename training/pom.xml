@@ -97,6 +97,17 @@
       <version>5.5.0.Final</version>
     </dependency>
 
+    <dependency>
+      <groupId>com.itextpdf</groupId>
+      <artifactId>itextpdf</artifactId>
+      <version>5.0.6</version>
+    </dependency>
+
+    <dependency>
+      <groupId>commons-lang</groupId>
+      <artifactId>commons-lang</artifactId>
+      <version>2.3</version>
+    </dependency>
 
     <dependency>
       <groupId>commons-fileupload</groupId>

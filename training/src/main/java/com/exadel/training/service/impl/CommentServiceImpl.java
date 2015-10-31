@@ -1,13 +1,16 @@
 package com.exadel.training.service.impl;
 
+import com.exadel.training.controller.model.CommentModel;
 import com.exadel.training.dao.CommentDAO;
 import com.exadel.training.dao.TrainingDAO;
 import com.exadel.training.dao.UserDAO;
 import com.exadel.training.dao.domain.Comment;
 import com.exadel.training.dao.domain.Training;
 import com.exadel.training.dao.domain.User;
+import com.exadel.training.security.User.CustomUser;
 import com.exadel.training.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -63,7 +66,19 @@ public class CommentServiceImpl implements CommentService{
 
     @Override
     @Transactional
-    public void addComment(Comment comment) {
+    public void addComment(CommentModel commentModel, Long trainingId) {
+        Comment comment = new Comment();
+        comment.setClear(commentModel.getClear());
+        comment.setCreativity(commentModel.getCreativity());
+        comment.setEffective(commentModel.getEffective());
+        comment.setInteresting(commentModel.getInteresting());
+        comment.setNewMaterial(commentModel.getNewMaterial());
+        comment.setRecommendation(commentModel.getRecommendation());
+        comment.setOther(commentModel.getOther());
+        CustomUser customUser = (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = userDAO.getUserByID(customUser.getUserId());
+        comment.setUser(user);
+        comment.setTraining(trainingDAO.getTrainingById(trainingId));
         comment.setIsPositive(isCommentPositive(comment));
         comment.setDate(new Date().getTime());
         commentDAO.addComment(comment);
@@ -97,6 +112,7 @@ public class CommentServiceImpl implements CommentService{
     }
 
     @Override
+    @Transactional
     public Comment getComment(Long id) {
         return commentDAO.getComment(id);
     }
@@ -105,5 +121,17 @@ public class CommentServiceImpl implements CommentService{
     @Transactional
     public List<Comment> getUserCommentList(Long userId) {
         return userDAO.getUserByID(userId).getCommentList();
+    }
+
+    @Override
+    @Transactional
+    public List<Comment> getTrainingCommentListByDate(Long idTraining, Long startDate, Long endDate) {
+        return commentDAO.getTrainingCommentListByDate(idTraining, startDate, endDate);
+    }
+
+    @Override
+    @Transactional
+    public List<Comment> getUserCommentListByDate(Long idUser, Long startDate, Long endDate) {
+        return commentDAO.getUserCommentListByDate(idUser, startDate, endDate);
     }
 }

@@ -80,6 +80,7 @@ public class FeedbackServiceImpl implements FeedbackService {
     }
 
     @Override
+    @Transactional
     public List<Feedback> getFeedbackListAboutUser(long idUser, long startDate, long endDate) {
         return feedbackDAO.getFeedbackListAboutUser(idUser, startDate, endDate);
     }
@@ -91,6 +92,7 @@ public class FeedbackServiceImpl implements FeedbackService {
     }
 
     @Override
+    @Transactional
     public List<Feedback> getFeedbackListFromTraining(long idTraining, long startDate, long endDate) {
         return feedbackDAO.getFeedbackListFromTraining(idTraining, startDate, endDate);
     }

@@ -84,7 +84,6 @@ public class Validate {
         for (MethodArgument argument : MethodArgument.of(joinPoint)) {
             if (argument.getValue() instanceof Long && (Long) argument.getValue() == 0) {
                 throw new IllegalArgumentException("id == 0 in" + methodSignature.getName());
-
             }
         }
     }

@@ -19,7 +19,7 @@ public class AddFeedbackModelValidator implements Validator {
     public void validate(Object o, Errors errors) {
         AddFeedbackModel addFeedbackModel = (AddFeedbackModel)o;
 
-        long idTraining = addFeedbackModel.getTraingID();
+        long idTraining = addFeedbackModel.getTrainingID();
         long idUser = addFeedbackModel.getUserID();
 
         if (isValidID(idUser) || isValidID(idTraining)) {

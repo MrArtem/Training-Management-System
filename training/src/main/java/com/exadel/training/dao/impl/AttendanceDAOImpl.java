@@ -5,6 +5,7 @@ import com.exadel.training.dao.domain.Attendance;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -56,7 +57,7 @@ public class AttendanceDAOImpl implements AttendanceDAO {
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<Attendance> getAllAttendanceByUserIDBetweenDates(long idUser, Date from, Date to) {
+    public List<Attendance> getAllAttendanceByUserIDBetweenDates(long idUser, long idTraining, Date from, Date to) {
         Session session = sessionFactory.getCurrentSession();
         Criteria criteria = session.createCriteria(Attendance.class, "attendance");
 
@@ -67,12 +68,17 @@ public class AttendanceDAOImpl implements AttendanceDAO {
         criteria.add(Restrictions.gt("lesson.date", from.getTime()));
         criteria.add(Restrictions.lt("lesson.date", to.getTime()));
 
+        criteria.createAlias("lesson.training", "training");
+        criteria.add(Restrictions.eq("training.id", idTraining));
+
+        criteria.addOrder(Order.asc("lesson.date"));
+
         return criteria.list();
     }
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<Attendance> getAllAttendanceByUserIDfromDate(long idUser, Date from) {
+    public List<Attendance> getAllAttendanceByUserIDFromDate(long idUser, Date from) {
         Session session = sessionFactory.getCurrentSession();
         Criteria criteria = session.createCriteria(Attendance.class, "attendance");
 

@@ -2,7 +2,7 @@ package com.exadel.training.controller;
 
 import com.exadel.training.controller.model.CommentModel;
 import com.exadel.training.controller.model.RatingModel;
-import com.exadel.training.controller.model.TrainingListModel;
+import com.exadel.training.controller.model.trainingModels.TrainingListModel;
 import com.exadel.training.controller.model.trainingModels.GetTrainingModel;
 import com.exadel.training.controller.model.trainingModels.ListenerModel;
 import com.exadel.training.controller.model.userModels.ExUserModel;
@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -47,6 +46,11 @@ public class TrainingBaseController {
     @Autowired
     @Qualifier("tagValidator")
     private Validator tagValidator;
+
+    @InitBinder
+    private void initBinder(WebDataBinder webDataBinder) {
+        webDataBinder.setValidator(tagValidator);
+    }
 
     @LegalID
     @Secured({"ADMIN", "USER", "EX_COACH", "EX_USER"})
@@ -134,20 +138,7 @@ public class TrainingBaseController {
     @RequestMapping(value = "/{id}/add_comment")
     @Secured({"ADMIN", "USER", "EX_COACH"})
     public void addComment(@PathVariable("id") Long trainingId, @RequestBody CommentModel commentModel) {
-        Comment comment = new Comment();
-        comment.setClear(commentModel.getClear());
-        comment.setCreativity(commentModel.getCreativity());
-        comment.setEffective(commentModel.getEffective());
-        comment.setInteresting(commentModel.getInteresting());
-        comment.setNewMaterial(commentModel.getNewMaterial());
-        comment.setRecommendation(commentModel.getRecommendation());
-        comment.setOther(commentModel.getOther());
-        comment.setDate(new Date().getTime());
-        CustomUser customUser = (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user = userService.getUserById(customUser.getUserId());
-        comment.setUser(user);
-        comment.setTraining(trainingService.getTraining(trainingId));
-        commentService.addComment(comment);
+        commentService.addComment(commentModel, trainingId);
     }
 
     @LegalID
@@ -165,20 +156,7 @@ public class TrainingBaseController {
         List<Comment> commentList = commentService.getTrainingCommentList(trainingId);
         List<CommentModel> commentModelList = new ArrayList<CommentModel>();
         for (Comment comment : commentList) {
-            CommentModel commentModel = new CommentModel();
-            commentModel.setClear(comment.getClear());
-            commentModel.setCreativity(comment.getCreativity());
-            commentModel.setEffective(comment.getEffective());
-            commentModel.setInteresting(comment.getInteresting());
-            commentModel.setNewMaterial(comment.getNewMaterial());
-            commentModel.setRecommendation(comment.getRecommendation());
-            commentModel.setOther(comment.getOther());
-            commentModel.setDate(comment.getDate());
-            commentModel.setIsPositive(comment.getIsPositive());
-            commentModel.setIsDeleted(comment.getIsDeleted());
-            commentModel.setId(comment.getId());
-            commentModel.setUserId(comment.getUser().getId());
-            commentModel.setUserName(comment.getUser().getFirstName() + " " + comment.getUser().getLastName());
+            CommentModel commentModel = new CommentModel(comment);
             commentModelList.add(commentModel);
         }
         return commentModelList;
@@ -191,20 +169,7 @@ public class TrainingBaseController {
         List<Comment> commentList = commentService.getCoachCommentList(coachId);
         List<CommentModel> commentModelList = new ArrayList<CommentModel>();
         for (Comment comment : commentList) {
-            CommentModel commentModel = new CommentModel();
-            commentModel.setClear(comment.getClear());
-            commentModel.setCreativity(comment.getCreativity());
-            commentModel.setEffective(comment.getEffective());
-            commentModel.setInteresting(comment.getInteresting());
-            commentModel.setNewMaterial(comment.getNewMaterial());
-            commentModel.setRecommendation(comment.getRecommendation());
-            commentModel.setOther(comment.getOther());
-            commentModel.setDate(comment.getDate());
-            commentModel.setIsPositive(comment.getIsPositive());
-            commentModel.setIsDeleted(comment.getIsDeleted());
-            commentModel.setId(comment.getId());
-            commentModel.setUserId(comment.getUser().getId());
-            commentModel.setUserName(comment.getUser().getFirstName() + " " + comment.getUser().getLastName());
+            CommentModel commentModel = new CommentModel(comment);
             commentModelList.add(commentModel);
         }
         return commentModelList;
@@ -217,20 +182,7 @@ public class TrainingBaseController {
         List<Comment> commentList = commentService.getUserCommentList(userId);
         List<CommentModel> commentModelList = new ArrayList<CommentModel>();
         for (Comment comment : commentList) {
-            CommentModel commentModel = new CommentModel();
-            commentModel.setClear(comment.getClear());
-            commentModel.setCreativity(comment.getCreativity());
-            commentModel.setEffective(comment.getEffective());
-            commentModel.setInteresting(comment.getInteresting());
-            commentModel.setNewMaterial(comment.getNewMaterial());
-            commentModel.setRecommendation(comment.getRecommendation());
-            commentModel.setOther(comment.getOther());
-            commentModel.setDate(comment.getDate());
-            commentModel.setIsPositive(comment.getIsPositive());
-            commentModel.setIsDeleted(comment.getIsDeleted());
-            commentModel.setId(comment.getId());
-            commentModel.setUserId(comment.getUser().getId());
-            commentModel.setUserName(comment.getUser().getFirstName() + " " + comment.getUser().getLastName());
+            CommentModel commentModel = new CommentModel(comment);
             commentModelList.add(commentModel);
         }
         return commentModelList;

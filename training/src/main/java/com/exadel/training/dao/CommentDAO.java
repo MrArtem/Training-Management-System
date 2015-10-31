@@ -10,4 +10,8 @@ public interface CommentDAO {
     void addComment(Comment comment);
 
     void editComment(Comment comment);
+
+    List<Comment> getTrainingCommentListByDate(Long idTraining, Long startDate, Long endDate);
+
+    List<Comment> getUserCommentListByDate(Long idUser, Long startDate, Long endDate);
 }

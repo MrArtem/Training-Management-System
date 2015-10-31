@@ -1,6 +1,8 @@
 package com.exadel.training.controller.model.fileModels;
 
+import com.exadel.training.dao.domain.FileStorage;
 import org.springframework.web.multipart.MultipartFile;
+import sun.misc.BASE64Encoder;
 
 import java.util.List;
 
@@ -8,10 +10,9 @@ import java.util.List;
  * Created by ayudovin on 26.10.2015.
  */
 public class FileUpload {
-
     private long idTraining;
     private String name;
-    private List<String> multipartFileList;
+    private List<String> files;
 
     public FileUpload() {
     }
@@ -32,11 +33,11 @@ public class FileUpload {
         this.name = name;
     }
 
-    public List<String> getMultipartFileList() {
-        return multipartFileList;
+    public List<String> getFiles() {
+        return files;
     }
 
-    public void setMultipartFileList(List<String> multipartFileList) {
-        this.multipartFileList = multipartFileList;
+    public void setFiles(List<String> files) {
+        this.files = files;
     }
 }

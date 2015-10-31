@@ -25,5 +25,5 @@ public interface LessonDAO {
 
     List<Lesson> getLessonListByTrainingAndState(long trainingId, Lesson.State state);
 
-    List<Lesson> getLessonListActual(long startDate, long endDate);
+    List<Lesson> getLessonListActual(long idTraining, long startDate, long endDate);
 }

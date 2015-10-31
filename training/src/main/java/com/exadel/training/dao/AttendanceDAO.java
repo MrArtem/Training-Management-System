@@ -15,6 +15,6 @@ public interface AttendanceDAO {
 
     Attendance getAttendanceByID(long id);
     Attendance getAttendanceByUserIDAndLessonID(long idUser, long idLesson);
-    List<Attendance> getAllAttendanceByUserIDfromDate(long idUser, Date from);
-    List<Attendance> getAllAttendanceByUserIDBetweenDates(long idUser, Date from, Date to);
+    List<Attendance> getAllAttendanceByUserIDFromDate(long idUser, Date from);
+    List<Attendance> getAllAttendanceByUserIDBetweenDates(long idUser, long idTraining, Date from, Date to);
 }
