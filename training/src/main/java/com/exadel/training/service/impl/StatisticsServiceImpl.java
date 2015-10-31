@@ -3,6 +3,7 @@ package com.exadel.training.service.impl;
 import com.exadel.training.controller.model.StatisticsModel;
 import com.exadel.training.dao.domain.*;
 import com.exadel.training.service.*;
+import com.exadel.training.utils.Utils;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
@@ -59,6 +60,15 @@ public class StatisticsServiceImpl implements StatisticsService {
 
     @Autowired
     private AttendanceService attendanceService;
+
+    @Autowired
+    private FeedbackService feedbackService;
+
+    @Autowired
+    private CommentService commentService;
+
+    @Autowired
+    private ListenerService listenerService;
 
     private void drawMainInfo(Document document, String title, String text)  throws DocumentException {
         Paragraph paragraph = new Paragraph();
@@ -129,61 +139,66 @@ public class StatisticsServiceImpl implements StatisticsService {
     }
 
     private List<Attendance> drawUserTable(Document document, List<Attendance> attendanceList) throws DocumentException {
-        Integer columnNumber = attendanceList.size() + 1;
-        PdfPTable table = new PdfPTable(columnNumber);
-        table.setWidthPercentage(100);
-        List<Attendance> attendancesWithComments = new ArrayList<Attendance>();
-        Integer rotation;
-        if (columnNumber <= OPTIMAL_COLUMN_NUMBER) {
-            rotation = HORIZONTAL_ROTATION;
-        } else {
-            rotation = VERTICAL_ROTATION;
-        }
-        addHeaderCell(table, "", rotation);
-        for (Attendance attendance : attendanceList) {
-            addHeaderCell(table, format.format(attendance.getLesson().getDate()), rotation);
-        }
-        addHeaderCell(table, attendanceList.get(0).getLesson().getTraining().getTitle(), rotation);
-        for (Attendance attendance : attendanceList) {
-            if(StringUtils.isNotBlank(attendance.getComment())) {
-                attendancesWithComments.add(attendance);
-            }
-            if (attendance.isPresence()) {
-                PdfPCell cell = new PdfPCell(new Paragraph("", CELL_FONT));
-                cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-                cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-                table.addCell(cell);
+        if (attendanceList != null && !attendanceList.isEmpty()) {
+            Integer columnNumber = attendanceList.size() + 1;
+            PdfPTable table = new PdfPTable(columnNumber);
+            table.setWidthPercentage(100);
+            List<Attendance> attendancesWithComments = new ArrayList<Attendance>();
+            Integer rotation;
+            if (columnNumber <= OPTIMAL_COLUMN_NUMBER) {
+                rotation = HORIZONTAL_ROTATION;
             } else {
-                PdfPCell cell = new PdfPCell(new Paragraph("-", CELL_FONT));
-                cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-                cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-                table.addCell(cell);
+                rotation = VERTICAL_ROTATION;
             }
+            addHeaderCell(table, "", rotation);
+            for (Attendance attendance : attendanceList) {
+                addHeaderCell(table, format.format(attendance.getLesson().getDate()), rotation);
+            }
+            addHeaderCell(table, attendanceList.get(0).getLesson().getTraining().getTitle(), rotation);
+            for (Attendance attendance : attendanceList) {
+                if (StringUtils.isNotBlank(attendance.getComment())) {
+                    attendancesWithComments.add(attendance);
+                }
+                if (attendance.isPresence()) {
+                    PdfPCell cell = new PdfPCell(new Paragraph("", CELL_FONT));
+                    cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                    cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+                    table.addCell(cell);
+                } else {
+                    PdfPCell cell = new PdfPCell(new Paragraph("-", CELL_FONT));
+                    cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                    cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+                    table.addCell(cell);
+                }
+            }
+            table.setHeaderRows(1);
+            document.add(table);
+            document.add(Chunk.NEWLINE);
+            return attendancesWithComments;
         }
-        table.setHeaderRows(1);
-        document.add(table);
-        document.add(Chunk.NEWLINE);
-        return attendancesWithComments;
+        return new ArrayList<>();
     }
 
     private void drawPresenceComments(Document document,List<Attendance> attendancesWithComments,
                                       Boolean isUserStatistics) throws DocumentException {
-        for (Attendance attendance : attendancesWithComments) {
-            String title;
-            if(isUserStatistics){
-                title = attendance.getLesson().getTraining().getTitle();
-            } else {
-                title = attendance.getUser().getFirstName() + " " + attendance.getUser().getLastName();
+        if (attendancesWithComments != null && !attendancesWithComments.isEmpty()) {
+            for (Attendance attendance : attendancesWithComments) {
+                String title;
+                if (isUserStatistics) {
+                    title = attendance.getLesson().getTraining().getTitle();
+                } else {
+                    title = attendance.getUser().getFirstName() + " " + attendance.getUser().getLastName();
+                }
+                drawMainInfo(document, title
+                        + ", " + format.format(attendance.getLesson().getDate()), attendance.getComment());
             }
-            drawMainInfo(document, title
-                    + ", " + format.format(attendance.getLesson().getDate()), attendance.getComment());
         }
     }
 
     private void drawUserTrainings(Document document, List<Training> trainingList,
                                    String title, Boolean drawTable, Long id, Long startDate, Long endDate)
             throws DocumentException{
-        if (trainingList.size() != 0) {
+        if (trainingList != null && !trainingList.isEmpty()) {
             drawTitle(document, title);
             for (Training training : trainingList) {
                 drawTrainingShortInfo(document, training);
@@ -211,112 +226,116 @@ public class StatisticsServiceImpl implements StatisticsService {
 
     private void drawFeedbacks(Document document, List<Feedback> feedbackList, Boolean isUserStatistics)
             throws DocumentException {
-        for (Feedback feedback : feedbackList) {
-            String title;
-            if (isUserStatistics) {
-                title = feedback.getTraining().getTitle();
-            } else {
-                title = feedback.getUser().getFirstName() + " " + feedback.getUser().getLastName();
+        if (feedbackList != null && !feedbackList.isEmpty()) {
+            for (Feedback feedback : feedbackList) {
+                String title;
+                if (isUserStatistics) {
+                    title = feedback.getTraining().getTitle();
+                } else {
+                    title = feedback.getUser().getFirstName() + " " + feedback.getUser().getLastName();
+                }
+                StringBuffer feedbackData = new StringBuffer("\n");
+                feedbackData.append("Has he/she attended the lectures? ");
+                if (feedback.isAttendance()) {
+                    feedbackData.append("Yes\n");
+                } else {
+                    feedbackData.append("No\n");
+                }
+                feedbackData.append("Is he/she willing to learn? ");
+                if (feedback.isAttitude()) {
+                    feedbackData.append("Yes\n");
+                } else {
+                    feedbackData.append("No\n");
+                }
+                feedbackData.append("Was the student communicative? ");
+                if (feedback.isCommSkills()) {
+                    feedbackData.append("Yes\n");
+                } else {
+                    feedbackData.append("No\n");
+                }
+                feedbackData.append("Is the student motivated? ");
+                if (feedback.isMotivation()) {
+                    feedbackData.append("Yes\n");
+                } else {
+                    feedbackData.append("No\n");
+                }
+                feedbackData.append("Was the student focused on the result? ");
+                if (feedback.isFocusOnResult()) {
+                    feedbackData.append("Yes\n");
+                } else {
+                    feedbackData.append("No\n");
+                }
+                feedbackData.append("Was the student asking questions? ");
+                if (feedback.isQuestions()) {
+                    feedbackData.append("Yes\n");
+                } else {
+                    feedbackData.append("No\n");
+                }
+                if (StringUtils.isNotBlank(feedback.getOther())) {
+                    feedbackData.append("Something else: ");
+                    feedbackData.append(feedback.getOther());
+                }
+                drawMainInfo(document, title
+                        + ", " + format.format(feedback.getDate()), feedbackData.toString());
             }
-            StringBuffer feedbackData = new StringBuffer("\n");
-            feedbackData.append("Has he/she attended the lectures? ");
-            if (feedback.isAttendance()) {
-                feedbackData.append("Yes\n");
-            } else {
-                feedbackData.append("No\n");
-            }
-            feedbackData.append("Is he/she willing to learn? ");
-            if (feedback.isAttitude()) {
-                feedbackData.append("Yes\n");
-            } else {
-                feedbackData.append("No\n");
-            }
-            feedbackData.append("Was the student communicative? ");
-            if (feedback.isCommSkills()) {
-                feedbackData.append("Yes\n");
-            } else {
-                feedbackData.append("No\n");
-            }
-            feedbackData.append("Is the student motivated? ");
-            if (feedback.isMotivation()) {
-                feedbackData.append("Yes\n");
-            } else {
-                feedbackData.append("No\n");
-            }
-            feedbackData.append("Was the student focused on the result? ");
-            if (feedback.isFocusOnResult()) {
-                feedbackData.append("Yes\n");
-            } else {
-                feedbackData.append("No\n");
-            }
-            feedbackData.append("Was the student asking questions? ");
-            if (feedback.isQuestions()) {
-                feedbackData.append("Yes\n");
-            } else {
-                feedbackData.append("No\n");
-            }
-            if (StringUtils.isNotBlank(feedback.getOther())) {
-                feedbackData.append("Something else: ");
-                feedbackData.append(feedback.getOther());
-            }
-            drawMainInfo(document, title
-                    + ", " + format.format(feedback.getDate()), feedbackData.toString());
         }
     }
 
     private void drawComments(Document document, List<Comment> commentList, Boolean isUserStatistics)
             throws DocumentException {
-        for (Comment comment : commentList) {
-            String title;
-            if (isUserStatistics) {
-                title = comment.getTraining().getTitle();
-            } else {
-                title = comment.getUser().getFirstName() + " " + comment.getUser().getLastName();
+        if (commentList != null && !commentList.isEmpty()) {
+            for (Comment comment : commentList) {
+                String title;
+                if (isUserStatistics) {
+                    title = comment.getTraining().getTitle();
+                } else {
+                    title = comment.getUser().getFirstName() + " " + comment.getUser().getLastName();
+                }
+                StringBuffer commentData = new StringBuffer("\n");
+                commentData.append("Was it interesting? ");
+                if (comment.getInteresting()) {
+                    commentData.append("Yes\n");
+                } else {
+                    commentData.append("No\n");
+                }
+                commentData.append("Was it clear? ");
+                if (comment.getClear()) {
+                    commentData.append("Yes\n");
+                } else {
+                    commentData.append("No\n");
+                }
+                commentData.append("Did you learn something new? ");
+                if (comment.getNewMaterial()) {
+                    commentData.append("Yes\n");
+                } else {
+                    commentData.append("No\n");
+                }
+                commentData.append("Was the coach creative? ");
+                if (comment.getCreativity()) {
+                    commentData.append("Yes\n");
+                } else {
+                    commentData.append("No\n");
+                }
+                commentData.append("Would you recommend this course? ");
+                if (comment.getRecommendation()) {
+                    commentData.append("Yes\n");
+                } else {
+                    commentData.append("No\n");
+                }
+                commentData.append("The effectiveness rating: ");
+                commentData.append(comment.getEffective() + "\n");
+                if (StringUtils.isNotBlank(comment.getOther())) {
+                    commentData.append("Something else: ");
+                    commentData.append(comment.getOther());
+                }
+                drawMainInfo(document, title
+                        + ", " + format.format(comment.getDate()), commentData.toString());
             }
-            StringBuffer commentData = new StringBuffer("\n");
-            commentData.append("Was it interesting? ");
-            if (comment.getInteresting()) {
-                commentData.append("Yes\n");
-            } else {
-                commentData.append("No\n");
-            }
-            commentData.append("Was it clear? ");
-            if (comment.getClear()) {
-                commentData.append("Yes\n");
-            } else {
-                commentData.append("No\n");
-            }
-            commentData.append("Did you learn something new? ");
-            if (comment.getNewMaterial()) {
-                commentData.append("Yes\n");
-            } else {
-                commentData.append("No\n");
-            }
-            commentData.append("Was the coach creative? ");
-            if (comment.getCreativity()) {
-                commentData.append("Yes\n");
-            } else {
-                commentData.append("No\n");
-            }
-            commentData.append("Would you recommend this course? ");
-            if (comment.getRecommendation()) {
-                commentData.append("Yes\n");
-            } else {
-                commentData.append("No\n");
-            }
-            commentData.append("The effectiveness rating: ");
-            commentData.append(comment.getEffective() + "\n");
-            if (StringUtils.isNotBlank(comment.getOther())) {
-                commentData.append("Something else: ");
-                commentData.append(comment.getOther());
-            }
-            drawMainInfo(document, title
-                    + ", " + format.format(comment.getDate()), commentData.toString());
         }
     }
 
     private void drawListeners(Document document, List<User> userList, String title) throws DocumentException {
-        if (userList.size() != 0) {
+        if (userList != null && !userList.isEmpty()) {
             StringBuffer users = new StringBuffer("\n");
             for (User user : userList) {
                 users.append(user.getFirstName() + " " + user.getLastName() + "\n");
@@ -325,49 +344,54 @@ public class StatisticsServiceImpl implements StatisticsService {
         }
     }
     private void drawTrainingTable(Document document, List<Lesson> lessonList) throws DocumentException {
-        Integer columnNumber = lessonList.size() + 1;
-        Set<User> users = new HashSet<User>();
-        for (Lesson lesson : lessonList) {
-            for (Attendance attendance : lesson.getAttendanceList()) {
-                users.add(attendance.getUser());
-            }
-        }
-        List<User> userList = new ArrayList<User>(users);
-        Integer rowNumber = users.size() + 1;
-        PdfPTable table = new PdfPTable(columnNumber);
-        table.setWidthPercentage(100);
-        Integer rotation;
-        if (columnNumber <= OPTIMAL_COLUMN_NUMBER) {
-            rotation = HORIZONTAL_ROTATION;
-        } else {
-            rotation = VERTICAL_ROTATION;
-        }
-        Format format = new SimpleDateFormat("dd-MM-yyyy");
-        addHeaderCell(table, "", rotation);
-        for (Lesson lesson : lessonList) {
-            addHeaderCell(table, format.format(lesson.getDate()), rotation);
-        }
-        for (Integer j = 0; j < rowNumber; j++) {
-            User user = userList.get(j);
-            addHeaderCell(table, user.getFirstName() + " " + user.getLastName(), rotation);
-            for (Integer i = 0; i < columnNumber - 1; i++) {
-                Lesson lesson = lessonList.get(i);
-                Attendance attendance = attendanceService.getAttendanceByUserIDAndLessonID;
-                String data = "";
-                if (attendance == null) {
-                    data = "X";
-                } else if (!attendance.isPresence()) {
-                    data = "-";
-                    PdfPCell cell = new PdfPCell(new Paragraph(data, CELL_FONT));
-                    cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-                    cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-                    table.addCell(cell);
+        if (lessonList != null && !lessonList.isEmpty()) {
+            Integer columnNumber = lessonList.size() + 1;
+            Set<User> users = new HashSet<User>();
+            for (Lesson lesson : lessonList) {
+                for (Attendance attendance : lesson.getAttendanceList()) {
+                    users.add(attendance.getUser());
                 }
             }
+            List<User> userList = new ArrayList<User>(users);
+            if (!userList.isEmpty()) {
+                Integer rowNumber = users.size() + 1;
+                PdfPTable table = new PdfPTable(columnNumber);
+                table.setWidthPercentage(100);
+                Integer rotation;
+                if (columnNumber <= OPTIMAL_COLUMN_NUMBER) {
+                    rotation = HORIZONTAL_ROTATION;
+                } else {
+                    rotation = VERTICAL_ROTATION;
+                }
+                Format format = new SimpleDateFormat("dd-MM-yyyy");
+                addHeaderCell(table, "", rotation);
+                for (Lesson lesson : lessonList) {
+                    addHeaderCell(table, format.format(lesson.getDate()), rotation);
+                }
+                for (Integer j = 0; j < rowNumber; j++) {
+                    User user = userList.get(j);
+                    addHeaderCell(table, user.getFirstName() + " " + user.getLastName(), rotation);
+                    for (Integer i = 0; i < columnNumber - 1; i++) {
+                        Lesson lesson = lessonList.get(i);
+                        Attendance attendance =
+                                attendanceService.getAttendanceByUserIDAndLessonID(user.getId(), lesson.getId());
+                        String data = "";
+                        if (attendance == null) {
+                            data = "X";
+                        } else if (!attendance.isPresence()) {
+                            data = "-";
+                            PdfPCell cell = new PdfPCell(new Paragraph(data, CELL_FONT));
+                            cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                            cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+                            table.addCell(cell);
+                        }
+                    }
+                }
+                table.setHeaderRows(1);
+                document.add(table);
+                document.add(Chunk.NEWLINE);
+            }
         }
-        table.setHeaderRows(1);
-        document.add(table);
-        document.add(Chunk.NEWLINE);
     }
 
     @Transactional
@@ -383,8 +407,8 @@ public class StatisticsServiceImpl implements StatisticsService {
         drawMainInfo(document, "Last name", user.getLastName());
         drawMainInfo(document, "Email", user.getEmail());
         drawMainInfo(document, "Phone number", user.getPhone());
-        List<Training> coachTrainingList = userService.getCoachTrainingListOfUser(id);
-        if (coachTrainingList.size() != 0) {
+        List<Training> coachTrainingList = userService.getCoachTrainingList(id, startDate, endDate);
+        if (coachTrainingList != null && !coachTrainingList.isEmpty()) {
             drawTitle(document, "Courses created by this user");
             for (Training training : coachTrainingList) {
                 drawTrainingShortInfo(document, training);
@@ -396,13 +420,13 @@ public class StatisticsServiceImpl implements StatisticsService {
                 "User's courses he/she is waiting for", false, id, startDate, endDate);
         drawUserTrainings(document, userService.getUserTrainingsByState(id, Listener.State.LEAVE),
                 "User's courses he/she left", true, id, startDate, endDate);
-        List<Feedback> feedbackList = user.getFeedbackList();
-        if (feedbackList.size() != 0) {
+        List<Feedback> feedbackList = feedbackService.getFeedbackListAboutUser(id, startDate, endDate);
+        if (feedbackList != null && !feedbackList.isEmpty()) {
             drawTitle(document, "Feedbacks on this user");
             drawFeedbacks(document, feedbackList, true);
         }
-        List<Comment> commentList = user.getCommentList();
-        if(commentList.size() != 0) {
+        List<Comment> commentList = commentService.getUserCommentListByDate(id, startDate, endDate);
+        if(commentList != null && !commentList.isEmpty()) {
             drawTitle(document, "Comments from this user");
             drawComments(document, commentList, true);
         }
@@ -431,12 +455,36 @@ public class StatisticsServiceImpl implements StatisticsService {
         drawTitle(document, "Training Statistics");
         Training training = trainingService.getTraining(id);
         drawTrainingInfo(document, training);
-        //drawListeners(document, trainingService.);
-        drawTrainingTable(document, training.getLessonList());
-        drawComments(document, training.getCommentList(), false);
-        drawFeedbacks(document, training.getFeedbackList(), false);
+        drawListeners(document, listenerService.getListenerListByTrainingAndState(id, Listener.State.ACCEPTED),
+                "Current listeners");
+        drawListeners(document, listenerService.getListenerListByTrainingAndState(id, Listener.State.WAITING),
+                "Waiting listeners");
+        drawListeners(document, listenerService.getListenerListByTrainingAndState(id, Listener.State.LEAVE),
+                "Listeners who's left");
+        drawTrainingTable(document, lessonService.getLessonListActual(id, startDate, endDate));
+        List<Feedback> feedbackList = feedbackService.getFeedbackListFromTraining(id, startDate, endDate);
+        if (feedbackList != null && !feedbackList.isEmpty()) {
+            drawTitle(document, "Feedbacks from this training");
+            drawFeedbacks(document, feedbackList, false);
+        }
+        List<Comment> commentList = commentService.getTrainingCommentListByDate(id, startDate, endDate);
+        if(commentList != null && !commentList.isEmpty()) {
+            drawTitle(document, "Comments to this training");
+            drawComments(document, commentList, false);
+        }
+        document.close();
+        String encodedBytes = encoder.encode(outputStream.toByteArray());
 
-        return null;
+        try {
+            BASE64Decoder decoder = new BASE64Decoder();
+            byte[] decodedBytes = decoder.decodeBuffer(encodedBytes);
+            FileOutputStream fos = new FileOutputStream("test.pdf");
+            fos.write(decodedBytes);
+            fos.close();
+        } catch (IOException e) {
+            System.out.println(":(");
+        }
+        return encodedBytes;
     }
 
     @Override

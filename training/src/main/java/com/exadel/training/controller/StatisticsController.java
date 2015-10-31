@@ -17,10 +17,10 @@ public class StatisticsController {
 //    public String getStatistics(@RequestBody StatisticsModel statisticsModel) {
     public String getStatistics() {
         StatisticsModel statisticsModel = new StatisticsModel();
-        statisticsModel.setId(1L);
+        statisticsModel.setId(3L);
         statisticsModel.setStartDate(0L);
         statisticsModel.setEndDate(1446199758917L);
-        statisticsModel.setStatisticsType(StatisticsModel.StatisticsType.USER);
+        statisticsModel.setStatisticsType(StatisticsModel.StatisticsType.TRAINING);
         return statisticsService.getStatistics(statisticsModel);
     }
 }

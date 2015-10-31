@@ -72,4 +72,13 @@ public class ListenerServiceImpl implements ListenerService {
         }
         return userList;
     }
+
+    @Override
+    public List<User> getListenerListByTrainingAndState(long trainingId, Listener.State state) {
+       List<User> userList = new ArrayList<User>();
+        for (Listener listener : listenerDAO.getListenerListByTrainingAndState(trainingId, state)) {
+            userList.add(listener.getUser());
+        }
+        return userList;
+    }
 }

@@ -12,6 +12,9 @@ import java.util.List;
 public interface AttendanceService {
     void updateAttendance(AttendanceModel attendanceModel);
 
+    Attendance getAttendanceByUserIDAndLessonID(long idUser, long idLesson);
+
     List<Attendance> getAllAttendanceByLessonID(long idLesson);
+    List<Attendance> getAllAttendanceByUserIDFromDate(long idUser, Date from);
     List<Attendance> getAllAttendanceByUserIDBetweenDates(long idUser, long idTraining, Date from, Date to);
 }
