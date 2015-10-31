@@ -432,16 +432,6 @@ public class StatisticsServiceImpl implements StatisticsService {
         }
         document.close();
         String encodedBytes = encoder.encode(outputStream.toByteArray());
-
-        try {
-            BASE64Decoder decoder = new BASE64Decoder();
-            byte[] decodedBytes = decoder.decodeBuffer(encodedBytes);
-            FileOutputStream fos = new FileOutputStream("test.pdf");
-            fos.write(decodedBytes);
-            fos.close();
-        } catch (IOException e) {
-            System.out.println(":(");
-        }
         return encodedBytes;
     }
 
@@ -474,31 +464,17 @@ public class StatisticsServiceImpl implements StatisticsService {
         }
         document.close();
         String encodedBytes = encoder.encode(outputStream.toByteArray());
-
-        try {
-            BASE64Decoder decoder = new BASE64Decoder();
-            byte[] decodedBytes = decoder.decodeBuffer(encodedBytes);
-            FileOutputStream fos = new FileOutputStream("test.pdf");
-            fos.write(decodedBytes);
-            fos.close();
-        } catch (IOException e) {
-            System.out.println(":(");
-        }
         return encodedBytes;
     }
 
     @Override
-    public String getStatistics(StatisticsModel statisticsModel) {
-        try {
-            if (statisticsModel.getStatisticsType() == StatisticsModel.StatisticsType.USER) {
-                return getUserStatistics(statisticsModel.getId(),
+    public String getStatistics(StatisticsModel statisticsModel) throws DocumentException {
+        if (statisticsModel.getStatisticsType() == StatisticsModel.StatisticsType.USER) {
+            return getUserStatistics(statisticsModel.getId(),
+                    statisticsModel.getStartDate(), statisticsModel.getEndDate());
+        } else {
+            return getTrainingStatistics(statisticsModel.getId(),
                         statisticsModel.getStartDate(), statisticsModel.getEndDate());
-            } else {
-                return getTrainingStatistics(statisticsModel.getId(),
-                        statisticsModel.getStartDate(), statisticsModel.getEndDate());
-            }
-        } catch (DocumentException documentException) {
-            return "";
         }
     }
 }
