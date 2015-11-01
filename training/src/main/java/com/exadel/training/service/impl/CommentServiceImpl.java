@@ -112,6 +112,7 @@ public class CommentServiceImpl implements CommentService{
     }
 
     @Override
+    @Transactional
     public Comment getComment(Long id) {
         return commentDAO.getComment(id);
     }
@@ -120,5 +121,17 @@ public class CommentServiceImpl implements CommentService{
     @Transactional
     public List<Comment> getUserCommentList(Long userId) {
         return userDAO.getUserByID(userId).getCommentList();
+    }
+
+    @Override
+    @Transactional
+    public List<Comment> getTrainingCommentListByDate(Long idTraining, Long startDate, Long endDate) {
+        return commentDAO.getTrainingCommentListByDate(idTraining, startDate, endDate);
+    }
+
+    @Override
+    @Transactional
+    public List<Comment> getUserCommentListByDate(Long idUser, Long startDate, Long endDate) {
+        return commentDAO.getUserCommentListByDate(idUser, startDate, endDate);
     }
 }

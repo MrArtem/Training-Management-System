@@ -16,7 +16,7 @@ import javax.persistence.EntityManagerFactory;
 @Configuration
 @EnableAutoConfiguration
 @EnableTransactionManagement
-@Import(WebSecurityConfiguration.class)
+@Import({WebSecurityConfiguration.class, WebSocketConfiguration.class})
 public class WebApplicationStarter extends SpringBootServletInitializer {
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {

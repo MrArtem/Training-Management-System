@@ -17,8 +17,8 @@ public class LessonServiceImpl implements LessonService{
     private LessonDAO lessonDAO;
 
     @Override
-    public List<Lesson> getLessonByTraining(long trainingId) {
-        return lessonDAO.getLessonListByTraining(trainingId);
+    public List<Lesson> getLessonByTrainingActual(long trainingId) {
+        return lessonDAO.getLessonListActualByTraining(trainingId);
     }
 
     @Override
@@ -39,5 +39,10 @@ public class LessonServiceImpl implements LessonService{
     @Override
     public Lesson getLessonByID(long lessonId) {
         return lessonDAO.getLessonById(lessonId);
+    }
+
+    @Override
+    public List<Lesson> getLessonListActual(long idTraining, long startDate, long endDate) {
+        return lessonDAO.getLessonListActual(idTraining, startDate, endDate);
     }
 }

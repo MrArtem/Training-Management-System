@@ -6,7 +6,11 @@ import com.exadel.training.dao.domain.Training;
 import com.exadel.training.dao.domain.User;
 import com.exadel.training.service.ApproveActionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.ArrayList;
 import java.util.List;
 
-@RestController
+@Controller
 public class ApproveActionController {
 
     private final String trainingTableName = "APPROVE_TRAINING";
@@ -26,7 +30,8 @@ public class ApproveActionController {
     private ApproveActionService approveActionService;
 
     @Secured("ADMIN")
-    @RequestMapping(value = "/approve_list", method = RequestMethod.GET)
+    @MessageMapping("/approve_list")
+    @SendTo("/pipe/approve_list")
     public List<ApproveActionModel> getApproveActionList(@RequestParam("page") Integer page,
                                                          @RequestParam("page_size")
                                                          Integer pageSize) {
@@ -50,5 +55,12 @@ public class ApproveActionController {
             approveActionModelList.add(approveActionModel);
         }
         return approveActionModelList;
+    }
+
+    @Secured("ADMIN")
+    @MessageMapping("/approve_count")
+    @SendTo("/pipe/approve_count")
+    public Integer getApproveActionCount() {
+        return approveActionService.getActionNumber();
     }
 }

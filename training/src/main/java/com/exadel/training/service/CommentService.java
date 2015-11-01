@@ -19,4 +19,8 @@ public interface CommentService {
 
     List<Comment> getUserCommentList(Long userId);
 
+    List<Comment> getTrainingCommentListByDate(Long idTraining, Long startDate, Long endDate);
+
+    List<Comment> getUserCommentListByDate(Long idUser, Long startDate, Long endDate);
+
 }

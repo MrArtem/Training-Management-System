@@ -1,5 +1,6 @@
 package com.exadel.training.service;
 
+import com.exadel.training.controller.model.trainingModels.ApproveLessonModel;
 import com.exadel.training.controller.model.trainingModels.LessonModel;
 import com.exadel.training.controller.model.trainingModels.RepeatModel;
 import com.exadel.training.dao.domain.*;
@@ -11,7 +12,7 @@ public interface TrainingService {
 
     Training getTraining(long id);
 
-    boolean canRate(long id);
+    boolean canRate(long trainingId, long userId);
 
     List<Listener> getListenerListRecord(long trainingId);
 
@@ -61,6 +62,8 @@ public interface TrainingService {
             , RepeatModel repeatModel
     );
 
+    void removeTraining(Long trainingId);
+
     List<Training> getTrainingListByTagList(Integer page, Integer pageSize,Boolean isActual, List<Tag> tagList);
 
     ApproveAction getApproveAction(long actionId);
@@ -75,7 +78,11 @@ public interface TrainingService {
 
     void removeLesson(long trainingId, LessonModel lessonModel);
 
-    void confirmEditLesson(long actionId, LessonModel lessonModel);
+    void confirmLesson(long actionId, ApproveLessonModel approveLessonModel);
 
     double setRating(long trainingId, int rating, long userId);
+
+    ApproveLesson getApproveLesson(long actionId);
+
+    void canceledLesson(long actionId);
 }

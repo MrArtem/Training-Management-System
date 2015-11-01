@@ -2,6 +2,7 @@ package com.exadel.training.controller;
 
 import com.exadel.training.controller.model.trainingModels.AddingTrainingModel;
 import com.exadel.training.controller.model.trainingModels.ApproveGetTrainingModel;
+import com.exadel.training.controller.model.trainingModels.ApproveLessonModel;
 import com.exadel.training.controller.model.trainingModels.LessonModel;
 import com.exadel.training.dao.domain.*;
 import com.exadel.training.service.TrainingService;
@@ -100,6 +101,13 @@ public class TrainingCRUDController {
 
     @LegalID
     @Secured({"ADMIN", "USER"})
+    @RequestMapping(value = "/{id}/remove", method = RequestMethod.DELETE)
+    void removeTraining(@PathVariable("id") long trainingId) {
+
+    }
+
+    @LegalID
+    @Secured({"ADMIN", "USER"})
     @RequestMapping(value = "/getApproveTraining/{id}", method = RequestMethod.GET)
     public ApproveGetTrainingModel getApproveTrainingModel(@PathVariable("id") long actionId) {
         ApproveAction approveAction = trainingService.getApproveAction(actionId);
@@ -107,7 +115,6 @@ public class TrainingCRUDController {
         ApproveGetTrainingModel approveTrainingModel = new ApproveGetTrainingModel();
         Training training = approveAction.getTraining();
         User coach = training.getCoach();
-        //TODO code review
         if (approveTraining != null) {
             approveTrainingModel.setTitle(approveTraining.getTitle());
             approveTrainingModel.setDescription(approveTraining.getDescription());
@@ -174,7 +181,28 @@ public class TrainingCRUDController {
     @LegalID
     @Secured({"ADMIN", "USER", "EX_COACH", "EX_USER"})
     @RequestMapping(value = "/{id}/confirm/lesson", method = RequestMethod.PUT)
-    void confirmChangeLesson(@PathVariable("id") long actionId, @RequestBody LessonModel lessonModel) {
-        //todo
+    void confirmLesson(@PathVariable("id") long actionId, @RequestBody ApproveLessonModel approveLessonModel) {
+        trainingService.confirmLesson(actionId, approveLessonModel);
+    }
+
+    @LegalID
+    @Secured({"ADMIN"})
+    @RequestMapping(value = "/{id}/canceled_lesson", method = RequestMethod.PUT)
+    void canceledLesson(@PathVariable("id") long actionId) {
+        trainingService.canceledLesson(actionId);
+    }
+
+    @LegalID
+    @Secured("ADMIN")
+    @RequestMapping(value = "/{id}/approve_lesson", method = RequestMethod.GET)
+    ApproveLessonModel getApproveLessonModel(@PathVariable("id") long actionId) {
+        ApproveLesson approveLesson = trainingService.getApproveLesson(actionId);
+        ApproveLessonModel approveLessonModel = new ApproveLessonModel();
+        Lesson lesson = approveLesson.getLesson();
+        approveLessonModel.setOldDate(lesson.getDate());
+        approveLessonModel.setOldPlace(lesson.getPlace());
+        approveLessonModel.setNewPlace(approveLesson.getPlace());
+        approveLessonModel.setNewDate(approveLesson.getDate());
+        return approveLessonModel;
     }
 }

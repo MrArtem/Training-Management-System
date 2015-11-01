@@ -14,5 +14,4 @@ public interface MessageGenerator {
     String getTextNotificationAdminAboutShortage(String title, long id, boolean isDay, int listenerNumber);
     String getTextRaceMoreThreeHours(String title, long id, long idEmployee, long time);
     String getTextRaceLessThreeHours(String title, long id, long idEmployee, long time);
-    String getTextSMSForHour(String title, String place, long time);
 }

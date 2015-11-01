@@ -51,11 +51,14 @@ public class LessonDAOImpl implements LessonDAO {
     }
 
     @Override
-    public List<Lesson> getLessonListByTraining(long trainingId) {
-        //todo lesson state
+    @SuppressWarnings("unchecked")
+    public List<Lesson> getLessonListActualByTraining(long trainingId) {
         Session session = sessionFactory.getCurrentSession();
         Training training = session.load(Training.class, trainingId);
-        return training.getLessonList();
+        return session.createQuery("from Lesson less where less.training = :training and less.state != :state")
+                .setParameter("training", training)
+                .setParameter("state", Lesson.State.REMOVAL)
+                .list();
     }
 
     @Override
@@ -77,10 +80,11 @@ public class LessonDAOImpl implements LessonDAO {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public Lesson getNextLesson(long trainingId) {
         Session session = sessionFactory.getCurrentSession();
         Training training = session.load(Training.class, trainingId);
-        return (Lesson)session.createQuery("from  Lesson less where less.training = :training and less.data = " +
+        return (Lesson) session.createQuery("from  Lesson less where less.training = :training and less.data = " +
                 "(select min(l.date) from Lesson l where l.training = :training and l.data >= :curDate )")
                 .setParameter("training", training)
                 .setParameter("curDate", getTime())
@@ -95,6 +99,33 @@ public class LessonDAOImpl implements LessonDAO {
         return session.createQuery("from Lesson less where less.training = :training and less.state = :state")
                 .setParameter("training", training)
                 .setParameter("state", state)
+                .list();
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public List<Lesson> getLessonListActual(long idTraining, long startDate, long endDate) {
+        Session session = sessionFactory.getCurrentSession();
+        Training training = session.load(Training.class, idTraining);
+        return sessionFactory.getCurrentSession().createQuery(" from Lesson less where less.date >= :startDate " +
+                "and less.date <= :endDate and less.state != :state and less.training = :training")
+                .setParameter("state", Lesson.State.REMOVAL)
+                .setParameter("endDate", endDate)
+                .setParameter("startDate", startDate)
+                .setParameter("training", training)
+                .list();
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public List<Lesson> getLessonListActualFrom(long trainingId, long startDate) {
+        Session session = sessionFactory.getCurrentSession();
+        Training training = session.load(Training.class, trainingId);
+        return sessionFactory.getCurrentSession(). createQuery(" from Lesson less where less.date >= :startDate and " +
+                " less.state != :state and less.training = :training")
+                .setParameter("state", Lesson.State.REMOVAL)
+                .setParameter("startDate", startDate)
+                .setParameter("training", training)
                 .list();
     }
 }

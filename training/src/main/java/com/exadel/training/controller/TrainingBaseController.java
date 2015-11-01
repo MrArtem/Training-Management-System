@@ -1,24 +1,25 @@
 package com.exadel.training.controller;
 
-import com.exadel.training.controller.model.*;
-import com.exadel.training.controller.model.trainingModels.*;
+import com.exadel.training.controller.model.CommentModel;
+import com.exadel.training.controller.model.RatingModel;
+import com.exadel.training.controller.model.trainingModels.TrainingListModel;
+import com.exadel.training.controller.model.trainingModels.GetTrainingModel;
+import com.exadel.training.controller.model.trainingModels.ListenerModel;
 import com.exadel.training.controller.model.userModels.ExUserModel;
-import com.exadel.training.controller.model.userModels.UserModel;
 import com.exadel.training.dao.domain.*;
 import com.exadel.training.security.User.CustomUser;
 import com.exadel.training.service.*;
-import com.exadel.training.validate.TagValidator;
 import com.exadel.training.validate.annotation.LegalID;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.validation.Validator;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
-import sun.plugin.liveconnect.SecurityContextHelper;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -42,13 +43,14 @@ public class TrainingBaseController {
     private ListenerService listenerService;
 
 
-//    @Autowired
-//    private TagValidator tagValidator;
-//
-//    @InitBinder
-//    private void initBinder(WebDataBinder webDataBinder) {
-//        webDataBinder.setValidator(tagValidator);
-//    }
+    @Autowired
+    @Qualifier("tagValidator")
+    private Validator tagValidator;
+
+    @InitBinder
+    private void initBinder(WebDataBinder webDataBinder) {
+        webDataBinder.setValidator(tagValidator);
+    }
 
     @LegalID
     @Secured({"ADMIN", "USER", "EX_COACH", "EX_USER"})
@@ -59,6 +61,9 @@ public class TrainingBaseController {
         getTrainingModel.setTraining(training);
         getTrainingModel.setStartDate(lessonService.getStartDateByTraining(trainingId));
         getTrainingModel.setEndDate(lessonService.getEndDateByTraining(trainingId));
+        CustomUser customUser = (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        getTrainingModel.setCanRate(trainingService.canRate(trainingId, customUser.getUserId()));
+        getTrainingModel.setCanSubscribe(listenerService.canSubscribe(trainingId, customUser.getUserId()));
         return getTrainingModel;
     }
 
@@ -66,7 +71,7 @@ public class TrainingBaseController {
     @Secured({"ADMIN", "USER", "EX_COACH", "EX_USER"})
     @RequestMapping(value = "/{id}/lesson_list", method = RequestMethod.GET)
     List<Lesson> getLessonListByTraining(@PathVariable("id") long trainingId) {
-        return lessonService.getLessonByTraining(trainingId);
+        return lessonService.getLessonByTrainingActual(trainingId);
     }
 
     @LegalID
@@ -115,24 +120,16 @@ public class TrainingBaseController {
         trainingList = trainingService.getTrainingListByTagList(page, PAGE_SIZE, isActual, tagList);
         List<TrainingListModel> trainingListModelList = new ArrayList<TrainingListModel>();
         for (Training training : trainingList) {
-            TrainingListModel trainingListModel = new TrainingListModel();
-            trainingListModel.setId(training.getId());
-            trainingListModel.setTitle(training.getTitle());
-            trainingListModel.setExcerpt(training.getExcerpt());
-            trainingListModel.setCoachId(training.getCoach().getId());
-            trainingListModel.setCoachName(training.getCoach().getFirstName() +
-                    " " + training.getCoach().getLastName());
-            trainingListModel.setTagList(training.getTagList());
-            //todo get user here
-            User user = new User();
-            trainingListModel.setIsCoach(userService.isCoach(user.getId(), training.getId()));
-            //todo get next date and place
+            TrainingListModel trainingListModel = new TrainingListModel(training);
+            Lesson nextLesson = lessonService.getNextLesson(training.getId());
+            trainingListModel.setNextDate(nextLesson.getDate());
+            trainingListModel.setNextPlace(nextLesson.getPlace());
             trainingListModelList.add(trainingListModel);
         }
         return trainingListModelList;
     }
 
-    //@LegalID
+    @LegalID
     @RequestMapping(value = "/{id}/add_comment")
     @Secured({"ADMIN", "USER", "EX_COACH"})
     public void addComment(@PathVariable("id") Long trainingId, @RequestBody CommentModel commentModel) {

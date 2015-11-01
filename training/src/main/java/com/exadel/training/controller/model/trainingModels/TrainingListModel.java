@@ -1,4 +1,4 @@
-package com.exadel.training.controller.model;
+package com.exadel.training.controller.model.trainingModels;
 
 import com.exadel.training.dao.domain.Tag;
 import com.exadel.training.dao.domain.Training;
