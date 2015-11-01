@@ -7,7 +7,7 @@
             <p class="field">Coach: <a ui-sref="profile({userId: courseInfo.coachId})" class="info">{{courseInfo.coachName}}</a></p>
             <p class="field">Language: <span class="info">{{courseInfo.language}}</span></p>
 
-            <a href="" class="right button round tiny default-btn-blue" ng-click="courseinfo.subscribe()">OK</a>
+            <a ng-if="courseinfo.canSubscribe" href="" class="right button round tiny default-btn-blue" ng-click="courseinfo.subscribe()">OK</a>
         </div>
 
         <div class="row">
