@@ -12,6 +12,11 @@ public class ApproveDAOImpl<T> implements ApproveDAO<T> {
     private SessionFactory sessionFactory;
 
     @Override
+    public T getApprove(Class<T> c, Long id) {
+        return c.cast(sessionFactory.getCurrentSession().load(c, id));
+    }
+
+    @Override
     public void addApprove(T t) {
         sessionFactory.getCurrentSession().save(t);
     }

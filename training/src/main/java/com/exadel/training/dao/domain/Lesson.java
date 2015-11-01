@@ -1,14 +1,17 @@
 package com.exadel.training.dao.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.List;
 
-/**
- * Created by ayudovin on 05.10.2015.
- */
 @Entity
 @Table
 public class Lesson {
+
+    public  enum State {
+        NONE, REMOVAL, ADD
+    }
     @Id
     @GeneratedValue
     private long id;
@@ -17,13 +20,23 @@ public class Lesson {
 
     private String place;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @Enumerated(EnumType.STRING)
+    private State state;
+
+    @JsonIgnore
+    @OneToOne
+    private ApproveLesson approveLesson;
+
+    @JsonIgnore
+    @ManyToOne
     private Training training;
-    
+
+    @JsonIgnore
     @OneToMany
     private List<Attendance> attendanceList;
 
     public Lesson() {
+        this.state = State.NONE;
     }
 
     public long getId() {
@@ -64,5 +77,21 @@ public class Lesson {
 
     public void setAttendanceList(List<Attendance> attendanceList) {
         this.attendanceList = attendanceList;
+    }
+
+    public ApproveLesson getApproveLesson() {
+        return approveLesson;
+    }
+
+    public void setApproveLesson(ApproveLesson approveLesson) {
+        this.approveLesson = approveLesson;
+    }
+
+    public State getState() {
+        return state;
+    }
+
+    public void setState(State state) {
+        this.state = state;
     }
 }

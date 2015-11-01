@@ -1,16 +1,13 @@
 package com.exadel.training.dao.domain;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table
 public class ApproveAction {
 
-    private enum TableName {
-        APPROVE_TRAINING, APPROVE_LESSON
-    }
-
-    private enum Type {
+    public enum Type {
         CREATE, EDIT, REMOVE
     }
 
@@ -20,15 +17,27 @@ public class ApproveAction {
 
     private Long date;
 
-    @Enumerated(value = EnumType.STRING)
-    private TableName tableName;
+    @OneToOne
+    private Training training;
 
-    private Long actionId;
+    @OneToOne
+    private ApproveTraining approveTraining;
+
+    @OneToMany
+    List<ApproveLesson> approveLessonList;
 
     @Enumerated(value = EnumType.STRING)
     private Type type;
 
     public ApproveAction() {
+    }
+
+    public ApproveTraining getApproveTraining() {
+        return approveTraining;
+    }
+
+    public void setApproveTraining(ApproveTraining approveTraining) {
+        this.approveTraining = approveTraining;
     }
 
     public Long getId() {
@@ -43,20 +52,20 @@ public class ApproveAction {
         this.date = date;
     }
 
-    public TableName getTableName() {
-        return tableName;
+    public Training getTraining() {
+        return training;
     }
 
-    public void setTableName(TableName tableName) {
-        this.tableName = tableName;
+    public void setTraining(Training training) {
+        this.training = training;
     }
 
-    public Long getActionId() {
-        return actionId;
+    public List<ApproveLesson> getApproveLessonList() {
+        return approveLessonList;
     }
 
-    public void setActionId(Long actionId) {
-        this.actionId = actionId;
+    public void setApproveLessonList(List<ApproveLesson> approveLessonList) {
+        this.approveLessonList = approveLessonList;
     }
 
     public Type getType() {

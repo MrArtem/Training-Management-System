@@ -1,15 +1,17 @@
 package com.exadel.training.dao.impl;
 
-import com.exadel.training.dao.domain.Lesson;
-import com.exadel.training.dao.domain.Training;
+import com.exadel.training.dao.domain.*;
 import com.exadel.training.dao.TrainingDAO;
-import com.exadel.training.dao.domain.User;
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -17,7 +19,6 @@ import java.util.List;
  * Created by azapolski on 10/5/2015.
  */
 @Repository
-@Transactional
 public class TrainingDAOImpl implements TrainingDAO {
 
     @Autowired
@@ -27,7 +28,7 @@ public class TrainingDAOImpl implements TrainingDAO {
     @Override
     public void addTraining(Training training) {
         sessionFactory.getCurrentSession().save(training);
-    }
+}
 
     @Override
     public void changeTraining(Training training) {
@@ -40,12 +41,52 @@ public class TrainingDAOImpl implements TrainingDAO {
     }
 
     @Override
-    public List<Training> getTrainingListActual(long trainingId) {
-        return null;
+    @SuppressWarnings("unchecked")
+    public List<Training> getTrainingListByTagList(Integer page, Integer pageSize, Boolean isActual, List<Tag> tagList) {
+        Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Training.class);
+        if (tagList.size() == 0) {
+            if (isActual) {
+                criteria = criteria.add(Restrictions.eq("state", Training.State.NONE));
+                Long date = new Date().getTime();
+                criteria = criteria.createCriteria("lessonList").add(Restrictions.gt("date", date));
+                criteria = criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+                criteria = criteria.addOrder(Order.asc("date"));
+
+            }
+            return criteria.list();
+        } else {
+            criteria = criteria.add(Restrictions.eq("state", Training.State.NONE));
+            if (isActual) {
+                Long date = new Date().getTime();
+                DetachedCriteria detachedCriteria = DetachedCriteria.forClass(Training.class);
+                detachedCriteria = detachedCriteria.add(Restrictions.eq("state", Training.State.NONE));
+                detachedCriteria = detachedCriteria.setProjection(Projections.property("id"));
+                detachedCriteria = detachedCriteria.createCriteria("lessonList").add(Restrictions.gt("date", date));
+                detachedCriteria = detachedCriteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+                criteria.add(Subqueries.propertyIn("id", detachedCriteria));
+            }
+            criteria.setProjection(Projections.projectionList().add(Projections.groupProperty("id"))
+                    .add(Projections.count("id").as("count")));
+            criteria = criteria.addOrder(Order.desc("count"));
+            criteria = criteria.createCriteria("tagList");
+            Junction disjunction = Restrictions.disjunction();
+            for (Tag tag : tagList) {
+                disjunction = disjunction.add(Restrictions.eq("specialty", tag.getSpecialty()));
+            }
+            criteria = criteria.add(disjunction);
+            List<Training> trainingList = new ArrayList<Training>();
+            List<Object[]> result = criteria.list();
+            for (Object[] object : result) {
+                long id = (Long) object[0];
+                Training training = getTrainingById(id);
+                trainingList.add(training);
+            }
+            return trainingList;
+        }
     }
 
     @Override
-    public List<User> getListenerList(long trainingId) {
+    public List<Listener> getListenerList(long trainingId) {
         Session session = sessionFactory.getCurrentSession();
         Training training  = session.load(Training.class, trainingId);
         return training.getListenerList();
@@ -57,4 +98,5 @@ public class TrainingDAOImpl implements TrainingDAO {
         Training training = session.load(Training.class, trainingId);
         return training.getLessonList();
     }
+
 }

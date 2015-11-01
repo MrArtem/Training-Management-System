@@ -1,0 +1,32 @@
+<div class="approval">
+    <div class="row">
+        <div class="small-12 medium-8 large-8 column">
+
+            <h5>Something that needs your attention</h5>
+
+            <div class="scrollable-div">
+
+                <table class="fullwidth-table">
+                    <thead>
+                    <tr>
+                        <th>Who</th>
+                        <th>What</th>
+                        <th>When</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="item in approval.approveList">
+                        <td>{{item.coachName}}</td>
+                        <td>{{approval.makeText(item.type, item.tableName)}} {{item.trainingName}}</td>
+                        <td>{{item.date | date: "MMM d, y h:mm a"}}</td>
+                        <td><a ui-sref="step1({courseId: item.trainingId, type: item.type, edit: true, id: item.id})">See details</a></td>
+                    </tr>
+                    </tbody>
+                </table>
+
+            </div>
+
+        </div>
+    </div>
+</div>
