@@ -41,7 +41,7 @@
         //});
 
         function getMyCourses() {
-            courseAPI.getCoursesForUser(true, []).then(function(data) {
+            courseAPI.getCourseList(true, []).then(function(data) {
                 vm.userCourses = angular.copy(data);
             })
         }

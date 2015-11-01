@@ -36,6 +36,7 @@
             login: login,
             logout: logout,
             manageLesson: manageLesson,
+            subscribe: subscribe,
             uploadFiles: uploadFiles
         };
         return urlProvider;
@@ -155,6 +156,10 @@
 
     function manageLesson(courseId) {
         return '/api/training/' + courseId + '/lesson';
+    }
+
+    function subscribe(courseId) {
+        return '/api/training/' + courseId + '/addListener';
     }
 
     function uploadFiles() {

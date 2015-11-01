@@ -25,6 +25,7 @@
             getShortInfo: getShortInfo,
             getTimetable: getTimetable,
             editLesson: editLesson,
+            subscribe: subscribe,
             uploadFiles: uploadFiles
         }
         return courseAPI;
@@ -275,6 +276,12 @@
                 }
             }).then(function (results) {
                 return results.data;
+            });
+        }
+
+        function subscribe(courseId) {
+            return $http.post(urlProvider.subscribe(courseId)).then(function(result) {
+                return result.data;
             });
         }
 
