@@ -41,7 +41,7 @@ public class FileController {
     @RequestMapping(value = "/get_files/{idTraining}", method = RequestMethod.GET)
     @LegalID
     public List<FileDownload> getFiles(@PathVariable("idTraining") long idTraining) {
-        List<FileDownload> fileDownloadList = new ArrayList<>();
+        List<FileDownload> fileDownloadList = new ArrayList<FileDownload>();
 
         for(FileStorage fileStorage : fileStorageService.getAllFileByTraining(idTraining)) {
             fileDownloadList.add(new FileDownload(fileStorage));
