@@ -176,7 +176,7 @@ public class StatisticsServiceImpl implements StatisticsService {
             document.add(Chunk.NEWLINE);
             return attendancesWithComments;
         }
-        return new ArrayList<>();
+        return new ArrayList<Attendance>();
     }
 
     private void drawPresenceComments(Document document,List<Attendance> attendancesWithComments,
