@@ -22,7 +22,7 @@
             findUsers: findUsers,
             getApproveList: getApproveList,
             getComments: getComments,
-            getCoursesForUser: getCoursesForUser,
+            getCourseList: getCourseList,
             getCurrentCoursesForUser: getCurrentCoursesForUser,
             getEditedCourse: getEditedCourse,
             getFeedbacksOnUser: getFeedbacksOnUser,
@@ -101,7 +101,7 @@
         return '/api/training/' + courseId + '/comment_list';
     }
 
-    function getCoursesForUser() {
+    function getCourseList() {
         return '/api/training/training_list';
     }
 

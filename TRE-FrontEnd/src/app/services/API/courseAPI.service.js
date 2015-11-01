@@ -19,7 +19,7 @@
             editCourse: editCourse,
             getAttachments: getAttachments,
             getComments: getComments,
-            getCoursesForUser: getCoursesForUser,
+            getCourseList: getCourseList,
             getEditedCourse: getEditedCourse,
             getParticipants: getParticipants,
             getShortInfo: getShortInfo,
@@ -266,8 +266,8 @@
 
         //////////
 
-        function getCoursesForUser(isActual, tagList) {
-            return $http.get(urlProvider.getCoursesForUser(), {
+        function getCourseList(isActual, tagList) {
+            return $http.get(urlProvider.getCourseList(), {
                 params: {
                     is_actual: isActual,
                     page: 1,
