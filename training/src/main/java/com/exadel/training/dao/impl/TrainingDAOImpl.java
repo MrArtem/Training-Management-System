@@ -28,7 +28,7 @@ public class TrainingDAOImpl implements TrainingDAO {
     @Override
     public void addTraining(Training training) {
         sessionFactory.getCurrentSession().save(training);
-    }
+}
 
     @Override
     public void changeTraining(Training training) {
