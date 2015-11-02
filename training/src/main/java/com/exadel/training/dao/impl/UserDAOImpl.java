@@ -68,7 +68,10 @@ public class UserDAOImpl implements UserDAO {
         criteria.createAlias("training.listenerList", "listener");
         criteria.createAlias("training.lessonList", "lesson");
 
-        criteria.add(Restrictions.eq("listener.user.id", idUser));
+        Criterion criterionListener = Restrictions.and(Restrictions.eq("listener.user.id", idUser));
+        Criterion criterionCoach = Restrictions.and(Restrictions.eq("training.coach.id", idUser));
+
+        criteria.add(Restrictions.or(criterionListener,criterionCoach));
         criteria.add(Restrictions.gt("lesson.date", new Date().getTime()));
 
         criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
