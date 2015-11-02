@@ -49,13 +49,13 @@ public class TrainingDAOImpl implements TrainingDAO {
     @Override
     @SuppressWarnings("unchecked")
     public List<Training> getTrainingListByTagList(Integer page, Integer pageSize, Boolean isActual, List<Tag> tagList) {
-        Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Training.class);
+        Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Training.class, "training");
         if (tagList.size() == 0) {
             if (isActual) {
                 CustomUser customUser = (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
                 User user = userDAO.getUserByID(customUser.getUserId());
                 criteria.add(Restrictions.eq("coach", user));
-                criteria = criteria.createCriteria("listenerList").add(Restrictions.eq("user", user));
+                criteria.createAlias("training.listenerList", "listener").add(Restrictions.eq("user", user));
             }
             criteria = criteria.add(Restrictions.eq("state", Training.State.NONE));
             Long date = new Date().getTime();
@@ -69,7 +69,7 @@ public class TrainingDAOImpl implements TrainingDAO {
                 CustomUser customUser = (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
                 User user = userDAO.getUserByID(customUser.getUserId());
                 criteria.add(Restrictions.eq("coach", user));
-                criteria = criteria.createCriteria("listenerList").add(Restrictions.eq("user", user));
+                criteria.createAlias("training.listenerList", "listener").add(Restrictions.eq("user", user));
             }
             Long date = new Date().getTime();
             DetachedCriteria detachedCriteria = DetachedCriteria.forClass(Training.class);
