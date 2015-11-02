@@ -122,8 +122,10 @@ public class TrainingBaseController {
         for (Training training : trainingList) {
             TrainingListModel trainingListModel = new TrainingListModel(training);
             Lesson nextLesson = lessonService.getNextLesson(training.getId());
-            trainingListModel.setNextDate(nextLesson.getDate());
-            trainingListModel.setNextPlace(nextLesson.getPlace());
+            if( nextLesson != null ) {
+                trainingListModel.setNextDate(nextLesson.getDate());
+                trainingListModel.setNextPlace(nextLesson.getPlace());
+            }
             trainingListModelList.add(trainingListModel);
         }
         return trainingListModelList;
