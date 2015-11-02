@@ -9,14 +9,14 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import java.util.HashMap;
 import java.util.Map;
 
-@ControllerAdvice
+//@ControllerAdvice
 public class GlobalControllerExceptionHandler {
-    @ResponseStatus(HttpStatus.I_AM_A_TEAPOT)
-    @ExceptionHandler(Exception.class)
-    @ResponseBody
-    public Object handleConflict(Exception exception) {
-        Map<String, String> errorMessage = new HashMap<>();
-        errorMessage.put("errorMessage", exception.getMessage());
-        return errorMessage;
-    }
+//    @ResponseStatus(HttpStatus.I_AM_A_TEAPOT)
+//    @ExceptionHandler(Exception.class)
+//    @ResponseBody
+//    public Object handleConflict(Exception exception) {
+//        Map<String, String> errorMessage = new HashMap<String, String>();
+//        errorMessage.put("errorMessage", exception.getMessage());
+//        return errorMessage;
+//    }
 }

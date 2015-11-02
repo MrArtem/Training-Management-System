@@ -22,7 +22,7 @@
             findUsers: findUsers,
             getApproveList: getApproveList,
             getComments: getComments,
-            getCoursesForUser: getCoursesForUser,
+            getCourseList: getCourseList,
             getCurrentCoursesForUser: getCurrentCoursesForUser,
             getEditedCourse: getEditedCourse,
             getFeedbacksOnUser: getFeedbacksOnUser,
@@ -36,6 +36,7 @@
             login: login,
             logout: logout,
             manageLesson: manageLesson,
+            subscribe: subscribe,
             uploadFiles: uploadFiles
         };
         return urlProvider;
@@ -101,7 +102,7 @@
         return '/api/training/' + courseId + '/comment_list';
     }
 
-    function getCoursesForUser() {
+    function getCourseList() {
         return '/api/training/training_list';
     }
 
@@ -155,6 +156,10 @@
 
     function manageLesson(courseId) {
         return '/api/training/' + courseId + '/lesson';
+    }
+
+    function subscribe(courseId) {
+        return '/api/training/' + courseId + '/addListener';
     }
 
     function uploadFiles() {

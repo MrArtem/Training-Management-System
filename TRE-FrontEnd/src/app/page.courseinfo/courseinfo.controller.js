@@ -16,6 +16,7 @@
         vm.courseInfo.timetable = [];
 
         vm.getShortInfo = getShortInfo;
+        vm.subscribe = subscribe;
 
         $scope.courseInfo = vm.courseInfo;
 
@@ -26,6 +27,12 @@
                 $scope.courseInfo = angular.copy(data);
                 console.log($scope.courseInfo);
             });
+        }
+
+        function subscribe() {
+            courseAPI.subscribe($stateParams.courseId).then(function(data) {
+                console.log('Subscribed successfully');
+            })
         }
 
     }

@@ -19,12 +19,13 @@
             editCourse: editCourse,
             getAttachments: getAttachments,
             getComments: getComments,
-            getCoursesForUser: getCoursesForUser,
+            getCourseList: getCourseList,
             getEditedCourse: getEditedCourse,
             getParticipants: getParticipants,
             getShortInfo: getShortInfo,
             getTimetable: getTimetable,
             editLesson: editLesson,
+            subscribe: subscribe,
             uploadFiles: uploadFiles
         }
         return courseAPI;
@@ -266,8 +267,8 @@
 
         //////////
 
-        function getCoursesForUser(isActual, tagList) {
-            return $http.get(urlProvider.getCoursesForUser(), {
+        function getCourseList(isActual, tagList) {
+            return $http.get(urlProvider.getCourseList(), {
                 params: {
                     is_actual: isActual,
                     page: 1,
@@ -275,6 +276,12 @@
                 }
             }).then(function (results) {
                 return results.data;
+            });
+        }
+
+        function subscribe(courseId) {
+            return $http.post(urlProvider.subscribe(courseId)).then(function(result) {
+                return result.data;
             });
         }
 

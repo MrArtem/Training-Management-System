@@ -1,36 +1,39 @@
 <div class="container profile">
+	<div class="row">
+		<div class="small-12 medium-6 medium-centered column">
+			<div class="row profile-short">
+				<h3 class="title">{{profile.profileInfo.username}}</h3>
 
-    <div class="row profile-short">
-        <h3 class="title">{{profile.profileInfo.username}}</h3>
+				<p class="field">Email: <span class="info">{{profile.profileInfo.email}}</span></p>
 
-        <p class="field">Email: <span class="info">{{profile.profileInfo.email}}</span></p>
+				<p class="field">Phone number: <span class="info">{{profile.profileInfo.phone}}</span></p>
+			</div>
 
-        <p class="field">Phone number: <span class="info">{{profile.profileInfo.phone}}</span></p>
-    </div>
+			<div class="row">
 
-    <div class="row">
+				<div class="icon-bar four-up small-horizontal large-vertical">
+					<a class="item" ui-sref="profile.attended">
+						<i class="fa fa-book"></i>
+						<label>Current courses</label>
+					</a>
+					<a class="item" ui-sref="profile.current">
+						<i class="fa fa-book"></i>
+						<label>Attended courses</label>
+					</a>
+					<a class="item" ui-sref="profile.waiting">
+						<i class="fa fa-hourglass-half"></i>
+						<label>Waiting for courses</label>
+					</a>
+					<a class="item" ui-sref="profile.feedbacks">
+						<i class="fa fa-comments-o"></i>
+						<label>Feedbacks</label>
+					</a>
+				</div>
 
-        <div class="icon-bar four-up small-horizontal large-vertical">
-            <a class="item" ui-sref="profile.attended">
-                <i class="fa fa-book"></i>
-                <label>Current courses</label>
-            </a>
-            <a class="item" ui-sref="profile.current">
-                <i class="fa fa-book"></i>
-                <label>Attended courses</label>
-            </a>
-            <a class="item" ui-sref="profile.waiting">
-                <i class="fa fa-hourglass-half"></i>
-                <label>Waiting for courses</label>
-            </a>
-            <a class="item" ui-sref="profile.feedbacks">
-                <i class="fa fa-comments-o"></i>
-                <label>Feedbacks</label>
-            </a>
-        </div>
+				<div ui-view>
+				</div>
 
-        <div ui-view>
-        </div>
-
-    </div>
+			</div>
+		</div>
+	</div>
 </div>

@@ -30,7 +30,7 @@
         function addFeedbackOnUser() {
             console.log('Feedback to be added:');
             console.log(vm.fbInfo);
-            userAPI.addFeedbackOnUser($stateParams.courseId, 2, vm.fbInfo).then(function(data) {
+            userAPI.addFeedbackOnUser($stateParams.courseId, 1, vm.fbInfo).then(function(data) {
                 console.log('feedback added successfully');
             });
         }
