@@ -63,7 +63,9 @@ public class TrainingBaseController {
         getTrainingModel.setEndDate(lessonService.getEndDateByTraining(trainingId));
         CustomUser customUser = (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         getTrainingModel.setCanRate(trainingService.canRate(trainingId, customUser.getUserId()));
-        getTrainingModel.setCanSubscribe(listenerService.canSubscribe(trainingId, customUser.getUserId()));
+        boolean isCoach = customUser.getUserId() == training.getCoach().getId();
+        getTrainingModel.setIsCoach( isCoach );
+        getTrainingModel.setCanSubscribe( !isCoach && listenerService.canSubscribe(trainingId, customUser.getUserId()));
         return getTrainingModel;
     }
 

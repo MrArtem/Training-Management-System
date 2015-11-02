@@ -32,10 +32,10 @@ public class ListenerServiceImpl implements ListenerService {
     @Override
     public void addListener(long trainingId, long userId) {
         Listener listener = listenerDAO.getListenerByTrainingUser(trainingId, userId);
-        if (listener != null) {
-            listenerDAO.removeListener(listener);
+        if (listener == null) {
+            listener = new Listener();
+            listenerDAO.addListener(listener);
         }
-        listener = new Listener();
         List<Listener> listenerListAccepted = listenerDAO.getListenerListAccepted(trainingId);
         Training training = trainingDAO.getTrainingById(trainingId);
         User user = userDAO.getUserByID(userId);
@@ -46,7 +46,7 @@ public class ListenerServiceImpl implements ListenerService {
         }
         listener.setTraining(training);
         listener.setUser(user);
-        listenerDAO.addListener(listener);
+        listenerDAO.changeListener(listener);
         List<Lesson> lessonList = lessonDAO.getLessonListActualFrom(trainingId, Utils.getTime());
         for(Lesson lesson : Utils.emptyIfNull(lessonList)) {
             Attendance attendance = new Attendance();
@@ -63,15 +63,15 @@ public class ListenerServiceImpl implements ListenerService {
         if (listener != null) {
             listener.setState(Listener.State.LEAVE);
             listenerDAO.changeListener(listener);
-            listener = listenerDAO.getNextListenerInWaitList(trainingId);
-            if(listener != null) {
-                listener.setState(Listener.State.WAITING);
-                listenerDAO.changeListener(listener);
+            Listener listenerNext = listenerDAO.getNextListenerInWaitList(trainingId);
+            if(listenerNext != null) {
+                listenerNext.setState(Listener.State.WAITING);
+                listenerDAO.changeListener(listenerNext);
             }
-        }
-        List<Attendance> attendanceList  = attendanceDAO.getAllAttendanceByUserIDFromDate(userId, new Date(Utils.getTime()));
-        for(Attendance attendance : Utils.emptyIfNull(attendanceList)) {
-            attendanceDAO.delete(attendance);
+            List<Attendance> attendanceList  = attendanceDAO.getAllAttendanceByUserIDFromDate(userId, new Date(Utils.getTime()));
+            for(Attendance attendance : Utils.emptyIfNull(attendanceList)) {
+                attendanceDAO.delete(attendance);
+            }
         }
         User user = userDAO.getUserByID(userId);
         newsService.addNews(user, News.TableName.TRAINING, News.ActionType.LEAVE, trainingId);
