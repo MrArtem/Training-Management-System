@@ -54,8 +54,10 @@ public class TrainingDAOImpl implements TrainingDAO {
             if (isActual) {
                 CustomUser customUser = (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
                 User user = userDAO.getUserByID(customUser.getUserId());
-                criteria.add(Restrictions.eq("coach", user));
-                criteria.createAlias("training.listenerList", "listener").add(Restrictions.eq("user", user));
+                criteria.createAlias("training.listenerList", "listener");
+                Criterion isCoach = Restrictions.eq("coach", user);
+                Criterion isSubscribed = Restrictions.eq("listener.user", user);
+                criteria.add(Restrictions.or(isCoach, isSubscribed));
             }
             criteria = criteria.add(Restrictions.eq("state", Training.State.NONE));
             Long date = new Date().getTime();
@@ -68,8 +70,10 @@ public class TrainingDAOImpl implements TrainingDAO {
             if (isActual) {
                 CustomUser customUser = (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
                 User user = userDAO.getUserByID(customUser.getUserId());
-                criteria.add(Restrictions.eq("coach", user));
-                criteria.createAlias("training.listenerList", "listener").add(Restrictions.eq("user", user));
+                criteria.createAlias("training.listenerList", "listener");
+                Criterion isCoach = Restrictions.eq("coach", user);
+                Criterion isSubscribed = Restrictions.eq("listener.user", user);
+                criteria.add(Restrictions.or(isCoach, isSubscribed));
             }
             Long date = new Date().getTime();
             DetachedCriteria detachedCriteria = DetachedCriteria.forClass(Training.class);

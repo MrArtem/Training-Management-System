@@ -1,4 +1,4 @@
-<div class="container courseinfo">
+<div ng-class="{'waiting-for-angular': !courseinfo.isContentLoaded }" class="container courseinfo">
 	<div class="row">
 		<div class="small-12 medium-6 medium-centered column">
 			<div class="row courseinfo-short">
@@ -12,7 +12,7 @@
 				<p class="field">Coach: <a ui-sref="profile({userId: courseInfo.coachId})" class="info">{{courseInfo.coachName}}</a>
 				</p>
 
-				<p class="field">Language: <span class="info">{{courseInfo.language}}</span></p>
+				<p class="field">Language: <span class="info">{{courseinfo.getLanguage(courseInfo.language)}}</span></p>
 
 				<a ng-if="courseInfo.canSubscribe && !courseInfo.isCoach" href="" class="button round tiny default-btn-blue"
 				   ng-click="courseinfo.subscribe()">Subscribe</a>
