@@ -25,7 +25,7 @@ public class Attendance {
     @ManyToOne(cascade = CascadeType.ALL)
     private User user;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private Lesson lesson;
 
     public Attendance(){

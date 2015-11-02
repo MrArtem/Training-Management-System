@@ -24,7 +24,7 @@ public class Lesson {
     private State state;
 
     @JsonIgnore
-    @OneToOne
+    @OneToOne(optional = false)
     private ApproveLesson approveLesson;
 
     @JsonIgnore
