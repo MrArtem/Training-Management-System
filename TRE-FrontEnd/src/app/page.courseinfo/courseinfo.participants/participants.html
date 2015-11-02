@@ -18,8 +18,8 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <!--<tr ng-repeat="participant in courseInfo.participantsList track by $index" class="rowWithSecret">-->
-                    <tr ng-repeat="i in [1, 2] track by $index" class="rowWithSecret">
+                    <tr ng-repeat="participant in courseInfo.participantsList track by $index" class="rowWithSecret">
+                    <!--<tr ng-repeat="i in [1, 2] track by $index" class="rowWithSecret">-->
                         <td>{{$index + 1}}</td>
                         <td>{{participant.username}}</td>
                         <td>{{participant.email}}</td>
@@ -28,7 +28,7 @@
                     </tr>
                     </tbody>
                 </table>
-                <!--<p ng-show="courseInfo.participantsList.length == 0">Nobody subscribed yet</p>-->
+                <p ng-show="courseInfo.participantsList.length == 0">Nobody subscribed yet</p>
             </div>
 
         </div>

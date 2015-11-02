@@ -14,7 +14,7 @@
 
 				<p class="field">Language: <span class="info">{{courseInfo.language}}</span></p>
 
-				<a ng-if="courseInfo.canSubscribe" href="" class="button round tiny default-btn-blue"
+				<a ng-if="courseInfo.canSubscribe && !courseInfo.isCoach" href="" class="button round tiny default-btn-blue"
 				   ng-click="courseinfo.subscribe()">Subscribe</a>
 				<a ng-if="!courseInfo.canSubscribe && !courseInfo.isCoach" href="" class="button round tiny default-btn-red"
 				   ng-click="courseinfo.leave()">Leave</a>
