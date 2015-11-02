@@ -8,6 +8,7 @@ $btn-blue: #55acee;
 $btn-blue-border: #55a4e6;
 $btn-blue-hover: #2D88BF;
 $btn-blue-border-hover: #2c83b8;
+$btn-blue-accent: rgb(0, 109, 170);
 
 $btn-green: #57ad68;
 $btn-green-border: #a9d8b2;
@@ -180,7 +181,15 @@ table {
 }
 
 .accent-btn-blue {
+  color: white !important;
+  background-color: $btn-blue !important;
+  border-color: $btn-blue !important;
+}
 
+.accent-btn-blue:hover {
+  color: white !important;
+  background-color: $btn-blue-accent !important;
+  border-color: rgb(0, 109, 170) !important;
 }
 
 .btn-file {

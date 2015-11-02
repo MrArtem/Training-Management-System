@@ -4,7 +4,7 @@
 
 			<div class="scrollable-div">
 
-				<div ng-repeat="item in approval.approveList">
+				<div ng-repeat="item in approval.approveList track by $index">
 					<p><a ui-sref="profile({userId: item.coachId})">{{item.coachName}}</a>
 						{{approval.makeText(item.type, item.tableName)}} <a
 							ui-sref="step1({courseId: item.trainingId, type: item.type, edit: true, id: item.id})">{{item.trainingName}}</a>

@@ -1,66 +1,67 @@
 <div class="container">
 	<div class="row">
-		<div class="small-12 medium-10 large-10 medium-centered column">
+		<div class="small-12 medium-9 medium-centered column">
 			<div class="mycourses">
-				<a ui-sref="step1">create course!</a>
+				<div class="tools-header row">
+					<div class="small-12 medium-4 medium-centered column">
+						<div class="row">
+							<div class="small-9 column">
+								<ul class="segmented-tool button-group toggle" data-toggle="buttons-radio">
+									<li>
+										<input type="radio" id="r1" ng-model="mycourses.filter.isCoach" value=""
+											   data-toggle="button">
+										<label class="button small tool-label" for="r1">All</label>
+									</li>
+									<li>
+										<input type="radio" id="r2" ng-model="mycourses.filter.isCoach" value=false
+											   data-toggle="button">
+										<label class="button small tool-label" for="r2">Student</label>
+									</li>
+									<li>
+										<input type="radio" id="r3" ng-model="mycourses.filter.isCoach" value=true
+											   data-toggle="button">
+										<label class="button small tool-label" for="r3">Coach</label>
+									</li>
+								</ul>
+							</div>
 
-				<!--<div class="tools-header row">-->
-					<!--<div class="medium-6 medium-offset-3  hide-for-small-only columns">-->
-
-
-						<!--<ul class="segmented-tool button-group  toggle" data-toggle="buttons-radio">-->
-							<!--<li>-->
-								<!--<input type="radio" id="r1" ng-model="mycourses.filter.isCoach" value="" data-toggle="button">-->
-								<!--<label class="button small secondary " for="r1">All</label>-->
-							<!--</li>-->
-							<!--<li>-->
-								<!--<input type="radio" id="r2" ng-model="mycourses.filter.isCoach" value=false data-toggle="button">-->
-								<!--<label class="button small secondary " for="r2">Student</label>-->
-							<!--</li>-->
-							<!--<li>-->
-								<!--<input type="radio" id="r3" ng-model="mycourses.filter.isCoach" value=true data-toggle="button">-->
-								<!--<label class="button small secondary" for="r3">Coach</label>-->
-							<!--</li>-->
-						<!--</ul>-->
-
-					<!--</div>-->
-					<!--<div class="medium-3 small-12  columns">-->
-						<!--<form>-->
-							<!--<div class="row collapse  search-tool">-->
-								<!--<div class="small-12 columns">-->
-									<!--<i class="fa fa-search"></i>-->
-									<!--<input type="text" placeholder="Quick Look" ng-model="mycourses.filter.search">-->
-								<!--</div>-->
+							<!--all page was designed horribly, can do nothing about it-->
+							<!--<div class="small-3 column">-->
+								<!--<i class="fa fa-search"></i>-->
+								<!--<input type="text" placeholder="Quick Look" ng-model="mycourses.filter.search">-->
 							<!--</div>-->
-						<!--</form>-->
+						</div>
+					</div>
 
-					<!--</div>-->
+				</div>
 
-				<!--</div>-->
+				<section class="row">
+					<div class="small-12 medium-6 column card"
+						 ng-repeat="course in mycourses.userCourses | filter:{isCoach: mycourses.filter.isCoach}">
+						<div class="card-bg" ui-sref="courseinfo({courseId: course.id})">
+							<h1 class="course-title"><a ui-sref="courseinfo({courseId: course.id})">{{course.title}}</a>
+							</h1>
 
-				<!--<section class="course-list row">-->
-					<!--<div class="course-item column" ng-repeat="course in mycourses.userCourses | filter:{isCoach: mycourses.filter.isCoach}">-->
-						<!--<h1 class="course-title"><a ui-sref="courseinfo({courseId: course.id})">{{course.title}}</a></h1>-->
+							<!-- it is not returned -->
+							<!--<h2 class="course-lesson-number">Lesson #{{course.nextLesson}}</h2>-->
 
-						<!--&lt;!&ndash; it is not returned &ndash;&gt;-->
-						<!--&lt;!&ndash;<h2 class="course-lesson-number">Lesson #{{course.nextLesson}}</h2>&ndash;&gt;-->
+							<p class="course-excerpt">{{course.excerpt}}</p>
 
-						<!--<p class="course-excerpt">{{course.excerpt}}</p>-->
+							<p>Coach: <a ui-sref="profile({userId: course.coachId})"
+										 class="value">{{course.coachName}}</a></p>
 
-						<!--<div class="course-meta">-->
-							<!--<h3 class="course-date">When: <span class="value">{{course.nextDate | date: "MMM d, y h:mm a"}}</span></h3>-->
+							<p class="info"><i class="fa fa-clock-o"></i> <span class="value">{{course.nextDate | date: "MMM d, y h:mm a"}}</span>
+							</p>
 
-							<!--<h3 class="course-place">Where: <span class="value">{{course.nextPlace}}</span></h3>-->
+							<p class="info"><i class="fa fa-map-marker"></i> <span
+								class="value">{{course.nextPlace}}</span></p>
 
-							<!--<h3 class="course-coach">Who: <a ui-sref="profile({userId: course.coachId})" class="value">{{course.coachName}}</a></h3>-->
-							<!--<a class="course-goto"><i class="fa fa-arrow-right"></i></a>-->
-						<!--</div>-->
-					<!--</div>-->
 
-				<!--</section>-->
+						</div>
+					</div>
+
+				</section>
 			</div>
-			</div>
-
 		</div>
 
 	</div>

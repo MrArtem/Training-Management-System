@@ -38,3 +38,13 @@ nav {
 div#searchModal {
   top: 0 !important;
 }
+
+.create-btn {
+  padding-left: rem-calc(15) !important;
+  padding-right: rem-calc(15) !important;
+  padding-top: rem-calc(7) !important;
+  padding-bottom: rem-calc(10) !important;
+
+  font-weight: 600;
+  font-family: $tre-font-family;
+}

@@ -38,9 +38,8 @@ public class TrainingListModel {
         this.coachName = training.getCoach().getLastName() + " " + training.getCoach().getFirstName();
         this.coachId = training.getCoach().getId();
         this.tagList = training.getTagList();
-        //CustomUser user = (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        //this.isCoach = user.getUserId() == training.getCoach().getId();
-        this.isCoach = false;
+        CustomUser user = (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        this.isCoach = user.getUserId() == training.getCoach().getId();
     }
 
     public Long getId() {
