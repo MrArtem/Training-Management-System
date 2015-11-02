@@ -1,5 +1,6 @@
 .tre-dropdown {
-  border: 1 px solid $text-color !important;
+  border: 1px solid $border-gray !important;
+  border-radius: rem-calc(10) !important;
   color: $text-color !important;
 
   label {
@@ -9,7 +10,7 @@
 
   a {
     color: $text-color !important;
-    line-height: 120% !important;
+    line-height: 160% !important;
   }
 
   .no-margin-top {

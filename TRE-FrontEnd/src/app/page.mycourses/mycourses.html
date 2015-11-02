@@ -37,7 +37,7 @@
 				</div>
 
 				<section class="row">
-					<div class="small-12 medium-6 column card"
+					<div class="small-12 medium-6 column end card"
 						 ng-repeat="course in mycourses.userCourses | filter:{isCoach: mycourses.filter.isCoach}">
 						<div class="card-bg" ui-sref="courseinfo({courseId: course.id})">
 							<h1 class="course-title"><a ui-sref="courseinfo({courseId: course.id})">{{course.title}}</a>
