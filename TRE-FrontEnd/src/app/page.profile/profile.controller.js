@@ -11,6 +11,7 @@
         var userId = $stateParams.userId;
         console.log(userId);
         vm.profileInfo = {};
+        vm.isContentLoaded = false;
 
         vm.profileInfo.currentCourses = [];
         vm.profileInfo.feedbacks = [];
@@ -26,6 +27,7 @@
         function getProfileInfo() {
             userAPI.getProfileInfo(userId).then(function(user) {
                 vm.profileInfo = angular.copy(user);
+                vm.isContentLoaded = true;
             });
         }
 

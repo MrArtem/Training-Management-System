@@ -15,6 +15,12 @@
   transform: translateY($transformY);
 }
 
+.waiting-for-angular {
+  .card, .card-bg {
+    display: none;
+  }
+}
+
 .browse {
   .card {
 
