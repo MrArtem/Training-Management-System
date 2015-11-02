@@ -16,6 +16,7 @@
         vm.courseInfo.timetable = [];
 
         vm.getShortInfo = getShortInfo;
+        vm.leave = leave;
         vm.subscribe = subscribe;
 
         $scope.courseInfo = vm.courseInfo;
@@ -32,6 +33,12 @@
         function subscribe() {
             courseAPI.subscribe($stateParams.courseId).then(function(data) {
                 console.log('Subscribed successfully');
+            })
+        }
+
+        function leave() {
+            courseAPI.leave($stateParams.courseId).then(function(data) {
+                console.log('Left training successfully');
             })
         }
 
