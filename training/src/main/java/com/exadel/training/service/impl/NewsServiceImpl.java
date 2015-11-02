@@ -57,7 +57,7 @@ public class NewsServiceImpl implements NewsService {
                 Feedback feedback = feedbackService.getFeedback(news.getIdRow());
                 newsModel.setTitle(feedback.getTraining().getTitle());
         }
-        template.convertAndSend("/pipe/news", news);
+        //template.convertAndSend("/pipe/news", news);
     }
 
     @Override

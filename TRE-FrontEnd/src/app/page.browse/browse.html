@@ -1,13 +1,13 @@
 <div class="container browse">
 	<div class="row">
-		<div class="small-12 medium-6 medium-centered column">
+		<div class="small-12 medium-8 medium-centered column">
 
 			<div class="row">
 
 			</div>
 
 			<div class="row">
-				<div class="small-12 medium-3 column card" ng-repeat="course in browse.courseList">
+				<div class="left small-12 column card" ng-repeat="course in browse.courseList">
 					<div class="card-bg" ui-sref="courseinfo({courseId: course.id})">
 						<h3 class="course-title"><a ui-sref="courseinfo({courseId: course.id})">{{course.title}}</a>
 						</h3>
