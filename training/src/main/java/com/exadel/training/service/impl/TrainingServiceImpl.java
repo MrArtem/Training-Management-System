@@ -87,7 +87,7 @@ public class TrainingServiceImpl implements TrainingService {
 
 
     private List<ApproveLesson> addLessonListNotRepeating(Training training
-            , List<LessonModel> lessonModelList, boolean isConfirmed, boolean createLesson, String place) {
+            , List<LessonModel> lessonModelList, boolean isConfirmed, boolean createLesson, String place, boolean isAdmin) {
         List<ApproveLesson> approveLessonList = new ArrayList<ApproveLesson>();
         for (LessonModel lessonModel : lessonModelList) {
             Lesson lesson = null;
@@ -128,7 +128,7 @@ public class TrainingServiceImpl implements TrainingService {
     }
 
     private List<ApproveLesson> addLessonListRepeating(Training training, RepeatModel repeatModel
-            , boolean isConfirmed, boolean createLesson, String place) {
+            , boolean isConfirmed, boolean createLesson, String place, boolean isAdmin) {
         List<ApproveLesson> approveLessonList = new ArrayList<ApproveLesson>();
         LessonModel[] lessonModelList = repeatModel.getLessonList();
         int dayOfWeekStart = Utils. getDayOfWeek(repeatModel.getStartDate());
@@ -157,7 +157,7 @@ public class TrainingServiceImpl implements TrainingService {
                         attendanceDAO.save(attendance);
                     }
                 }
-                if (!isConfirmed) {
+                if (!isConfirmed && !isAdmin) {
                     ApproveLesson approveLesson = new ApproveLesson();
                     approveLesson.setLesson(lesson);
                     approveLesson.setDate(dateLesson);
@@ -182,8 +182,12 @@ public class TrainingServiceImpl implements TrainingService {
     public void createTraining(Long coachId, String title, String description, String shortInfo
             , Integer language, Integer maxSize, boolean isInner, String place
             , List<Long> tagIdList, String additionalInfo, boolean isRepeating
-            , List<LessonModel> lessonModelList, RepeatModel repeatModel) {
+            , List<LessonModel> lessonModelList, RepeatModel repeatModel, Long currentUserId) {
 
+
+
+        User currentUser = userDAO.getUserByID(currentUserId);
+        boolean isAdmin = currentUser.getRole() == User.Role.ADMIN;
         User coach = userDAO.getUserByID(coachId);
         Training training = new Training(title
                 , description
@@ -195,30 +199,38 @@ public class TrainingServiceImpl implements TrainingService {
                 , coach);
         List<Tag> tagList = getTagList(tagIdList);
         training.setTagList(tagList);
+        if(isAdmin) {
+            training.setState(Training.State.NONE);
+        }
         trainingDAO.addTraining(training);
-
-        ApproveTraining approveTraining = getApproveTraining(title
-                , description
-                , shortInfo
-                , language
-                , maxSize
-                , additionalInfo
-                , isInner);
-        approveTraining.setTagList(tagList);
-        trainingApproveDAO.addApprove(approveTraining);
         ApproveAction approveAction = new ApproveAction();
-        approveAction.setDate(Utils.getTime());
-        approveAction.setType(ApproveAction.Type.CREATE);
-        approveAction.setTraining(training);
+        if( !isAdmin ) {
+            ApproveTraining approveTraining = getApproveTraining(title
+                    , description
+                    , shortInfo
+                    , language
+                    , maxSize
+                    , additionalInfo
+                    , isInner);
+            approveTraining.setTagList(tagList);
+            trainingApproveDAO.addApprove(approveTraining);
+            approveAction.setDate(Utils.getTime());
+            approveAction.setType(ApproveAction.Type.CREATE);
+            approveAction.setTraining(training);
+        }
         List<ApproveLesson> approveLessonList = null;
         if (isRepeating) {
-            approveLessonList = addLessonListRepeating(training, repeatModel, false, true, place);
+            approveLessonList = addLessonListRepeating(training, repeatModel
+                    , false, true, place, isAdmin);
         } else {
-            approveLessonList = addLessonListNotRepeating(training, lessonModelList, false, true, place);
+            approveLessonList = addLessonListNotRepeating(training, lessonModelList
+                    , false, true, place, isAdmin);
         }
-        approveAction.setApproveLessonList(approveLessonList);
-        approveAction.setType(ApproveAction.Type.CREATE);
-        approveActionDAO.addApproveAction(approveAction);
+        if (currentUser.getRole() != User.Role.ADMIN){
+            approveAction.setApproveLessonList(approveLessonList);
+            approveAction.setType(ApproveAction.Type.CREATE);
+            approveActionDAO.addApproveAction(approveAction);
+        }
     }
 
     private void removeApproveLessonList(ApproveAction approveAction, boolean removeLesson) {
@@ -336,6 +348,7 @@ public class TrainingServiceImpl implements TrainingService {
             , Integer language, Integer maxSize, boolean isInner, String place, List<Long> tagIdList
             , String additionalInfo, List<LessonModel> lessonModelList, RepeatModel repeatModel) {
 
+
         ApproveTraining approveTraining = getApproveTraining(title
                 , description
                 , shortInfo
@@ -350,9 +363,9 @@ public class TrainingServiceImpl implements TrainingService {
         approveAction.setType(ApproveAction.Type.EDIT);
         List<ApproveLesson> approveLessonList;
         if (training.isRepeat()) {
-            approveLessonList = addLessonListRepeating(training, repeatModel, false, false, place);
+            approveLessonList = addLessonListRepeating(training, repeatModel, false, false, place, false);
         } else {
-            approveLessonList = addLessonListNotRepeating(training, lessonModelList, false, false, place);
+            approveLessonList = addLessonListNotRepeating(training, lessonModelList, false, false, place, false);
         }
 
         approveAction.setApproveLessonList(approveLessonList);
@@ -363,16 +376,48 @@ public class TrainingServiceImpl implements TrainingService {
     @Override
     public void editTraining(Long trainingId, String title, String description, String shortInfo
             , Integer language, Integer maxSize, boolean isInner, String place, List<Long> tagIdList
-            , String additionalInfo, List<LessonModel> lessonModelList, RepeatModel repeatModel) {
+            , String additionalInfo, List<LessonModel> lessonModelList, RepeatModel repeatModel, long currentUserId) {
         ApproveAction approveAction = approveActionDAO.getApproveActionByTrainingId(trainingId);
+        User currentUser = userDAO.getUserByID(currentUserId);
         if (approveAction == null) {
-            editTrainingNotPrevApprove(trainingDAO.getTrainingById(trainingId), title, description
-                    , shortInfo, language, maxSize, isInner, place, tagIdList
-                    , additionalInfo, lessonModelList, repeatModel);
+            editTrainingNotPrevApprove(trainingDAO.getTrainingById(trainingId)
+                    , title
+                    , description
+                    , shortInfo
+                    , language
+                    , maxSize
+                    , isInner
+                    , place
+                    , tagIdList
+                    , additionalInfo
+                    , lessonModelList
+                    , repeatModel);
         } else {
-            editTrainingWithPrevApprove(approveAction, title, description
-                    , shortInfo, language, maxSize, isInner, place, tagIdList
-                    , additionalInfo, lessonModelList, repeatModel);
+            editTrainingWithPrevApprove(approveAction
+                    , title
+                    , description
+                    , shortInfo
+                    , language
+                    , maxSize
+                    , isInner
+                    , place
+                    , tagIdList
+                    , additionalInfo
+                    , lessonModelList
+                    , repeatModel);
+        }
+        if( currentUser.getRole() == User.Role.ADMIN ) {
+            confirmTraining(approveAction.getId()
+                    , title
+                    , description
+                    , shortInfo
+                    , language
+                    , maxSize
+                    , isInner
+                    , place
+                    , tagIdList
+                    , lessonModelList
+                    , repeatModel);
         }
     }
 

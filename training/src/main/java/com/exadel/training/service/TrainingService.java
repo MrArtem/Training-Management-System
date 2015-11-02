@@ -29,6 +29,7 @@ public interface TrainingService {
             , boolean isRepeating
             , List<LessonModel> lessonModelList
             , RepeatModel repeatModel
+            , long currentUserId
     );
 
     void confirmTraining(Long actionId
@@ -60,6 +61,7 @@ public interface TrainingService {
             , String additionalInfo
             , List<LessonModel> lessonModelList
             , RepeatModel repeatModel
+            , long currentUserId
     );
 
     void removeTraining(Long trainingId);

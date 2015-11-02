@@ -5,11 +5,13 @@ import com.exadel.training.controller.model.trainingModels.ApproveGetTrainingMod
 import com.exadel.training.controller.model.trainingModels.ApproveLessonModel;
 import com.exadel.training.controller.model.trainingModels.LessonModel;
 import com.exadel.training.dao.domain.*;
+import com.exadel.training.security.User.CustomUser;
 import com.exadel.training.service.TrainingService;
 import com.exadel.training.validate.AddingTrainingModelValidator;
 import com.exadel.training.validate.annotation.LegalID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,6 +36,8 @@ public class TrainingCRUDController {
     @Secured({"ADMIN", "USER"})
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     void createTraining(@Valid @RequestBody AddingTrainingModel addingTrainingModel) {
+        CustomUser customUser =  (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
         trainingService.createTraining(addingTrainingModel.getCoachId()
                 , addingTrainingModel.getTitle()
                 , addingTrainingModel.getDescription()
@@ -46,7 +50,8 @@ public class TrainingCRUDController {
                 , addingTrainingModel.getAdditionalInfo()
                 , addingTrainingModel.getIsRepeating()
                 , addingTrainingModel.getLessonList()
-                , addingTrainingModel.getRepeatModel());
+                , addingTrainingModel.getRepeatModel()
+                , customUser.getUserId());
 
     }
 
