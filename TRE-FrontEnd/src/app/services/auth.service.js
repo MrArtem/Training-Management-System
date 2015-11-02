@@ -5,7 +5,7 @@
         .factory('authService', authService);
 
     /* @ngInject */
-    function authService($cookies, $state, $q, authAPI) {
+    function authService($cookies, $state, $q, $window, authAPI) {
         var loginPromise = $q.defer();
         var accessRights = {
             accessRightsFromString: accessRightsFromString,
@@ -73,7 +73,8 @@
             isLogged = false;
             user = {};
             clearUserCreds();
-            $state.go('login');
+            $window.location.reload();
+            //$state.go('login');
         }
 
         function credsLogin() {

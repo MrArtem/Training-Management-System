@@ -1,9 +1,26 @@
-.hey-clas {
-  position: absolute;
-}
+.tre-dropdown {
+  border: 1 px solid $text-color !important;
+  color: $text-color !important;
 
-.hey-hey-class {
-  position: absolute;
+  label {
+    background-color: white !important;
+    color: $text-color !important;
+  }
+
+  a {
+    color: $text-color !important;
+    line-height: 120% !important;
+  }
+
+  .no-margin-top {
+    margin-top: rem-calc(3) !important;
+    padding-top: 0 !important;
+  }
+
+  .no-margin-bottom {
+    padding-bottom: 0 !important;
+    margin-bottom: rem-calc(3) !important;
+  }
 }
 
 .navbar {

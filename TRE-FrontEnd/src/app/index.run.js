@@ -10,7 +10,7 @@
         $log.debug('runBlock end');
 
         $rootScope.isLoginPage = isLoginPage;
-        
+
         //try login with creds
         authService.credsLogin();
 
@@ -18,16 +18,12 @@
             console.log('$viewContentLoaded');
             Foundation.global.namespace = '';
             $(document).foundation();
-
-
         });
 
         $rootScope.$on("$stateChangeStart", function (event, toState, toParams, fromState, fromParams) {
             //            console.log("State: " + toState.url);
             //            console.log("Auth Rights Needed: " + toState.accessRights)
             //            console.log("Auth Rights: " + authService.getAccessRights())
-
-
             // is Logged
             if (toState.auth && !authService.isLogged()) {
                 // User isn’t authenticated
@@ -35,7 +31,6 @@
                 event.preventDefault();
                 return;
             }
-
 
             if (authService.isLogged) {
                 if (authService.getAccessRights() > toState.accessRights) {
@@ -47,8 +42,6 @@
                 }
             }
         });
-
-
 
         function isLoginPage() {
             return $state.includes('login');
