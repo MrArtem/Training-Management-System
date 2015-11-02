@@ -101,7 +101,7 @@ public class TrainingCRUDController {
                 , addingTrainingModel.getTagList()
                 , addingTrainingModel.getAdditionalInfo()
                 , addingTrainingModel.getLessonList()
-                , addingTrainingModel.getRepeatModel());
+                , addingTrainingModel.getRepeatModel(), 1);
     }
 
     @LegalID

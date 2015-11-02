@@ -182,7 +182,7 @@ public class TrainingServiceImpl implements TrainingService {
     public void createTraining(Long coachId, String title, String description, String shortInfo
             , Integer language, Integer maxSize, boolean isInner, String place
             , List<Long> tagIdList, String additionalInfo, boolean isRepeating
-            , List<LessonModel> lessonModelList, RepeatModel repeatModel, Long currentUserId) {
+            , List<LessonModel> lessonModelList, RepeatModel repeatModel, long currentUserId) {
 
 
 
@@ -267,9 +267,9 @@ public class TrainingServiceImpl implements TrainingService {
             training.setIsInner(isInner);
             training.setTagList(getTagList(tagIdList));
             if (training.isRepeat()) {
-                addLessonListRepeating(training, repeatModel, true, true, place);
+                addLessonListRepeating(training, repeatModel, true, true, place, false);
             } else {
-                addLessonListNotRepeating(training, lessonModelList, true, true, place);
+                addLessonListNotRepeating(training, lessonModelList, true, true, place, false);
             }
             training.setState(Training.State.NONE);
             trainingDAO.changeTraining(training);
@@ -336,9 +336,9 @@ public class TrainingServiceImpl implements TrainingService {
 
         List<ApproveLesson> approveLessonList;
         if (training.isRepeat()) {
-            approveLessonList = addLessonListRepeating(training, repeatModel, false, false, place);
+            approveLessonList = addLessonListRepeating(training, repeatModel, false, false, place, false);
         } else {
-            approveLessonList = addLessonListNotRepeating(training, lessonModelList, false, false, place);
+            approveLessonList = addLessonListNotRepeating(training, lessonModelList, false, false, place, false);
         }
         approveAction.setApproveLessonList(approveLessonList);
     }
