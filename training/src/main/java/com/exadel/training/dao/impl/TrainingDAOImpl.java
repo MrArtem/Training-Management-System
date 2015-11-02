@@ -1,12 +1,15 @@
 package com.exadel.training.dao.impl;
 
+import com.exadel.training.dao.UserDAO;
 import com.exadel.training.dao.domain.*;
 import com.exadel.training.dao.TrainingDAO;
+import com.exadel.training.security.User.CustomUser;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,6 +26,9 @@ public class TrainingDAOImpl implements TrainingDAO {
 
     @Autowired
     private SessionFactory sessionFactory;
+
+    @Autowired
+    private UserDAO userDAO;
 
 
     @Override
@@ -43,28 +49,39 @@ public class TrainingDAOImpl implements TrainingDAO {
     @Override
     @SuppressWarnings("unchecked")
     public List<Training> getTrainingListByTagList(Integer page, Integer pageSize, Boolean isActual, List<Tag> tagList) {
-        Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Training.class);
+        Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Training.class, "training");
         if (tagList.size() == 0) {
             if (isActual) {
-                criteria = criteria.add(Restrictions.eq("state", Training.State.NONE));
-                Long date = new Date().getTime();
-                criteria = criteria.createCriteria("lessonList").add(Restrictions.gt("date", date));
-                criteria = criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
-                criteria = criteria.addOrder(Order.asc("date"));
-
+                CustomUser customUser = (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+                User user = userDAO.getUserByID(customUser.getUserId());
+                criteria.createAlias("training.listenerList", "listener");
+                Criterion isCoach = Restrictions.eq("coach", user);
+                Criterion isSubscribed = Restrictions.eq("listener.user", user);
+                criteria.add(Restrictions.or(isCoach, isSubscribed));
             }
+            criteria = criteria.add(Restrictions.eq("state", Training.State.NONE));
+            Long date = new Date().getTime();
+            criteria = criteria.createCriteria("lessonList").add(Restrictions.gt("date", date));
+            criteria = criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+            criteria = criteria.addOrder(Order.asc("date"));
             return criteria.list();
         } else {
             criteria = criteria.add(Restrictions.eq("state", Training.State.NONE));
             if (isActual) {
-                Long date = new Date().getTime();
-                DetachedCriteria detachedCriteria = DetachedCriteria.forClass(Training.class);
-                detachedCriteria = detachedCriteria.add(Restrictions.eq("state", Training.State.NONE));
-                detachedCriteria = detachedCriteria.setProjection(Projections.property("id"));
-                detachedCriteria = detachedCriteria.createCriteria("lessonList").add(Restrictions.gt("date", date));
-                detachedCriteria = detachedCriteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
-                criteria.add(Subqueries.propertyIn("id", detachedCriteria));
+                CustomUser customUser = (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+                User user = userDAO.getUserByID(customUser.getUserId());
+                criteria.createAlias("training.listenerList", "listener");
+                Criterion isCoach = Restrictions.eq("coach", user);
+                Criterion isSubscribed = Restrictions.eq("listener.user", user);
+                criteria.add(Restrictions.or(isCoach, isSubscribed));
             }
+            Long date = new Date().getTime();
+            DetachedCriteria detachedCriteria = DetachedCriteria.forClass(Training.class);
+            detachedCriteria = detachedCriteria.add(Restrictions.eq("state", Training.State.NONE));
+            detachedCriteria = detachedCriteria.setProjection(Projections.property("id"));
+            detachedCriteria = detachedCriteria.createCriteria("lessonList").add(Restrictions.gt("date", date));
+            detachedCriteria = detachedCriteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+            criteria.add(Subqueries.propertyIn("id", detachedCriteria));
             criteria.setProjection(Projections.projectionList().add(Projections.groupProperty("id"))
                     .add(Projections.count("id").as("count")));
             criteria = criteria.addOrder(Order.desc("count"));

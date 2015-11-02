@@ -18,6 +18,12 @@
 $light-border-color: rgba(0, 0, 0, 0.12);
 $dark-border-color: rgba(0, 0, 0, 0.40);
 
+.waiting-for-angular {
+  .card, .card-bg {
+    visibility: hidden;
+  }
+}
+
 .mycourses {
 
   .card {

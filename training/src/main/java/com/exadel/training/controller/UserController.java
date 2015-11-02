@@ -65,8 +65,10 @@ public class UserController {
         for(Training training : userService.actualTrainings(idUser)) {
             TrainingListModel trainingListModel = new TrainingListModel(training);
             Lesson nextLesson = lessonService.getNextLesson(training.getId());
-            trainingListModel.setNextDate(nextLesson.getDate());
-            trainingListModel.setNextPlace(nextLesson.getPlace());
+            if (nextLesson != null) {
+                trainingListModel.setNextDate(nextLesson.getDate());
+                trainingListModel.setNextPlace(nextLesson.getPlace());
+            }
             trainingListModelList.add(trainingListModel);
         }
 
