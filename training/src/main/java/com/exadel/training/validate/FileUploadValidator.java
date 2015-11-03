@@ -31,6 +31,6 @@ public class FileUploadValidator implements Validator {
 
     }
     private boolean isValidID(long id) {
-        return id <= 0 ? false : true;
+        return id <= 0;
     }
 }
