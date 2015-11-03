@@ -2,9 +2,11 @@ package com.exadel.training.controller;
 
 import com.exadel.training.controller.model.feedbackModels.AddFeedbackModel;
 import com.exadel.training.controller.model.feedbackModels.FeedbackModel;
+import com.exadel.training.controller.model.feedbackModels.FullFeedback;
 import com.exadel.training.dao.domain.Feedback;
 import com.exadel.training.service.FeedbackService;
 import com.exadel.training.validate.annotation.LegalID;
+import org.bouncycastle.ocsp.Req;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.access.annotation.Secured;
@@ -52,5 +54,12 @@ public class FeedbackController {
     @RequestMapping(value = "/add_feedback", method = RequestMethod.POST, consumes = "application/json")
     public void addFeedback(@Validated @RequestBody AddFeedbackModel addFeedbackModel) {
         feedbackService.addFeedback(addFeedbackModel);
+    }
+
+    @Secured({"ADMIN", "USER"})
+    @RequestMapping(value = "/get_feedback/{idFeedback}", method = RequestMethod.GET)
+    @LegalID
+    public FullFeedback getFeedbackByID(@PathVariable("idFeedback") long idFeedback) {
+        return new FullFeedback(feedbackService.getFeedback(idFeedback));
     }
 }
