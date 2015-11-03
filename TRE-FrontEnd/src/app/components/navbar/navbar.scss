@@ -1,3 +1,25 @@
+@mixin style-placeholder($color, $fontsize) {
+  ::-webkit-input-placeholder {
+    color: $color;
+    font-size: $fontsize;
+  }
+
+  :-moz-placeholder { /* Firefox 18- */
+    color: $color;
+    font-size: $fontsize;
+  }
+
+  ::-moz-placeholder {  /* Firefox 19+ */
+    color: $color;
+    font-size: $fontsize;
+  }
+
+  :-ms-input-placeholder {
+    color: $color;
+    font-size: $fontsize;
+  }
+}
+
 .tre-dropdown {
   border: 1px solid $border-gray !important;
   border-radius: rem-calc(10) !important;
@@ -65,4 +87,24 @@ div#searchModal {
 
   font-weight: 600;
   font-family: $tre-font-family;
+}
+
+#searchModal {
+  .search-input {
+    border: none !important;
+    background: white !important;
+  }
+
+  .search-input:focus {
+    box-shadow: none;
+    outline: none;
+  }
+
+  .found-training {
+
+  }
+
+  .found-user {
+
+  }
 }

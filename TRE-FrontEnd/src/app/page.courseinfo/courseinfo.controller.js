@@ -19,6 +19,7 @@
         vm.getLanguage = getLanguage;
         vm.getShortInfo = getShortInfo;
         vm.leave = leave;
+        vm.setRating = setRating; //TODO
         vm.subscribe = subscribe;
 
         $scope.courseInfo = vm.courseInfo;
@@ -41,6 +42,12 @@
                 $scope.courseInfo = angular.copy(data);
                 vm.isContentLoaded = true;
                 console.log($scope.courseInfo);
+            });
+        }
+
+        function setRating() {
+            courseAPI.setRating().then(function(data) {
+                console.log('Training rated successfully');
             });
         }
 

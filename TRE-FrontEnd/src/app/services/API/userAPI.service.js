@@ -10,9 +10,10 @@
             addFeedbackOnUser: addFeedbackOnUser,
             getCurrentCourses: getCurrentCourses,
             getFeedbacksOn: getFeedbacksOn,
+            getFeedback: getFeedback, //TODO
             getPastCourses: getPastCourses,
             getProfileInfo: getProfileInfo,
-            getWaitingCourses: getWaitingCourses
+            getWaitingCourses: getWaitingCourses,
         };
         return userAPI;
 
@@ -32,6 +33,12 @@
 
         function getFeedbacksOn(userId) {
             return $http.get(urlProvider.getFeedbacksOnUser(userId)).then(function(result) {
+                return result.data;
+            });
+        }
+
+        function getFeedback(fbId) {
+            return $http.get(urlProvider.getFeedback(fbId)).then(function(result) {
                 return result.data;
             });
         }

@@ -67,6 +67,10 @@ body {
 
 }
 
+textarea {
+  resize: none;
+}
+
 .waiting-for-angular {
   //display: block;
   background: url(assets/images/loader.svg) no-repeat center center ;

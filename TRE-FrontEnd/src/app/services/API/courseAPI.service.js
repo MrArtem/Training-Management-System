@@ -8,24 +8,29 @@
     function courseAPI($state, $http, urlProvider) {
         var courseAPI = {
             addComment: addComment,
+            addExCoach: addExCoach, //TODO
             addLesson: addLesson,
             addParticipant: addParticipant,
             approveCourse: approveCourse,
             cancelCreate: cancelCreate,
             cancelEdit: cancelEdit,
             createCourse: createCourse,
+            deleteFile: deleteFile, //TODO
             deleteLesson: deleteLesson,
             deleteParticipant: deleteParticipant,
             editCourse: editCourse,
+            getAllTags: getAllTags, //TODO
             getAttachments: getAttachments,
             getComments: getComments,
             getCourseList: getCourseList,
             getEditedCourse: getEditedCourse,
+            getExCoachList: getExCoachList, //TODO
             getParticipants: getParticipants,
             getShortInfo: getShortInfo,
             getTimetable: getTimetable,
             editLesson: editLesson,
             leave: leave,
+            setRating: setRating,
             subscribe: subscribe,
             uploadFiles: uploadFiles
         }
@@ -33,12 +38,21 @@
 
         //////////
 
-        function getAttachments() {
-
+        function getAttachments(courseId) {
+            return $http.get(urlProvider.getAttachments(courseId)).then(function(result) {
+                return result.data;
+            });
         }
 
         function getComments(courseId) {
             return $http.get(urlProvider.getComments(courseId)).then(function (result) {
+                return result.data;
+            });
+        }
+
+        //TODO
+        function getExCoachList() {
+            return $http.get(urlProvider.getExCoachList()).then(function(result) {
                 return result.data;
             });
         }
@@ -51,6 +65,12 @@
 
         function getShortInfo(courseId) {
             return $http.get(urlProvider.getShortInfo(courseId)).then(function(result) {
+                return result.data;
+            });
+        }
+
+        function getAllTags() {
+            return $http.get(urlProvider.getAllTags()).then(function(result) {
                 return result.data;
             });
         }
@@ -248,6 +268,12 @@
             });
         }
 
+        function addExCoach(coachData) {
+            return $http.post(urlProvider.addExCoach(), coachData).then(function(result) {
+                return result.data;
+            });
+        }
+
         //////////
 
         function uploadFiles(files) {
@@ -266,6 +292,13 @@
             });
         }
 
+        //TODO
+        function deleteFile(fileId) {
+           //return $http.put(urlProvider.deleteFile(fileId)).then(function(result) {
+           //    return result.data;
+           //});
+        }
+
         //////////
 
         function getCourseList(isActual, tagList) {
@@ -282,6 +315,13 @@
 
         function leave(courseId) {
             return $http.put(urlProvider.leave(courseId)).then(function(result) {
+                return result.data;
+            });
+        }
+
+        //TODO
+        function setRating(courseId, rating) {
+            return $http.put(urlProvider.setRating(courseId, rating)).then(function(result) {
                 return result.data;
             });
         }

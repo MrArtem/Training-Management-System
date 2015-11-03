@@ -17,10 +17,10 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr ng-repeat="fb in profileInfo.feedbacks">
+                    <tr ng-repeat="fb in profileInfo.feedbacks track by $index">
                         <td><a ui-sref="profile({userId: fb.coachID})">{{fb.coachName}}</a></td>
                         <td>{{fb.isPositive==true ? '+' : '-'}}</td>
-                        <td>See details</td>
+                        <td data-reveal-id="seeFeedbackModal" ng-click="feedbacks.seeFeedback($index)"><a href="">See details</a></td>
                     </tr>
                     </tbody>
                 </table>
@@ -29,5 +29,62 @@
 
         </div>
 
+    </div>
+</div>
+
+<div class="tre-modal">
+    <div id="seeFeedbackModal" class="reveal-modal medium" data-reveal aria-labelledby="feedbackTitle"
+         aria-hidden="true"
+         role="dialog">
+        <h2 id="feedbackTitle">...</h2>
+
+        <form name="feedbackForm" novalidate>
+
+            <div class="row">
+                <div class="small-12 medium-6 no-left-padding column">
+                    <input type="checkbox" id="attendance" ng-model="feedbacks.fbInfo.attendance" ng-disabled><label for="attendance">Was
+                    it interesting?</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="small-12 medium-6 no-left-padding column">
+                    <input type="checkbox" id="attitude" ng-model="feedbacks.fbInfo.attitude" ng-disabled><label for="attitude">Was it
+                    clear?</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="small-12 medium-6 no-left-padding column">
+                    <input type="checkbox" id="commSkills" ng-model="feedbacks.fbInfo.commSkills" ng-disabled><label for="commSkills">Did
+                    you learn something new?</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="small-12 medium-6 no-left-padding column">
+                    <input type="checkbox" id="questions" ng-model="feedbacks.fbInfo.questions" ng-disabled><label for="questions">Was the coach creative?</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="small-12 medium-6 no-left-padding column">
+                    <input type="checkbox" id="motivation" ng-model="feedbacks.fbInfo.motivation"><label for="motivation">Would you recommend this course?</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="small-12 medium-6 no-left-padding column">
+                    <input type="checkbox" id="focusOnResult" ng-model="feedbacks.fbInfo.focusOnResult" ng-disabled><label for=focusOnResult>Would you recommend this course?</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="small-12 medium-6 no-left-padding column">
+                    <label>Anything else?
+                        <textarea type="text" name="other" placeholder="Do you have something else to say?" ng-model="feedbacks.fbInfo.other" ng-maxlength="10000" ng-disabled></textarea>
+                    </label>
+                </div>
+            </div>
+
+            <div class="row">
+                <a href="" class="right button round tiny default-btn-blue" close-modal="seeFeedbackModal">OK</a>
+            </div>
+        </form>
+        <a class="close-reveal-modal" aria-label="Close">&#215;</a>
     </div>
 </div>

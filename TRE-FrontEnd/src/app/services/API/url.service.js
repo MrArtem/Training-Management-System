@@ -8,6 +8,7 @@
     function UrlProvider() {
         var urlProvider = {
             addComment: addComment,
+            addExCoach: addExCoach, //TODO
             addFeedback: addFeedback,
             addParticipant: addParticipant,
             approveCourse: approveCourse,
@@ -15,16 +16,21 @@
             cancelEdit: cancelEdit,
             confirm: confirm,
             createCourse: createCourse,
+            deleteFile: deleteFile, //TODO
             deleteLesson: deleteLesson,
             deleteParticipant: deleteParticipant,
             editCourse: editCourse,
             findTrainings: findTrainings,
             findUsers: findUsers,
+            getAllTags: getAllTags, //TODO
             getApproveList: getApproveList,
+            getAttachments: getAttachments,
             getComments: getComments,
             getCourseList: getCourseList,
             getCurrentCoursesForUser: getCurrentCoursesForUser,
             getEditedCourse: getEditedCourse,
+            getExCoachList: getExCoachList, //TODO
+            getFeedback: getFeedback, //TODO
             getFeedbacksOnUser: getFeedbacksOnUser,
             getNewsList: getNewsList,
             getParticipants: getParticipants,
@@ -32,11 +38,12 @@
             getProfileInfo: getProfileInfo,
             getShortInfo: getShortInfo,
             getTimetable: getTimetable,
-            getWaitingCoursesForUser: getWaitingCoursesForUser,
+            getWaitingCoursesForUser: getWaitingCoursesForUser, //TODO
             leave: leave,
             login: login,
             logout: logout,
             manageLesson: manageLesson,
+            setRating: setRating, //TODO
             subscribe: subscribe,
             uploadFiles: uploadFiles
         };
@@ -45,6 +52,11 @@
 
     function addComment(courseId) {
         return '/api/training/' + courseId + '/add_comment';
+    }
+
+    //TODO
+    function addExCoach() {
+        //
     }
 
     function addFeedback() {
@@ -75,6 +87,11 @@
         return '/api/training/create';
     }
 
+    //TODO
+    function deleteFile(fileId) {
+        //return ;
+    }
+
     function deleteLesson(courseId, lessonId) {
         return '/api/training/' + courseId + '/lesson/' + lessonId;
     }
@@ -95,8 +112,16 @@
         return '/api/search_controller/search_user'
     }
 
+    function getAllTags() {
+        //return '/api/';
+    }
+
     function getApproveList() {
         return '/api/approve_list';
+    }
+
+    function getAttachments(courseId) {
+        return '/api/file_controller/get_files/' + courseId;
     }
 
     function getComments(courseId) {
@@ -115,8 +140,18 @@
         return '/api/training/getApproveTraining/' + trainingId;
     }
 
+    //TODO
+    function getExCoachList() {
+        //return '/api/';
+    }
+
     function getFeedbacksOnUser(userId) {
         return '/api/feedback_controller/feedbacks_of_user/' + userId;
+    }
+
+    //TODO
+    function getFeedback(fbId) {
+        //return '/api/feedback_controller/' + ;
     }
 
     function getNewsList() {
@@ -143,6 +178,7 @@
         return '/api/training/' + courseId + '/lesson_list';
     }
 
+    //TODO
     function getWaitingCoursesForUser(userId) {
         //return;
     }
@@ -161,6 +197,11 @@
 
     function manageLesson(courseId) {
         return '/api/training/' + courseId + '/lesson';
+    }
+
+    //TODO
+    function setRating(courseId, rating) {
+        return '/api/training/' + courseId + '/set_rating/' + rating;
     }
 
     function subscribe(courseId) {

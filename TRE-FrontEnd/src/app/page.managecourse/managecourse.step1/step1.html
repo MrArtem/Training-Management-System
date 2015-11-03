@@ -16,15 +16,15 @@
             <div class="row">
                 <div class="small-12 column">
                     <label>Short description
-                        <input type="text" name="shortInfo" placeholder="short description" ng-model="courseInfo.shortInfo" ng-maxlength="255" required>
+                        <textarea type="text" name="shortInfo" placeholder="short description" ng-model="courseInfo.shortInfo" ng-maxlength="255" required></textarea>
                     </label>
                     <small ng-show="courseForm.shortInfo.$invalid && courseForm.shortInfo.$touched" class="error">This field is required.</small>
                 </div>
             </div>
 
-            <!--&lt;!&ndash;CHANGE THIS&ndash;&gt;-->
-            <!--<div class="row">-->
-                <!--<div class="small-12 column">-->
+            <!--CHANGE THIS-->
+            <!--<div ng-if="managecourse.isAdmin()" class="row">-->
+                <!--<div class="small-12  medium-6 column">-->
                     <!--<label>Coach-->
                         <!--<input type="text" placeholder="coach" ng-model="courseInfo.coach">-->
                     <!--</label>-->
