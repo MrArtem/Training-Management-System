@@ -7,6 +7,7 @@
     /* @ngInject */
     function userAPI($http, urlProvider) {
         var userAPI = {
+            addExCoach: addExCoach,
             addFeedbackOnUser: addFeedbackOnUser,
             getCurrentCourses: getCurrentCourses,
             getFeedbacksOn: getFeedbacksOn,
@@ -16,6 +17,12 @@
             getWaitingCourses: getWaitingCourses
         };
         return userAPI;
+
+        function addExCoach(coachInfo) {
+            return $http.post(urlProvider.addExCoach(), coachInfo).then(function(result) {
+                return result.data;
+            })
+        }
 
         function addFeedbackOnUser(courseId, userId, fbInfo) {
             fbInfo.userID = userId;

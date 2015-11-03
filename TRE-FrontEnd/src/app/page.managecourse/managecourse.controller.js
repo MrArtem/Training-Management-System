@@ -68,7 +68,11 @@
                 }
             }
             $scope.courseInfo.language = parseInt($scope.courseInfo.language);
-            $scope.courseInfo.coachId = authService.getUser().userId;
+
+            //if admin is logged, he must choose a coach for training
+            if(!vm.isAdmin()) {
+                $scope.courseInfo.coachId = authService.getUser().userId;
+            }
             courseAPI.createCourse($scope.courseInfo).then(function(data) {
                 console.log("request success")
             }); //some then with alert?

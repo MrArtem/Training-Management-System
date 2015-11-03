@@ -113,7 +113,7 @@
     }
 
     function getAllTags() {
-        //return '/api/';
+        return '/api/training/tag_list';
     }
 
     function getApproveList() {

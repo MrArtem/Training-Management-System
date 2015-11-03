@@ -16,35 +16,35 @@
         vm.send = send;
         vm.connect = connect;
 
-        vm.connect();
-
-        $scope.$on('$stateChangeStart', function() {
-            vm.disconnect();
-        })
-
-        function connect() {
-            var socket = new SockJS('/api/approve_list');
-            stompClient = Stomp.over(socket);
-            stompClient.connect({}, function(frame) {
-                console.log('Connected: ' + frame);
-                stompClient.subscribe('/api/pipe/approve_list', function(greeting){
-                    console.log(greeting);
-                });
-
-                vm.send();
-            });
-        }
-
-        function disconnect() {
-            if (stompClient != null) {
-                stompClient.disconnect();
-            }
-            console.log("Disconnected");
-        }
-
-        function send() {
-            stompClient.send("/api/approve_list", {}, JSON.stringify({ 'page': 0, 'page_size': 10 }));
-        }
+        //vm.connect();
+        //
+        //$scope.$on('$stateChangeStart', function() {
+        //    vm.disconnect();
+        //})
+        //
+        //function connect() {
+        //    var socket = new SockJS('api/approve_list');
+        //    stompClient = Stomp.over(socket);
+        //    stompClient.connect({}, function(frame) {
+        //        console.log('Connected: ' + frame);
+        //        stompClient.subscribe('http://localhost:8080/pipe/approve_list', function(greeting){
+        //            console.log(greeting);
+        //        });
+        //
+        //        vm.send();
+        //    });
+        //}
+        //
+        //function disconnect() {
+        //    if (stompClient != null) {
+        //        stompClient.disconnect();
+        //    }
+        //    console.log("Disconnected");
+        //}
+        //
+        //function send() {
+        //    stompClient.send("api/approve_list", {}, JSON.stringify({ 'page': 0, 'page_size': 10 }));
+        //}
 
         //function getApproveList() {
         //    adminAPI.getApproveList().then(function(data) {
