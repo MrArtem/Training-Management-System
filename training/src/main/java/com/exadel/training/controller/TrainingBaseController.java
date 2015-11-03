@@ -63,7 +63,9 @@ public class TrainingBaseController {
         getTrainingModel.setEndDate(lessonService.getEndDateByTraining(trainingId));
         CustomUser customUser = (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         getTrainingModel.setCanRate(trainingService.canRate(trainingId, customUser.getUserId()));
-        getTrainingModel.setCanSubscribe(listenerService.canSubscribe(trainingId, customUser.getUserId()));
+        boolean isCoach = customUser.getUserId() == training.getCoach().getId();
+        getTrainingModel.setIsCoach( isCoach );
+        getTrainingModel.setCanSubscribe( !isCoach && listenerService.canSubscribe(trainingId, customUser.getUserId()));
         return getTrainingModel;
     }
 
@@ -196,9 +198,9 @@ public class TrainingBaseController {
     @LegalID
     @Secured({"ADMIN", "USER"})
     @RequestMapping(value = "{id}/leave/{userId}", method = RequestMethod.PUT)
-    void leaveListener(@PathVariable("id") long trainingId, @PathVariable("userId") Long userId) {
+    List<ListenerModel> leaveListener(@PathVariable("id") long trainingId, @PathVariable("userId") Long userId) {
         listenerService.leaveListener(trainingId, userId);
-
+        return getListenerList(trainingId);
     }
 
     @LegalID
@@ -213,9 +215,10 @@ public class TrainingBaseController {
     @LegalID
     @Secured({"ADMIN"})
     @RequestMapping(value = "{id}/addExListener", method = RequestMethod.POST)
-    void addListener(@PathVariable("id") long trainingId,@RequestBody ExUserModel exUserModel) {
+    List<ListenerModel> addListener(@PathVariable("id") long trainingId,@RequestBody ExUserModel exUserModel) {
         Long userId = userService.addExternalUser(exUserModel);
         listenerService.addListener(trainingId,userId);
+        return getListenerList(trainingId);
     }
 
     @LegalID
@@ -226,4 +229,6 @@ public class TrainingBaseController {
         long userId = customUser.getUserId();
         return new RatingModel(trainingService.setRating(trainingId, rating, userId));
     }
+
+
 }

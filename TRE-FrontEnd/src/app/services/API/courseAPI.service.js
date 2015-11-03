@@ -25,6 +25,7 @@
             getShortInfo: getShortInfo,
             getTimetable: getTimetable,
             editLesson: editLesson,
+            leave: leave,
             subscribe: subscribe,
             uploadFiles: uploadFiles
         }
@@ -276,6 +277,12 @@
                 }
             }).then(function (results) {
                 return results.data;
+            });
+        }
+
+        function leave(courseId) {
+            return $http.put(urlProvider.leave(courseId)).then(function(result) {
+                return result.data;
             });
         }
 

@@ -33,6 +33,7 @@
             getShortInfo: getShortInfo,
             getTimetable: getTimetable,
             getWaitingCoursesForUser: getWaitingCoursesForUser,
+            leave: leave,
             login: login,
             logout: logout,
             manageLesson: manageLesson,
@@ -144,6 +145,10 @@
 
     function getWaitingCoursesForUser(userId) {
         //return;
+    }
+
+    function leave(courseId) {
+        return '/api/training/' + courseId + '/leave';
     }
 
     function login() {

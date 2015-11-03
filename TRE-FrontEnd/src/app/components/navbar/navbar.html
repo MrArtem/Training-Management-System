@@ -25,10 +25,10 @@
                 <li class=""><a href="#"><i class="fa fa-globe"></i></a></li>
                 <li class="has-dropdown">
                     <a href="#"><i class="fa fa-user"></i></a>
-                    <ul class="dropdown">
+                    <ul class="dropdown tre-dropdown">
                         <li><label>{{navbar.user.username}}</label></li>
-                        <li><a ui-sref="profile({userId: navbar.user.userId})">Profile</a></li>
-                        <li><a href="#" ng-click="navbar.logout()">Logout</a></li>
+                        <li class="no-margin-bottom"><a ui-sref="profile({userId: navbar.user.userId})">Profile</a></li>
+                        <li class="no-margin-top"><a href="#" ng-click="navbar.logout()">Logout</a></li>
                     </ul>
                 </li>
             </ul>
