@@ -142,3 +142,4 @@ crashlytics-build.properties
 
 #index
 /com.exadel.training.dao.domain.User/*
+/indexes/
