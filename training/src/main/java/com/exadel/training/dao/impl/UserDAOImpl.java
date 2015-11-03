@@ -54,7 +54,8 @@ public class UserDAOImpl implements UserDAO {
     @SuppressWarnings("unchecked")
     public List<Training> visitedTrainings(long idUser) {
         return sessionFactory.getCurrentSession()
-                .createQuery("select distinct t from Training as t inner join t.lessonList as lesson inner join t.listenerList as listener where listener.user.id = :idUser and :currentDate > all elements(lesson.date) ")
+                .createQuery("select distinct t from Training as t  inner join t.listenerList as listener where listener.user.id = :idUser and " +
+                        "(select max(l.date) from t.lessonList as l) < :currentDate ")
                 .setParameter("idUser", idUser)
                 .setParameter("currentDate", new Date().getTime())
                 .list();
