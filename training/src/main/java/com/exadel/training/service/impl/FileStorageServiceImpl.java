@@ -42,6 +42,11 @@ public class FileStorageServiceImpl implements FileStorageService {
     }
 
     @Override
+    public void deleteFile(long idFileStorage) {
+        fileStorageDAO.deleteFile(idFileStorage);
+    }
+
+    @Override
     public List<FileStorage> getAllFileByTraining(long idTraining) {
         return trainingService.getTraining(idTraining).getFileStorageList();
     }

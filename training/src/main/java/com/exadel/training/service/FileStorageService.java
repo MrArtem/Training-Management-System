@@ -11,6 +11,7 @@ import java.util.List;
  */
 public interface FileStorageService {
     void addFile(FileUpload fileUpload) throws IOException;
+    void deleteFile(long idFileStorage);
 
     List<FileStorage> getAllFileByTraining(long idTraining);
 }

@@ -8,6 +8,7 @@ import com.exadel.training.validate.annotation.LegalID;
 import com.google.common.base.Strings;
 import org.bouncycastle.ocsp.Req;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -29,15 +30,16 @@ import java.util.Objects;
 @RequestMapping("/file_controller")
 public class FileController {
 
-
     @Autowired
     private FileStorageService fileStorageService;
 
+    @Secured({"ADMIN", "USER", "EX_COACH"})
     @RequestMapping(value = "/add_files", method = RequestMethod.POST)
     public void uploadFile(@RequestBody FileUpload fileUpload) throws IOException {
         fileStorageService.addFile(fileUpload);
     }
 
+    @Secured({"ADMIN", "USER", "EX_COACH"})
     @RequestMapping(value = "/get_files/{idTraining}", method = RequestMethod.GET)
     @LegalID
     public List<FileDownload> getFiles(@PathVariable("idTraining") long idTraining) {
@@ -49,4 +51,12 @@ public class FileController {
 
         return fileDownloadList;
     }
+
+    @Secured({"ADMIN", "USER", "EX_COACH"})
+    @RequestMapping(value = "/delete_file/{idFile}", method = RequestMethod.DELETE)
+    public void deleteFile(@PathVariable("idFile") long idFile) {
+        fileStorageService.deleteFile(idFile);
+    }
+
+
 }
