@@ -10,6 +10,7 @@ import com.exadel.training.dao.domain.User;
 import com.exadel.training.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.testng.util.Strings;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
@@ -31,7 +32,10 @@ public class UserServiceImpl implements UserService {
     public long addExternalUser(ExUserModel exUserModel) {
         User user = new User();
 
-        user.setLogin(exUserModel.getLogin());
+        //todo check login
+        if (Strings.isNullOrEmpty(exUserModel.getLogin())) {
+            user.setLogin(exUserModel.getLogin());
+        }
         user.setEmail(exUserModel.getEmail());
         user.setFirstName(exUserModel.getFirstName());
         user.setLastName(exUserModel.getLastName());
