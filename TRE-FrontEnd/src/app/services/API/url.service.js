@@ -64,7 +64,7 @@
     }
 
     function addParticipant(courseId) {
-        return '/api/training/' + courseId + '/add_listener'; //!!! CHECK
+        return '/api/training/' + courseId + '/addExListener';
     }
 
     function approveCourse(actionId) {
@@ -97,7 +97,7 @@
     }
 
     function deleteParticipant(courseId, userId) {
-        return '/api/training/' + courseId + '/leave/' + userId; //CHECK
+        return '/api/training/' + courseId + '/leave/' + userId;
     }
 
     function editCourse(trainingId) {

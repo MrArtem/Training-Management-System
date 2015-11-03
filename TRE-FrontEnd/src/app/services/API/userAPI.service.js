@@ -13,7 +13,7 @@
             getFeedback: getFeedback, //TODO
             getPastCourses: getPastCourses,
             getProfileInfo: getProfileInfo,
-            getWaitingCourses: getWaitingCourses,
+            getWaitingCourses: getWaitingCourses
         };
         return userAPI;
 
