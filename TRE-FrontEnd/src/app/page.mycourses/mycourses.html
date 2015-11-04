@@ -1,12 +1,11 @@
-<!---->
 <div class="container" ng-class="{'waiting-for-angular': !mycourses.isContentLoaded }">
 	<div class="row">
-		<div class="small-12 medium-9 medium-centered column">
+		<div class="col-xs-12 col-md-8 col-md-offset-2">
 			<div class="mycourses">
 				<div class="tools-header row">
-					<div class="small-12 medium-4 medium-centered column">
+					<div class="col-xs-12 col-md-4 col-md-offset-4">
 						<div class="row">
-							<div class="small-9 column">
+							<div class="col-xs-9">
 								<ul class="segmented-tool button-group toggle" data-toggle="buttons-radio">
 									<li>
 										<input type="radio" id="r1" ng-model="mycourses.filter.isCoach" value=""
@@ -27,7 +26,7 @@
 							</div>
 
 							<!--all page was designed horribly, can do nothing about it-->
-							<!--<div class="small-3 column">-->
+							<!--<div class="col-xs-3">-->
 								<!--<i class="fa fa-search"></i>-->
 								<!--<input type="text" placeholder="Quick Look" ng-model="mycourses.filter.search">-->
 							<!--</div>-->
@@ -37,7 +36,7 @@
 				</div>
 
 				<section class="row">
-					<div class="small-12 medium-6 column end card"
+					<div class="col-xs-12 col-md-6 card"
 						 ng-repeat="course in mycourses.userCourses | filter:{isCoach: mycourses.filter.isCoach}">
 						<div class="card-bg" ui-sref="courseinfo({courseId: course.id})">
 							<h1 class="course-title"><a ui-sref="courseinfo({courseId: course.id})">{{course.title}}</a>
