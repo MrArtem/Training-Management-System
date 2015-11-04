@@ -45,7 +45,7 @@ public class FileController {
     public void uploadFile(@RequestParam(value="file", required=false) MultipartFile file,
                            @RequestParam(value="files") Object data, @RequestParam(value="idTraining") String idTraining) throws IOException {
         Map<String, String> result = new ObjectMapper().readValue(data.toString(), HashMap.class);
-       // fileStorageService.addFile(result, Long.parseLong(idTraining));
+        fileStorageService.addFile(result, Long.parseLong(idTraining));
     }
 
     @Secured({"ADMIN", "USER", "EX_COACH"})
