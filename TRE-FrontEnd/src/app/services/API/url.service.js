@@ -209,6 +209,6 @@
     }
 
     function uploadFiles() {
-        return '/api/file_controller/';
+        return '/api/file_controller/add_files';
     }
 })();

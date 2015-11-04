@@ -276,14 +276,21 @@
 
         //////////
 
-        function uploadFiles(files) {
+        function uploadFiles(courseId, files) {
             console.log(files);
-            var formData = new FormData();
-            for(var i in files) {
-                formData.append('files', angular.toJson(files[i].data));
-            }
 
-            console.log(formData);
+            var initialValue = {};
+            var fileMap = files.reduce(function(acc, file) {
+                acc[file.name] = file.data;
+                return acc;
+            }, initialValue);
+            console.log(fileMap);
+
+            var formData = new FormData();
+            formData.append('idTraining', courseId);
+            formData.append('files', JSON.stringify(fileMap));
+
+            console.log(formData.toString());
             return $http.post(urlProvider.uploadFiles(), formData, {
                 headers: {
                     'Content-Type': undefined

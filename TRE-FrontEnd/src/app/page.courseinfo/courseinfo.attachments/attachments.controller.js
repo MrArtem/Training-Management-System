@@ -21,7 +21,7 @@
         //NEED TO RELOAD FILES
         function uploadFiles() {
             console.log('files to be uploaded: ', $scope.filesToUpload);
-            courseAPI.uploadFiles($scope.filesToUpload).then(function(result) {
+            courseAPI.uploadFiles($stateParams.courseId, $scope.filesToUpload).then(function(result) {
                 //$scope.$parent.courseInfo.files = angular.copy(result); UNCOMMENT ONLY WHEN FILES ARE RETURNED ON UPLOAD
                 console.log($scope.$parent.courseInfo.files);
             });
