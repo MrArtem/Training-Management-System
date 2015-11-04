@@ -25,9 +25,9 @@ public class FileUploadValidator implements Validator {
           errors.reject("id <= 0");
         }
 
-        if(fileUpload.getFiles() == null || fileUpload.getNames() == null) {
+      /*  if(fileUpload.getFiles() == null || fileUpload.getNames() == null) {
             errors.reject("null can't be in a model for upload files");
-        }
+        }*/
 
     }
     private boolean isValidID(long id) {
