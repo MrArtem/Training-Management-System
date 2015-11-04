@@ -5,6 +5,7 @@ import com.exadel.training.controller.model.fileModels.FileUpload;
 import com.exadel.training.dao.domain.FileStorage;
 import com.exadel.training.service.FileStorageService;
 import com.exadel.training.validate.annotation.LegalID;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.access.annotation.Secured;
@@ -12,9 +13,13 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.validation.Validator;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by ayudovin on 26.10.2015.
@@ -37,8 +42,10 @@ public class FileController {
 
     @Secured({"ADMIN", "USER", "EX_COACH"})
     @RequestMapping(value = "/add_files", method = RequestMethod.POST)
-    public void uploadFile(@RequestBody FileUpload fileUpload) throws IOException {
-        FileUpload fileUpload1 = fileUpload;
+    public void uploadFile(@RequestParam(value="file", required=false) MultipartFile file,
+                           @RequestParam(value="files") Object data, @RequestParam(value="idTraining") Object id) throws IOException {
+        HashMap<String,String> result =
+                new ObjectMapper().readValue(data.toString(), HashMap.class);
     }
 
     @Secured({"ADMIN", "USER", "EX_COACH"})
