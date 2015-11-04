@@ -1,8 +1,11 @@
-/**
- *  If you want to override some foundation settings, you have to change values here.
- *  The list of settings values are listed here bower_components/foundation/scss/foundation/_settings.scss
- */
-$topbar-bg-color: #000;
+@font-face {
+  font-family: Merriweather;
+  src: url('assets/fonts/merriweather/Merriweather Light.ttf');
+}
+
+$tre-font-family: Merriweather;
+$tre-header-font: 'Open Sans', sans-serif;
+$text-color: rgba(0, 0, 0, 0.6);
 
 $btn-blue: #55acee;
 $btn-blue-border: #55a4e6;
@@ -22,18 +25,10 @@ $btn-red-border-hover: $btn-red-hover;
 
 
 $fa-font-path: "../../bower_components/font-awesome/fonts";
-@import '../../bower_components/foundation/scss/foundation/_functions';
 @import '../../src/app/index.customize';
 
-
-/**
- *  The import of foundation is made manually because there is still no links of the
- *  sass version in their bower.json...
- */
-@import '../../bower_components/foundation/scss/foundation';
-
 @import '../../bower_components/font-awesome/scss/font-awesome.scss';
-
+@import '../../bower_components/bootstrap/dist/css/bootstrap.min.css';
 
 
 /**
@@ -48,6 +43,7 @@ html {
 }
 
 body {
+  font-family: $tre-font-family;
   color: $text-color;
   height: 100% !important;
 
@@ -65,6 +61,13 @@ body {
     text-decoration: none;
   }
 
+}
+
+.form-control {
+  border: none !important;
+  outline: 0 !important;
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important;
 }
 
 textarea {
@@ -114,7 +117,7 @@ table {
 }
 
 .fa {
-  margin-right: rem-calc(6);
+  margin-right: 0.5rem;
 }
 
 .error {
@@ -214,7 +217,7 @@ table {
 .btn-file {
   position: relative;
   overflow: hidden;
-  font-size: rem-calc(15);
+  font-size: 0.95rem;
 }
 
 .btn-file input[type=file] {
