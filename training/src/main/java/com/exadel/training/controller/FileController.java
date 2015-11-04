@@ -5,22 +5,16 @@ import com.exadel.training.controller.model.fileModels.FileUpload;
 import com.exadel.training.dao.domain.FileStorage;
 import com.exadel.training.service.FileStorageService;
 import com.exadel.training.validate.annotation.LegalID;
-import com.google.common.base.Strings;
-import org.bouncycastle.ocsp.Req;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import org.springframework.validation.Validator;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * Created by ayudovin on 26.10.2015.
@@ -29,15 +23,25 @@ import java.util.Objects;
 @RequestMapping("/file_controller")
 public class FileController {
 
-
     @Autowired
     private FileStorageService fileStorageService;
 
+    @Autowired
+    @Qualifier("fileUploadValidator")
+    Validator fileUploadValidator;
+
+    @InitBinder
+    private void initBinder(WebDataBinder webDataBinder) {
+        webDataBinder.setValidator(fileUploadValidator);
+    }
+
+    @Secured({"ADMIN", "USER", "EX_COACH"})
     @RequestMapping(value = "/add_files", method = RequestMethod.POST)
     public void uploadFile(@RequestBody FileUpload fileUpload) throws IOException {
         fileStorageService.addFile(fileUpload);
     }
 
+    @Secured({"ADMIN", "USER", "EX_COACH"})
     @RequestMapping(value = "/get_files/{idTraining}", method = RequestMethod.GET)
     @LegalID
     public List<FileDownload> getFiles(@PathVariable("idTraining") long idTraining) {
@@ -49,4 +53,12 @@ public class FileController {
 
         return fileDownloadList;
     }
+
+    @Secured({"ADMIN", "USER", "EX_COACH"})
+    @RequestMapping(value = "/delete_file/{idFile}", method = RequestMethod.DELETE)
+    public void deleteFile(@PathVariable("idFile") long idFile) {
+        fileStorageService.deleteFile(idFile);
+    }
+
+
 }

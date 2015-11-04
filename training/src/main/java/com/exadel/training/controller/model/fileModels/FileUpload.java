@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class FileUpload {
     private long idTraining;
-    private String name;
+    private List<String> names;
     private List<String> files;
 
     public FileUpload() {
@@ -25,12 +25,12 @@ public class FileUpload {
         this.idTraining = idTraining;
     }
 
-    public String getName() {
-        return name;
+    public List<String> getNames() {
+        return names;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNames(List<String> names) {
+        this.names = names;
     }
 
     public List<String> getFiles() {

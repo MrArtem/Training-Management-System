@@ -28,15 +28,22 @@ public class FileStorageServiceImpl implements FileStorageService {
 
     @Override
     public void addFile(FileUpload fileUpload) throws IOException {
-      for(String fieBase64 : fileUpload.getFiles()) {
-          FileStorage fileStorage = new FileStorage();
+     for(int i = 0; i<fileUpload.getFiles().size(); i++) {
+         FileStorage fileStorage = new FileStorage();
+         List<String> names = fileUpload.getNames();
+         List<String> files = fileUpload.getFiles();
 
-          fileStorage.setName(fileUpload.getName());
-          fileStorage.setFile(decoder.decodeBuffer(fieBase64));
+         fileStorage.setName(names.get(i));
+         fileStorage.setFile(decoder.decodeBuffer(files.get(i)));
+         fileStorage.setTraining(trainingService.getTraining(fileUpload.getIdTraining()));
 
-          fileStorage.setTraining(trainingService.getTraining(fileUpload.getIdTraining()));
-          fileStorageDAO.addFile(fileStorage);
-      }
+         fileStorageDAO.addFile(fileStorage);
+     }
+    }
+
+    @Override
+    public void deleteFile(long idFileStorage) {
+        fileStorageDAO.deleteFile(idFileStorage);
     }
 
     @Override

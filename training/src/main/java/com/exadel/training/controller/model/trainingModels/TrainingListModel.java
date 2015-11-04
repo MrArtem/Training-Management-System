@@ -28,6 +28,8 @@ public class TrainingListModel {
 
     private Boolean isCoach;
 
+    private Training.State state;
+
     public TrainingListModel() {
     }
 
@@ -40,6 +42,7 @@ public class TrainingListModel {
         this.tagList = training.getTagList();
         CustomUser user = (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         this.isCoach = user.getUserId() == training.getCoach().getId();
+        this.state = training.getState();
     }
 
     public Long getId() {
@@ -112,5 +115,13 @@ public class TrainingListModel {
 
     public void setIsCoach(Boolean isCoach) {
         this.isCoach = isCoach;
+    }
+
+    public Training.State getState() {
+        return state;
+    }
+
+    public void setState(Training.State state) {
+        this.state = state;
     }
 }
