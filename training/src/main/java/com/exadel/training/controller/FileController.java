@@ -38,7 +38,7 @@ public class FileController {
     @Secured({"ADMIN", "USER", "EX_COACH"})
     @RequestMapping(value = "/add_files", method = RequestMethod.POST)
     public void uploadFile(@RequestBody FileUpload fileUpload) throws IOException {
-        fileStorageService.addFile(fileUpload);
+        FileUpload fileUpload1 = fileUpload;
     }
 
     @Secured({"ADMIN", "USER", "EX_COACH"})
