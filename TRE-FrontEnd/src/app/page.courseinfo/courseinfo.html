@@ -1,54 +1,56 @@
-<div ng-class="{'waiting-for-angular': !courseinfo.isContentLoaded }" class="container courseinfo">
-	<div class="row">
-		<div class="small-12 medium-6 medium-centered column">
-			<div class="row courseinfo-short">
-				<h1 class="title">{{courseInfo.title}}</h1>
+<div ng-class="{'waiting-for-angular': !courseinfo.isContentLoaded }" class="container-fluid courseinfo">
+    <div class="row">
+        <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
+            <div class="row courseinfo-short">
+                <h1 class="title">{{courseInfo.title}}</h1>
 
-				<h3 class="short-desc">{{courseInfo.shortInfo}}</h3>
+                <h3 class="short-desc">{{courseInfo.shortInfo}}</h3>
 
-				<p class="field">Start date: <span class="info">{{courseInfo.startDate | date: "MMM d, y h:mm a"}}</span>
-				</p>
+                <p class="field">Start date: <span
+                        class="info">{{courseInfo.startDate | date: "MMM d, y h:mm a"}}</span>
+                </p>
 
-				<p class="field">Coach: <a ui-sref="profile({userId: courseInfo.coachId})" class="info">{{courseInfo.coachName}}</a>
-				</p>
+                <p class="field">Coach: <a ui-sref="profile({userId: courseInfo.coachId})" class="info">{{courseInfo.coachName}}</a>
+                </p>
 
-				<p class="field">Language: <span class="info">{{courseinfo.getLanguage(courseInfo.language)}}</span></p>
+                <p class="field">Language: <span class="info">{{courseinfo.getLanguage(courseInfo.language)}}</span></p>
 
-				<a ng-if="courseInfo.canSubscribe" href="" class="button round tiny default-btn-blue"
-				   ng-click="courseinfo.subscribe()">Subscribe</a>
-				<a ng-if="!courseInfo.canSubscribe && !courseInfo.isCoach" href="" class="button round tiny default-btn-red"
-				   ng-click="courseinfo.leave()">Leave</a>
-			</div>
+                <a ng-if="courseInfo.canSubscribe" href="" class="btn default-btn-blue"
+                   ng-click="courseinfo.subscribe()">Subscribe</a>
+                <a ng-if="!courseInfo.canSubscribe && !courseInfo.isCoach" href=""
+                   class="btn default-btn-red"
+                   ng-click="courseinfo.leave()">Leave</a>
+            </div>
 
-			<div class="row">
-
-				<div class="icon-bar five-up small-horizontal large-vertical">
-					<a class="item" ui-sref="courseinfo.timetable">
-						<i class="fa fa-clock-o"></i>
-						<label>Timetable</label>
-					</a>
-					<a class="item" ui-sref="courseinfo.description">
-						<i class="fa fa-book"></i>
-						<label>Description</label>
-					</a>
-					<a class="item" ui-sref="courseinfo.participants">
-						<i class="fa fa-users"></i>
-						<label>Participants</label>
-					</a>
-					<a class="item" ui-sref="courseinfo.attachments">
-						<i class="fa fa-files-o"></i>
-						<label>Materials</label>
-					</a>
-					<a class="item" ui-sref="courseinfo.comments">
-						<i class="fa fa-comments-o"></i>
-						<label>Comments</label>
-					</a>
-				</div>
-
-				<div ui-view>
-				</div>
-
-			</div>
-		</div>
-	</div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-4 col-md-3 pull-right no-side-padding">
+                    <div class="icon-bar">
+                        <div class="row no-margin">
+                            <div class="col-xs-3 col-sm-12 item" ui-sref="courseinfo.timetable">
+                                <p><i class="fa fa-clock-o"></i></p>
+                                <label>Timetable</label>
+                            </div>
+                            <div class="col-xs-3 col-sm-12 item" ui-sref="courseinfo.participants">
+                                <p><i class="fa fa-users"></i></p>
+                                <label>Participants</label>
+                            </div>
+                            <div class="col-xs-3 col-sm-12 item" ui-sref="courseinfo.attachments">
+                                <p><i class="fa fa-files-o"></i></p>
+                                <label>Materials</label>
+                            </div>
+                            <div class="col-xs-3 col-sm-12 item" ui-sref="courseinfo.comments">
+                                <p><i class="fa fa-comments-o"></i></p>
+                                <label>Comments</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-8 col-md-9">
+                    <div ui-view>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </div>

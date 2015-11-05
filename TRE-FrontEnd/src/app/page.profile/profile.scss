@@ -5,18 +5,19 @@
 }
 
 .profile {
-  $left-pd: 3rem;
-  $right-pd: 3rem;
+  $left-pd: 48px;
+  $right-pd: 48px;
 
   .profile-short {
-    margin-bottom: 2rem;
+    margin-bottom: 32px;
+    margin-left: 15px;
 
     .title {
-      margin-bottom: 1.8rem;
+      margin-bottom: 30px;
     }
 
     .short-desc {
-      margin-bottom: 1.5rem;
+      margin-bottom: 24px;
     }
 
     .field {
@@ -25,24 +26,12 @@
       .info {
         color: $text-color;
       }
-
     }
 
     .field, .info {
-      margin-bottom: 0.5rem;
+      margin-bottom: 8px;
     }
 
-  }
-
-  .icon-bar.large-vertical {
-    float: right;
-  }
-
-  .icon-bar {
-    .item {
-      padding-left: $left-pd;
-      padding-right: $right-pd;
-    }
   }
 
 }

@@ -166,13 +166,12 @@ div#searchModal {
 }
 
 .create-btn {
-  padding-left: rem-calc(15) !important;
-  padding-right: rem-calc(15) !important;
-  padding-top: rem-calc(4) !important;
-  padding-bottom: rem-calc(10) !important;
+  margin-top: 15px !important;
+  margin-bottom: 8px !important;
 
-  font-weight: 600;
-  font-family: $tre-font-family;
+  font-weight: 500;
+  font-family: $tre-header-font;
+  overflow: hidden;
 }
 
 #searchModal {

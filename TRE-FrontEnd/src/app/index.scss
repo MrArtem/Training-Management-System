@@ -23,6 +23,11 @@ $btn-red-border: $btn-red;
 $btn-red-hover: #a1161b;
 $btn-red-border-hover: $btn-red-hover;
 
+$btn-gray: rgba(0,0,0,0.5);
+$btn-gray-border: rgba(0,0,0,0.15);
+$btn-gray-hover: rgba(0, 0, 0, 0.6);
+$btn-gray-border-hover: rgba(0, 0, 0, 0.3);
+
 
 $fa-font-path: "../../bower_components/font-awesome/fonts";
 @import '../../src/app/index.customize';
@@ -69,6 +74,47 @@ body {
   -webkit-box-shadow: none !important;
   box-shadow: none !important;
 }
+
+///// UTILITY CLASSES /////
+
+.no-left-padding {
+  padding-left: 0 !important;
+}
+
+.no-side-padding {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+.no-margin {
+  margin: 0 !important;
+}
+
+.fullwidth-table {
+  width: 100% !important;
+}
+
+.scrollable-div {
+  max-height: 400px;
+  overflow: auto;
+}
+
+.bottom-mg-25 {
+  margin-bottom: 25px;
+}
+
+///////////////////////////
+
+.modal {
+  .modal-title {
+    font-weight: bold;
+  }
+
+  .modal-content {
+    border: none !important;
+  }
+}
+
 
 textarea {
   resize: none;
@@ -124,10 +170,6 @@ table {
   color: red !important;
 }
 
-.no-left-padding {
-  padding-left: 0 !important;
-}
-
 .container {
   margin-top: 2rem;
 }
@@ -152,21 +194,88 @@ table {
   }
 }
 
-.fullwidth-table {
-  width: 100% !important;
-}
-
-.scrollable-div {
-  max-height: 400px;
-  overflow: auto;
-}
-
 .nested-view {
   margin: 0.5em;
 }
 
+.tab-heading {
+  font-weight: bold;
+}
+
+/* ICON BAR */
+
+.icon-bar {
+  color: rgba(0,0,0,0.6);
+  border: 1px solid rgba(0,0,0,0.08);
+  background-color: rgba(0,0,0,0.015);
+  //font-size: 17px;
+
+  .item {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    text-align: center;
+    a {
+      color: rgba(0,0,0,0.6);
+    }
+
+    .fa {
+      //font-size: 27px;
+    }
+  }
+
+  .item:hover {
+    cursor: pointer;
+    label, .fa {
+      color: rgba(0,0,0,0.72);
+      cursor: pointer;
+    }
+
+  }
+}
+
+/////////////////////////
+
 /* BUTTONS*/
+
+.tre-btn {
+  padding-left: 16px;
+  padding-right: 16px;
+  border-radius: 24px;
+  box-shadow: none !important;
+  outline: none !important;
+  background-color: $white;
+}
+
+.default-btn {
+  @extend .tre-btn;
+  color: $btn-gray;
+  border-color: $btn-gray-border;
+}
+
+.default-btn:hover {
+  color: $btn-gray-hover;
+  border-color: $btn-gray-border-hover;
+}
+
+.accent-btn {
+  @extend .tre-btn;
+}
+
 .default-btn-blue {
+  @extend .default-btn;
+  color: $btn-blue;
+  border-color: $btn-blue-border;
+  background-color: $white;
+}
+
+.default-btn-blue:hover {
+  color: $btn-blue-hover;
+  border-color: $btn-blue-border-hover;
+  background-color: $white;
+}
+
+.default-btn-blue {
+  @extend .default-btn;
   color: $btn-blue;
   border-color: $btn-blue-border;
   background-color: $white;
@@ -179,6 +288,7 @@ table {
 }
 
 .default-btn-green {
+  @extend .default-btn;
   color: $btn-green;
   border-color: $btn-green-border;
   background-color: $white;
@@ -191,6 +301,7 @@ table {
 }
 
 .default-btn-red {
+  @extend .default-btn;
   color: $btn-red;
   border-color: $btn-red-border;
   background-color: $white;
@@ -203,6 +314,7 @@ table {
 }
 
 .accent-btn-blue {
+  @extend .accent-btn;
   color: white !important;
   background-color: $btn-blue !important;
   border-color: $btn-blue !important;

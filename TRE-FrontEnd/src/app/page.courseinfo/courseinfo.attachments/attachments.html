@@ -1,14 +1,14 @@
 <div class="attachments">
     <div class="row">
-        <div class="small-12 medium-8 large-8 column">
+        <div class="col-xs-12 col-md-11">
 
-            <h5>Attachments</h5>
+            <h4 class="tab-heading">Attachments</h4>
 
-            <a class="button round tiny default-btn-blue" data-reveal-id="uploadModal"><i class="fa fa-upload"></i>Upload files</a>
+            <a class="btn default-btn-blue bottom-mg-25" data-toggle="modal" data-target="#uploadModal"><i class="fa fa-upload"></i>Upload files</a>
 
             <div class="scrollable-div">
 
-                <table ng-show="courseInfo.files.length != 0" class="fullwidth-table">
+                <table ng-show="courseInfo.files.length != 0" class="table fullwidth-table">
                     <thead>
                     <tr>
                         <th>#</th>
@@ -16,9 +16,9 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr ng-repeat="i in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]">
-                        <td>No</td>
-                        <td>Some file</td>
+                    <tr ng-repeat="file in courseInfo.files track by $index">
+                        <td>{{$index + 1}}</td>
+                        <td>{{file.name}}</td>
                     </tr>
                     </tbody>
                 </table>
@@ -29,34 +29,40 @@
     </div>
 </div>
 
-<div class="tre-modal">
-    <div id="uploadModal" class="reveal-modal small" data-reveal aria-labelledby="addTitle" aria-hidden="true"
-         role="dialog">
-        <h2 id="addTitle">Upload files</h2>
+<div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-labelledby="addTitle">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="addTitle">Upload files</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row" ng-controller="FileUploadController as upload">
+                    <div class="col-xs-12 col-sm-6">
+                        <button class="btn btn-file default-btn-blue" id="uploadFileBtn">
+                            <i class="fa fa-plus"></i> Add file
+                            <input type="file" ng-file-select="upload.onFileSelect($files)">
+                        </button>
+                    </div>
+                </div>
 
-        <div class="row" ng-controller="FileUploadController as upload">
-            <div class="small-12 medium-6 no-left-padding column">
-                <button class="button round tiny btn-file default-btn-blue" id="uploadFileBtn">
-                    <i class="fa fa-plus"></i> Add file
-                    <input type="file" ng-file-select="upload.onFileSelect($files)">
+                <div class="scrollable-div">
+                    <table ng-if="filesToUpload.length != 0">
+                        <tr ng-repeat="file in filesToUpload" class="rowWithSecret">
+                            <td>{{file.name}}</td>
+                            <td class="hiddenCell" ng-click="deleteFile($index)"><i class="fa fa-times"></i></td>
+                        </tr>
+                    </table>
+                    <p ng-if="filesToUpload.length == 0">No files uploaded yet</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button href="" class="btn default-btn" data-dismiss="modal">Cancel</button>
+                <button href="" class="btn default-btn-blue" data-dismiss="modal"
+                        ng-click="attachments.uploadFiles()">OK
                 </button>
             </div>
         </div>
-
-        <div class="scrollable-div">
-            <table ng-if="filesToUpload.length != 0">
-                <tr ng-repeat="file in filesToUpload" class="rowWithSecret">
-                    <td>{{file.name}}</td>
-                    <td class="hiddenCell" ng-click="deleteFile($index)"><i class="fa fa-times"></i></td>
-                </tr>
-            </table>
-            <p ng-if="filesToUpload.length == 0">No files uploaded yet</p>
-        </div>
-
-        <div class="row">
-            <a href="#" class="right button round tiny default-btn-blue" close-modal="uploadModal"
-               ng-click="attachments.uploadFiles()">OK</a>
-        </div>
-        <a class="close-reveal-modal" aria-label="Close">&#215;</a>
     </div>
 </div>
