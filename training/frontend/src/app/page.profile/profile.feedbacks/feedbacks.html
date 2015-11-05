@@ -1,0 +1,33 @@
+<div class="feedbacks">
+    <div class="row">
+        <div class="small-12 medium-8 large-8 column">
+
+            <h5>Feedbacks</h5>
+
+            <a class="button round tiny default-btn-blue" data-reveal-id="addFeedbackModal">Leave feedback</a>
+
+            <div class="scrollable-div">
+
+                <table ng-if="profileInfo.feedbacks.length != 0" class="fullwidth-table">
+                    <thead>
+                    <tr>
+                        <th>Who left</th>
+                        <th>Positive?</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="fb in profileInfo.feedbacks">
+                        <td><a ui-sref="profile({userId: fb.coachID})">{{fb.coachName}}</a></td>
+                        <td>{{fb.isPositive==true ? '+' : '-'}}</td>
+                        <td>See details</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <p ng-if="profileInfo.feedbacks.length == 0">No feedbacks left yet</p>
+            </div>
+
+        </div>
+
+    </div>
+</div>

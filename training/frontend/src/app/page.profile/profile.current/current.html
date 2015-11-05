@@ -1,0 +1,29 @@
+<div class="current">
+    <div class="row">
+        <div class="small-12 medium-8 large-8 column">
+
+            <h5>Current trainings</h5>
+
+            <div class="scrollable-div">
+
+                <table class="fullwidth-table">
+                    <thead>
+                    <tr>
+                        <th>Coach</th>
+                        <th>Training</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="course in profile.currentCourses">
+                        <td>{{course.coachName}}</td>
+                        <td>{{course.title}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
