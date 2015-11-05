@@ -52,7 +52,7 @@ gulp.task('html', ['inject', 'partials'], function () {
         .pipe($.csso())
         .pipe(cssFilter.restore())
         .pipe(assets.restore())
-        .pipe($.replace('../../bower_components/fontawesome/fonts', '../fonts'))
+        .pipe($.replace('../../bower_components/font-awesome/fonts', '../styles/assets/fonts'))
         .pipe($.useref())
         .pipe($.revReplace())
         .pipe(htmlFilter)
@@ -71,9 +71,11 @@ gulp.task('html', ['inject', 'partials'], function () {
 // Custom fonts are handled by the "other" task
 gulp.task('fonts', function () {
     return gulp.src($.mainBowerFiles())
+        .pipe($.debug())
         .pipe($.filter('**/*.{eot,svg,ttf,woff,woff2}'))
+        .pipe($.debug())
         .pipe($.flatten())
-        .pipe(gulp.dest(path.join(conf.paths.dist, '/fonts/')));
+        .pipe(gulp.dest(path.join(conf.paths.dist, 'styles/assets/fonts')));
 });
 
 gulp.task('other', function () {
@@ -82,15 +84,18 @@ gulp.task('other', function () {
     });
 
     return gulp.src([
-        path.join(conf.paths.src, '/**/*'),
+        path.join(conf.paths.src, '**/*'),
         path.join('!' + conf.paths.src, '/**/*.{html,css,js,scss}')
     ])
         .pipe(fileFilter)
-        .pipe(gulp.dest(path.join(conf.paths.dist, '/')));
+        .pipe($.flatten())
+
+        .pipe(gulp.dest(path.join(conf.paths.dist, 'styles/assets/fonts')))
 });
+
 
 gulp.task('clean', function (done) {
-    $.del([path.join(conf.paths.dist, '/'), path.join(conf.paths.tmp, '/')], done);
+    $.del([path.join(conf.paths.dist, '/'), path.join(conf.paths.tmp, '/')], {force: true} /*done*/);
 });
 
-gulp.task('build', ['html', 'fonts', 'other']);
+gulp.task('build', ['clean','html', 'fonts', 'other']);

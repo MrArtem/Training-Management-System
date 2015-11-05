@@ -137,6 +137,9 @@
         <groupId>com.github.eirslett</groupId>
         <artifactId>frontend-maven-plugin</artifactId>
         <version>0.0.26</version>
+        <configuration>
+          <workingDirectory>frontend</workingDirectory>
+        </configuration>
         <executions>
           <execution>
             <id>install node and npm</id>
@@ -171,6 +174,9 @@
               <goal>gulp</goal>
             </goals>
             <phase>generate-resources</phase>
+            <configuration>
+              <arguments>build</arguments>
+            </configuration>
           </execution>
         </executions>
       </plugin>

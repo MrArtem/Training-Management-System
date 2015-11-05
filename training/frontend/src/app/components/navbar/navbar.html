@@ -1,0 +1,67 @@
+<div class="navbar">
+    <nav class="top-bar" data-topbar role="navigation">
+        <ul class="title-area">
+            <li class="name">
+                <h1><a ui-sref="mycourses"><img alt="Exadel" ng-src="app/assets/images/ExadelLogo.png"></a></h1>
+            </li>
+        </ul>
+
+        <section class="top-bar-section">
+
+            <!-- Left Nav Section -->
+            <ul class="left">
+                <li><a ui-sref="mycourses" ng-class="{activelink: navbar.isActive('mycourses')}">MY COURSES</a></li>
+                <li><a ui-sref="browse" ng-class="{activelink: navbar.isActive('browse')}">BROWSE</a></li>
+                <li><a ui-sref="profile({userId: navbar.user.userId})"
+                       ng-class="{activelink: navbar.isActive('profile')}">PROFILE</a></li>
+                <li ng-if="navbar.isAdmin()"><a ui-sref="admin"
+                                                ng-class="{activelink: navbar.isActive('admin')}">ADMIN</a></li>
+            </ul>
+
+            <!-- Right Nav Section -->
+            <ul class="right">
+                <li class=""><a ui-sref="step1" class="right button round small accent-btn-blue create-btn">CREATE COURSE</a></li>
+                <li class=""><a href="#" data-reveal-id="searchModal"><i class="fa fa-search"></i></a></li>
+                <li class=""><a href="#"><i class="fa fa-globe"></i></a></li>
+                <li class="has-dropdown">
+                    <a href="#"><i class="fa fa-user"></i></a>
+                    <ul class="dropdown tre-dropdown">
+                        <li><label>{{navbar.user.username}}</label></li>
+                        <li class="no-margin-bottom"><a ui-sref="profile({userId: navbar.user.userId})">Profile</a></li>
+                        <li class="no-margin-top"><a href="#" ng-click="navbar.logout()">Logout</a></li>
+                    </ul>
+                </li>
+            </ul>
+
+        </section>
+
+    </nav>
+</div>
+
+<div class="tre-modal">
+    <div id="searchModal" class="reveal-modal large full-modal" data-reveal aria-labelledby="searchTitle"
+         data-options="close_on_background_click:false;" aria-hidden="true" role="dialog">
+        <h2 id="searchTitle">Search</h2>
+
+        <div class="row">
+            <input type="text" ng-model="navbar.searchQuery" ng-change="navbar.search()"
+                   ng-model-options="{debounce: { 'default': 250} }" placeholder="Search...">
+        </div>
+        <p>{{navbar.searchAnswer}}</p>
+
+        <div class="row" ng-repeat="training in navbar.foundTrainings">
+            <p>{{training.title}}</p>
+
+            <p>{{training.excerpt}}</p>
+        </div>
+        <div class="row" ng-repeat="user in navbar.foundUsers">
+            <p>{{user.username}}</p>
+
+            <p>{{user.email}}</p>
+
+            <p>{{user.phone}}</p>
+        </div>
+
+        <a class="close-reveal-modal" ng-click="navbar.clearModal()" aria-label="Close">&#215;</a>
+    </div>
+</div>

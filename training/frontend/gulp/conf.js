@@ -13,7 +13,7 @@ var gutil = require('gulp-util');
  */
 exports.paths = {
     src: 'src',
-    dist: 'src/main/webapp',
+    dist: '../src/main/webapp',
     tmp: '.tmp',
     e2e: 'e2e',
     tmpSass: '.sass-cache'
