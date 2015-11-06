@@ -17,12 +17,10 @@
 
         vm.getAttachments();
 
-
-        //NEED TO RELOAD FILES
         function uploadFiles() {
             console.log('files to be uploaded: ', $scope.filesToUpload);
             courseAPI.uploadFiles($stateParams.courseId, $scope.filesToUpload).then(function(result) {
-                //$scope.$parent.courseInfo.files = angular.copy(result); UNCOMMENT ONLY WHEN FILES ARE RETURNED ON UPLOAD
+                $scope.$parent.courseInfo.files = angular.copy(result);
                 console.log($scope.$parent.courseInfo.files);
             });
         }
@@ -30,7 +28,8 @@
         function deleteFile(index) {
             var fileId = $scope.$parent.courseInfo.files[index].idFile;
             console.log('Id of file to be deleted: ' + fileId);
-            courseAPI.deleteFile(fileId).then(function(data) {
+            courseAPI.deleteFile(fileId).then(function(result) {
+                $scope.$parent.courseInfo.files = angular.copy(result);
                 console.log('File deleted successfully');
             });
         }

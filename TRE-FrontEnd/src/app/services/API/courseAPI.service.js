@@ -304,6 +304,8 @@
                     'Content-Type': undefined
                 },
                 transformRequest: angular.identity
+            }).then(function(result) {
+                return result.data;
             });
         }
 
