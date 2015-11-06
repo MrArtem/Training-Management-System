@@ -5,11 +5,15 @@ import com.exadel.training.controller.model.userModels.ExUserModel;
 import com.exadel.training.controller.model.userModels.UserModel;
 import com.exadel.training.dao.domain.Lesson;
 import com.exadel.training.dao.domain.Training;
+import com.exadel.training.notification.Notification;
+import com.exadel.training.notification.help.MessageGenerator;
 import com.exadel.training.security.User.CustomUser;
 import com.exadel.training.service.LessonService;
 import com.exadel.training.service.UserService;
+import com.exadel.training.validate.Test;
 import com.exadel.training.validate.annotation.LegalID;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -29,6 +33,15 @@ public class UserController {
 
     @Autowired
     private LessonService lessonService;
+
+    @Autowired
+    @Qualifier("getTest")
+    private Test t;
+    @Autowired
+    private Notification notification;
+    @Autowired
+    private MessageGenerator messageGenerator;
+
 
     @Secured({"ADMIN", "USER", "EX_COACH"})
     @RequestMapping(value = "/user_info/{idUser}", method = RequestMethod.GET)

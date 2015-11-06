@@ -6,6 +6,7 @@ import com.exadel.training.dao.domain.FileStorage;
 import com.exadel.training.service.FileStorageService;
 import com.exadel.training.validate.annotation.LegalID;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sun.corba.se.impl.encoding.OSFCodeSetRegistry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.access.annotation.Secured;
@@ -45,7 +46,10 @@ public class FileController {
     public void uploadFile(@RequestParam(value="file", required=false) MultipartFile file,
                            @RequestParam(value="files") Object data, @RequestParam(value="idTraining") String idTraining) throws IOException {
         Map<String, String> result = new ObjectMapper().readValue(data.toString(), HashMap.class);
-        fileStorageService.addFile(result, Long.parseLong(idTraining));
+
+        for(Map.Entry<String, String> entry : result.entrySet()) {
+            fileStorageService.addFile(entry, Long.parseLong(idTraining));
+        }
     }
 
     @Secured({"ADMIN", "USER", "EX_COACH"})

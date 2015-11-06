@@ -22,8 +22,8 @@ import java.util.Properties;
 
 @Component
 public class NotificationEmail implements Notification {
-    private final String USERNAME = "mrartem6695@gmail.com";
-    private final String PASSWORD = "jordan23!";
+    private final String USERNAME = "tms@exadel.com";
+    private final String PASSWORD = "trainingMS";
 
     @Autowired
     private MessageGenerator messageGenerator;
