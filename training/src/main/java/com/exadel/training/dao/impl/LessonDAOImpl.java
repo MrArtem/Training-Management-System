@@ -47,7 +47,10 @@ public class LessonDAOImpl implements LessonDAO {
 
     @Override
     public Lesson getLessonByID(long idLesson) {
-        return sessionFactory.getCurrentSession().load(Lesson.class, idLesson);
+        return (Lesson)sessionFactory.getCurrentSession()
+                .createQuery("select l from Lesson as l where l.id = :idLesson")
+                .setParameter("idLesson", idLesson)
+                .uniqueResult();
     }
 
     @Override
