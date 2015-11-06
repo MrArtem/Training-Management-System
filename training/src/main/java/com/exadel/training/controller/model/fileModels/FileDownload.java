@@ -1,13 +1,17 @@
 package com.exadel.training.controller.model.fileModels;
 
 import com.exadel.training.dao.domain.FileStorage;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import sun.misc.BASE64Encoder;
+
+import java.io.Serializable;
 
 /**
  * Created by ayudovin on 31.10.2015.
  */
-public class FileDownload {
+public class FileDownload implements Serializable{
 
+    @JsonIgnore
     private BASE64Encoder encoder = new BASE64Encoder();
 
     private long idTraining;

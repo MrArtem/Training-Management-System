@@ -15,6 +15,7 @@ public class FileStorageDAOImpl implements FileStorageDAO{
     @Autowired
     private SessionFactory sessionFactory;
 
+    @Override
     public void addFile(FileStorage fileStorage) {
         sessionFactory.getCurrentSession().save(fileStorage);
     }

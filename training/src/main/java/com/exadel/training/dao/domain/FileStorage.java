@@ -16,6 +16,7 @@ public class FileStorage {
     private long id;
 
     @Lob
+
     private byte[] file;
 
     @NotBlank
