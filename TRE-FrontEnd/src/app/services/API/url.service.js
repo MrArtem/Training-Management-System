@@ -16,7 +16,7 @@
             cancelEdit: cancelEdit,
             confirm: confirm,
             createCourse: createCourse,
-            deleteFile: deleteFile, //TODO
+            deleteFile: deleteFile,
             deleteLesson: deleteLesson,
             deleteParticipant: deleteParticipant,
             editCourse: editCourse,
@@ -89,9 +89,8 @@
         return '/api/training/create';
     }
 
-    //TODO
     function deleteFile(fileId) {
-        //return ;
+        return '/api/file_controller/delete_file/' + fileId;
     }
 
     function deleteLesson(courseId, lessonId) {

@@ -4,7 +4,7 @@
 
             <h4 class="tab-heading">Feedbacks</h4>
 
-            <a class="button round tiny default-btn-blue" data-reveal-id="addFeedbackModal">Leave feedback</a>
+            <a class="btn default-btn-blue" data-toggle="modal" data-target="#addFeedbackModal">Leave feedback</a>
 
             <div class="scrollable-div">
 
@@ -20,7 +20,7 @@
                     <tr ng-repeat="fb in profileInfo.feedbacks track by $index">
                         <td><a ui-sref="profile({userId: fb.coachID})">{{fb.coachName}}</a></td>
                         <td>{{fb.isPositive==true ? '+' : '-'}}</td>
-                        <td data-reveal-id="seeFeedbackModal" ng-click="feedbacks.seeFeedback($index)"><a href="">See details</a></td>
+                        <td data-toggle="modal" data-target="#seeFeedbackModal" ng-click="feedbacks.seeFeedback($index)"><a href="">See details</a></td>
                     </tr>
                     </tbody>
                 </table>
@@ -29,6 +29,36 @@
 
         </div>
 
+    </div>
+</div>
+
+<div class="modal fade" id="addLessonModal" tabindex="-1" role="dialog" aria-labelledby="addTitle">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="addTitle">Add lesson</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6">
+                        <label>New date</label>
+                        <input type='text' ng-model="timetable.newDate" tre-datepicker="">
+                    </div>
+                    <div class="col-xs-12 col-sm-6">
+                        <label>New place</label>
+                        <input type='text' ng-model="timetable.newPlace">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button href="" class="btn default-btn" data-dismiss="modal">Cancel</button>
+                <button href="" class="btn default-btn-blue" data-dismiss="modal"
+                        ng-click="timetable.addLesson()">OK
+                </button>
+            </div>
+        </div>
     </div>
 </div>
 

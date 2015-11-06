@@ -27,13 +27,12 @@
             });
         }
 
-        //TODO
         function deleteFile(index) {
-            //var fileId = $scope.$parent.courseInfo.files[index].id; //field name id?
-            //console.log('Id of file to be deleted: ' + fileId);
-            //courseAPI.deleteFile(fileId).then(function(data) {
-            //    console.log('File deleted successfully');
-            //});
+            var fileId = $scope.$parent.courseInfo.files[index].idFile;
+            console.log('Id of file to be deleted: ' + fileId);
+            courseAPI.deleteFile(fileId).then(function(data) {
+                console.log('File deleted successfully');
+            });
         }
 
         function getAttachments() {

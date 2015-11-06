@@ -307,11 +307,10 @@
             });
         }
 
-        //TODO
         function deleteFile(fileId) {
-           //return $http.put(urlProvider.deleteFile(fileId)).then(function(result) {
-           //    return result.data;
-           //});
+           return $http.delete(urlProvider.deleteFile(fileId)).then(function(result) {
+               return result.data;
+           });
         }
 
         //////////
