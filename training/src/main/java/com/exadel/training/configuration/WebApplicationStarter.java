@@ -1,7 +1,6 @@
 package com.exadel.training.configuration;
 
 import com.exadel.training.security.ApplicationSecurity;
-import com.exadel.training.validate.Test;
 import org.hibernate.SessionFactory;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -42,12 +41,5 @@ public class WebApplicationStarter extends SpringBootServletInitializer {
         resolver.setMaxInMemorySize(1048576);
         resolver.setMaxUploadSize(25799625);
         return resolver;
-    }
-
-    @Bean
-    public Test getTest() {
-        Test t = new Test();
-        t.setId(1);
-        return t;
     }
 }
