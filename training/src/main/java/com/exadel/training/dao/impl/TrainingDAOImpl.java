@@ -58,6 +58,7 @@ public class TrainingDAOImpl implements TrainingDAO {
                 Criterion isCoach = Restrictions.eq("coach", user);
                 Criterion isSubscribed = Restrictions.eq("listener.user", user);
                 criteria.add(Restrictions.or(isCoach, isSubscribed));
+                criteria.add(Restrictions.eq("listener.state", Listener.State.ACCEPTED));
             }
             criteria = criteria.add(Restrictions.eq("state", Training.State.NONE));
             Long date = new Date().getTime();
@@ -74,6 +75,7 @@ public class TrainingDAOImpl implements TrainingDAO {
                 Criterion isCoach = Restrictions.eq("coach", user);
                 Criterion isSubscribed = Restrictions.eq("listener.user", user);
                 criteria.add(Restrictions.or(isCoach, isSubscribed));
+                criteria.add(Restrictions.eq("listener.state", Listener.State.ACCEPTED));
             }
             Long date = new Date().getTime();
             DetachedCriteria detachedCriteria = DetachedCriteria.forClass(Training.class);
