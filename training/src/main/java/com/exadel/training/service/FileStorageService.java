@@ -14,5 +14,7 @@ public interface FileStorageService {
     void addFile(Map.Entry<String,String> entry, long idTraining)  throws IOException;
     void deleteFile(long idFileStorage);
 
+    FileStorage getFileStorageByID(long idFile);
+
     List<FileStorage> getAllFileByTraining(long idTraining);
 }

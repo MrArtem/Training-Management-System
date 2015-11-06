@@ -2,7 +2,9 @@ package com.exadel.training.service.impl;
 
 import com.exadel.training.controller.model.attendanceModels.AttendanceModel;
 import com.exadel.training.dao.AttendanceDAO;
+import com.exadel.training.dao.LessonDAO;
 import com.exadel.training.dao.domain.Attendance;
+import com.exadel.training.dao.domain.Lesson;
 import com.exadel.training.service.AttendanceService;
 import com.exadel.training.service.LessonService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +22,7 @@ import java.util.List;
 public class AttendanceServiceImpl implements AttendanceService{
 
     @Autowired
-    LessonService lessonService;
+    LessonDAO lessonDAO;
     @Autowired
     AttendanceDAO attendanceDAO;
 
@@ -42,7 +44,8 @@ public class AttendanceServiceImpl implements AttendanceService{
 
     @Override
     public List<Attendance> getAllAttendanceByLessonID(long idLesson) {
-        return lessonService.getLessonByID(idLesson).getAttendanceList();
+        Lesson lesson = lessonDAO.getLessonByID(idLesson);
+        return lesson.getAttendanceList();
     }
 
     @Override

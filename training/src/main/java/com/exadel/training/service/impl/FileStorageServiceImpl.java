@@ -44,6 +44,11 @@ public class FileStorageServiceImpl implements FileStorageService {
     }
 
     @Override
+    public FileStorage getFileStorageByID(long idFile) {
+        return fileStorageDAO.getFileStorageByID(idFile);
+    }
+
+    @Override
     public List<FileStorage> getAllFileByTraining(long idTraining) {
         return trainingService.getTraining(idTraining).getFileStorageList();
     }
