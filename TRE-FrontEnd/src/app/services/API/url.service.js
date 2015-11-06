@@ -22,9 +22,10 @@
             editCourse: editCourse,
             findTrainings: findTrainings,
             findUsers: findUsers,
-            getAllTags: getAllTags, //TODO
+            getAllTags: getAllTags,
             getApproveList: getApproveList,
             getAttachments: getAttachments,
+            getAttendance: getAttendance,
             getComments: getComments,
             getCourseList: getCourseList,
             getCurrentCoursesForUser: getCurrentCoursesForUser,
@@ -43,6 +44,7 @@
             login: login,
             logout: logout,
             manageLesson: manageLesson,
+            setAttandance: setAttendance,
             setRating: setRating, //TODO
             subscribe: subscribe,
             uploadFiles: uploadFiles
@@ -124,6 +126,10 @@
         return '/api/file_controller/get_files/' + courseId;
     }
 
+    function getAttendance(lessonId) {
+        return '/api/attendance_controller/all_attendance/' + lessonId;
+    }
+
     function getComments(courseId) {
         return '/api/training/' + courseId + '/comment_list';
     }
@@ -197,6 +203,10 @@
 
     function manageLesson(courseId) {
         return '/api/training/' + courseId + '/lesson';
+    }
+
+    function setAttendance() {
+        return '/api/attendance_controller/update_attendance';
     }
 
     //TODO

@@ -19,8 +19,9 @@
             deleteLesson: deleteLesson,
             deleteParticipant: deleteParticipant,
             editCourse: editCourse,
-            getAllTags: getAllTags, //TODO
+            getAllTags: getAllTags,
             getAttachments: getAttachments,
+            getAttendance: getAttendance,
             getComments: getComments,
             getCourseList: getCourseList,
             getEditedCourse: getEditedCourse,
@@ -30,6 +31,7 @@
             getTimetable: getTimetable,
             editLesson: editLesson,
             leave: leave,
+            setAttendance: setAttendance,
             setRating: setRating,
             subscribe: subscribe,
             uploadFiles: uploadFiles
@@ -38,8 +40,20 @@
 
         //////////
 
+        function getAllTags() {
+            return $http.get(urlProvider.getAllTags()).then(function(result) {
+                return result.data;
+            });
+        }
+
         function getAttachments(courseId) {
             return $http.get(urlProvider.getAttachments(courseId)).then(function(result) {
+                return result.data;
+            });
+        }
+
+        function getAttendance(lessonId) {
+            return $http.get(urlProvider.getAttendance(lessonId)).then(function(result) {
                 return result.data;
             });
         }
@@ -65,12 +79,6 @@
 
         function getShortInfo(courseId) {
             return $http.get(urlProvider.getShortInfo(courseId)).then(function(result) {
-                return result.data;
-            });
-        }
-
-        function getAllTags() {
-            return $http.get(urlProvider.getAllTags()).then(function(result) {
                 return result.data;
             });
         }
@@ -322,6 +330,12 @@
 
         function leave(courseId) {
             return $http.put(urlProvider.leave(courseId)).then(function(result) {
+                return result.data;
+            });
+        }
+
+        function setAttendance(attendanceList) {
+            return $http.post(urlProvider.setAttendance(), attendanceList).then(function(result) {
                 return result.data;
             });
         }

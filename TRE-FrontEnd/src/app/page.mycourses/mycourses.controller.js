@@ -21,6 +21,7 @@
             courseAPI.getCourseList(true, []).then(function(data) {
                 vm.userCourses = angular.copy(data);
                 vm.isContentLoaded = true;
+                console.log('Received courses: ', vm.userCourses);
             })
         }
 
