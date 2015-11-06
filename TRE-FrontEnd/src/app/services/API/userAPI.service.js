@@ -11,7 +11,7 @@
             addFeedbackOnUser: addFeedbackOnUser,
             getCurrentCourses: getCurrentCourses,
             getFeedbacksOn: getFeedbacksOn,
-            getFeedback: getFeedback, //TODO
+            getFeedback: getFeedback,
             getPastCourses: getPastCourses,
             getProfileInfo: getProfileInfo,
             getWaitingCourses: getWaitingCourses

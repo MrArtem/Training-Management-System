@@ -20,7 +20,7 @@
                     <tr ng-repeat="fb in profileInfo.feedbacks track by $index">
                         <td><a ui-sref="profile({userId: fb.coachID})">{{fb.coachName}}</a></td>
                         <td>{{fb.isPositive==true ? '+' : '-'}}</td>
-                        <td data-toggle="modal" data-target="#seeFeedbackModal" ng-click="feedbacks.seeFeedback($index)"><a href="">See details</a></td>
+                        <td><a href="" data-toggle="modal" data-target="#seeFeedbackModal" ng-click="feedbacks.seeFeedback($index)">See details</a></td>
                     </tr>
                     </tbody>
                 </table>
@@ -32,13 +32,13 @@
     </div>
 </div>
 
-<div class="modal fade" id="#seeFeedbackModal" tabindex="-1" role="dialog" aria-labelledby="seeFbTitle">
+<div class="modal fade" id="seeFeedbackModal" tabindex="-1" role="dialog" aria-labelledby="seeFbTitle">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                         aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="seeFbTitle"></h4>
+                <h4 class="modal-title" id="#seeFbTitle"></h4>
             </div>
             <div class="modal-body">
                 <form name="feedbackForm" novalidate>
@@ -87,7 +87,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button href="" class="btn default-btn-blue" data-dismiss="modal">OK</button>
+                <button href="" class="btn default-btn-blue" data-dismiss="modal" ng-click="feedbacks.clearFbInfo()">OK</button>
             </div>
         </div>
     </div>

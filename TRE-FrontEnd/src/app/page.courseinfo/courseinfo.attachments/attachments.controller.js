@@ -12,6 +12,7 @@
         $scope.filesToUpload = [];
 
         vm.deleteFile = deleteFile;
+        vm.download = download;
         vm.getAttachments = getAttachments;
         vm.uploadFiles = uploadFiles;
 
@@ -32,6 +33,10 @@
                 $scope.$parent.courseInfo.files = angular.copy(result);
                 console.log('File deleted successfully');
             });
+        }
+
+        function download(filelink) {
+            window.open(filelink);
         }
 
         function getAttachments() {

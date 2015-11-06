@@ -31,7 +31,7 @@
             getCurrentCoursesForUser: getCurrentCoursesForUser,
             getEditedCourse: getEditedCourse,
             getExCoachList: getExCoachList, //TODO
-            getFeedback: getFeedback, //TODO
+            getFeedback: getFeedback,
             getFeedbacksOnUser: getFeedbacksOnUser,
             getNewsList: getNewsList,
             getParticipants: getParticipants,
@@ -154,9 +154,8 @@
         return '/api/feedback_controller/feedbacks_of_user/' + userId;
     }
 
-    //TODO
     function getFeedback(fbId) {
-        //return '/api/feedback_controller/' + ;
+        return '/api/feedback_controller/get_feedback/' + fbId;
     }
 
     function getNewsList() {
