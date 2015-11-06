@@ -11,6 +11,7 @@ public class FileDownload {
     private BASE64Encoder encoder = new BASE64Encoder();
 
     private long idTraining;
+    private long idFile;
     private String name;
     private String file;
 
@@ -21,6 +22,23 @@ public class FileDownload {
         this.idTraining = fileStorage.getTraining().getId();
         this.name = fileStorage.getName();
         this.file = encoder.encode(fileStorage.getFile());
+        this.idFile = fileStorage.getId();
+    }
+
+    public BASE64Encoder getEncoder() {
+        return encoder;
+    }
+
+    public void setEncoder(BASE64Encoder encoder) {
+        this.encoder = encoder;
+    }
+
+    public long getIdFile() {
+        return idFile;
+    }
+
+    public void setIdFile(long idFile) {
+        this.idFile = idFile;
     }
 
     public long getIdTraining() {

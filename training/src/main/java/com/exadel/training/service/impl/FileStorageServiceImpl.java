@@ -12,6 +12,7 @@ import sun.misc.BASE64Decoder;
 import javax.transaction.Transactional;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by ayudovin on 31.10.2015.
@@ -27,18 +28,16 @@ public class FileStorageServiceImpl implements FileStorageService {
     private TrainingService trainingService;
 
     @Override
-    public void addFile(FileUpload fileUpload) throws IOException {
-    /* for(int i = 0; i<fileUpload.getFiles().size(); i++) {
-         FileStorage fileStorage = new FileStorage();
-         List<String> names = fileUpload.getNames();
-         List<String> files = fileUpload.getFiles();
+    public void addFile(Map<String, String> files, long idTraining) throws IOException {
+        for(Map.Entry<String,String> entry: files.entrySet()) {
+            FileStorage fileStorage = new FileStorage();
 
-         fileStorage.setName(names.get(i));
-         fileStorage.setFile(decoder.decodeBuffer(files.get(i)));
-         fileStorage.setTraining(trainingService.getTraining(fileUpload.getIdTraining()));
+            fileStorage.setName(entry.getKey());
+            fileStorage.setFile(decoder.decodeBuffer(entry.getValue()));
+            fileStorage.setTraining(trainingService.getTraining(idTraining));
 
-         fileStorageDAO.addFile(fileStorage);
-     }*/
+            fileStorageDAO.addFile(fileStorage);
+        }
     }
 
     @Override

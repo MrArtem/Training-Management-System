@@ -1,6 +1,7 @@
 package com.exadel.training.controller;
 
 import com.exadel.training.controller.model.trainingModels.TrainingListModel;
+import com.exadel.training.controller.model.userModels.ExCoachModel;
 import com.exadel.training.controller.model.userModels.ExUserModel;
 import com.exadel.training.controller.model.userModels.UserModel;
 import com.exadel.training.dao.domain.Lesson;
@@ -77,6 +78,12 @@ public class UserController {
     @RequestMapping(value = "/add_ex_user", method = RequestMethod.POST, consumes = "application/json")
     public void addExUser(@RequestBody ExUserModel exUserModel) {
         userService.addExternalUser(exUserModel);
+    }
+
+    @Secured({"ADMIN"})
+    @RequestMapping(value = "/add_ex_coach", method = RequestMethod.POST, consumes = "application/json")
+    public void addExCoach(@RequestBody ExCoachModel exCoachModel) {
+
     }
 
 }
