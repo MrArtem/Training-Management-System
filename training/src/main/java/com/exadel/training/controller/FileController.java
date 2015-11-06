@@ -43,13 +43,21 @@ public class FileController {
 
     @Secured({"ADMIN", "USER", "EX_COACH"})
     @RequestMapping(value = "/add_files", method = RequestMethod.POST)
-    public void uploadFile(@RequestParam(value="file", required=false) MultipartFile file,
+    public List<FileDownload> uploadFile(@RequestParam(value="file", required=false) MultipartFile file,
                            @RequestParam(value="files") Object data, @RequestParam(value="idTraining") String idTraining) throws IOException {
         Map<String, String> result = new ObjectMapper().readValue(data.toString(), HashMap.class);
 
         for(Map.Entry<String, String> entry : result.entrySet()) {
             fileStorageService.addFile(entry, Long.parseLong(idTraining));
         }
+
+        List<FileDownload> fileDownloadList = new ArrayList<FileDownload>();
+
+        for(FileStorage fileStorage : fileStorageService.getAllFileByTraining(Long.parseLong(idTraining))) {
+            fileDownloadList.add(new FileDownload(fileStorage));
+        }
+
+        return fileDownloadList;
     }
 
     @Secured({"ADMIN", "USER", "EX_COACH"})
