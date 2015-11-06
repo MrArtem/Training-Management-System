@@ -1,0 +1,144 @@
+<div class="timetable">
+    <div class="row">
+        <div class="col-xs-12 col-md-11">
+            <h4 class="tab-heading">Timetable</h4>
+
+            <a class="btn default-btn-blue bottom-mg-25" data-toggle="modal" data-target="#addLessonModal"><i class="fa fa-plus"></i>Add
+                date</a>
+
+
+            <div class="scrollable-div">
+
+                <table ng-show="courseInfo.timetable.length != 0" class="table fullwidth-table">
+                    <thead>
+                    <tr>
+                        <th>Lesson</th>
+                        <th>When</th>
+                        <th>Where</th>
+                        <th>Attendance</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="lesson in courseInfo.lessonList">
+                        <td>{{$index + 1}}</td>
+                        <td>{{lesson.date | date: "MMM d, y h:mm a"}}</td>
+                        <td>{{lesson.place}}</td>
+                        <td><a href="" data-toggle="modal" data-target="#editLessonModal"
+                               ng-click="timetable.getLessonId($index)">Edit</a></td>
+                        <td><a href="" data-toggle="modal" data-target="#attendanceModal"
+                               ng-click="timetable.getAttendance($index)">Edit</a></td></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <p ng-show="courseInfo.timetable.length == 0">This training has no lessons.</p>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<div class="modal fade" id="addLessonModal" tabindex="-1" role="dialog" aria-labelledby="addTitle">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="addTitle">Add lesson</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6">
+                        <label>New date</label>
+                        <input type='text' ng-model="timetable.newDate" tre-datepicker="">
+                    </div>
+                    <div class="col-xs-12 col-sm-6">
+                        <label>New place</label>
+                        <input type='text' ng-model="timetable.newPlace">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button href="" class="btn default-btn" data-dismiss="modal">Cancel</button>
+                <button href="" class="btn default-btn-blue" data-dismiss="modal"
+                        ng-click="timetable.addLesson()">OK
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="editLessonModal" tabindex="-1" role="dialog" aria-labelledby="editTitle">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="editTitle">Edit lesson</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6">
+                        <label>New date: </label>
+                        <input type='text' ng-model="timetable.editedDate" tre-datepicker="">
+                    </div>
+                    <div class="col-xs-12 col-sm-6">
+                        <label>New place: </label>
+                        <input type='text' ng-model="timetable.editedPlace">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button href="" class="btn default-btn-red pull-left"
+                        ng-click="timetable.deleteLesson()" data-dismiss="modal">Delete lesson
+                </button>
+                <button href="" class="btn default-btn" data-dismiss="modal">Cancel</button>
+                <button href="" class="btn default-btn-blue"
+                        ng-click="timetable.editLesson()" data-dismiss="modal">OK
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="attendanceModal" tabindex="-1" role="dialog" aria-labelledby="attendanceTitle">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="attendanceTitle">Set attendance</h4>
+            </div>
+            <div class="modal-body">
+                <div class="scrollable-div">
+                    <table class="table fullwidth-table">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>User</th>
+                            <th>Present?</th>
+                            <th>Reason</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="record in timetable.attendanceList">
+                            <td>{{$index + 1}}</td>
+                            <td><a ui-sref="profile({userId: record.idUser})">{{record.nameUser}}</a></td>
+                            <td><input type="checkbox" ng-model="record.presence"></td>
+                            <td><input type="text" ng-model="record.reason" placeholder="Reason"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button href="" class="btn default-btn" data-dismiss="modal">Cancel</button>
+                <button href="" class="btn default-btn-blue" data-dismiss="modal"
+                        ng-click="timetable.setAttendance()">OK
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+

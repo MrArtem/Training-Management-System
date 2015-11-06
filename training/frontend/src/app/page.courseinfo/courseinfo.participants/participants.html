@@ -1,0 +1,156 @@
+<div class="participants">
+    <div class="row">
+        <div class="col-xs-12 col-md-11">
+
+            <h4 class="tab-heading">Participants</h4>
+            <a class="btn default-btn-blue bottom-mg-25" data-toggle="modal" data-target="#addParticipantModal"><i class="fa fa-plus"></i>Add participant</a>
+
+            <div class="scrollable-div">
+
+                <table class="table fullwidth-table">
+                    <!--ng-show="courseInfo.participantsList.length != 0"-->
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="participant in courseInfo.participantsList track by $index" class="rowWithSecret">
+                        <td>{{$index + 1}}</td>
+                        <td>{{participant.username}}</td>
+                        <td>{{participant.email}}</td>
+                        <td><a href="" data-toggle="modal" data-target="#addFeedbackModal" ng-click="participants.getUserId($index)">Leave feedback</a></td>
+                        <td class="hiddenCell" ng-click="participants.deleteParticipant($index)"><i class="fa fa-times"></i></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <p ng-show="courseInfo.participantsList.length == 0">Nobody subscribed yet</p>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!--Modal to add external user-->
+<div class="modal fade" id="addParticipantModal" tabindex="-1" role="dialog" aria-labelledby="addTitle">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="addTitle">Add participant</h4>
+            </div>
+            <div class="modal-body">
+                <form name="participantForm" novalidate>
+
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6">
+                            <label>First Name:</label>
+                            <input type='text' name="firstName" ng-model="participants.participantInfo.firstName" required>
+                            <small ng-show="participantForm.firstName.$invalid && participantForm.firstName.$touched" class="error">This
+                                field is required.
+                            </small>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6">
+                            <label>Last Name:</label>
+                            <input type='text' name="lastName" ng-model="participants.participantInfo.lastName" required>
+                            <small ng-show="participantForm.lastName.$invalid && participantForm.lastName.$touched" class="error">This
+                                field is required.
+                            </small>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6">
+                            <label>Email:</label>
+                            <input type='email' name="email" ng-model="participants.participantInfo.email" required>
+                            <small ng-show="participantForm.email.$invalid && participantForm.email.$touched" class="error">This
+                                field is required.
+                            </small>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6">
+                            <label>Phone number:</label>
+                            <input type='text' ng-model="participants.participantInfo.phone">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button href="" class="btn default-btn" data-dismiss="modal">Cancel</button>
+                <button href="" class="btn default-btn-blue" data-dismiss="modal"
+                        ng-click="participants.addParticipant()">OK
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Modal to add feedback-->
+<div class="modal fade" id="addFeedbackModal" tabindex="-1" role="dialog" aria-labelledby="fbTitle">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="fbTitle">Add feedback</h4>
+            </div>
+            <div class="modal-body">
+                <form name="feedbackForm" novalidate>
+
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6">
+                            <input type="checkbox" id="attendance" ng-model="participants.fbInfo.attendance"><label for="attendance">Was
+                            it interesting?</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6">
+                            <input type="checkbox" id="attitude" ng-model="participants.fbInfo.attitude"><label for="attitude">Was it
+                            clear?</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6">
+                            <input type="checkbox" id="commSkills" ng-model="participants.fbInfo.commSkills"><label for="commSkills">Did
+                            you learn something new?</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6">
+                            <input type="checkbox" id="questions" ng-model="participants.fbInfo.questions"><label for="questions">Was the coach creative?</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6">
+                            <input type="checkbox" id="motivation" ng-model="participants.fbInfo.motivation"><label for="motivation">Would you recommend this course?</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6">
+                            <input type="checkbox" id="focusOnResult" ng-model="participants.fbInfo.focusOnResult"><label for=focusOnResult>Would you recommend this course?</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6">
+                            <label>Anything else?
+                                <textarea type="text" name="other" placeholder="Do you have something else to say?" ng-model="participants.fbInfo.other" ng-maxlength="10000"></textarea>
+                            </label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button href="" class="btn default-btn" data-dismiss="modal">Cancel</button>
+                <button href="" class="btn default-btn-blue" data-dismiss="modal"
+                        ng-click="participants.addFeedbackOnUser()">OK
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
