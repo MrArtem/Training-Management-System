@@ -492,7 +492,7 @@ public class TrainingServiceImpl implements TrainingService {
         approveAction.setTraining(training);
         approveAction.setType(ApproveAction.Type.EDIT);
 
-        Lesson lesson = lessonDAO.getLessonById(lessonModel.getPrevLessonId());
+        Lesson lesson = lessonDAO.getLessonByID(lessonModel.getPrevLessonId());
 
         ApproveLesson approveLesson = new ApproveLesson();
         approveLesson.setLesson(lesson);
@@ -536,7 +536,7 @@ public class TrainingServiceImpl implements TrainingService {
     public void removeLesson(long trainingId, LessonModel lessonModel) {
         Training training = trainingDAO.getTrainingById(trainingId);
 
-        Lesson lesson = lessonDAO.getLessonById(lessonModel.getPrevLessonId());
+        Lesson lesson = lessonDAO.getLessonByID(lessonModel.getPrevLessonId());
 
         ApproveLesson approveLesson = new ApproveLesson();
         approveLesson.setLesson(lesson);

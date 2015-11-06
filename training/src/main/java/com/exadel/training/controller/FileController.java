@@ -75,8 +75,17 @@ public class FileController {
 
     @Secured({"ADMIN", "USER", "EX_COACH"})
     @RequestMapping(value = "/delete_file/{idFile}", method = RequestMethod.DELETE)
-    public void deleteFile(@PathVariable("idFile") long idFile) {
+    public List<FileDownload> deleteFile(@PathVariable("idFile") long idFile) {
+        long idTraining = fileStorageService.getFileStorageByID(idFile).getTraining().getId();
         fileStorageService.deleteFile(idFile);
+
+        List<FileDownload> fileDownloadList = new ArrayList<FileDownload>();
+
+        for(FileStorage fileStorage : fileStorageService.getAllFileByTraining(idTraining)) {
+            fileDownloadList.add(new FileDownload(fileStorage));
+        }
+
+        return fileDownloadList;
     }
 
 
