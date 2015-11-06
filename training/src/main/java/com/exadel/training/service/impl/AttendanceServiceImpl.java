@@ -22,13 +22,12 @@ import java.util.List;
 public class AttendanceServiceImpl implements AttendanceService{
 
     @Autowired
-    LessonDAO lessonDAO;
+    LessonService lessonService;
     @Autowired
     AttendanceDAO attendanceDAO;
 
     @Override
     public void updateAttendance(AttendanceModel attendanceModel) {
-        //todo ask about default attendance
         Attendance attendance = attendanceDAO.getAttendanceByID(attendanceModel.getIdAttendance());
 
         attendance.setComment(attendanceModel.getComment());
@@ -44,7 +43,8 @@ public class AttendanceServiceImpl implements AttendanceService{
 
     @Override
     public List<Attendance> getAllAttendanceByLessonID(long idLesson) {
-        Lesson lesson = lessonDAO.getLessonByID(idLesson);
+        //todo check load and get
+        Lesson lesson = lessonService.getLessonByID(idLesson);
         return lesson.getAttendanceList();
     }
 
