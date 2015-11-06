@@ -1,0 +1,29 @@
+<div class="waiting">
+    <div class="row">
+        <div class="col-xs-12 col-md-11">
+
+            <h4 class="tab-heading">Waiting for trainings</h4>
+
+            <div class="scrollable-div">
+
+                <table class="table fullwidth-table">
+                    <thead>
+                    <tr>
+                        <th>Coach</th>
+                        <th>Training</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="course in profileInfo.waitingCourses">
+                        <td>{{course.coachName}}</td>
+                        <td>{{course.trainingTitle}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
