@@ -24,10 +24,10 @@
                         <td>{{$index + 1}}</td>
                         <td>{{lesson.date | date: "MMM d, y h:mm a"}}</td>
                         <td>{{lesson.place}}</td>
-                        <td><a href="" data-toggle="modal" data-target="#editLessonModal"
-                               ng-click="timetable.getLessonId($index)">Edit</a></td>
                         <td><a href="" data-toggle="modal" data-target="#attendanceModal"
                                ng-click="timetable.getAttendance($index)">Edit</a></td></td>
+                        <td><a href="" data-toggle="modal" data-target="#editLessonModal"
+                               ng-click="timetable.getLessonId($index)">Edit</a></td>
                     </tr>
                     </tbody>
                 </table>
@@ -126,7 +126,7 @@
                             <td>{{$index + 1}}</td>
                             <td><a ui-sref="profile({userId: record.idUser})">{{record.nameUser}}</a></td>
                             <td><input type="checkbox" ng-model="record.presence"></td>
-                            <td><input type="text" ng-model="record.reason" placeholder="Reason"></td>
+                            <td><input type="text" ng-model="record.comment" placeholder="Reason"></td>
                         </tr>
                         </tbody>
                     </table>

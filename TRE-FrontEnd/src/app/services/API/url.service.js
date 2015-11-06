@@ -44,7 +44,7 @@
             login: login,
             logout: logout,
             manageLesson: manageLesson,
-            setAttandance: setAttendance,
+            setAttendance: setAttendance,
             setRating: setRating, //TODO
             subscribe: subscribe,
             uploadFiles: uploadFiles
