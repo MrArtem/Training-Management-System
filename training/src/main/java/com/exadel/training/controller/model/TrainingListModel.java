@@ -3,7 +3,7 @@ package com.exadel.training.controller.model;
 import com.exadel.training.dao.domain.Tag;
 import com.exadel.training.dao.domain.Training;
 import com.exadel.training.dao.domain.User;
-import com.exadel.training.security.User.CustomUser;
+import com.exadel.training.security.authentication.CustomAuthentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.List;
@@ -38,7 +38,8 @@ public class TrainingListModel {
         this.coachName = training.getCoach().getLastName() + " " + training.getCoach().getFirstName();
         this.coachId = training.getCoach().getId();
         this.tagList = training.getTagList();
-        CustomUser user = (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        CustomAuthentication user =
+                (CustomAuthentication) SecurityContextHolder.getContext().getAuthentication();
         this.isCoach = user.getUserId() == training.getCoach().getId();
     }
 

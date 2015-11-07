@@ -6,7 +6,7 @@ import com.exadel.training.dao.domain.Listener;
 import com.exadel.training.dao.domain.Training;
 import com.exadel.training.notification.Notification;
 import com.exadel.training.notification.help.MessageGenerator;
-import com.exadel.training.security.User.CustomUser;
+import com.exadel.training.security.authentication.CustomAuthentication;
 import com.exadel.training.service.SearchService;
 import com.exadel.training.service.UserService;
 import com.exadel.training.validate.annotation.LegalID;
@@ -36,7 +36,8 @@ public class UserController {
     @RequestMapping(value = "/user_info/{idUser}", method = RequestMethod.GET)
     @LegalID
     public UserModel getUserInfo(@PathVariable("idUser") long idUser) {
-        CustomUser customUser =  (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        CustomAuthentication customUser =
+                (CustomAuthentication) SecurityContextHolder.getContext().getAuthentication();
         long idCurrentUser = customUser.getUserId();
         UserModel userModel = new UserModel(userService.getUserById(idCurrentUser), userService.isCoachOfCurrentUser(idCurrentUser, idUser));
 

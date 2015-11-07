@@ -10,13 +10,14 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 import javax.persistence.EntityManagerFactory;
 
 @Configuration
 @EnableAutoConfiguration
 @EnableTransactionManagement
-@Import(WebSecurityConfiguration.class)
+@Import({WebSecurityConfiguration.class, WebSocketConfiguration.class})
 public class WebApplicationStarter extends SpringBootServletInitializer {
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
@@ -31,5 +32,14 @@ public class WebApplicationStarter extends SpringBootServletInitializer {
     @Bean
     public WebSecurityConfigurerAdapter webSecurityConfigurerAdapter() {
         return new ApplicationSecurity();
+    }
+
+    @Bean
+    public CommonsMultipartResolver multipartResolver() {
+        CommonsMultipartResolver resolver=new CommonsMultipartResolver();
+        resolver.setDefaultEncoding("utf-8");
+        resolver.setMaxInMemorySize(1048576);
+        resolver.setMaxUploadSize(25799625);
+        return resolver;
     }
 }
