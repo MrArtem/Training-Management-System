@@ -1,16 +1,19 @@
-package com.exadel.training.security.User;
+package com.exadel.training.security.authentication;
 
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 
 import java.util.Collection;
 
-public class CustomUser extends User {
+public class CustomAuthentication extends UsernamePasswordAuthenticationToken implements Authentication {
     private Long userId;
     private String firstName;
     private String secondName;
 
-    public CustomUser(String username, String password, Collection<? extends GrantedAuthority> authorities, Long userId, String firstName, String secondName) {
+    public CustomAuthentication(String username, String password,
+                                Collection<? extends GrantedAuthority> authorities,
+                                String firstName, String secondName, Long userId) {
         super(username, password, authorities);
         this.userId = userId;
         this.firstName = firstName;

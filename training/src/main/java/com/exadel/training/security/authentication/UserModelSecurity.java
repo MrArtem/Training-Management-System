@@ -1,4 +1,4 @@
-package com.exadel.training.security.User.UserModel;
+package com.exadel.training.security.authentication;
 
 public class UserModelSecurity {
 
