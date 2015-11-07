@@ -1,18 +1,19 @@
 package com.exadel.training.controller;
 
 import com.exadel.training.controller.model.trainingModels.TrainingListModel;
+import com.exadel.training.controller.model.userModels.ExCoachModel;
+import com.exadel.training.controller.model.userModels.ExUserModel;
 import com.exadel.training.controller.model.userModels.UserModel;
+import com.exadel.training.dao.domain.Lesson;
 import com.exadel.training.dao.domain.Training;
 import com.exadel.training.security.authentication.CustomAuthentication;
+import com.exadel.training.service.LessonService;
 import com.exadel.training.service.UserService;
 import com.exadel.training.validate.annotation.LegalID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +27,8 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    LessonService lessonService;
 
     @Secured({"ADMIN", "USER", "EX_COACH"})
     @RequestMapping(value = "/user_info/{idUser}", method = RequestMethod.GET)
@@ -59,12 +62,27 @@ public class UserController {
         List<TrainingListModel> trainingListModelList = new ArrayList<TrainingListModel>();
 
         for(Training training : userService.actualTrainings(idUser)) {
-            trainingListModelList.add(new TrainingListModel(training));
-            //todo get next date and place
-
+            TrainingListModel trainingListModel = new TrainingListModel(training);
+            Lesson nextLesson = lessonService.getNextLesson(training.getId());
+            if (nextLesson != null) {
+                trainingListModel.setNextDate(nextLesson.getDate());
+                trainingListModel.setNextPlace(nextLesson.getPlace());
+            }
+            trainingListModelList.add(trainingListModel);
         }
 
         return trainingListModelList;
     }
 
+    @Secured({"ADMIN"})
+    @RequestMapping(value = "/add_ex_user", method = RequestMethod.POST, consumes = "application/json")
+    public void addExUser(@RequestBody ExUserModel exUserModel) {
+        userService.addExternalUser(exUserModel);
+    }
+
+    @Secured({"ADMIN"})
+    @RequestMapping(value = "/add_ex_coach", method = RequestMethod.POST, consumes = "application/json")
+    public void addExCoach(@RequestBody ExCoachModel exCoachModel) {
+
+    }
 }
