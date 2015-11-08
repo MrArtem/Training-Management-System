@@ -38,7 +38,7 @@ public class LessonServiceImpl implements LessonService{
 
     @Override
     public Lesson getLessonByID(long lessonId) {
-        return lessonDAO.getLessonById(lessonId);
+        return lessonDAO.getLessonByID(lessonId);
     }
 
     @Override

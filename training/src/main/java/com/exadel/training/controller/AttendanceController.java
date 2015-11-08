@@ -35,7 +35,8 @@ public class AttendanceController {
 
     @Secured({"ADMIN", "USER"})
     @RequestMapping(value = "/update_attendance", method = RequestMethod.POST, consumes = "application/json")
-    public void updateAttendance(@RequestBody AttendanceModel attendanceModel) {
-        attendanceService.updateAttendance(attendanceModel);
+    public void updateAttendance(@RequestBody List<AttendanceModel> attendanceModelList) {
+      for(AttendanceModel attendance : attendanceModelList)
+        attendanceService.updateAttendance(attendance);
     }
 }

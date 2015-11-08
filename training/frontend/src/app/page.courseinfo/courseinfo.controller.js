@@ -53,12 +53,14 @@
 
         function subscribe() {
             courseAPI.subscribe($stateParams.courseId).then(function(data) {
+                cm.courseInfo.canSubscribe = false;
                 console.log('Subscribed successfully');
             })
         }
 
         function leave() {
             courseAPI.leave($stateParams.courseId).then(function(data) {
+                vm.courseInfo.canSubscribe = true;
                 console.log('Left training successfully');
             })
         }

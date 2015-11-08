@@ -1,9 +1,9 @@
 package com.exadel.training.dao.impl;
 
+import com.exadel.training.dao.TrainingDAO;
 import com.exadel.training.dao.UserDAO;
 import com.exadel.training.dao.domain.*;
-import com.exadel.training.dao.TrainingDAO;
-import com.exadel.training.security.User.CustomUser;
+import com.exadel.training.security.authentication.CustomAuthentication;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -11,7 +11,6 @@ import org.hibernate.criterion.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -52,12 +51,14 @@ public class TrainingDAOImpl implements TrainingDAO {
         Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Training.class, "training");
         if (tagList.size() == 0) {
             if (isActual) {
-                CustomUser customUser = (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+                CustomAuthentication customUser =
+                        (CustomAuthentication) SecurityContextHolder.getContext().getAuthentication();
                 User user = userDAO.getUserByID(customUser.getUserId());
                 criteria.createAlias("training.listenerList", "listener");
                 Criterion isCoach = Restrictions.eq("coach", user);
                 Criterion isSubscribed = Restrictions.eq("listener.user", user);
                 criteria.add(Restrictions.or(isCoach, isSubscribed));
+                criteria.add(Restrictions.eq("listener.state", Listener.State.ACCEPTED));
             }
             criteria = criteria.add(Restrictions.eq("state", Training.State.NONE));
             Long date = new Date().getTime();
@@ -68,12 +69,14 @@ public class TrainingDAOImpl implements TrainingDAO {
         } else {
             criteria = criteria.add(Restrictions.eq("state", Training.State.NONE));
             if (isActual) {
-                CustomUser customUser = (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+                CustomAuthentication customUser =
+                        (CustomAuthentication) SecurityContextHolder.getContext().getAuthentication();
                 User user = userDAO.getUserByID(customUser.getUserId());
                 criteria.createAlias("training.listenerList", "listener");
                 Criterion isCoach = Restrictions.eq("coach", user);
                 Criterion isSubscribed = Restrictions.eq("listener.user", user);
                 criteria.add(Restrictions.or(isCoach, isSubscribed));
+                criteria.add(Restrictions.eq("listener.state", Listener.State.ACCEPTED));
             }
             Long date = new Date().getTime();
             DetachedCriteria detachedCriteria = DetachedCriteria.forClass(Training.class);

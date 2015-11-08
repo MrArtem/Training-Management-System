@@ -11,8 +11,10 @@ import java.util.Map;
  * Created by ayudovin on 31.10.2015.
  */
 public interface FileStorageService {
-    void addFile(Map<String, String> files, long idTraining)  throws IOException;
+    void addFile(Map.Entry<String,String> entry, long idTraining)  throws IOException;
     void deleteFile(long idFileStorage);
+
+    FileStorage getFileStorageByID(long idFile);
 
     List<FileStorage> getAllFileByTraining(long idTraining);
 }

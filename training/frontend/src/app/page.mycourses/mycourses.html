@@ -1,43 +1,34 @@
-<!---->
-<div class="container" ng-class="{'waiting-for-angular': !mycourses.isContentLoaded }">
+<div class="container-fluid" ng-class="{'waiting-for-angular': !mycourses.isContentLoaded }">
 	<div class="row">
-		<div class="small-12 medium-9 medium-centered column">
+		<div class="col-xs-12 col-sm-8 col-sm-offset-2">
 			<div class="mycourses">
-				<div class="tools-header row">
-					<div class="small-12 medium-4 medium-centered column">
-						<div class="row">
-							<div class="small-9 column">
-								<ul class="segmented-tool button-group toggle" data-toggle="buttons-radio">
-									<li>
-										<input type="radio" id="r1" ng-model="mycourses.filter.isCoach" value=""
-											   data-toggle="button">
-										<label class="button small tool-label" for="r1">All</label>
-									</li>
-									<li>
-										<input type="radio" id="r2" ng-model="mycourses.filter.isCoach" value=false
-											   data-toggle="button">
-										<label class="button small tool-label" for="r2">Student</label>
-									</li>
-									<li>
-										<input type="radio" id="r3" ng-model="mycourses.filter.isCoach" value=true
-											   data-toggle="button">
-										<label class="button small tool-label" for="r3">Coach</label>
-									</li>
-								</ul>
+				<div class="row">
+					<div class="tools-header">
+						<div class="col-xs-6 col-sm-8 col-xs-offset-3 col-sm-offset-2">
+							<div id="segmented-picker">
+								<div class="btn-group">
+									<label class="btn btn-default segmented-button segmented-button-left" ng-model="mycourses.filter.isCoach" uib-btn-radio="''">All</label>
+									<label class="btn btn-default segmented-button" ng-model="mycourses.filter.isCoach" uib-btn-radio="false">Student</label>
+									<label class="btn btn-default segmented-button segmented-button-right" ng-model="mycourses.filter.isCoach" uib-btn-radio="true">Coach</label>
+								</div>
 							</div>
-
-							<!--all page was designed horribly, can do nothing about it-->
-							<!--<div class="small-3 column">-->
-								<!--<i class="fa fa-search"></i>-->
-								<!--<input type="text" placeholder="Quick Look" ng-model="mycourses.filter.search">-->
-							<!--</div>-->
 						</div>
 					</div>
+					<!--<div class="col-xs-12 col-sm-8 col-sm-offset-2 ">-->
+						<!--<div class="row">-->
+
+							<!--&lt;!&ndash;all page was designed horribly, can do nothing about it&ndash;&gt;-->
+							<!--&lt;!&ndash;<div class="col-xs-3">&ndash;&gt;-->
+								<!--&lt;!&ndash;<i class="fa fa-search"></i>&ndash;&gt;-->
+								<!--&lt;!&ndash;<input type="text" placeholder="Quick Look" ng-model="mycourses.filter.search">&ndash;&gt;-->
+							<!--&lt;!&ndash;</div>&ndash;&gt;-->
+						<!--</div>-->
+					<!--</div>-->
 
 				</div>
 
 				<section class="row">
-					<div class="small-12 medium-6 column end card"
+					<div class="col-xs-12 col-sm-6 col-lg-4 card"
 						 ng-repeat="course in mycourses.userCourses | filter:{isCoach: mycourses.filter.isCoach}">
 						<div class="card-bg" ui-sref="courseinfo({courseId: course.id})">
 							<h1 class="course-title"><a ui-sref="courseinfo({courseId: course.id})">{{course.title}}</a>

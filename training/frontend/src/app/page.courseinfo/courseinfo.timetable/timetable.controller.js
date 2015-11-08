@@ -8,12 +8,15 @@
     /** @ngInject */
     function TimetableController($scope, $stateParams, courseAPI) {
         var vm = this;
+        vm.attendanceList = [];
 
         vm.addLesson = addLesson;
         vm.deleteLesson = deleteLesson;
         vm.editLesson = editLesson;
+        vm.getAttendance = getAttendance;
         vm.getLessonId = getLessonId;
         vm.getTimetable = getTimetable;
+        vm.setAttendance = setAttendance;
 
         vm.getTimetable();
 
@@ -36,6 +39,14 @@
             });
         }
 
+        function getAttendance(index) {
+            vm.getLessonId(index);
+            courseAPI.getAttendance(vm.editedLessonId).then(function(data) {
+                vm.attendanceList = angular.copy(data);
+                console.log('Received attendance: ', data);
+            });
+        }
+
         function getLessonId(index) {
             vm.editedLessonId = $scope.$parent.courseInfo.lessonList[index].id;
             console.log(vm.editedLessonId);
@@ -47,6 +58,13 @@
                     console.log(data);
                 }
             );
+        }
+
+        function setAttendance() {
+            console.log('Attendance to be set: ', vm.attendanceList);
+            courseAPI.setAttendance($stateParams.courseId, vm.editedLessonId, vm.attendanceList).then(function(data) {
+                console.log('Attendance set successfully');
+            })
         }
     }
 

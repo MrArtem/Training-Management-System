@@ -1,11 +1,12 @@
 package com.exadel.training.controller;
 
 import com.exadel.training.controller.model.trainingModels.TrainingListModel;
+import com.exadel.training.controller.model.userModels.ExCoachModel;
 import com.exadel.training.controller.model.userModels.ExUserModel;
 import com.exadel.training.controller.model.userModels.UserModel;
 import com.exadel.training.dao.domain.Lesson;
 import com.exadel.training.dao.domain.Training;
-import com.exadel.training.security.User.CustomUser;
+import com.exadel.training.security.authentication.CustomAuthentication;
 import com.exadel.training.service.LessonService;
 import com.exadel.training.service.UserService;
 import com.exadel.training.validate.annotation.LegalID;
@@ -26,17 +27,17 @@ public class UserController {
 
     @Autowired
     private UserService userService;
-
     @Autowired
-    private LessonService lessonService;
+    LessonService lessonService;
 
     @Secured({"ADMIN", "USER", "EX_COACH"})
     @RequestMapping(value = "/user_info/{idUser}", method = RequestMethod.GET)
     @LegalID
     public UserModel getUserInfo(@PathVariable("idUser") long idUser) {
-        CustomUser customUser =  (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        CustomAuthentication customUser =
+                (CustomAuthentication) SecurityContextHolder.getContext().getAuthentication();
         long idCurrentUser = customUser.getUserId();
-        UserModel userModel = new UserModel(userService.getUserById(idUser), userService.isCoachOfCurrentUser(idCurrentUser, idUser));
+        UserModel userModel = new UserModel(userService.getUserById(idCurrentUser), userService.isCoachOfCurrentUser(idCurrentUser, idUser));
 
         return userModel;
     }
@@ -79,4 +80,9 @@ public class UserController {
         userService.addExternalUser(exUserModel);
     }
 
+    @Secured({"ADMIN"})
+    @RequestMapping(value = "/add_ex_coach", method = RequestMethod.POST, consumes = "application/json")
+    public void addExCoach(@RequestBody ExCoachModel exCoachModel) {
+
+    }
 }

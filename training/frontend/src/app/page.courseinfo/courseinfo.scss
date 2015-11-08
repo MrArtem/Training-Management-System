@@ -1,16 +1,22 @@
+.waiting-for-angular {
+  .courseinfo-short, .icon-bar {
+    display: none;
+  }
+}
+
 .courseinfo {
-  $left-pd: 3rem;
-  $right-pd: 3rem;
+  $left-pd: 48px;
+  $right-pd: 48px;
 
   .courseinfo-short {
-    margin-bottom: 2rem;
+    margin-bottom: 32px;
 
     .title {
-      margin-bottom: 1.8rem;
+      margin-bottom: 28px;
     }
 
     .short-desc {
-      margin-bottom: 1.5rem;
+      margin-bottom: 24px;
     }
 
     .field {
@@ -19,30 +25,10 @@
       .info {
         color: $text-color;
       }
-
     }
 
     .field, .info {
-      margin-bottom: 0.5rem;
+      margin-bottom: 8px;
     }
-
-  }
-
-  .icon-bar.large-vertical {
-    float: right;
-  }
-
-  .icon-bar {
-    .item {
-      padding-left: $left-pd;
-      padding-right: $right-pd;
-    }
-  }
-
-}
-
-.waiting-for-angular {
-  .courseinfo-short, .icon-bar {
-    display: none;
   }
 }

@@ -15,16 +15,32 @@
             cancelEdit: cancelEdit,
             confirm: confirm,
             createCourse: createCourse,
+<<<<<<< HEAD:TRE-FrontEnd/src/app/services/API/url.service.js
+            deleteFile: deleteFile,
+=======
+>>>>>>> 87b594ffe525966bf9aab5cfdbff11a5e771abf5:training/frontend/src/app/services/API/url.service.js
             deleteLesson: deleteLesson,
             deleteParticipant: deleteParticipant,
             editCourse: editCourse,
             findTrainings: findTrainings,
             findUsers: findUsers,
+<<<<<<< HEAD:TRE-FrontEnd/src/app/services/API/url.service.js
+            getAllTags: getAllTags,
             getApproveList: getApproveList,
+            getAttachments: getAttachments,
+            getAttendance: getAttendance,
+=======
+            getApproveList: getApproveList,
+>>>>>>> 87b594ffe525966bf9aab5cfdbff11a5e771abf5:training/frontend/src/app/services/API/url.service.js
             getComments: getComments,
             getCourseList: getCourseList,
             getCurrentCoursesForUser: getCurrentCoursesForUser,
             getEditedCourse: getEditedCourse,
+<<<<<<< HEAD:TRE-FrontEnd/src/app/services/API/url.service.js
+            getExCoachList: getExCoachList, //TODO
+            getFeedback: getFeedback,
+=======
+>>>>>>> 87b594ffe525966bf9aab5cfdbff11a5e771abf5:training/frontend/src/app/services/API/url.service.js
             getFeedbacksOnUser: getFeedbacksOnUser,
             getNewsList: getNewsList,
             getParticipants: getParticipants,
@@ -37,6 +53,11 @@
             login: login,
             logout: logout,
             manageLesson: manageLesson,
+<<<<<<< HEAD:TRE-FrontEnd/src/app/services/API/url.service.js
+            setAttendance: setAttendance,
+            setRating: setRating, //TODO
+=======
+>>>>>>> 87b594ffe525966bf9aab5cfdbff11a5e771abf5:training/frontend/src/app/services/API/url.service.js
             subscribe: subscribe,
             uploadFiles: uploadFiles
         };
@@ -72,7 +93,15 @@
     }
 
     function createCourse() {
+<<<<<<< HEAD:TRE-FrontEnd/src/app/services/API/url.service.js
+        return '/api/training/create';
+    }
+
+    function deleteFile(fileId) {
+        return '/api/file_controller/delete_file/' + fileId;
+=======
         return '/training/create';
+>>>>>>> 87b594ffe525966bf9aab5cfdbff11a5e771abf5:training/frontend/src/app/services/API/url.service.js
     }
 
     function deleteLesson(courseId, lessonId) {
@@ -99,6 +128,10 @@
         return '/approve_list';
     }
 
+    function getAttendance(lessonId) {
+        return '/api/attendance_controller/all_attendance/' + lessonId;
+    }
+
     function getComments(courseId) {
         return '/training/' + courseId + '/comment_list';
     }
@@ -116,7 +149,15 @@
     }
 
     function getFeedbacksOnUser(userId) {
+<<<<<<< HEAD:TRE-FrontEnd/src/app/services/API/url.service.js
+        return '/api/feedback_controller/feedbacks_of_user/' + userId;
+    }
+
+    function getFeedback(fbId) {
+        return '/api/feedback_controller/get_feedback/' + fbId;
+=======
         return '/feedback_controller/feedbacks_of_user/' + userId;
+>>>>>>> 87b594ffe525966bf9aab5cfdbff11a5e771abf5:training/frontend/src/app/services/API/url.service.js
     }
 
     function getNewsList() {
@@ -160,7 +201,20 @@
     }
 
     function manageLesson(courseId) {
+<<<<<<< HEAD:TRE-FrontEnd/src/app/services/API/url.service.js
+        return '/api/training/' + courseId + '/lesson';
+    }
+
+    function setAttendance() {
+        return '/api/attendance_controller/update_attendance';
+    }
+
+    //TODO
+    function setRating(courseId, rating) {
+        return '/api/training/' + courseId + '/set_rating/' + rating;
+=======
         return '/training/' + courseId + '/lesson';
+>>>>>>> 87b594ffe525966bf9aab5cfdbff11a5e771abf5:training/frontend/src/app/services/API/url.service.js
     }
 
     function subscribe(courseId) {

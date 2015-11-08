@@ -18,8 +18,8 @@ import java.util.TimeZone;
  * Created by azapolski on 10/6/2015.
  */
 @Repository
-@Transactional
 public class LessonDAOImpl implements LessonDAO {
+
     @Autowired
     SessionFactory sessionFactory;
 
@@ -46,8 +46,11 @@ public class LessonDAOImpl implements LessonDAO {
     }
 
     @Override
-    public Lesson getLessonById(long id) {
-        return sessionFactory.getCurrentSession().load(Lesson.class, id);
+    public Lesson getLessonByID(long idLesson) {
+        return (Lesson)sessionFactory.getCurrentSession()
+                .createQuery("select l from Lesson as l where l.id = :idLesson")
+                .setParameter("idLesson", idLesson)
+                .uniqueResult();
     }
 
     @Override

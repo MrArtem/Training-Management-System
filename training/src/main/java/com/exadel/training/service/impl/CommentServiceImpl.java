@@ -7,11 +7,11 @@ import com.exadel.training.dao.UserDAO;
 import com.exadel.training.dao.domain.Comment;
 import com.exadel.training.dao.domain.Training;
 import com.exadel.training.dao.domain.User;
-import com.exadel.training.security.User.CustomUser;
 import com.exadel.training.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import com.exadel.training.security.authentication.CustomAuthentication;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
@@ -75,7 +75,8 @@ public class CommentServiceImpl implements CommentService{
         comment.setNewMaterial(commentModel.getNewMaterial());
         comment.setRecommendation(commentModel.getRecommendation());
         comment.setOther(commentModel.getOther());
-        CustomUser customUser = (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        CustomAuthentication customUser =
+                (CustomAuthentication) SecurityContextHolder.getContext().getAuthentication();
         User user = userDAO.getUserByID(customUser.getUserId());
         comment.setUser(user);
         comment.setTraining(trainingDAO.getTrainingById(trainingId));

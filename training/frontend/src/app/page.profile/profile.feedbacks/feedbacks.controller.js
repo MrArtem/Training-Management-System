@@ -10,10 +10,15 @@
         var vm = this;
         vm.fbInfo = {};
 
+        vm.clearFbInfo = clearFbInfo;
         vm.getFeedbacks = getFeedbacks;
         vm.seeFeedback = seeFeedback;
 
         vm.getFeedbacks();
+
+        function clearFbInfo() {
+            vm.fbInfo = {};
+        }
 
         function getFeedbacks() {
             userAPI.getFeedbacksOn($stateParams.userId).then(function(feedbacks) {

@@ -28,8 +28,7 @@ public class FileStorageServiceImpl implements FileStorageService {
     private TrainingService trainingService;
 
     @Override
-    public void addFile(Map<String, String> files, long idTraining) throws IOException {
-        for(Map.Entry<String,String> entry: files.entrySet()) {
+    public void addFile(Map.Entry<String,String> entry, long idTraining) throws IOException {
             FileStorage fileStorage = new FileStorage();
 
             fileStorage.setName(entry.getKey());
@@ -37,12 +36,16 @@ public class FileStorageServiceImpl implements FileStorageService {
             fileStorage.setTraining(trainingService.getTraining(idTraining));
 
             fileStorageDAO.addFile(fileStorage);
-        }
     }
 
     @Override
     public void deleteFile(long idFileStorage) {
         fileStorageDAO.deleteFile(idFileStorage);
+    }
+
+    @Override
+    public FileStorage getFileStorageByID(long idFile) {
+        return fileStorageDAO.getFileStorageByID(idFile);
     }
 
     @Override

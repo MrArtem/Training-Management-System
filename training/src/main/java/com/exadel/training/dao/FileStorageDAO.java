@@ -10,4 +10,6 @@ import java.util.List;
 public interface FileStorageDAO {
     void addFile(FileStorage fileStorage);
     void deleteFile(long idFileStorage);
+
+    FileStorage getFileStorageByID(long idFile);
 }

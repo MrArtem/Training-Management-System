@@ -2,7 +2,9 @@ package com.exadel.training.service.impl;
 
 import com.exadel.training.controller.model.attendanceModels.AttendanceModel;
 import com.exadel.training.dao.AttendanceDAO;
+import com.exadel.training.dao.LessonDAO;
 import com.exadel.training.dao.domain.Attendance;
+import com.exadel.training.dao.domain.Lesson;
 import com.exadel.training.service.AttendanceService;
 import com.exadel.training.service.LessonService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +28,6 @@ public class AttendanceServiceImpl implements AttendanceService{
 
     @Override
     public void updateAttendance(AttendanceModel attendanceModel) {
-        //todo ask about default attendance
         Attendance attendance = attendanceDAO.getAttendanceByID(attendanceModel.getIdAttendance());
 
         attendance.setComment(attendanceModel.getComment());
@@ -42,7 +43,9 @@ public class AttendanceServiceImpl implements AttendanceService{
 
     @Override
     public List<Attendance> getAllAttendanceByLessonID(long idLesson) {
-        return lessonService.getLessonByID(idLesson).getAttendanceList();
+        //todo check load and get
+        Lesson lesson = lessonService.getLessonByID(idLesson);
+        return lesson.getAttendanceList();
     }
 
     @Override

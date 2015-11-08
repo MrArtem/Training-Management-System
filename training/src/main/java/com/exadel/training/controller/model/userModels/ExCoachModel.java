@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull;
  */
 public class ExCoachModel {
 
-    @Email
+    @Email @NotBlank
     private String email;
     @NotBlank
     private String firstname;

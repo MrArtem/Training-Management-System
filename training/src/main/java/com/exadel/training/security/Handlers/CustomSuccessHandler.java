@@ -1,8 +1,8 @@
-package com.exadel.training.security.Handlers;
+package com.exadel.training.security.handlers;
 
 
-import com.exadel.training.security.User.CustomUser;
-import com.exadel.training.security.User.UserModel.UserModelSecurity;
+import com.exadel.training.security.authentication.CustomAuthentication;
+import com.exadel.training.security.authentication.UserModelSecurity;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -25,7 +25,7 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         clearAuthenticationAttributes(request);
         try {
-            CustomUser user = (CustomUser) authentication.getPrincipal();
+            CustomAuthentication user = (CustomAuthentication) authentication;
             String userName = user.getFirstName() + " " + user.getSecondName();
             String role = "";
             for (GrantedAuthority grantedAuthority : user.getAuthorities()) {

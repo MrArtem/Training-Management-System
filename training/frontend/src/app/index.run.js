@@ -14,12 +14,6 @@
         //try login with creds
         authService.credsLogin();
 
-        $rootScope.$on('$viewContentLoaded', function () {
-            console.log('$viewContentLoaded');
-            Foundation.global.namespace = '';
-            $(document).foundation();
-        });
-
         $rootScope.$on("$stateChangeStart", function (event, toState, toParams, fromState, fromParams) {
             //            console.log("State: " + toState.url);
             //            console.log("Auth Rights Needed: " + toState.accessRights)

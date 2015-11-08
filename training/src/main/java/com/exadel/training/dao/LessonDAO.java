@@ -13,7 +13,7 @@ public interface LessonDAO {
 
     void removeLesson(Lesson lesson);
 
-    Lesson getLessonById(long id);
+    Lesson getLessonByID(long idLesson);
 
     List<Lesson> getLessonListActualByTraining(long trainingId);
 
