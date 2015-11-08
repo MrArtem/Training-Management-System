@@ -1,0 +1,34 @@
+.waiting-for-angular {
+  .courseinfo-short, .icon-bar {
+    display: none;
+  }
+}
+
+.courseinfo {
+  $left-pd: 48px;
+  $right-pd: 48px;
+
+  .courseinfo-short {
+    margin-bottom: 32px;
+
+    .title {
+      margin-bottom: 28px;
+    }
+
+    .short-desc {
+      margin-bottom: 24px;
+    }
+
+    .field {
+      color: $black;
+
+      .info {
+        color: $text-color;
+      }
+    }
+
+    .field, .info {
+      margin-bottom: 8px;
+    }
+  }
+}
