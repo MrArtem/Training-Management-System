@@ -2,16 +2,19 @@ package com.exadel.training.service.impl;
 
 import com.exadel.training.controller.model.userModels.ExCoachModel;
 import com.exadel.training.controller.model.userModels.ExUserModel;
-import com.exadel.training.controller.model.userModels.UserModel;
+import com.exadel.training.controller.model.userModels.PasswordExCoach;
 import com.exadel.training.dao.TrainingDAO;
+import com.exadel.training.dao.UserDAO;
 import com.exadel.training.dao.domain.Listener;
 import com.exadel.training.dao.domain.Training;
-import com.exadel.training.dao.UserDAO;
 import com.exadel.training.dao.domain.User;
 import com.exadel.training.dao.domain.UserPassword;
+import com.exadel.training.notification.Notification;
+import com.exadel.training.notification.help.MessageGenerator;
 import com.exadel.training.service.UserService;
 import org.apache.commons.lang.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.testng.util.Strings;
 
@@ -30,7 +33,27 @@ public class UserServiceImpl implements UserService {
     private UserDAO userDAO;
     @Autowired
     private TrainingDAO trainingDAO;
+    @Autowired
+    private PasswordEncoder encode;
+    @Autowired
+    MessageGenerator messageGenerator;
+    @Autowired
+    Notification notification;
 
+
+    @Override
+    public void setPasswordExCoach(PasswordExCoach passowrdExCoach) {
+        User user = userDAO.getUserByID(passowrdExCoach.getId());
+        UserPassword userPassword = new UserPassword();
+        userPassword.setPassword(encode.encode(passowrdExCoach.getPassword()));
+        user.setUserPassword(userPassword);
+    }
+
+    @Override
+    public void setPhone(String phone, long id) {
+        User user = userDAO.getUserByID(id);
+        user.setPhone(phone);
+    }
 
     @Override
     public long addExternalUser(ExUserModel exUserModel) {
@@ -52,21 +75,25 @@ public class UserServiceImpl implements UserService {
     @Override
     public long addExternalCoach(ExCoachModel exCoachModel) {
         User user = new User();
+        String password = RandomStringUtils.randomAlphabetic(8);
+        String login = exCoachModel.getFirstname().charAt(0) + exCoachModel.getLastname().toLowerCase();
 
         user.setEmail(exCoachModel.getEmail());
         user.setFirstName(exCoachModel.getFirstname());
         user.setLastName(exCoachModel.getLastname());
         user.setPhone(exCoachModel.getPhone());
+        user.setLogin(login);
 
         userDAO.save(user);
         long idUser = user.getId();
 
         UserPassword userPassword = new UserPassword();
         userPassword.setId(idUser);
-        userPassword.setPassword(RandomStringUtils.randomAlphabetic(8));
-        //todo save password
+        userPassword.setPassword(encode.encode(password));
+        user.setUserPassword(userPassword);
 
-        return 0;
+        notification.send(exCoachModel.getEmail(),"coach", messageGenerator.getTextPasswordForExCoach(exCoachModel.getLastname() + exCoachModel.getFirstname(), 1L, password, login));
+        return idUser;
     }
 
     @Override
@@ -87,6 +114,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserByLogin(String login) {
         return userDAO.getUserByLogin(login);
+    }
+
+    @Override
+    public List<User> getUsersByRole(User.Role role) {
+        return userDAO.getUsersByRole(role);
     }
 
     @Override

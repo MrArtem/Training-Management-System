@@ -3,11 +3,11 @@ package com.exadel.training.controller;
 import com.exadel.training.controller.model.trainingModels.TrainingListModel;
 import com.exadel.training.controller.model.userModels.ExCoachModel;
 import com.exadel.training.controller.model.userModels.ExUserModel;
+import com.exadel.training.controller.model.userModels.PasswordExCoach;
 import com.exadel.training.controller.model.userModels.UserModel;
 import com.exadel.training.dao.domain.Lesson;
 import com.exadel.training.dao.domain.Training;
-import com.exadel.training.notification.Notification;
-import com.exadel.training.notification.help.MessageGenerator;
+import com.exadel.training.dao.domain.User;
 import com.exadel.training.security.authentication.CustomAuthentication;
 import com.exadel.training.service.LessonService;
 import com.exadel.training.service.UserService;
@@ -32,10 +32,6 @@ public class UserController {
     @Autowired
     LessonService lessonService;
 
-    @Autowired
-    MessageGenerator messageGenerator;
-    @Autowired
-    Notification notification;
 
     @Secured({"ADMIN", "USER", "EX_COACH"})
     @RequestMapping(value = "/user_info/{idUser}", method = RequestMethod.GET)
@@ -45,8 +41,6 @@ public class UserController {
                 (CustomAuthentication) SecurityContextHolder.getContext().getAuthentication();
         long idCurrentUser = customUser.getUserId();
         UserModel userModel = new UserModel(userService.getUserById(idCurrentUser), userService.isCoachOfCurrentUser(idCurrentUser, idUser));
-
-        notification.send("mrartem6695@gmail.com","sdfh", messageGenerator.getTextPasswordForExCoach("artem",1L,"jordan23"));
 
         return userModel;
     }
@@ -91,7 +85,25 @@ public class UserController {
 
     @Secured({"ADMIN"})
     @RequestMapping(value = "/add_ex_coach", method = RequestMethod.POST, consumes = "application/json")
-    public void addExCoach(@RequestBody ExCoachModel exCoachModel) {
+    public List<UserModel> addExCoach(@RequestBody ExCoachModel exCoachModel) {
+        userService.addExternalCoach(exCoachModel);
 
+        List<UserModel> userList = new ArrayList<UserModel>();
+        for(User user : userService.getUsersByRole(User.Role.EX_COACH)) {
+            userList.add(new UserModel(user));
+        }
+        return userList;
+    }
+
+    @Secured({"EX_COACH"})
+    @RequestMapping(value = "/set_password", method = RequestMethod.POST, consumes = "application/json")
+    public void setPassword(@RequestBody PasswordExCoach passwordExCoach) {
+        userService.setPasswordExCoach(passwordExCoach);
+    }
+
+    @Secured({"ADMIN", "USER", "EX_COACH"})
+    @RequestMapping(value = "/set_phone/{id}/{phone}", method = RequestMethod.GET)
+    public void setPhone(@PathVariable("phone") String phone, @PathVariable("id") long id) {
+        userService.setPhone(phone, id);
     }
 }

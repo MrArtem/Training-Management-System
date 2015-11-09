@@ -2,6 +2,7 @@
     <div style="background-color: #276FA0;"><img src="cid:image"></div>
     <div align="center">Здравствуйте, ${name}!</div>
    <div align="center">Ваш пароль : ${password}</div>
+   <div align="center">Ваш логин : ${login} </div>
    <div align="center">Рекомендуем вам поменять пароль</div>
      <a href="${uri}"> Перейдите по ссылке
     </div>

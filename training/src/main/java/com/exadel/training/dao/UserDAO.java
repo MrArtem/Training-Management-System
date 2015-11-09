@@ -18,6 +18,7 @@ public interface UserDAO {
     User getUserByID(long id);
     User getUserByLogin(String login);
 
+    List<User> getUsersByRole(User.Role role);
     List<Training> visitedTrainings(long idUser);
     List<Training> actualTrainings(long idUser);
     List<Training> getCoachTrainingsBetweenDates(long idCoach, long startDate, long endDate);

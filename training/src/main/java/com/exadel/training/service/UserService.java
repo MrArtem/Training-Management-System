@@ -2,6 +2,7 @@ package com.exadel.training.service;
 
 import com.exadel.training.controller.model.userModels.ExCoachModel;
 import com.exadel.training.controller.model.userModels.ExUserModel;
+import com.exadel.training.controller.model.userModels.PasswordExCoach;
 import com.exadel.training.dao.domain.Listener;
 import com.exadel.training.dao.domain.Training;
 import com.exadel.training.dao.domain.User;
@@ -12,6 +13,9 @@ import java.util.List;
  * Created by HP on 06.10.2015.
  */
 public interface UserService {
+    void setPasswordExCoach(PasswordExCoach passowrdExCoach);
+    void setPhone(String phone, long id);
+
     long addExternalUser(ExUserModel exUserModel);
     long addExternalCoach(ExCoachModel exCoachModel);
 
@@ -21,6 +25,7 @@ public interface UserService {
     User getUserById(long id);
     User getUserByLogin(String login);
 
+    List<User> getUsersByRole(User.Role role);
     List<Training> getListenerTrainingListOfUser(long idUser);
     List<Training> getCoachTrainingList(long idUser);
     List<Training> getCoachTrainingList(long idCoach, long startDate, long endDate);

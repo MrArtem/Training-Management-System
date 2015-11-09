@@ -1,25 +1,21 @@
 package com.exadel.training.notification.help.impl;
 
-import javax.annotation.PostConstruct;
-import javax.security.auth.login.Configuration;
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Paths;
-import java.text.SimpleDateFormat;
-
-/**
- * Created by ayudovin on 13.10.2015.
- */
 import com.exadel.training.notification.help.MessageGenerator;
 import freemarker.template.Template;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import java.io.IOException;
 import java.io.StringWriter;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
+/**
+ * Created by ayudovin on 13.10.2015.
+ */
 
 @Component
 public class MessageGeneratorHTML implements MessageGenerator {
@@ -211,13 +207,14 @@ public class MessageGeneratorHTML implements MessageGenerator {
     }
 
     @Override
-    public String getTextPasswordForExCoach(String name, long idTraining, String password) {
+    public String getTextPasswordForExCoach(String name, long idTraining, String password, String login) {
         StringWriter writer = new StringWriter();
         try {
             Template template = cfg.getTemplate("/passwordExCoach.ftl");
             Map<String, Object> data = new HashMap<String, Object>();
             data.put("name", name);
             data.put("password", password);
+            data.put("login", login);
             data.put("uri", SITE_URI + "trainings/" + idTraining);
             template.process(data, writer);
         } catch (Exception e) {
