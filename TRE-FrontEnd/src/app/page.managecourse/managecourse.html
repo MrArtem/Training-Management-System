@@ -1,34 +1,14 @@
 <div class="container-fluid managecourse">
 	<div class="row">
 		<div class="col-xs-12 col-sm-6 col-sm-offset-3">
-
-			<div class="row managecourse-h1">
-				<input class="material-input" type="text" name="name" id="name" placeholder="Enter course name"
-					   ng-model="courseInfo.title" ng-maxlength="50" required>
-			</div>
-
-			<!--<div class="row" ng-if="managecourse.isAdmin()">-->
-			<div class="row">
-				<div class="col-xs-12">
-					<p class="info-small color-gray pull-left">Coach: </p>
-
-					<tre-popover id="coachPopover" popover-template="'/page.managecourse/managecourse.popovers/coachPopover.html'">
-						<a href="" class="link-select">select</a>
-						<a href="" class="link-select">{{managecourse.coachName}}</a>
-					</tre-popover>
-
-				</div>
-			</div>
-
-
 			<div class="row">
 				<h1>.....</h1>
 			</div>
 			<div class="row">
-				<a ng-if="!isEdited" href="" class="left button small round default-btn-blue"
+				<a ng-if="!isEdited" href="" class="btn default-btn-blue pull-left"
 				   ng-click="managecourse.createCourse()">Create
 					course</a>
-				<a ng-if="managecourse.isAdmin() && isEdited" href="" class="left button round default-btn-green"
+				<a ng-if="managecourse.isAdmin() && isEdited" href="" class="btn default-btn-green pull-left"
 				   ng-disabled="courseForm.$invalid"
 				   ng-click="managecourse.approveCourse()">Approve course</a>
 			</div>

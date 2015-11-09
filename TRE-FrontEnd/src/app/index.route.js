@@ -32,10 +32,10 @@
                 templateUrl: 'app/page.browse/browse.html',
                 controller: 'BrowseController',
                 controllerAs: 'browse',
-                //auth: true,
-                //accessRights: 1
+                auth: true,
+                accessRights: 1
             }).state('courseinfo', {
-                url: '/courseinfo',
+                url: '/courseinfo/:courseId',
                 templateUrl: 'app/page.courseinfo/courseinfo.html',
                 controller: 'CourseInfoController',
                 controllerAs: 'courseinfo',
@@ -52,7 +52,8 @@
                 accessRights: 4,
                 auth: false
             }).state('managecourse', {
-                url: '/managecourse',
+                abstract: true,
+                url: '/managecourse/:courseId:id:type:edit',
                 templateUrl: 'app/page.managecourse/managecourse.html',
                 controller: 'ManageCourseController',
                 controllerAs: 'managecourse',
@@ -62,8 +63,8 @@
                     id: null,
                     type: null
                 },
-                //auth: true,
-                //accessRights: 2
+                auth: true,
+                accessRights: 2
             }).state('mycourses', {
                 url: '/',
                 templateUrl: 'app/page.mycourses/mycourses.html',
@@ -72,15 +73,15 @@
                 auth: true,
                 accessRights: 2
             }).state('profile', {
-                url: '/profile',
+                url: '/profile/:userId',
                 templateUrl: 'app/page.profile/profile.html',
                 controller: 'ProfileController',
                 controllerAs: 'profile',
                 params: {
                     userId: null
                 },
-                //auth: true,
-                //accessRights: 2
+                auth: true,
+                accessRights: 2
             })
 
         ;

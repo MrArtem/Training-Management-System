@@ -4,35 +4,35 @@
 
     <div class="row">
 
-        <div class="small-7 column">
+        <div class="col-xs-7">
 
             <div class="row collapse">
 
                 <div class="row" ng-repeat="day in step4.days track by $index">
 
-                    <div class="small-3 column">
-                        <div class="small-6 column">
+                    <div class="col-xs-3">
+                        <div class="col-xs-6">
                             <label class="right" ng-bind="step4.days[$index]"></label>
                         </div>
-                        <div class="small-6 column">
+                        <div class="col-xs-6">
                             <input type="checkbox" ng-model="step4.onDays[$index]">
                         </div>
 
                     </div>
 
-                    <div class="small-5 column">
-                        <div class="small-6 column">
+                    <div class="col-xs-5">
+                        <div class="col-xs-6">
                             <input type="number" ng-model="tempDates[$index].hours"
                                    ng-disabled="!step4.onDays[$index]">
                         </div>
-                        <div class="small-6 column">
+                        <div class="col-xs-6">
                             <input type="number" ng-model="tempDates[$index].minutes"
                                    ng-disabled="!step4.onDays[$index]">
                         </div>
 
                     </div>
 
-                    <div class="small-4 column">
+                    <div class="col-xs-4">
                         <input type="text" ng-model="tempDates[$index].place" ng-disabled="!step4.onDays[$index]">
                     </div>
 
@@ -41,20 +41,20 @@
             </div>
         </div>
 
-        <div class="small-5 column">
+        <div class="col-xs-5">
             <div class="row">
-                <div class="small-4 column">
+                <div class="col-xs-4">
                     <label for="startDate" class="right inline">Start date:</label>
                 </div>
-                <div class="small-8 column">
+                <div class="col-xs-8">
                     <input type="text" id="startDate" ng-model="temp.startDate" tre-datepicker="">
                 </div>
             </div>
             <div class="row">
-                <div class="small-4 column">
+                <div class="col-xs-4">
                     <label for="endDate" class="right inline">End date:</label>
                 </div>
-                <div class="small-8 column">
+                <div class="col-xs-8">
                     <input type="text" id="endDate" ng-model="temp.endDate" tre-datepicker="">
                 </div>
             </div>

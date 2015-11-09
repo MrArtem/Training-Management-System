@@ -28,6 +28,8 @@
 				</div>
 
 				<section class="row">
+					<!--TODO-->
+					<p ng-if="mycourses.userCourses.length == 0">Sorry, you have no actual courses</p>
 					<div class="col-xs-12 col-sm-6 col-lg-4 card"
 						 ng-repeat="course in mycourses.userCourses | filter:{isCoach: mycourses.filter.isCoach}">
 						<div class="card-bg" ui-sref="courseinfo({courseId: course.id})">

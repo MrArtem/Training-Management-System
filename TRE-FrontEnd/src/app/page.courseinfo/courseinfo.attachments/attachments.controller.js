@@ -9,6 +9,8 @@
     function AttachmentsController($scope, $stateParams, courseAPI, fileReader) {
         //debugger;
         var vm = this;
+        vm.data = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
+        vm.fileName = 'logo.png';
         $scope.filesToUpload = [];
 
         vm.deleteFile = deleteFile;
@@ -35,9 +37,25 @@
             });
         }
 
-        function download(filelink) {
-            window.open(filelink);
+        function download(uri, filename) {
+            var link = document.createElement('a');
+            if (typeof link.download === 'string') {
+                link.href = uri;
+                link.download = filename;
+
+                //Firefox requires the link to be in the body
+                document.body.appendChild(link);
+
+                //simulate click
+                link.click();
+
+                //remove the link when done
+                document.body.removeChild(link);
+            } else {
+                window.open(uri);
+            }
         }
+
 
         function getAttachments() {
             courseAPI.getAttachments($stateParams.courseId).then(function(data) {

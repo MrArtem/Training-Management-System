@@ -2,10 +2,10 @@
 
     <div class="row">
 
-        <div class="small-10 small-offset-1 column">
+        <div class="col-xs-10 col-xs-offset-1">
 
             <div class="row">
-                <div class="small-12 column">
+                <div class="col-xs-12">
                     <label>Title
                         <input type="text" name="title" placeholder="title" ng-model="courseInfo.title" ng-maxlength="50" required>
                     </label>
@@ -14,7 +14,7 @@
             </div>
 
             <div class="row">
-                <div class="small-12 column">
+                <div class="col-xs-12">
                     <label>Short description
                         <textarea type="text" name="shortInfo" placeholder="short description" ng-model="courseInfo.shortInfo" ng-maxlength="255" required></textarea>
                     </label>
@@ -34,62 +34,68 @@
                 </ul>
 
             </div>
-            <a class="button round tiny default-btn-blue" data-reveal-id="addExCoachModal"><i class="fa fa-plus"></i>Add external coach</a>
+            <a class="btn default-btn-blue" data-toggle="modal" data-target="#addExCoachModal"><i class="fa fa-plus"></i>Add external coach</a>
         </div>
-        <div class="small-1 column"><a ui-sref="step2">Next</a></div>
+        <div class="col-xs-1"><a ui-sref="step2">Next</a></div>
 
     </div>
 
 </div>
 
 <!--Modal to add external coach-->
-<div class="tre-modal">
-    <div id="addExCoachModal" class="reveal-modal tiny" data-reveal aria-labelledby="exCoachTitle"
-         aria-hidden="true"
-         role="dialog">
-        <h2 id="exCoachTitle">Add external coach</h2>
+<div class="modal fade" id="addExCoachModal" tabindex="-1" role="dialog" aria-labelledby="coachTitle">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="coachTitle">Add external coach</h4>
+            </div>
+            <div class="modal-body">
+                <form name="coachForm" novalidate>
 
-        <form name="coachForm" novalidate>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6 no-left-padding">
+                            <label>First Name:</label>
+                            <input type='text' name="firstName" ng-model="step1.coachInfo.firstName" required>
+                            <small ng-show="coachForm.firstName.$invalid && coachForm.firstName.$touched" class="error">This
+                                field is required.
+                            </small>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6 no-left-padding">
+                            <label>Last Name:</label>
+                            <input type='text' name="lastName" ng-model="step1.coachInfo.lastName" required>
+                            <small ng-show="coachForm.lastName.$invalid && coachForm.lastName.$touched" class="error">This
+                                field is required.
+                            </small>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6 no-left-padding">
+                            <label>Email:</label>
+                            <input type='email' name="email" ng-model="step1.coachInfo.email" required>
+                            <small ng-show="coachForm.email.$invalid && coachForm.email.$touched" class="error">This
+                                field is required.
+                            </small>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6 no-left-padding">
+                            <label>Phone number:</label>
+                            <input type='text' ng-model="step1.coachInfo.phone">
+                        </div>
+                    </div>
 
-            <div class="row">
-                <div class="small-12 medium-6 no-left-padding column">
-                    <label>First Name:</label>
-                    <input type='text' name="firstName" ng-model="step1.coachInfo.firstName" required>
-                    <small ng-show="coachForm.firstName.$invalid && coachForm.firstName.$touched" class="error">This
-                        field is required.
-                    </small>
-                </div>
+                </form>
             </div>
-            <div class="row">
-                <div class="small-12 medium-6 no-left-padding column">
-                    <label>Last Name:</label>
-                    <input type='text' name="lastName" ng-model="step1.coachInfo.lastName" required>
-                    <small ng-show="coachForm.lastName.$invalid && coachForm.lastName.$touched" class="error">This
-                        field is required.
-                    </small>
-                </div>
+            <div class="modal-footer">
+                <button href="" class="btn default-btn" data-dismiss="modal">Cancel</button>
+                <button href="" class="btn default-btn-blue" data-dismiss="modal" ng-disabled="coachForm.$invalid"
+                        ng-click="step1.addExCoach()">OK
+                </button>
             </div>
-            <div class="row">
-                <div class="small-12 medium-6 no-left-padding column">
-                    <label>Email:</label>
-                    <input type='email' name="email" ng-model="step1.coachInfo.email" required>
-                    <small ng-show="coachForm.email.$invalid && coachForm.email.$touched" class="error">This
-                        field is required.
-                    </small>
-                </div>
-            </div>
-            <div class="row">
-                <div class="small-12 medium-6 no-left-padding column">
-                    <label>Phone number:</label>
-                    <input type='text' ng-model="step1.coachInfo.phone">
-                </div>
-            </div>
-
-            <div class="row">
-                <a href="" class="right button round tiny default-btn-blue" close-modal="addExCoachModal" ng-disabled="coachForm.$invalid"
-                   ng-click="step1.addExCoach()">OK</a>
-            </div>
-        </form>
-        <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+        </div>
     </div>
 </div>

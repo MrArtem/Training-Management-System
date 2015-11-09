@@ -4,26 +4,26 @@
 
     <div class="row">
 
-        <div class="small-12 medium-8 large-8 column">
+        <div class="col-xs-12 col-sm-8">
 
             <div class="row collapse">
 
-                <div class="small-4 column">
+                <div class="col-xs-4">
                     <label>Date</label>
                         <input type='text' name="manualdate" ng-model="step4.dateTime.date" tre-datepicker="">
                 </div>
-                <div class="small-2 small-offset-1 column">
+                <div class="col-xs-2 col-xs-offset-1">
                     <label>Hour</label>
                         <input type='number' name="manualhours" ng-model="step4.dateTime.hours">
 
                 </div>
-                <div class="small-2 small-offset-1 column">
+                <div class="col-xs-2 col-xs-offset-1">
                     <label>Minutes</label>
                         <input type='number' name="manualminutes" id="minutes" ng-model="step4.dateTime.minutes">
                 </div>
-                <div class="small-2 column">
+                <div class="col-xs-2">
                     <label>.</label>
-                    <a href="" class="button round tiny default-btn-blue" ng-click="step4.addDate()">Add date</a>
+                    <a href="" class="btn default-btn-blue" ng-click="step4.addDate()">Add date</a>
                 </div>
 
             </div>
