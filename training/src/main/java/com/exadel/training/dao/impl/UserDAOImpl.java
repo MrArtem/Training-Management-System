@@ -125,4 +125,13 @@ public class UserDAOImpl implements UserDAO {
                 .setParameter("userLogin", userLogin)
                 .uniqueResult();
     }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public List<User> getUsersByRole(User.Role role) {
+        return sessionFactory.getCurrentSession()
+                .createQuery("select u from User as u where u.role = :role")
+                .setParameter("role", role)
+                .list();
+    }
 }
