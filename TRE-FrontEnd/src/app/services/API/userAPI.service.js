@@ -9,6 +9,8 @@
         var userAPI = {
             addExCoach: addExCoach,
             addFeedbackOnUser: addFeedbackOnUser,
+            changePassword: changePassword, //TODO
+            changePhoneNumber: changePhoneNumber, //TODO
             getCurrentCourses: getCurrentCourses,
             getFeedbacksOn: getFeedbacksOn,
             getFeedback: getFeedback,
@@ -30,6 +32,14 @@
             return $http.post(urlProvider.addFeedback(), fbInfo).then(function(result) {
                 return result.data;
             });
+        }
+
+        function changePassword(newPassword) {
+
+        }
+
+        function changePhoneNumber(phoneNumber) {
+
         }
 
         function getCurrentCourses(userId) {
