@@ -209,4 +209,20 @@ public class MessageGeneratorHTML implements MessageGenerator {
         }
         return writer.toString();
     }
+
+    @Override
+    public String getTextPasswordForExCoach(String name, long idTraining, String password) {
+        StringWriter writer = new StringWriter();
+        try {
+            Template template = cfg.getTemplate("/requestFeedback.ftl");
+            Map<String, Object> data = new HashMap<String, Object>();
+            data.put("name", name);
+            data.put("password", password);
+            data.put("uri", SITE_URI + "trainings/" + idTraining);
+            template.process(data, writer);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return writer.toString();
+    }
 }

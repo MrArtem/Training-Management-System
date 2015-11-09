@@ -1,0 +1,157 @@
+<nav class="navbar navbar-default">
+	<div class="container-fluid">
+		<!-- Brand and toggle get grouped for better mobile display -->
+		<div class="navbar-header">
+			<!--<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">-->
+				<!--<span class="sr-only">Toggle navigation</span>-->
+				<!--<span class="icon-bar"></span>-->
+				<!--<span class="icon-bar"></span>-->
+				<!--<span class="icon-bar"></span>-->
+			<!--</button>-->
+			<a class="navbar-brand" ui-sref="mycourses"><img alt="Exadel" ng-src="app/assets/images/ExadelLogo.png"></a>
+		</div>
+
+		<!-- Collect the nav links, forms, and other content for toggling -->
+		<div class="collapse navbar-collapse">
+			<ul class="nav navbar-nav">
+				<li ng-class="{activelink: navbar.isActive('mycourses')}"><a ui-sref="mycourses">MY COURSES</a></li>
+				<li ng-class="{activelink: navbar.isActive('browse')}"><a ui-sref="browse">BROWSE</a></li>
+				<li ng-class="{activelink: navbar.isActive('profile')}"><a ui-sref="profile({userId: navbar.user.userId})">PROFILE</a></li>
+				<li ng-class="{activelink: navbar.isActive('admin')}" ng-if="navbar.isAdmin()"><a ui-sref="admin">ADMIN</a></li>
+			</ul>
+			<ul class="nav navbar-nav navbar-right">
+				<li><button ui-sref="step1" class="btn create-btn accent-btn-blue hidden-sm">CREATE COURSE</button></li>
+				<li><a href="" data-toggle="modal" data-target="#searchModal"><i class="fa fa-search"></i></a></li>
+				<li><a href=""><i class="fa fa-globe"></i></a></li>
+				<li class="dropdown">
+					<a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user"></i></a>
+					<ul class="dropdown-menu">
+						<li><label>{{navbar.user.username}}</label></li>
+						<li><a ui-sref="profile({userId: navbar.user.userId})">Profile</a></li>
+						<li><a href="" ng-click="navbar.logout()">Logout</a></li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+	</div>
+</nav>
+
+<!--<nav class="navbar navbar-default navbar-fixed-top tre-navbar">-->
+	<!--<div class="container-fluid">-->
+		<!--&lt;!&ndash; Brand and toggle get grouped for better mobile display &ndash;&gt;-->
+		<!--<div class="navbar-header">-->
+			<!--<a class="navbar-brand" ui-sref="mycourses">-->
+				<!--<img alt="Exadel" ng-src="app/assets/images/ExadelLogo.png">-->
+			<!--</a>-->
+		<!--</div>-->
+
+		<!--&lt;!&ndash; Collect the nav links, forms, and other content for toggling &ndash;&gt;-->
+		<!--<div class="collapse navbar-collapse tre-navbar">-->
+			<!--<ul class="nav navbar-nav">-->
+
+				<!--<li><a ui-sref="mycourses" ng-class="{activelink: navbar.isActive('mycourses')}">MY COURSES</a></li>-->
+				<!--<li><a ui-sref="browse" ng-class="{activelink: navbar.isActive('browse')}">BROWSE</a></li>-->
+				<!--<li><a ui-sref="profile({userId: navbar.user.userId})"-->
+					   <!--ng-class="{activelink: navbar.isActive('profile')}">PROFILE</a></li>-->
+				<!--<li ng-if="navbar.isAdmin()"><a ui-sref="admin"-->
+												<!--ng-class="{activelink: navbar.isActive('admin')}">ADMIN</a></li>-->
+
+			<!--</ul>-->
+
+			<!--<ul class="nav navbar-nav navbar-right">-->
+
+				<!--<li class=""><a ui-sref="step1" class="right button round small accent-btn-blue create-btn">CREATE-->
+					<!--COURSE</a></li>-->
+				<!--<li class=""><a href="" data-reveal-id="searchModal"><i class="fa fa-search"></i></a></li>-->
+				<!--<li class=""><a href=""><i class="fa fa-globe"></i></a></li>-->
+				<!--<li class="has-dropdown">-->
+					<!--<a href="#"><i class="fa fa-user"></i></a>-->
+					<!--<ul class="dropdown tre-dropdown">-->
+						<!--<li><label>{{navbar.user.username}}</label></li>-->
+						<!--<li class="no-margin-bottom"><a ui-sref="profile({userId: navbar.user.userId})">Profile</a></li>-->
+						<!--<li class="no-margin-top"><a href="" ng-click="navbar.logout()">Logout</a></li>-->
+					<!--</ul>-->
+				<!--</li>-->
+			<!--</ul>-->
+		<!--</div>-->
+	<!--</div>-->
+<!--</nav>-->
+
+<!--<div class="navbar">-->
+<!--<nav class="top-bar" data-topbar role="navigation">-->
+<!--<ul class="title-area">-->
+<!--<li class="name">-->
+<!--<h1><a ui-sref="mycourses"><img alt="Exadel" ng-src="app/assets/images/ExadelLogo.png"></a></h1>-->
+<!--</li>-->
+<!--</ul>-->
+
+<!--<section class="top-bar-section">-->
+
+<!--&lt;!&ndash; Left Nav Section &ndash;&gt;-->
+<!--<ul class="left">-->
+<!--<li><a ui-sref="mycourses" ng-class="{activelink: navbar.isActive('mycourses')}">MY COURSES</a></li>-->
+<!--<li><a ui-sref="browse" ng-class="{activelink: navbar.isActive('browse')}">BROWSE</a></li>-->
+<!--<li><a ui-sref="profile({userId: navbar.user.userId})"-->
+<!--ng-class="{activelink: navbar.isActive('profile')}">PROFILE</a></li>-->
+<!--<li ng-if="navbar.isAdmin()"><a ui-sref="admin"-->
+<!--ng-class="{activelink: navbar.isActive('admin')}">ADMIN</a></li>-->
+<!--</ul>-->
+
+<!--&lt;!&ndash; Right Nav Section &ndash;&gt;-->
+<!--<ul class="right">-->
+<!--<li class=""><a ui-sref="step1" class="right button round small accent-btn-blue create-btn">CREATE COURSE</a></li>-->
+<!--<li class=""><a href="#" data-reveal-id="searchModal"><i class="fa fa-search"></i></a></li>-->
+<!--<li class=""><a href="#"><i class="fa fa-globe"></i></a></li>-->
+<!--<li class="has-dropdown">-->
+<!--<a href="#"><i class="fa fa-user"></i></a>-->
+<!--<ul class="dropdown tre-dropdown">-->
+<!--<li><label>{{navbar.user.username}}</label></li>-->
+<!--<li class="no-margin-bottom"><a ui-sref="profile({userId: navbar.user.userId})">Profile</a></li>-->
+<!--<li class="no-margin-top"><a href="#" ng-click="navbar.logout()">Logout</a></li>-->
+<!--</ul>-->
+<!--</li>-->
+<!--</ul>-->
+
+<!--</section>-->
+
+<!--</nav>-->
+<!--</div>-->
+
+<div class="modal fade" id="#searchModal" tabindex="-1" role="dialog" aria-labelledby="searchTitle">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+						aria-hidden="true" ng-click="navbar.clearModal()">&times;</span></button>
+				<h4 class="modal-title" id="searchTitle"></h4>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<input type="text" class="search-input" ng-model="navbar.searchQuery" ng-change="navbar.search()"
+						   ng-model-options="{debounce: { 'default': 250} }" placeholder="Search...">
+				</div>
+				<p>{{navbar.searchAnswer}}</p>
+
+				<div class="row" ng-repeat="training in navbar.foundTrainings">
+					<div class="found-training">
+						<h4>{{training.title}}</h4>
+
+						<p class="excerpt">{{training.excerpt}}</p>
+						<p class="info">Coach: <span class="value"><a ui-sref="profile({userId: training.coachId})">{{training.coachName}}</a></span></p>
+					</div>
+				</div>
+				<div class="row" ng-repeat="user in navbar.foundUsers">
+					<div class="found-user">
+						<p>{{user.username}}</p>
+
+						<p>{{user.email}}</p>
+
+						<p>{{user.phone}}</p>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,4 +1,4 @@
-package com.exadel.training.security.Handlers;
+package com.exadel.training.security.handlers;
 
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;

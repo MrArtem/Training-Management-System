@@ -5,7 +5,7 @@ import com.exadel.training.controller.model.trainingModels.ApproveGetTrainingMod
 import com.exadel.training.controller.model.trainingModels.ApproveLessonModel;
 import com.exadel.training.controller.model.trainingModels.LessonModel;
 import com.exadel.training.dao.domain.*;
-import com.exadel.training.security.User.CustomUser;
+import com.exadel.training.security.authentication.CustomAuthentication;
 import com.exadel.training.service.TrainingService;
 import com.exadel.training.validate.AddingTrainingModelValidator;
 import com.exadel.training.validate.annotation.LegalID;
@@ -36,7 +36,8 @@ public class TrainingCRUDController {
     @Secured({"ADMIN", "USER"})
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     void createTraining(@Valid @RequestBody AddingTrainingModel addingTrainingModel) {
-        CustomUser customUser =  (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        CustomAuthentication customUser =
+                (CustomAuthentication) SecurityContextHolder.getContext().getAuthentication();
 
         trainingService.createTraining(addingTrainingModel.getCoachId()
                 , addingTrainingModel.getTitle()

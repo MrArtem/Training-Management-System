@@ -7,7 +7,7 @@ import com.exadel.training.controller.model.trainingModels.GetTrainingModel;
 import com.exadel.training.controller.model.trainingModels.ListenerModel;
 import com.exadel.training.controller.model.userModels.ExUserModel;
 import com.exadel.training.dao.domain.*;
-import com.exadel.training.security.User.CustomUser;
+import com.exadel.training.security.authentication.CustomAuthentication;
 import com.exadel.training.service.*;
 import com.exadel.training.validate.annotation.LegalID;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,7 +61,8 @@ public class TrainingBaseController {
         getTrainingModel.setTraining(training);
         getTrainingModel.setStartDate(lessonService.getStartDateByTraining(trainingId));
         getTrainingModel.setEndDate(lessonService.getEndDateByTraining(trainingId));
-        CustomUser customUser = (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        CustomAuthentication customUser =
+                (CustomAuthentication) SecurityContextHolder.getContext().getAuthentication();
         getTrainingModel.setCanRate(trainingService.canRate(trainingId, customUser.getUserId()));
         boolean isCoach = customUser.getUserId() == training.getCoach().getId();
         getTrainingModel.setIsCoach( isCoach );
@@ -122,12 +123,19 @@ public class TrainingBaseController {
         trainingList = trainingService.getTrainingListByTagList(page, PAGE_SIZE, isActual, tagList);
         List<TrainingListModel> trainingListModelList = new ArrayList<TrainingListModel>();
         for (Training training : trainingList) {
-            TrainingListModel trainingListModel = new TrainingListModel(training);
+            TrainingListModel trainingListModel = new TrainingListModel();
+            trainingListModel.setId(training.getId());
+            trainingListModel.setTitle(training.getTitle());
+            trainingListModel.setExcerpt(training.getExcerpt());
+            trainingListModel.setCoachId(training.getCoach().getId());
+            trainingListModel.setCoachName(training.getCoach().getFirstName() +
+                    " " + training.getCoach().getLastName());
+            trainingListModel.setTagList(training.getTagList());
+            User user = new User();
+            trainingListModel.setIsCoach(userService.isCoach(user.getId(), training.getId()));
             Lesson nextLesson = lessonService.getNextLesson(training.getId());
-            if( nextLesson != null ) {
-                trainingListModel.setNextDate(nextLesson.getDate());
-                trainingListModel.setNextPlace(nextLesson.getPlace());
-            }
+            trainingListModel.setNextDate(nextLesson.getDate());
+            trainingListModel.setNextPlace(nextLesson.getPlace());
             trainingListModelList.add(trainingListModel);
         }
         return trainingListModelList;
@@ -190,7 +198,8 @@ public class TrainingBaseController {
     @Secured({"ADMIN", "USER"})
     @RequestMapping(value = "{id}/addListener", method = RequestMethod.POST)
     void addListener(@PathVariable("id") long trainingId) {
-        CustomUser customUser =  (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        CustomAuthentication customUser =
+                (CustomAuthentication) SecurityContextHolder.getContext().getAuthentication();
         long userId = customUser.getUserId();
         listenerService.addListener(trainingId, userId);
     }
@@ -207,7 +216,8 @@ public class TrainingBaseController {
     @Secured({"ADMIN", "USER"})
     @RequestMapping(value = "{id}/leave", method = RequestMethod.PUT)
     void leaveListener(@PathVariable("id") long trainingId) {
-        CustomUser customUser =  (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        CustomAuthentication customUser =
+                (CustomAuthentication) SecurityContextHolder.getContext().getAuthentication();
         Long userId = customUser.getUserId();
         listenerService.leaveListener(trainingId, userId);
     }
@@ -225,7 +235,8 @@ public class TrainingBaseController {
     @Secured({"ADMIN", "USER"})
     @RequestMapping(value = "{id}/set_rating/{rating}")
     RatingModel setRating(@PathVariable("id") long trainingId, @PathVariable("rating") int rating) {
-        CustomUser customUser =  (CustomUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        CustomAuthentication customUser =
+                (CustomAuthentication) SecurityContextHolder.getContext().getAuthentication();
         long userId = customUser.getUserId();
         return new RatingModel(trainingService.setRating(trainingId, rating, userId));
     }
