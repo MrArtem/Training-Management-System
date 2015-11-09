@@ -117,7 +117,7 @@
 <!--</nav>-->
 <!--</div>-->
 
-<div class="modal fade" id="#searchModal" tabindex="-1" role="dialog" aria-labelledby="searchTitle">
+<div class="modal fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="searchTitle">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -134,7 +134,9 @@
 
 				<div class="row" ng-repeat="training in navbar.foundTrainings">
 					<div class="found-training">
+						<p>TRAINING</p>
 						<h4>{{training.title}}</h4>
+						<p class="state">{{training.state}}</p>
 
 						<p class="excerpt">{{training.excerpt}}</p>
 						<p class="info">Coach: <span class="value"><a ui-sref="profile({userId: training.coachId})">{{training.coachName}}</a></span></p>

@@ -5,7 +5,7 @@
 			<div class="row">
 				<div class="tag-container">
 					<p class="tags-title">TAGS</p>
-					<a ng-repeat="tag in browse.tagList" class="btn btn-default tag" href="" role="button">{{tag.specialty}}</a>
+					<a ng-repeat="tag in browse.tagList" class="btn btn-default tag" href="" role="button" ng-class="{selected: browse.isTagSelected(tag.id)}" ng-click="browse.selectTag(tag.id)">{{tag.specialty}}</a>
 				</div>
 			</div>
 

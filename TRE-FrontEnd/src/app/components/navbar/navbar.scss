@@ -161,20 +161,12 @@ nav {
   height: 100% !important;
 }
 
-div#searchModal {
-  top: 0 !important;
-}
+.modal-dialog {
+  border: none !important;
+  width: 100% !important;
+  height: 100% !important;
+  background-color: rgba(0, 0, 0, 0.5);
 
-.create-btn {
-  margin-top: 15px !important;
-  margin-bottom: 8px !important;
-
-  font-weight: 500;
-  font-family: $tre-header-font;
-  overflow: hidden;
-}
-
-#searchModal {
   .search-input {
     border: none !important;
     background: white !important;
@@ -186,10 +178,25 @@ div#searchModal {
   }
 
   .found-training {
-
+    padding-top: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid black;
   }
 
   .found-user {
 
   }
+}
+
+div#searchModal {
+  top: 0 !important;
+}
+
+.create-btn {
+  margin-top: 15px !important;
+  margin-bottom: 8px !important;
+
+  font-weight: 500;
+  font-family: $tre-header-font;
+  overflow: hidden;
 }

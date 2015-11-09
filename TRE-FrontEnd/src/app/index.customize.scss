@@ -125,8 +125,7 @@ $text-color: rgba(0, 0, 0, 0.6);
 $light-gray: #f6f6f6;
 $border-gray: #e7e7e7;
 $blue: #4A90E2;
-$tre-light-blue: #55acee;
-$tre-hover-blue: #25709D;
+
 
 
 // We use these as default colors throughout // $primary-color: #008CBA; // $secondary-color: #e7e7e7; // $alert-color: #f04124; // $success-color: #43AC6A; // $warning-color: #f08a24; // $info-color: #a0d3e8; // We use these to control various global styles $body-bg:$light-gray; $body-font-color:$black; // $body-font-family: $font-family-sans-serif; // $body-font-weight: $font-weight-normal; // $body-font-style: normal; // We use this to control font-smoothing // $font-smoothing: antialiased; // We use these to control text direction settings // $text-direction: ltr; // $opposite-direction: right; // $default-float: left; // $last-child-float: $opposite-direction; // We use these to make sure border radius matches unless we want it different. // $global-radius: 3px; // $global-rounded: 1000px; // We use these to control inset shadow shiny edges and depressions. // $shiny-edge-size: 0 1px 0; // $shiny-edge-color: rgba($white, .5); // $shiny-edge-active-color: rgba($black, .2); // d. Media Query Ranges // - - - - - - - - - - - - - - - - - - - - - - - - - $small-breakpoint:em-calc(720);

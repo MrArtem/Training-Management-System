@@ -6,6 +6,8 @@
 $tre-font-family: Merriweather;
 $tre-header-font: 'Open Sans', sans-serif;
 $text-color: rgba(0, 0, 0, 0.6);
+$tre-light-blue: #55acee;
+$tre-hover-blue: #25709D;
 
 $btn-blue: #55acee;
 $btn-blue-border: #55a4e6;
@@ -101,6 +103,30 @@ body {
 
 .bottom-mg-25 {
   margin-bottom: 25px;
+}
+
+.link-select {
+  margin-left: 5px;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.link-select:hover {
+  border: none !important;
+  box-shadow: none !important;
+}
+
+///////////////////////////
+
+
+.material-input {
+  border: none !important;
+  background: white !important;
+}
+
+.material-input:focus, .material-input:valid {
+  box-shadow: none;
+  outline: none;
 }
 
 ///////////////////////////

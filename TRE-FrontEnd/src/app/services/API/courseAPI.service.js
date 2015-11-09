@@ -15,7 +15,7 @@
             cancelCreate: cancelCreate,
             cancelEdit: cancelEdit,
             createCourse: createCourse,
-            deleteFile: deleteFile, //TODO
+            deleteFile: deleteFile,
             deleteLesson: deleteLesson,
             deleteParticipant: deleteParticipant,
             editCourse: editCourse,
