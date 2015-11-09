@@ -214,7 +214,7 @@ public class MessageGeneratorHTML implements MessageGenerator {
     public String getTextPasswordForExCoach(String name, long idTraining, String password) {
         StringWriter writer = new StringWriter();
         try {
-            Template template = cfg.getTemplate("/requestFeedback.ftl");
+            Template template = cfg.getTemplate("/passwordExCoach.ftl");
             Map<String, Object> data = new HashMap<String, Object>();
             data.put("name", name);
             data.put("password", password);

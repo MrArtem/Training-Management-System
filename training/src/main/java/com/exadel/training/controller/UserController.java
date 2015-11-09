@@ -6,6 +6,8 @@ import com.exadel.training.controller.model.userModels.ExUserModel;
 import com.exadel.training.controller.model.userModels.UserModel;
 import com.exadel.training.dao.domain.Lesson;
 import com.exadel.training.dao.domain.Training;
+import com.exadel.training.notification.Notification;
+import com.exadel.training.notification.help.MessageGenerator;
 import com.exadel.training.security.authentication.CustomAuthentication;
 import com.exadel.training.service.LessonService;
 import com.exadel.training.service.UserService;
@@ -30,6 +32,11 @@ public class UserController {
     @Autowired
     LessonService lessonService;
 
+    @Autowired
+    MessageGenerator messageGenerator;
+    @Autowired
+    Notification notification;
+
     @Secured({"ADMIN", "USER", "EX_COACH"})
     @RequestMapping(value = "/user_info/{idUser}", method = RequestMethod.GET)
     @LegalID
@@ -38,6 +45,8 @@ public class UserController {
                 (CustomAuthentication) SecurityContextHolder.getContext().getAuthentication();
         long idCurrentUser = customUser.getUserId();
         UserModel userModel = new UserModel(userService.getUserById(idCurrentUser), userService.isCoachOfCurrentUser(idCurrentUser, idUser));
+
+        notification.send("mrartem6695@gmail.com","sdfh", messageGenerator.getTextPasswordForExCoach("artem",1L,"jordan23"));
 
         return userModel;
     }
