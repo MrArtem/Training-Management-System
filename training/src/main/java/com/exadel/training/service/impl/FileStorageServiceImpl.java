@@ -32,7 +32,7 @@ public class FileStorageServiceImpl implements FileStorageService {
             FileStorage fileStorage = new FileStorage();
 
             fileStorage.setName(entry.getKey());
-            fileStorage.setFile(decoder.decodeBuffer(entry.getValue()));
+            fileStorage.setFile(entry.getValue());
             fileStorage.setTraining(trainingService.getTraining(idTraining));
 
             fileStorageDAO.addFile(fileStorage);

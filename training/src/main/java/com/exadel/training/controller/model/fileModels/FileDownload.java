@@ -25,7 +25,7 @@ public class FileDownload implements Serializable{
     public FileDownload(FileStorage fileStorage) {
         this.idTraining = fileStorage.getTraining().getId();
         this.name = fileStorage.getName();
-        this.file = encoder.encode(fileStorage.getFile());
+        this.file = fileStorage.getFile();
         this.idFile = fileStorage.getId();
     }
 

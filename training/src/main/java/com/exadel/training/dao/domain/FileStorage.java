@@ -16,8 +16,7 @@ public class FileStorage {
     private long id;
 
     @Lob
-
-    private byte[] file;
+    private String file;
 
     @NotBlank
     private String name;
@@ -36,11 +35,11 @@ public class FileStorage {
         this.id = id;
     }
 
-    public byte[] getFile() {
+    public String getFile() {
         return file;
     }
 
-    public void setFile(byte[] file) {
+    public void setFile(String file) {
         this.file = file;
     }
 
