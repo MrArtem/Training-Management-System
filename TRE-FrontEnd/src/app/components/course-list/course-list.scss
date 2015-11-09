@@ -1,0 +1,56 @@
+
+
+///// TO BE REFACTORED /////
+.course-list{
+    padding: 1rem 1rem;
+    
+    
+    .course-item{
+        background-color: $white;
+        padding: 2rem;
+        margin-bottom: 2rem;
+        
+        .course-title{
+            max-width: 83%;
+        }
+        .course-lesson-number{
+            color: $gray;
+            font-weight: 300;
+        }
+        .course-excerpt{
+            color: $gray;
+            font-weight: 300;
+        }
+        .course-meta{
+            position: relative;
+            [class^='course-'] {
+                
+                margin-bottom: 0;
+                font-size: 1rem;
+                color: $gray;
+                font-weight: 300;
+                .value{
+                    font-weight: 400;
+                    color: $black;
+                }
+            }
+            
+            .course-goto{
+                color: $blue;
+                display: block;
+                position: absolute;
+                right: 10px;
+                bottom: 10px;
+                padding: 10px;
+                
+                transition: 0.2s ease-out;
+                &:hover{
+                    transform: rotate(360deg);
+                }
+            }
+        }
+        
+    }
+    
+    
+}

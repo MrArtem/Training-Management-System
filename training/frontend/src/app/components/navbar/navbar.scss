@@ -1,0 +1,110 @@
+@mixin style-placeholder($color, $fontsize) {
+  ::-webkit-input-placeholder {
+    color: $color;
+    font-size: $fontsize;
+  }
+
+  :-moz-placeholder { /* Firefox 18- */
+    color: $color;
+    font-size: $fontsize;
+  }
+
+  ::-moz-placeholder {  /* Firefox 19+ */
+    color: $color;
+    font-size: $fontsize;
+  }
+
+  :-ms-input-placeholder {
+    color: $color;
+    font-size: $fontsize;
+  }
+}
+
+.tre-dropdown {
+  border: 1px solid $border-gray !important;
+  border-radius: rem-calc(10) !important;
+  color: $text-color !important;
+
+  label {
+    background-color: white !important;
+    color: $text-color !important;
+  }
+
+  a {
+    color: $text-color !important;
+    line-height: 160% !important;
+  }
+
+  .no-margin-top {
+    margin-top: rem-calc(3) !important;
+    padding-top: 0 !important;
+  }
+
+  .no-margin-bottom {
+    padding-bottom: 0 !important;
+    margin-bottom: rem-calc(3) !important;
+  }
+}
+
+.navbar {
+  border-bottom: solid 1px $border-gray;
+}
+
+nav {
+
+  .activelink {
+    border-bottom: solid 2px black;
+  }
+
+  #searchModal:after {
+    content: "";
+    display: block;
+    position: fixed; /* could also be absolute */
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 10;
+    background-color: rgba(0,0,0,0.5);
+  }
+}
+
+.full-modal {
+  background-size: 100% 100% !important;
+  background-repeat: no-repeat !important;
+  height: 100% !important;
+}
+
+div#searchModal {
+  top: 0 !important;
+}
+
+.create-btn {
+  padding-left: rem-calc(15) !important;
+  padding-right: rem-calc(15) !important;
+  padding-top: rem-calc(4) !important;
+  padding-bottom: rem-calc(10) !important;
+
+  font-weight: 600;
+  font-family: $tre-font-family;
+}
+
+#searchModal {
+  .search-input {
+    border: none !important;
+    background: white !important;
+  }
+
+  .search-input:focus {
+    box-shadow: none;
+    outline: none;
+  }
+
+  .found-training {
+
+  }
+
+  .found-user {
+
+  }
+}

@@ -2,6 +2,7 @@ package com.exadel.training.service.impl;
 
 import com.exadel.training.dao.TagDAO;
 import com.exadel.training.dao.domain.Tag;
+import com.exadel.training.dao.domain.Training;
 import com.exadel.training.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -11,6 +12,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
+@Transactional
 public class TagServiceImpl implements TagService{
 
     @Autowired
@@ -18,17 +20,22 @@ public class TagServiceImpl implements TagService{
 
 
     @Override
-    @Transactional
-    public void addTag(String specialty, String colour) {
-        Tag tag = new Tag();
-        tag.setColour(colour);
-        tag.setSpecialty(specialty);
-        tagDAO.addTag(tag);
+    public Long addTag(Tag tag) {
+        Tag DBTag = tagDAO.getTagBySpecialty(tag.getSpecialty());
+        if (DBTag == null) {
+            tagDAO.addTag(tag);
+            return tag.getId();
+        }
+        return DBTag.getId();
     }
 
     @Override
-    @Transactional
     public List<Tag> getTagList() {
         return tagDAO.getTagList();
+    }
+
+    @Override
+    public Tag getTagBySpecialty(String specialty) {
+        return tagDAO.getTagBySpecialty(specialty);
     }
 }

@@ -1,0 +1,32 @@
+<div class="attended">
+    <div ng-class="{'waiting-for-angular': !attendedcourses.isContentLoaded }">
+        <div class="row">
+            <div class="small-12 medium-8 large-8 column">
+                <div class="attended-courses">
+                    <h5>Attended courses</h5>
+
+                    <div class="scrollable-div">
+
+                        <table class="fullwidth-table">
+                            <thead>
+                            <tr>
+                                <th>Coach</th>
+                                <th>Training</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="course in profileInfo.pastCourses">
+                                <td>{{course.coachName}}</td>
+                                <td>{{course.title}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

@@ -15,20 +15,22 @@ public class Feedback {
     @GeneratedValue
     private long id;
 
-    private boolean clear;
+    private boolean attendance;
 
-    private boolean interesting;
+    private boolean attitude;
 
-    private boolean newMaterial;
+    private boolean commSkills;
 
-    private int effective;
+    private boolean questions;
 
-    private boolean recommendation;
+    private boolean motivation;
+
+    private boolean focusOnResult;
 
     private String other;
 
     @NotNull
-    private Date date;
+    private long date;
 
     @ManyToOne(cascade = CascadeType.ALL)
     private User user;
@@ -47,44 +49,52 @@ public class Feedback {
         this.id = id;
     }
 
-    public boolean isClear() {
-        return clear;
+    public boolean isAttendance() {
+        return attendance;
     }
 
-    public void setClear(boolean clear) {
-        this.clear = clear;
+    public void setAttendance(boolean attendance) {
+        this.attendance = attendance;
     }
 
-    public boolean isInteresting() {
-        return interesting;
+    public boolean isAttitude() {
+        return attitude;
     }
 
-    public void setInteresting(boolean interesting) {
-        this.interesting = interesting;
+    public void setAttitude(boolean attitude) {
+        this.attitude = attitude;
     }
 
-    public boolean isNewMaterial() {
-        return newMaterial;
+    public boolean isCommSkills() {
+        return commSkills;
     }
 
-    public void setNewMaterial(boolean newMaterial) {
-        this.newMaterial = newMaterial;
+    public void setCommSkills(boolean commSkills) {
+        this.commSkills = commSkills;
     }
 
-    public int getEffective() {
-        return effective;
+    public boolean isQuestions() {
+        return questions;
     }
 
-    public void setEffective(int effective) {
-        this.effective = effective;
+    public void setQuestions(boolean questions) {
+        this.questions = questions;
     }
 
-    public boolean isRecommendation() {
-        return recommendation;
+    public boolean isMotivation() {
+        return motivation;
     }
 
-    public void setRecommendation(boolean recommendation) {
-        this.recommendation = recommendation;
+    public void setMotivation(boolean motivation) {
+        this.motivation = motivation;
+    }
+
+    public boolean isFocusOnResult() {
+        return focusOnResult;
+    }
+
+    public void setFocusOnResult(boolean focusOnResult) {
+        this.focusOnResult = focusOnResult;
     }
 
     public String getOther() {
@@ -95,11 +105,11 @@ public class Feedback {
         this.other = other;
     }
 
-    public Date getDate() {
+    public long getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(long date) {
         this.date = date;
     }
 

@@ -1,7 +1,25 @@
 package com.exadel.training.dao.domain;
 
+import org.apache.lucene.analysis.charfilter.MappingCharFilterFactory;
+import org.apache.lucene.analysis.core.LowerCaseFilterFactory;
+import org.apache.lucene.analysis.core.StopFilterFactory;
+import org.apache.lucene.analysis.core.WhitespaceTokenizerFactory;
+import org.apache.lucene.analysis.miscellaneous.WordDelimiterFilterFactory;
+import org.apache.lucene.analysis.ngram.NGramFilterFactory;
+import org.apache.lucene.analysis.snowball.SnowballPorterFilterFactory;
+import org.apache.lucene.analysis.standard.StandardTokenizerFactory;
+import org.apache.lucene.analysis.synonym.SynonymFilterFactory;
+import org.hibernate.search.annotations.*;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+
+import org.hibernate.search.annotations.Index;
+import org.hibernate.search.annotations.Parameter;
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotBlank;
+
 import java.util.List;
 
 /**
@@ -9,26 +27,78 @@ import java.util.List;
  */
 @Entity
 @Table
+@Indexed
+@AnalyzerDef(name = "customAnalyzer",
+        tokenizer = @TokenizerDef(factory = WhitespaceTokenizerFactory.class),
+        filters = {
+                @TokenFilterDef(factory = LowerCaseFilterFactory.class),
+                @TokenFilterDef(factory = SnowballPorterFilterFactory.class, params = {
+                        @Parameter(name = "language", value = "English")
+                }),
+                @TokenFilterDef(factory = SnowballPorterFilterFactory.class, params = {
+                        @Parameter(name = "language", value = "Russian")
+                }),
+                @TokenFilterDef(factory = LowerCaseFilterFactory.class),
+                @TokenFilterDef(factory = SnowballPorterFilterFactory.class, params = {
+                        @Parameter(name = "language", value = "English")
+                }),
+                @TokenFilterDef(factory = SnowballPorterFilterFactory.class, params = {
+                        @Parameter(name = "language", value = "Russian")
+                }),
+                @TokenFilterDef(factory = WordDelimiterFilterFactory.class, params = {
+                        @Parameter(name = "splitOnCaseChange", value = "1")
+                }),
+                @TokenFilterDef(factory = NGramFilterFactory.class, params = {
+                        @Parameter(name = "minGramSize", value = "3"),
+                        @Parameter(name = "maxGramSize", value = "10")
+                }),
+                @TokenFilterDef(factory = SynonymFilterFactory.class, params = {
+                @Parameter(name = "synonyms", value = "searchSynonyms/synonyms.txt"),
+                @Parameter(name = "expand", value = "false")
+                })
+        })
 public class User {
+
+    public   enum Role{
+        ADMIN, USER, EX_COACH, EX_USER
+    }
 
     @Id
     @GeneratedValue
     private long id;
 
     @NotNull
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
+    @NotBlank
+    private String login;
+
+    @NotBlank
+    @Field(index = Index.YES, analyze = Analyze.YES, store = Store.YES)
+    @Analyzer(definition = "customAnalyzer")
     private String firstName;
 
-    @NotNull
+    @NotBlank
+    @Field(index = Index.YES, analyze = Analyze.YES, store = Store.YES)
+    @Analyzer(definition = "customAnalyzer")
     private String lastName;
 
-    @NotNull
+    @NotBlank
+    @Field(index = Index.YES, analyze = Analyze.YES, store = Store.YES)
+    @Analyzer(definition = "customAnalyzer")
+    @Email
     private String email;
 
-    @NotNull
+    @Field(index = Index.YES, analyze = Analyze.YES, store = Store.YES)
+    @Analyzer(definition = "customAnalyzer")
     private String phone;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    private List<Training> trainingListListener;
+    @OneToOne
+    private UserPassword userPassword;
+
+    @OneToMany(mappedBy = "user")
+    private List<Listener> trainingListListener;
 
     @OneToMany(mappedBy = "coach")
     private List<Training> trainingListCoach;
@@ -53,6 +123,14 @@ public class User {
         this.id = id;
     }
 
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
     public String getFirstName() {
         return firstName;
     }
@@ -73,6 +151,14 @@ public class User {
         return email;
     }
 
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
     public void setEmail(String email) {
         this.email = email;
     }
@@ -85,12 +171,12 @@ public class User {
         this.phone = phone;
     }
 
-    public List<Training> getTrainingsListener() {
-        return trainingListListener;
+    public UserPassword getUserPassword() {
+        return userPassword;
     }
 
-    public void setTrainingsListener(List<Training> trainingListListener) {
-        this.trainingListListener = trainingListListener;
+    public void setUserPassword(UserPassword userPassword) {
+        this.userPassword = userPassword;
     }
 
     public List<Training> getTrainingsCoach() {
@@ -124,7 +210,12 @@ public class User {
     public void setAttendances(List<Attendance> attendances) {
         this.attendances = attendances;
     }
-}
- enum Role{
-   
+
+    public List<Listener> getTrainingListListener() {
+        return trainingListListener;
+    }
+
+    public void setTrainingListListener(List<Listener> trainingListListener) {
+        this.trainingListListener = trainingListListener;
+    }
 }

@@ -1,0 +1,28 @@
+<div class="container browse" ng-class="{'waiting-for-angular': !browse.isContentLoaded }">
+	<div class="row">
+		<div class="small-12 medium-8 medium-centered column">
+
+			<div class="row">
+
+			</div>
+
+			<div class="row">
+				<div class="left small-12 column card" ng-repeat="course in browse.courseList">
+					<div class="card-bg" ui-sref="courseinfo({courseId: course.id})">
+						<h3 class="course-title"><a ui-sref="courseinfo({courseId: course.id})">{{course.title}}</a>
+						</h3>
+
+						<!-- it is not returned -->
+						<!--<h2 class="course-lesson-number">Lesson #{{course.nextLesson}}</h2>-->
+
+						<p class="course-excerpt">{{course.excerpt}}</p>
+
+						<p>Coach: <a ui-sref="profile({userId: course.coachId})"
+									 class="value">{{course.coachName}}</a></p>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>
