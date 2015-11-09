@@ -25,6 +25,8 @@
             courseAPI.uploadFiles($stateParams.courseId, $scope.filesToUpload).then(function(result) {
                 $scope.$parent.courseInfo.files = angular.copy(result);
                 console.log($scope.$parent.courseInfo.files);
+            }).finally(function() {
+                $scope.filesToUpload = [];
             });
         }
 
@@ -37,23 +39,9 @@
             });
         }
 
-        function download(uri, filename) {
-            var link = document.createElement('a');
-            if (typeof link.download === 'string') {
-                link.href = uri;
-                link.download = filename;
-
-                //Firefox requires the link to be in the body
-                document.body.appendChild(link);
-
-                //simulate click
-                link.click();
-
-                //remove the link when done
-                document.body.removeChild(link);
-            } else {
-                window.open(uri);
-            }
+        function download(fileId, uri, filename) {
+            console.log(fileId, uri, filename);
+            $("#" + fileId).attr("href", uri).attr("download", filename);
         }
 
 

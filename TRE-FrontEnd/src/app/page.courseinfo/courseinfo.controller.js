@@ -15,6 +15,7 @@
         vm.courseInfo.participantsList = [];
         vm.courseInfo.timetable = [];
         vm.isContentLoaded = false;
+        vm.rating = 0;
 
         vm.getLanguage = getLanguage;
         vm.getShortInfo = getShortInfo;
@@ -45,10 +46,14 @@
             });
         }
 
-        function setRating() {
-            courseAPI.setRating().then(function(data) {
-                console.log('Training rated successfully');
-            });
+        function setRating(rating) {
+            console.log('Rating to be set: ', rating);
+            if($scope.courseInfo.canRate) {
+                courseAPI.setRating($stateParams.courseId, rating).then(function(data) {
+                    $scope.courseInfo.rating = data.rating;
+                    console.log('Training rated successfully');
+                });
+            }
         }
 
         function subscribe() {

@@ -1,63 +1,63 @@
 <div class="container-fluid" ng-class="{'waiting-for-angular': !mycourses.isContentLoaded }">
-	<div class="row">
-		<div class="col-xs-12 col-sm-8 col-sm-offset-2">
-			<div class="mycourses">
-				<div class="row">
-					<div class="tools-header">
-						<div class="col-xs-6 col-sm-8 col-xs-offset-3 col-sm-offset-2">
-							<div id="segmented-picker">
-								<div class="btn-group">
-									<label class="btn btn-default segmented-button segmented-button-left" ng-model="mycourses.filter.isCoach" uib-btn-radio="''">All</label>
-									<label class="btn btn-default segmented-button" ng-model="mycourses.filter.isCoach" uib-btn-radio="false">Student</label>
-									<label class="btn btn-default segmented-button segmented-button-right" ng-model="mycourses.filter.isCoach" uib-btn-radio="true">Coach</label>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!--<div class="col-xs-12 col-sm-8 col-sm-offset-2 ">-->
-						<!--<div class="row">-->
+    <div class="row">
+        <div class="col-xs-12 col-sm-8 col-sm-offset-2">
+            <div class="mycourses">
+                <div class="row">
+                    <div class="tools-header">
+                        <div class="col-xs-6 col-sm-8 col-xs-offset-3 col-sm-offset-2">
+                            <div id="segmented-picker">
+                                <div class="btn-group">
+                                    <label class="btn btn-default segmented-button segmented-button-left"
+                                           ng-model="mycourses.filter.isCoach" uib-btn-radio="''">All</label>
+                                    <label class="btn btn-default segmented-button" ng-model="mycourses.filter.isCoach"
+                                           uib-btn-radio="false">Student</label>
+                                    <label class="btn btn-default segmented-button segmented-button-right"
+                                           ng-model="mycourses.filter.isCoach" uib-btn-radio="true">Coach</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-2 col-xs-6">
+                        <form name="localSearch">
+                            <input type="text" class = "form-control localSearchForm" name="search" ng-model="mycourses.search" placeholder="Quick Look">
+                        </form>
+                    </div>
 
-							<!--&lt;!&ndash;all page was designed horribly, can do nothing about it&ndash;&gt;-->
-							<!--&lt;!&ndash;<div class="col-xs-3">&ndash;&gt;-->
-								<!--&lt;!&ndash;<i class="fa fa-search"></i>&ndash;&gt;-->
-								<!--&lt;!&ndash;<input type="text" placeholder="Quick Look" ng-model="mycourses.filter.search">&ndash;&gt;-->
-							<!--&lt;!&ndash;</div>&ndash;&gt;-->
-						<!--</div>-->
-					<!--</div>-->
+                </div>
 
-				</div>
+                <section class="row">
+                    <!--TODO-->
+                    <p ng-if="mycourses.userCourses.length == 0">Sorry, you have no actual courses</p>
 
-				<section class="row">
-					<!--TODO-->
-					<p ng-if="mycourses.userCourses.length == 0">Sorry, you have no actual courses</p>
-					<div class="col-xs-12 col-sm-6 col-lg-4 card"
-						 ng-repeat="course in mycourses.userCourses | filter:{isCoach: mycourses.filter.isCoach}">
-						<div class="card-bg" ui-sref="courseinfo({courseId: course.id})">
-							<h1 class="course-title"><a ui-sref="courseinfo({courseId: course.id})">{{course.title}}</a>
-							</h1>
+                    <div class="col-xs-12 col-sm-6 col-lg-4 card"
+                         ng-repeat="course in mycourses.userCourses | filter:{isCoach: mycourses.filter.isCoach} | filter: mycourses.search">
+                        <div class="card-bg" ui-sref="courseinfo({courseId: course.id})">
+                            <h1 class="course-title"><a ui-sref="courseinfo({courseId: course.id})">{{course.title}}</a>
+                            </h1>
 
-							<!-- it is not returned -->
-							<!--<h2 class="course-lesson-number">Lesson #{{course.nextLesson}}</h2>-->
+                            <!-- it is not returned -->
+                            <!--<h2 class="course-lesson-number">Lesson #{{course.nextLesson}}</h2>-->
 
-							<p class="course-excerpt">{{course.excerpt}}</p>
+                            <p class="course-excerpt">{{course.excerpt}}</p>
 
-							<p>Coach: <a ui-sref="profile({userId: course.coachId})"
-										 class="value">{{course.coachName}}</a></p>
+                            <p>Coach: <a ng-if="!course.isCoach" ui-sref="profile({userId: course.coachId})"
+                                         class="value">{{course.coachName}}</a>
+                                <a ng-if="course.isCoach" class="value">me</a></p>
 
-							<p class="info"><i class="fa fa-clock-o"></i> <span class="value">{{course.nextDate | date: "MMM d, y h:mm a"}}</span>
-							</p>
+                            <p class="info"><i class="fa fa-clock-o"></i> <span class="value">{{course.nextDate | date: "MMM d, y h:mm a"}}</span>
+                            </p>
 
-							<p class="info"><i class="fa fa-map-marker"></i> <span
-								class="value">{{course.nextPlace}}</span></p>
+                            <p class="info"><i class="fa fa-map-marker"></i> <span
+                                    class="value">{{course.nextPlace}}</span></p>
 
 
-						</div>
-					</div>
+                        </div>
+                    </div>
 
-				</section>
-			</div>
-		</div>
+                </section>
+            </div>
+        </div>
 
-	</div>
+    </div>
 
 </div>

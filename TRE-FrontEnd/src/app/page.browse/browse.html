@@ -10,7 +10,7 @@
 			</div>
 
 			<div class="row">
-				<div class="pull-left col-xs-12 col-sm-6 col-lg-4 card" ng-repeat="course in browse.courseList">
+				<div class="pull-left col-xs-12 col-sm-6 col-lg-4 card" ng-repeat="course in browse.courseList | filterByTags: browse.selectedTagIds">
 					<div class="card-bg" ui-sref="courseinfo({courseId: course.id})">
 						<h3 class="course-title"><a ui-sref="courseinfo({courseId: course.id})">{{course.title}}</a>
 						</h3>

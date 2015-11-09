@@ -4,6 +4,8 @@
             <div class="row courseinfo-short">
                 <h1 class="title">{{courseInfo.title}}</h1>
 
+                <uib-rating ng-model="courseInfo.rating" max="5" readonly="!courseInfo.canRate" aria-labelledby="default-rating" ng-click="courseinfo.setRating(value)"></uib-rating>
+
                 <h3 class="short-desc">{{courseInfo.shortInfo}}</h3>
 
                 <p class="field">Start date: <span

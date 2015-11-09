@@ -17,14 +17,9 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <!--<tr>-->
-                        <!--<td><a target="_self" href="" ng-click="attachments.downloadHC()">Dowload</a></td>-->
-                        <!--<td class="hiddenCell" ng-click="attachments.deleteFile($index)"><i class="fa fa-times"></i></td>-->
-                    <!--</tr>-->
                     <tr ng-repeat="file in courseInfo.files track by $index" class="rowWithSecret">
                         <td>{{$index + 1}}</td>
-
-                        <td><a href="" ng-click="attachments.download(attachments.data, attachments.fileName)">{{file.name}}</a></td>
+                        <td><a id="{{file.idFile}}" href="" ng-click="attachments.download(file.idFile, file.file, file.name)">{{file.name}}</a></td>
                         <td class="hiddenCell" ng-click="attachments.deleteFile($index)"><i class="fa fa-times"></i></td>
                     </tr>
                     </tbody>

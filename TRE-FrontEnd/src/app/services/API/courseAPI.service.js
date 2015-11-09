@@ -11,6 +11,7 @@
             addExCoach: addExCoach, //TODO
             addLesson: addLesson,
             addParticipant: addParticipant,
+            addTag: addTag,
             approveCourse: approveCourse,
             cancelCreate: cancelCreate,
             cancelEdit: cancelEdit,
@@ -40,11 +41,19 @@
 
         //////////
 
+        function addTag(tag) {
+            return $http.post(urlProvider.addTag(), tag).then(function(result) {
+                return result.data;
+            });
+        }
+
         function getAllTags() {
             return $http.get(urlProvider.getAllTags()).then(function(result) {
                 return result.data;
             });
         }
+
+        //////////
 
         function getAttachments(courseId) {
             return $http.get(urlProvider.getAttachments(courseId)).then(function(result) {

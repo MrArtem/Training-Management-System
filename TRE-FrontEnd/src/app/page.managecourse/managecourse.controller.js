@@ -10,6 +10,7 @@
 
 		var vm = this;
 		vm.courseInfo = {};
+		vm.courseInfo.tagList = []
 		vm.exCoachInfo = {};
 
 		vm.approveCourse = approveCourse;

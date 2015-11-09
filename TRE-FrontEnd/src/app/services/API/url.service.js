@@ -11,6 +11,7 @@
             addExCoach: addExCoach, //TODO
             addFeedback: addFeedback,
             addParticipant: addParticipant,
+            addTag: addTag,
             approveCourse: approveCourse,
             cancelCreate: cancelCreate,
             cancelEdit: cancelEdit,
@@ -67,6 +68,10 @@
 
     function addParticipant(courseId) {
         return '/api/training/' + courseId + '/addExListener';
+    }
+
+    function addTag() {
+        return '/api/training/add_tag';
     }
 
     function approveCourse(actionId) {
