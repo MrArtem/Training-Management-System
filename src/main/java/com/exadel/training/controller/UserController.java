@@ -40,7 +40,7 @@ public class UserController {
         CustomAuthentication customUser =
                 (CustomAuthentication) SecurityContextHolder.getContext().getAuthentication();
         long idCurrentUser = customUser.getUserId();
-        UserModel userModel = new UserModel(userService.getUserById(idCurrentUser), userService.isCoachOfCurrentUser(idCurrentUser, idUser));
+        UserModel userModel = new UserModel(userService.getUserById(idUser), userService.isCoachOfCurrentUser(idCurrentUser, idUser));
 
         return userModel;
     }
