@@ -1,0 +1,47 @@
+<div class="nested-view manual-tab">
+
+    <h3>Add a date</h3>
+
+    <div class="row">
+
+        <div class="col-xs-12 col-sm-8">
+
+            <div class="row collapse">
+
+                <div class="col-xs-4">
+                    <label>Date</label>
+                        <input type='text' name="manualdate" ng-model="step4.dateTime.date" tre-datepicker="">
+                </div>
+                <div class="col-xs-2 col-xs-offset-1">
+                    <label>Hour</label>
+                        <input type='number' name="manualhours" ng-model="step4.dateTime.hours">
+
+                </div>
+                <div class="col-xs-2 col-xs-offset-1">
+                    <label>Minutes</label>
+                        <input type='number' name="manualminutes" id="minutes" ng-model="step4.dateTime.minutes">
+                </div>
+                <div class="col-xs-2">
+                    <label>.</label>
+                    <a href="" class="btn default-btn-blue" ng-click="step4.addDate()">Add date</a>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="scrollable-div">
+                    <table>
+                        <tr ng-repeat="lesson in courseInfo.lessonList track by $index">
+                            <td>{{lesson.date |  date: "MMM d, y h:mm a"}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+</div>
+

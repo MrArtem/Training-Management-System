@@ -1,0 +1,46 @@
+.waiting-for-angular {
+  .profile-short, .icon-bar {
+    display: none;
+  }
+}
+
+.profile {
+  $left-pd: 48px;
+  $right-pd: 48px;
+
+  .profile-short {
+    margin-bottom: 32px;
+    margin-left: 15px;
+
+    .title {
+      margin-bottom: 30px;
+    }
+
+    .short-desc {
+      margin-bottom: 24px;
+    }
+
+    .field {
+      color: $black;
+
+      .info {
+        color: $text-color;
+      }
+    }
+
+    .field, .info {
+      margin-bottom: 8px;
+    }
+
+  }
+
+}
+
+.profile-view {
+  padding-top: 25px;
+  padding-left: 15px;
+}
+
+.router-tabs {
+  margin-left: 15px;
+}

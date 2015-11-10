@@ -1,0 +1,43 @@
+<div class="step3">
+
+    <div class="row">
+
+        <div class="col-xs-1"><a ui-sref="step2">Previous</a></div>
+
+        <div class="col-xs-10">
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <label>Language
+                        <select name="language" ng-model="courseInfo.language" required>
+                            <option value="1">English</option>
+                            <option value="2">Russian</option>
+                        </select>
+                    </label>
+                    <small ng-show="courseForm.language.$invalid && courseForm.language.$touched" class="error">This field is required.</small>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-6">
+                    <label>Maximum number of participants
+                        <input type="number" name="participants" placeholder="participant number" ng-model="courseInfo.maxSize" required>
+                    </label>
+                    <small ng-show="courseForm.participants.$invalid && courseForm.participants.$touched" class="error">This field is required.</small>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <label>Place
+                        <input type="text" name="place" placeholder="place" ng-model="courseInfo.place" ng-maxlength="255">
+                    </label>
+                    <small ng-show="courseForm.place.$invalid && courseForm.place.$touched" class="error">This field is required.</small>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-xs-1"><a ui-sref="{{step3.openCustomTab()}}">Next</a></div>
+
+    </div>
+
+</div>

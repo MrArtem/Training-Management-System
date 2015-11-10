@@ -1,0 +1,9 @@
+<div class="popover-container scroll">
+
+	<div class="row" ng-repeat="training in statistics.trainingList">
+		<div class="col-xs-12 select-dropdown">
+			<a href="" ng-click="statistics.setTraining(training.id)" close-on-click="trainingPopover">{{training.title}}</a>
+		</div>
+	</div>
+
+</div>

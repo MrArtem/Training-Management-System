@@ -1,0 +1,31 @@
+<div class="container-fluid browse" ng-class="{'waiting-for-angular': !browse.isContentLoaded }">
+	<div class="row">
+		<div class="col-xs-12 col-sm-8 col-sm-offset-2">
+
+			<div class="row">
+				<div class="tag-container">
+					<p class="tags-title">TAGS</p>
+					<a ng-repeat="tag in browse.tagList" class="btn btn-default tag" href="" role="button" ng-class="{selected: browse.isTagSelected(tag.id)}" ng-click="browse.selectTag(tag.id)">{{tag.specialty}}</a>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="pull-left col-xs-12 col-sm-6 col-lg-4 card" ng-repeat="course in browse.courseList">
+					<div class="card-bg" ui-sref="courseinfo({courseId: course.id})">
+						<h3 class="course-title"><a ui-sref="courseinfo({courseId: course.id})">{{course.title}}</a>
+						</h3>
+
+						<!-- it is not returned -->
+						<!--<h2 class="course-lesson-number">Lesson #{{course.nextLesson}}</h2>-->
+
+						<p class="course-excerpt">{{course.excerpt}}</p>
+
+						<p>Coach: <a ui-sref="profile({userId: course.coachId})"
+									 class="value">{{course.coachName}}</a></p>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>

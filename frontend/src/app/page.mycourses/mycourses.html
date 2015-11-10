@@ -1,0 +1,61 @@
+<div class="container-fluid" ng-class="{'waiting-for-angular': !mycourses.isContentLoaded }">
+	<div class="row">
+		<div class="col-xs-12 col-sm-8 col-sm-offset-2">
+			<div class="mycourses">
+				<div class="row tools-header">
+					<div class="col-xs-4 col-sm-8 col-xs-offset-4 col-sm-offset-2">
+						<div class="segmented-picker">
+							<div class="btn-group">
+								<label class="btn btn-default segmented-button segmented-button-left"
+									   ng-model="mycourses.filter.isCoach" uib-btn-radio="''">All</label>
+								<label class="btn btn-default segmented-button" ng-model="mycourses.filter.isCoach"
+									   uib-btn-radio="false">Student</label>
+								<label class="btn btn-default segmented-button segmented-button-right"
+									   ng-model="mycourses.filter.isCoach" uib-btn-radio="true">Coach</label>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-4 col-sm-2">
+						<form name="localSearch">
+							<input type="text" class="form-control localSearchForm" name="search"
+								   ng-model="mycourses.search" placeholder="Quick Look">
+						</form>
+					</div>
+				</div>
+
+				<section class="row">
+					<!--TODO-->
+					<p class="text-center" ng-if="mycourses.userCourses.length == 0">Sorry, you have no actual courses</p>
+
+					<div class="col-xs-12 col-sm-6 col-lg-4 card"
+						 ng-repeat="course in mycourses.userCourses | filter:{isCoach: mycourses.filter.isCoach} | filter: mycourses.search">
+						<div class="card-bg" ui-sref="courseinfo({courseId: course.id})">
+							<h1 class="course-title"><a ui-sref="courseinfo({courseId: course.id})">{{course.title}}</a>
+							</h1>
+
+							<!-- it is not returned -->
+							<!--<h2 class="course-lesson-number">Lesson #{{course.nextLesson}}</h2>-->
+
+							<p class="course-excerpt">{{course.excerpt}}</p>
+
+							<p>Coach: <a ng-if="!course.isCoach" ui-sref="profile({userId: course.coachId})"
+										 class="value">{{course.coachName}}</a>
+								<a ng-if="course.isCoach" class="value">me</a></p>
+
+							<p class="info"><i class="fa fa-clock-o"></i> <span class="value">{{course.nextDate | date: "MMM d, y h:mm a"}}</span>
+							</p>
+
+							<p class="info"><i class="fa fa-map-marker"></i> <span
+								class="value">{{course.nextPlace}}</span></p>
+
+
+						</div>
+					</div>
+
+				</section>
+			</div>
+		</div>
+
+	</div>
+
+</div>

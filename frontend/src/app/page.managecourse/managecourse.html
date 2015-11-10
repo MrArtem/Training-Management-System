@@ -1,0 +1,21 @@
+<div class="container-fluid managecourse">
+	<div class="row">
+		<div class="col-xs-12 col-sm-6 col-sm-offset-3">
+			<div class="row">
+				<h1>.....</h1>
+			</div>
+			<div class="row">
+				<a ng-if="!isEdited" href="" class="btn default-btn-blue pull-left"
+				   ng-click="managecourse.createCourse()">Create
+					course</a>
+				<a ng-if="managecourse.isAdmin() && isEdited" href="" class="btn default-btn-green pull-left"
+				   ng-disabled="courseForm.$invalid"
+				   ng-click="managecourse.approveCourse()">Approve course</a>
+			</div>
+
+			<form name="courseForm">
+				<div ui-view></div>
+			</form>
+		</div>
+	</div>
+</div>
