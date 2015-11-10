@@ -15,7 +15,7 @@ public interface ApproveActionDAO {
 
     void removeApproveAction(ApproveAction approveAction);
 
-    Integer getApproveActionNumber();
+    Long getApproveActionNumber();
 
     List<ApproveAction> getApproveActionList(Integer page, Integer pageSize);
 }

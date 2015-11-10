@@ -17,9 +17,10 @@
 
         function login(login, password) {
             var headers = {'Content-Type': 'application/x-www-form-urlencoded'};
-            return $http.post(urlProvider.login(), "username=" + login + "&password=" + password, {headers: headers}).then(function(result) {
-                return result.data;
+            return $http.post(urlProvider.login(), "username=" + login + "&password=" + password, {headers: headers}).then(function(data){
+                return data.data;
             });
+
         }
 
         function logout() {

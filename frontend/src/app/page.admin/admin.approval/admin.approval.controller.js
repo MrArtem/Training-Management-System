@@ -25,9 +25,9 @@
         function connect() {
             var socket = new SockJS('http://localhost:8080/approve_list');
             stompClient = Stomp.over(socket);
-            stompClient.connect({}, function(frame) {
+            stompClient.connect({}, {}, function(frame) {
                 console.log('Connected: ' + frame);
-                stompClient.subscribe('http://localhost:8080/pipe/approve_list', function(greeting){
+                stompClient.subscribe('/pipe/approve_list', function(greeting){
                     console.log(greeting);
                 });
 
@@ -43,7 +43,8 @@
         }
 
         function send() {
-            stompClient.send("http://localhost:8080/approve_list", {}, JSON.stringify({ 'page': 0, 'page_size': 10 }));
+            debugger;
+            stompClient.send("/approve_list", {}, JSON.stringify({ 'page': 0, 'page_size': 10 }))
         }
 
         function getApproveList() {

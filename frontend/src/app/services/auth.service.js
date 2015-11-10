@@ -57,7 +57,7 @@
                 loginPromise.resolve(user);
                 $state.go('mycourses');
             }, function () {
-
+                alert("Login Error");
             });
 
             return true;

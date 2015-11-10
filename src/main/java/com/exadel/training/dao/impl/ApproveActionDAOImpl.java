@@ -39,8 +39,8 @@ public class ApproveActionDAOImpl implements ApproveActionDAO {
     }
 
     @Override
-    public Integer getApproveActionNumber() {
-        return (Integer) sessionFactory.getCurrentSession().createCriteria(ApproveAction.class)
+    public Long getApproveActionNumber() {
+        return (Long) sessionFactory.getCurrentSession().createCriteria(ApproveAction.class)
                 .setProjection(Projections.rowCount()).uniqueResult();
     }
 
