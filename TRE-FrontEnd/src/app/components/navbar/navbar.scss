@@ -132,7 +132,7 @@
 
   .no-margin-bottom {
     padding-bottom: 0 !important;
-    margin-bottom: rem-calc(3) !important;
+    margin-bottom: 3px !important;
   }
 }
 
@@ -140,32 +140,17 @@
   border-bottom: solid 1px $border-gray;
 }
 
-nav {
 
-  #searchModal:after {
-    content: "";
-    display: block;
-    position: fixed; /* could also be absolute */
-    top: 0;
-    left: 0;
+#searchModal {
+
+  .modal-dialog {
     height: 100%;
-    width: 100%;
-    z-index: 10;
-    background-color: rgba(0,0,0,0.5);
   }
-}
 
-.full-modal {
-  background-size: 100% 100% !important;
-  background-repeat: no-repeat !important;
-  height: 100% !important;
-}
-
-.modal-dialog {
-  border: none !important;
-  width: 100% !important;
-  height: 100% !important;
-  background-color: rgba(0, 0, 0, 0.5);
+  .modal-content {
+    height: 100%;
+    border-radius: 0;
+  }
 
   .search-input {
     border: none !important;
@@ -186,6 +171,21 @@ nav {
   .found-user {
 
   }
+}
+
+.full-modal {
+  background-size: 100% 100% !important;
+  background-repeat: no-repeat !important;
+  height: 100% !important;
+}
+
+.modal-dialog {
+  border: none !important;
+  width: 100% !important;
+  height: 100% !important;
+  background-color: rgba(0, 0, 0, 0.5);
+
+
 }
 
 div#searchModal {
