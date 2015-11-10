@@ -37,7 +37,7 @@ public class MessageGeneratorHTML implements MessageGenerator {
         cfg = new freemarker.template.Configuration(freemarker.template.Configuration.VERSION_2_3_23);
         cfg.setClassForTemplateLoading(this.getClass(), "/");
 
-        cfg.setDirectoryForTemplateLoading(Paths.get(".", "messageForm").toFile());
+        cfg.setDirectoryForTemplateLoading(Paths.get(".", "mail-template").toFile());
     }
 
     public String getTextActionTrainer(String title, String place, long time) {
