@@ -124,45 +124,51 @@
 
 <div class="modal fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="searchTitle">
     <div class="modal-dialog no-margin" role="document">
-        <div class="row no-padding no-margin">
-            <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2">
-                <div class="modal-content no-padding">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                                aria-hidden="true" ng-click="navbar.clearModal()">&times;</span></button>
-                        <h4 class="modal-title" id="searchTitle"></h4>
-                    </div>
-                    <div class="modal-body">
+        <div class="full-height">
+            <div class="row no-padding no-margin">
+                <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 full-height">
+                    <div class="modal-content">
                         <div class="row">
-                            <input type="text" class="search-input" ng-model="navbar.searchQuery" ng-change="navbar.search()"
-                                   ng-model-options="{debounce: { 'default': 250} }" placeholder="Search...">
-                        </div>
-                        <p>{{navbar.searchAnswer}}</p>
-
-                        <div class="row" ng-repeat="training in navbar.foundTrainings">
-                            <div class="found-training">
-                                <p>TRAINING</p>
-                                <h4>{{training.title}}</h4>
-
-                                <p class="state">{{training.state}}</p>
-
-                                <p class="excerpt">{{training.excerpt}}</p>
-
-                                <p class="info">Coach: <span class="value"><a ui-sref="profile({userId: training.coachId})">{{training.coachName}}</a></span>
-                                </p>
+                            <div class="col-xs-12">
+                                <button type="button" class="close pull-right" data-dismiss="modal" aria-label="Close"><span
+                                        aria-hidden="true" ng-click="navbar.clearModal()">&times;</span></button>
                             </div>
                         </div>
-                        <div class="row" ng-repeat="user in navbar.foundUsers">
-                            <div class="found-user">
-                                <p>{{user.username}}</p>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <div class="row">
+                                        <input type="text" class="search-input" ng-model="navbar.searchQuery" ng-change="navbar.search()"
+                                               ng-model-options="{debounce: { 'default': 250} }" placeholder="Search...">
+                                        <p>{{navbar.searchAnswer}}</p>
+                                    </div>
+                                    <div class="row" ng-repeat="training in navbar.foundTrainings">
+                                        <div class="found-training">
+                                            <p>TRAINING</p>
+                                            <h4>{{training.title}}</h4>
 
-                                <p>{{user.email}}</p>
+                                            <p class="state">{{training.state}}</p>
 
-                                <p>{{user.phone}}</p>
+                                            <p class="excerpt">{{training.excerpt}}</p>
+
+                                            <p class="info">Coach: <span class="value"><a ui-sref="profile({userId: training.coachId})">{{training.coachName}}</a></span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="row" ng-repeat="user in navbar.foundUsers">
+                                        <div class="found-user">
+                                            <p>{{user.username}}</p>
+
+                                            <p>{{user.email}}</p>
+
+                                            <p>{{user.phone}}</p>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="modal-footer">
+                        <div class="modal-footer">
+                        </div>
                     </div>
                 </div>
             </div>

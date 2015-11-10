@@ -14,7 +14,6 @@
     "angular": "~1.4.0",
     "modernizer": "~2.8.2",
     "font-awesome": "~4.4.0",
-    "foundation-datepicker": "~1.4.0",
     "angular-bootstrap": "~0.14.2",
     "ng-stomp": "~0.0.2",
     "stompie": "~0.0.5",
