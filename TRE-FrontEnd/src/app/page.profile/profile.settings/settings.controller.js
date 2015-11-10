@@ -9,13 +9,13 @@
     function SettingsController($scope, $stateParams, userAPI) {
         var vm = this;
         vm.changePassword = changePassword;
-        vm.changePhoneNumber = changePhoneNumber;
+        vm.newPassword = "";
 
         function changePassword() {
-        }
-
-        function changePhoneNumber() {
-
+            userAPI.changePassword($stateParams.userId, vm.newPassword).then(function(result) {
+                return result.data;
+                console.log('Password changed successfully');
+            });
         }
     }
 })();

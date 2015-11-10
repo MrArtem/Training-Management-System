@@ -9,8 +9,7 @@
         var userAPI = {
             addExCoach: addExCoach,
             addFeedbackOnUser: addFeedbackOnUser,
-            changePassword: changePassword, //TODO
-            changePhoneNumber: changePhoneNumber, //TODO
+            changePassword: changePassword,
             getCurrentCourses: getCurrentCourses,
             getFeedbacksOn: getFeedbacksOn,
             getFeedback: getFeedback,
@@ -34,12 +33,14 @@
             });
         }
 
-        function changePassword(newPassword) {
-
-        }
-
-        function changePhoneNumber(phoneNumber) {
-
+        function changePassword(userId, newPassword) {
+            var psInfo = {
+                id: userId,
+                password: newPassword
+            };
+            return $http.post(urlProvider.changePassword(), psInfo).then(function(result) {
+                return result.data;
+            });
         }
 
         function getCurrentCourses(userId) {

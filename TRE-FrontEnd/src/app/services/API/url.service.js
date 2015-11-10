@@ -15,8 +15,7 @@
             approveCourse: approveCourse,
             cancelCreate: cancelCreate,
             cancelEdit: cancelEdit,
-            changePassword: changePassword, //TODO
-            changePhoneNumber: changePhoneNumber, //TODO
+            changePassword: changePassword,
             confirm: confirm,
             createCourse: createCourse,
             deleteFile: deleteFile,
@@ -89,14 +88,8 @@
         return '/api/training/cancel_edit/' + trainingId;
     }
 
-    //TODO
     function changePassword() {
-        //
-    }
-
-    //TODO
-    function changePhoneNumber() {
-
+        return '/api/user_controller/set_password';
     }
 
     function confirm(trainingId) {

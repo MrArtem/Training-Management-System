@@ -327,11 +327,12 @@
         //////////
 
         function getCourseList(isActual, tagList) {
+            console.log('Taglist: ', tagList);
             return $http.get(urlProvider.getCourseList(), {
                 params: {
                     is_actual: isActual,
                     page: 1,
-                    tag: []
+                    tag: tagList
                 }
             }).then(function (results) {
                 return results.data;

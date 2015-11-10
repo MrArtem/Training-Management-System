@@ -21,6 +21,5 @@
                 console.log($scope.$parent.profileInfo.pastCourses);
             });
         }
-
     }
 })();

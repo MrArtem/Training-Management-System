@@ -6,7 +6,7 @@
         .controller('CourseInfoController', CourseInfoController);
 
     /** @ngInject */
-    function CourseInfoController($scope, $stateParams, courseAPI) {
+    function CourseInfoController($scope, $state, $stateParams, courseAPI, $location) {
         var vm = this;
 
         vm.courseInfo = {};
@@ -19,6 +19,7 @@
 
         vm.getLanguage = getLanguage;
         vm.getShortInfo = getShortInfo;
+        vm.isActive = isActive;
         vm.leave = leave;
         vm.setRating = setRating; //TODO
         vm.subscribe = subscribe;
@@ -46,6 +47,13 @@
             });
         }
 
+        function leave() {
+            courseAPI.leave($stateParams.courseId).then(function(data) {
+                vm.courseInfo.canSubscribe = true;
+                console.log('Left training successfully');
+            })
+        }
+
         function setRating(rating) {
             console.log('Rating to be set: ', rating);
             if($scope.courseInfo.canRate) {
@@ -58,16 +66,14 @@
 
         function subscribe() {
             courseAPI.subscribe($stateParams.courseId).then(function(data) {
-                cm.courseInfo.canSubscribe = false;
+                vm.courseInfo.canSubscribe = false;
                 console.log('Subscribed successfully');
             })
         }
 
-        function leave() {
-            courseAPI.leave($stateParams.courseId).then(function(data) {
-                vm.courseInfo.canSubscribe = true;
-                console.log('Left training successfully');
-            })
+        function isActive(state) {
+            return $location.absUrl().search(state) === -1 ? false : true
+
         }
 
     }

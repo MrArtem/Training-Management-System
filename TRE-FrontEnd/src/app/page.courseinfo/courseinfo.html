@@ -4,7 +4,9 @@
             <div class="row courseinfo-short">
                 <h1 class="title">{{courseInfo.title}}</h1>
 
-                <uib-rating ng-model="courseInfo.rating" max="5" readonly="!courseInfo.canRate" aria-labelledby="default-rating" ng-click="courseinfo.setRating(value)"></uib-rating>
+                <!--Uncomment when checked-->
+                <!--<uib-rating ng-model="courseInfo.rating" max="5" readonly="!courseInfo.canRate"-->
+                <!--aria-labelledby="default-rating" ng-click="courseinfo.setRating(value)"></uib-rating>-->
 
                 <h3 class="short-desc">{{courseInfo.shortInfo}}</h3>
 
@@ -25,34 +27,22 @@
             </div>
 
             <div class="row">
-                <div class="col-xs-12 col-sm-4 col-md-3 pull-right no-side-padding">
-                    <div class="icon-bar">
-                        <div class="row no-margin">
-                            <div class="col-xs-3 col-sm-12 item" ui-sref="courseinfo.timetable">
-                                <p><i class="fa fa-clock-o"></i></p>
-                                <label>Timetable</label>
-                            </div>
-                            <div class="col-xs-3 col-sm-12 item" ui-sref="courseinfo.participants">
-                                <p><i class="fa fa-users"></i></p>
-                                <label>Participants</label>
-                            </div>
-                            <div class="col-xs-3 col-sm-12 item" ui-sref="courseinfo.attachments">
-                                <p><i class="fa fa-files-o"></i></p>
-                                <label>Materials</label>
-                            </div>
-                            <div class="col-xs-3 col-sm-12 item" ui-sref="courseinfo.comments">
-                                <p><i class="fa fa-comments-o"></i></p>
-                                <label>Comments</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xs-12 col-sm-8 col-md-9">
-                    <div ui-view>
-                    </div>
+                <ul class="nav navbar-nav router-tabs">
+                    <li role="presentation" ng-class="{activelink: courseinfo.isActive('timetable')}"><a
+                            ui-sref="courseinfo.timetable"><i class="fa fa-clock-o"></i>Timetable</a></li>
+                    <li role="presentation" ng-class="{activelink: courseinfo.isActive('participants')}"><a
+                            ui-sref="courseinfo.participants"><i class="fa fa-users"></i>Participants</a></li>
+                    <li role="presentation" ng-class="{activelink: courseinfo.isActive('attachments')}"><a
+                            ui-sref="courseinfo.attachments"><i class="fa fa-files-o"></i>Materials</a></li>
+                    <li role="presentation" ng-class="{activelink: courseinfo.isActive('comments')}"><a
+                            ui-sref="courseinfo.comments"><i class="fa fa-comments-o"></i>Comments</a></li>
+                </ul>
+            </div>
+
+            <div class="row">
+                <div ui-view class="courseinfo-view">
                 </div>
             </div>
         </div>
     </div>
-</div>
 </div>

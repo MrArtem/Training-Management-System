@@ -11,7 +11,7 @@
         vm.courseList = [];
         vm.filteredCourses = [];
         vm.tagList = [];
-        vm.selectedTagIds = [];
+        vm.selectedTags = [];
         vm.isContentLoaded = false;
 
         vm.getTagList = getTagList;
@@ -31,7 +31,7 @@
 
         function getTrainingList() {
             //false stands for isActual
-            courseAPI.getCourseList(false).then(function(data) {
+            courseAPI.getCourseList(false, vm.selectedTags).then(function(data) {
                 vm.courseList = angular.copy(data);
                 vm.isContentLoaded = true;
                 console.log('Received courses: ');
@@ -39,20 +39,21 @@
             });
         }
 
-        function isTagSelected(tagId) {
-            return (vm.selectedTagIds.indexOf(tagId) > -1);
+        function isTagSelected(tagSpec) {
+            return (vm.selectedTags.indexOf(tagSpec) > -1);
         }
 
-        function selectTag(tagId) {
-            var tagIndex = vm.selectedTagIds.indexOf(tagId);
+        function selectTag(tagSpec) {
+            var tagIndex = vm.selectedTags.indexOf(tagSpec);
             if(tagIndex > -1) {
-                vm.selectedTagIds.splice(tagIndex, 1);
+                vm.selectedTags.splice(tagIndex, 1);
             }
             else {
-                vm.selectedTagIds.push(tagId);
+                vm.selectedTags.push(tagSpec);
             }
 
-            vm.filteredCourses = $filter('filterByTags')(vm.courseList, vm.selectedTagIds);
+            vm.getTrainingList();
+            //vm.filteredCourses = $filter('filterByTags')(vm.courseList, vm.selectedTags);
         }
     }
 })();

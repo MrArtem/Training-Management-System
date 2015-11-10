@@ -20,7 +20,7 @@
                     <tbody>
                     <tr ng-repeat="participant in courseInfo.participantsList track by $index" class="rowWithSecret">
                         <td>{{$index + 1}}</td>
-                        <td>{{participant.username}}</td>
+                        <td><a href="" ui-sref="profile({userId: participant.userId})">{{participant.username}}</a></td>
                         <td>{{participant.email}}</td>
                         <td><a href="" data-toggle="modal" data-target="#addFeedbackModal" ng-click="participants.getUserId($index)">Leave feedback</a></td>
                         <td class="hiddenCell" ng-click="participants.deleteParticipant($index)"><i class="fa fa-times"></i></td>

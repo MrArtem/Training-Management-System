@@ -59,7 +59,7 @@
         }
 
         function getUserId(index) {
-            vm.selectedUserId = $scope.$parent.courseInfo.participantsList[index].id;
+            vm.selectedUserId = $scope.$parent.courseInfo.participantsList[index].userId;
         }
 
     }

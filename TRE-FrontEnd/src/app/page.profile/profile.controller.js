@@ -26,8 +26,10 @@
         vm.getProfileInfo();
 
         function getProfileInfo() {
+            console.log(userId);
             userAPI.getProfileInfo(userId).then(function(user) {
                 vm.profileInfo = angular.copy(user);
+                console.log('User', user);
                 vm.isContentLoaded = true;
             });
         }
