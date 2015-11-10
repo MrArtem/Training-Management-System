@@ -1,5 +1,6 @@
 package com.exadel.training.controller;
 
+import com.exadel.training.controller.model.PageModel;
 import com.exadel.training.controller.model.trainingModels.ApproveActionModel;
 import com.exadel.training.dao.domain.ApproveAction;
 import com.exadel.training.dao.domain.Training;
@@ -27,15 +28,14 @@ public class ApproveActionController {
     private ApproveActionService approveActionService;
 
     @Secured("ADMIN")
-//    @MessageMapping("/approve_list")
-//    @SendTo("/pipe/approve_list")
-    @RequestMapping("/approve_list")
-    @ResponseBody
-    public List<ApproveActionModel> getApproveActionList(@RequestParam("page") Integer page,
-                                                         @RequestParam("page_size")
-                                                         Integer pageSize) {
+    @MessageMapping("/approve_list")
+    @SendTo("/pipe/approve_list")
+//    @RequestMapping("/approve_list")
+//    @ResponseBody
+    public List<ApproveActionModel> getApproveActionList(@RequestBody PageModel pageModel) {
         List<ApproveActionModel> approveActionModelList = new ArrayList<ApproveActionModel>();
-        for (ApproveAction approveAction : approveActionService.getActionList(page, pageSize)) {
+        for (ApproveAction approveAction :
+                approveActionService.getActionList(pageModel.getPage(), pageModel.getPage_size())) {
             ApproveActionModel approveActionModel = new ApproveActionModel();
             approveActionModel.setDate(approveAction.getDate());
             approveActionModel.setType(approveAction.getType());
@@ -57,11 +57,11 @@ public class ApproveActionController {
     }
 
     @Secured("ADMIN")
-//    @MessageMapping("/approve_count")
-//    @SendTo("/pipe/approve_count")
-    @RequestMapping("/approve_count")
-    @ResponseBody
-    public Integer getApproveActionCount() {
+    @MessageMapping("/approve_count")
+    @SendTo("/pipe/approve_count")
+//    @RequestMapping("/approve_count")
+//    @ResponseBody
+    public Long getApproveActionCount() {
         return approveActionService.getActionNumber();
     }
 }

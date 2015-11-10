@@ -1,6 +1,7 @@
 package com.exadel.training.controller;
 
 import com.exadel.training.controller.model.NewsModel;
+import com.exadel.training.controller.model.PageModel;
 import com.exadel.training.dao.domain.Comment;
 import com.exadel.training.dao.domain.Feedback;
 import com.exadel.training.dao.domain.News;
@@ -35,14 +36,13 @@ public class NewsController {
     private FeedbackService feedbackService;
 
     @Secured({"ADMIN"})
-//    @MessageMapping("/news")
-//    @SendTo("/pipe/news")
-    @RequestMapping("/news")
-    @ResponseBody
-    public List<NewsModel> getNewsList(@RequestParam("page") Integer page,
-                                @RequestParam("page_size") Integer pageSize) {
+    @MessageMapping("/news")
+    @SendTo("/pipe/news")
+//    @RequestMapping("/news")
+//    @ResponseBody
+    public List<NewsModel> getNewsList(@RequestBody PageModel pageModel) {
         List<NewsModel> newsModelList = new ArrayList<NewsModel>();
-        for(News news : newsService.getNewsList(page, pageSize)) {
+        for(News news : newsService.getNewsList(pageModel.getPage(), pageModel.getPage_size())) {
             NewsModel newsModel = new NewsModel(news);
             switch(news.getTableName()) {
                 case TRAINING:
