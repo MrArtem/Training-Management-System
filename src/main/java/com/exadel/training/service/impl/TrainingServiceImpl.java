@@ -640,4 +640,9 @@ public class TrainingServiceImpl implements TrainingService {
             lessonDAO.changeLesson(lesson);
         }
     }
+
+    @Override
+    public List<Training> getTrainingListForStatistic() {
+        return trainingDAO.getTrainingListForStatistic();
+    }
 }

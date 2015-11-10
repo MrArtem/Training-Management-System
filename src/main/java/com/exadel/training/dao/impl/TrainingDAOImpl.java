@@ -4,6 +4,7 @@ import com.exadel.training.dao.TrainingDAO;
 import com.exadel.training.dao.UserDAO;
 import com.exadel.training.dao.domain.*;
 import com.exadel.training.security.authentication.CustomAuthentication;
+import com.exadel.training.utils.Utils;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -119,4 +120,12 @@ public class TrainingDAOImpl implements TrainingDAO {
         return training.getLessonList();
     }
 
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public List<Training> getTrainingListForStatistic() {
+        return sessionFactory.getCurrentSession().createQuery("from Training tr where tr.state = :state ")
+                .setParameter("state", Training.State.NONE)
+                .list();
+    }
 }

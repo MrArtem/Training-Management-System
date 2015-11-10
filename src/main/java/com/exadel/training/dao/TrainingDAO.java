@@ -17,4 +17,6 @@ public interface TrainingDAO {
     List<Lesson> getLessonList(long trainingId);
 
     List<Training> getTrainingListByTagList(Integer page, Integer pageSize, Boolean isActual, List<Tag> tagList);
+
+    List<Training> getTrainingListForStatistic();
 }

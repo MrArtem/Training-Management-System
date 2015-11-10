@@ -87,4 +87,6 @@ public interface TrainingService {
     ApproveLesson getApproveLesson(long actionId);
 
     void canceledLesson(long actionId);
+    
+    List<Training> getTrainingListForStatistic();
 }

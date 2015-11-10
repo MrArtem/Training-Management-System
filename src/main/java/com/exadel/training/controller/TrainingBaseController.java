@@ -2,13 +2,12 @@ package com.exadel.training.controller;
 
 import com.exadel.training.controller.model.CommentModel;
 import com.exadel.training.controller.model.RatingModel;
-import com.exadel.training.controller.model.trainingModels.TrainingListModel;
-import com.exadel.training.controller.model.trainingModels.GetTrainingModel;
-import com.exadel.training.controller.model.trainingModels.ListenerModel;
+import com.exadel.training.controller.model.trainingModels.*;
 import com.exadel.training.controller.model.userModels.ExUserModel;
 import com.exadel.training.dao.domain.*;
 import com.exadel.training.security.authentication.CustomAuthentication;
 import com.exadel.training.service.*;
+import com.exadel.training.utils.Utils;
 import com.exadel.training.validate.annotation.LegalID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -197,7 +196,7 @@ public class TrainingBaseController {
     @LegalID
     @Secured({"ADMIN", "USER"})
     @RequestMapping(value = "{id}/addListener", method = RequestMethod.POST)
-    void addListener(@PathVariable("id") long trainingId) {
+    public void addListener(@PathVariable("id") long trainingId) {
         CustomAuthentication customUser =
                 (CustomAuthentication) SecurityContextHolder.getContext().getAuthentication();
         long userId = customUser.getUserId();
@@ -207,7 +206,7 @@ public class TrainingBaseController {
     @LegalID
     @Secured({"ADMIN", "USER"})
     @RequestMapping(value = "{id}/leave/{userId}", method = RequestMethod.PUT)
-    List<ListenerModel> leaveListener(@PathVariable("id") long trainingId, @PathVariable("userId") Long userId) {
+    public List<ListenerModel> leaveListener(@PathVariable("id") long trainingId, @PathVariable("userId") Long userId) {
         listenerService.leaveListener(trainingId, userId);
         return getListenerList(trainingId);
     }
@@ -215,7 +214,7 @@ public class TrainingBaseController {
     @LegalID
     @Secured({"ADMIN", "USER"})
     @RequestMapping(value = "{id}/leave", method = RequestMethod.PUT)
-    void leaveListener(@PathVariable("id") long trainingId) {
+    public void leaveListener(@PathVariable("id") long trainingId) {
         CustomAuthentication customUser =
                 (CustomAuthentication) SecurityContextHolder.getContext().getAuthentication();
         Long userId = customUser.getUserId();
@@ -225,7 +224,7 @@ public class TrainingBaseController {
     @LegalID
     @Secured({"ADMIN"})
     @RequestMapping(value = "{id}/addExListener", method = RequestMethod.POST)
-    List<ListenerModel> addListener(@PathVariable("id") long trainingId,@RequestBody ExUserModel exUserModel) {
+    public List<ListenerModel> addListener(@PathVariable("id") long trainingId,@RequestBody ExUserModel exUserModel) {
         Long userId = userService.addExternalUser(exUserModel);
         listenerService.addListener(trainingId,userId);
         return getListenerList(trainingId);
@@ -234,12 +233,23 @@ public class TrainingBaseController {
     @LegalID
     @Secured({"ADMIN", "USER"})
     @RequestMapping(value = "{id}/set_rating/{rating}")
-    RatingModel setRating(@PathVariable("id") long trainingId, @PathVariable("rating") int rating) {
+    public RatingModel setRating(@PathVariable("id") long trainingId, @PathVariable("rating") int rating) {
         CustomAuthentication customUser =
                 (CustomAuthentication) SecurityContextHolder.getContext().getAuthentication();
         long userId = customUser.getUserId();
         return new RatingModel(trainingService.setRating(trainingId, rating, userId));
     }
 
+    @RequestMapping(value = "/training_list/statistic")
+    public List<TrainingShortModel> getTrainingListForStatistic() {
+        List<TrainingShortModel> trainingShortModelList = new ArrayList<TrainingShortModel>();
+        for (Training training : Utils.emptyIfNull(trainingService.getTrainingListForStatistic())) {
+            TrainingShortModel trainingShortModel = new TrainingShortModel();
+            trainingShortModel.setId(training.getId());
+            trainingShortModel.setTitle(training.getTitle());
+            trainingShortModelList.add(trainingShortModel);
+        }
+        return trainingShortModelList;
+    }
 
 }

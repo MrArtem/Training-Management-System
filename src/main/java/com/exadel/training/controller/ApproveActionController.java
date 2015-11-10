@@ -11,10 +11,7 @@ import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,8 +27,10 @@ public class ApproveActionController {
     private ApproveActionService approveActionService;
 
     @Secured("ADMIN")
-    @MessageMapping("/approve_list")
-    @SendTo("/pipe/approve_list")
+//    @MessageMapping("/approve_list")
+//    @SendTo("/pipe/approve_list")
+    @RequestMapping("/approve_list")
+    @ResponseBody
     public List<ApproveActionModel> getApproveActionList(@RequestParam("page") Integer page,
                                                          @RequestParam("page_size")
                                                          Integer pageSize) {
@@ -58,8 +57,10 @@ public class ApproveActionController {
     }
 
     @Secured("ADMIN")
-    @MessageMapping("/approve_count")
-    @SendTo("/pipe/approve_count")
+//    @MessageMapping("/approve_count")
+//    @SendTo("/pipe/approve_count")
+    @RequestMapping("/approve_count")
+    @ResponseBody
     public Integer getApproveActionCount() {
         return approveActionService.getActionNumber();
     }
