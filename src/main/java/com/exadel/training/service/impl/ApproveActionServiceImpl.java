@@ -28,7 +28,7 @@ public class ApproveActionServiceImpl implements ApproveActionService {
 
     @Override
     @Transactional
-    public Integer getActionNumber() {
+    public Long getActionNumber() {
         return approveActionDAO.getApproveActionNumber();
     }
 
