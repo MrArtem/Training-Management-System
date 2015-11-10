@@ -21,6 +21,7 @@ public interface UserDAO {
     List<User> getUsersByRole(User.Role role);
     List<Training> visitedTrainings(long idUser);
     List<Training> actualTrainings(long idUser);
+    List<Training> waitingTrainings(long idUser);
     List<Training> getCoachTrainingsBetweenDates(long idCoach, long startDate, long endDate);
     List<Training> getUserTrainingsByState(long idUser, Listener.State state);
     List<Training> getUserTrainingsByState(long idUser, Listener.State state, long startDate, long endDate);

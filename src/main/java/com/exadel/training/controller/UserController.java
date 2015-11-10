@@ -77,6 +77,25 @@ public class UserController {
         return trainingListModelList;
     }
 
+    @Secured({"ADMIN", "USER"})
+    @RequestMapping(value = "/waitingTraining/{idUser}", method = RequestMethod.GET)
+    @LegalID
+    public List<TrainingListModel> getWaitingTraining(@PathVariable("idUser") long idUser) {
+        List<TrainingListModel> trainingListModelList = new ArrayList<>();
+
+        for(Training training : userService.waitingTrainings(idUser)) {
+            TrainingListModel trainingListModel = new TrainingListModel(training);
+            Lesson nextLesson = lessonService.getNextLesson(training.getId());
+            if (nextLesson != null) {
+                trainingListModel.setNextDate(nextLesson.getDate());
+                trainingListModel.setNextPlace(nextLesson.getPlace());
+            }
+            trainingListModelList.add(trainingListModel);
+        }
+
+        return trainingListModelList;
+    }
+
     @Secured({"ADMIN"})
     @RequestMapping(value = "/add_ex_user", method = RequestMethod.POST, consumes = "application/json")
     public void addExUser(@RequestBody ExUserModel exUserModel) {
