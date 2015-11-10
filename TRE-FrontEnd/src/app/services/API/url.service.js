@@ -41,6 +41,7 @@
             getPastCoursesForUser: getPastCoursesForUser,
             getProfileInfo: getProfileInfo,
             getShortInfo: getShortInfo,
+            getStatistics: getStatistics,
             getTimetable: getTimetable,
             getWaitingCoursesForUser: getWaitingCoursesForUser, //TODO
             leave: leave,
@@ -193,6 +194,10 @@
 
     function getShortInfo(courseId) {
         return '/api/training/' + courseId;
+    }
+
+    function getStatistics() {
+        return '/api/statistics';
     }
 
     function getTimetable(courseId) {

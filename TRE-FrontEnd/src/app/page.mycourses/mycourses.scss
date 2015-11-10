@@ -82,38 +82,8 @@ $dark-border-color: rgba(0, 0, 0, 0.40);
     border: 1px solid #ccc !important;
   }
 
-  .localSearchForm{
-    width: 200px;
+  .localSearchForm {
     height: 36px;
     border-radius: 16px;
-  }
-
-  #segmented-picker {
-    align-content: center;
-    width: 240px;
-    margin: auto;
-
-    .segmented-button {
-      color: rgba(0,0,0,0.7);
-      width: 80px;
-      height: 36px;
-      background-color: white!important;
-      box-shadow: none !important;
-      border-color: #ccc !important;
-    }
-
-    .segmented-button.active {
-      background-color: #f4f4f4 !important;
-      color: black !important;
-      font-weight: 300;
-    }
-
-    .segmented-button-left {
-      border-radius: 16px 0px 0px 16px;
-    }
-
-    .segmented-button-right {
-      border-radius: 0px 16px 16px 0px;
-    }
   }
 }

@@ -20,7 +20,8 @@
     "stompie": "~0.0.5",
     "stomp-websocket": "~2.3.4",
     "sockjs": "~0.3.4",
-    "bootstrap": "~3.3.5"
+    "bootstrap": "~3.3.5",
+    "angular-bootstrap-datetimepicker": "~0.3.15"
   },
   "devDependencies": {
     "angular-mocks": "~1.4.0"

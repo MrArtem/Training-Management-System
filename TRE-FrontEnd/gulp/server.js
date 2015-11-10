@@ -11,7 +11,7 @@ var util = require('util');
 
 var proxyMiddleware = require('http-proxy-middleware');
 var proxy = proxyMiddleware('/api',
-    {target: 'http://localhost:8080', //http://192.168.137.62:8080
+    {target: 'http://localhost:8080',
     pathRewrite: {
         "/api" : ""
     }});

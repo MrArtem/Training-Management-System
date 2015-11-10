@@ -8,7 +8,8 @@
     function adminAPI($http, urlProvider) {
         var adminAPI = {
             getApproveList: getApproveList,
-            getNewsList: getNewsList
+            getNewsList: getNewsList,
+            getStatistics: getStatistics
         }
         return adminAPI;
 
@@ -31,6 +32,12 @@
                 }
             }).then(function (results) {
                 return results.data;
+            });
+        }
+
+        function getStatistics(statisticsModel) {
+            return $http.post(urlProvider.getStatistics(), statisticsModel).then(function(result) {
+                return result.data;
             });
         }
 

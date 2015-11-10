@@ -105,6 +105,14 @@ body {
   margin-bottom: 25px;
 }
 
+.top-mg-25 {
+  margin-top: 25px;
+}
+
+.right-mg-10 {
+  margin-right: 10px;
+}
+
 .link-select {
   margin-left: 5px;
   border: none !important;
@@ -226,6 +234,7 @@ table {
 
 .tab-heading {
   font-weight: bold;
+  margin-bottom: 20px;
 }
 
 /* ICON BAR */
@@ -397,9 +406,9 @@ table {
   }
 
   .tag:hover {
-    color: rgba(0,0,0,0.8);
-    background-color: rgba(255,255,255,0.6);
-    border-color: rgba(0,0,0,0.14);
+    color: rgba(0,0,0,0.9);
+    background-color: rgba(255,255,255,0.8);
+    border-color: rgba(0,0,0,0.25);
 
     .hiddden-icon {
       visiblity: visible;
@@ -420,6 +429,87 @@ table {
 
     padding-left: 3px;
   }
+}
+
+.calendar {
+  width: 230px !important;
+  min-width: 200px;
+  float: left;
+  border: none !important;
+
+  input {
+    background-color: white !important;
+    border: 1px solid rgba(0,0,0,0.10) !important;
+    cursor: pointer !important;
+  }
+
+  input[disabled] {
+    cursor: pointer !important;
+  }
+
+  .addon-calendar {
+    padding-right: 4px !important;
+    background-color: white !important;
+    border: 1px solid rgba(0,0,0,0.10) !important;
+    font-size: 18px !important;
+    box-shadow: none !important;
+  }
+}
+
+.segmented-picker {
+  align-content: center;
+  width: 240px;
+  margin: auto;
+
+  .segmented-button {
+    color: rgba(0,0,0,0.7);
+    width: 80px;
+    height: 36px;
+    background-color: white!important;
+    box-shadow: none !important;
+    border-color: #ccc !important;
+  }
+
+  .segmented-button.active {
+    background-color: #f4f4f4 !important;
+    color: black !important;
+    font-weight: 300;
+  }
+
+  .segmented-button-left {
+    border-radius: 16px 0px 0px 16px;
+  }
+
+  .segmented-button-right {
+    border-radius: 0px 16px 16px 0px;
+  }
+}
+
+.router-tabs {
+  background-color: white !important;
+  border-bottom: solid 1px $border-gray;
+
+  .activelink {
+    a {
+      color: rgba(0,0,0,0.9) !important;
+      background-color: white !important;
+      border-bottom: 2px solid rgba(0,0,0,0.9) !important;
+    }
+
+    a:hover {
+      background-color: white !important;
+    }
+  }
+
+  a, .fa {
+    color: rgba(0,0,0,0.6);
+  }
+
+  a:hover, .fa:hover {
+    color: rgba(0,0,0,0.72);
+    background-color: white !important;
+  }
+
 }
 
 /**

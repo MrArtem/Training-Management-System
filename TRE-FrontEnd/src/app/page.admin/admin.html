@@ -1,18 +1,17 @@
-<div class="container managecourse">
+<div class="container-fluid admin">
 	<div class="row">
-		<div class="small-12 medium-6 medium-centered column">
+		<div class="col-xs-12 col-sm-6 col-sm-offset-3">
 			<div class="row">
 
-				<ul class="tabs">
-					<li class="tab-title"><a ui-sref="admin.approval">Approval</a></li>
-					<li class="tab-title"><a ui-sref="admin.statistics">Statistics</a></li>
-					<li class="tab-title"><a ui-sref="admin.news">News</a></li>
+				<ul class="nav nav-tabs router-tabs">
+					<li role="presentation" ng-class="{active: admin.isActive('approval')}"><a ui-sref="admin.approval">Approval</a></li>
+					<li role="presentation" ng-class="{active: admin.isActive('statistics')}"><a ui-sref="admin.statistics">Statistics</a></li>
+					<li role="presentation" ng-class="{active: admin.isActive('news')}"><a ui-sref="admin.news">News</a></li>
 				</ul>
 
 			</div>
 
 			<div ui-view class="row">
-
 			</div>
 		</div>
 	</div>

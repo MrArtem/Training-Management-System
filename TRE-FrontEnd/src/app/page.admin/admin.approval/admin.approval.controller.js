@@ -6,7 +6,7 @@
         .controller('ApprovalController', ApprovalController);
 
     /** @ngInject */
-    function ApprovalController($scope, $stomp, adminAPI) {
+    function ApprovalController($scope, adminAPI) {
         var vm = this;
         var stompClient = null;
 
@@ -16,66 +16,41 @@
         vm.send = send;
         vm.connect = connect;
 
-        //vm.connect();
-        //
-        //$scope.$on('$stateChangeStart', function() {
-        //    vm.disconnect();
-        //})
-        //
-        //function connect() {
-        //    var socket = new SockJS('api/approve_list');
-        //    stompClient = Stomp.over(socket);
-        //    stompClient.connect({}, function(frame) {
-        //        console.log('Connected: ' + frame);
-        //        stompClient.subscribe('http://localhost:8080/pipe/approve_list', function(greeting){
-        //            console.log(greeting);
-        //        });
-        //
-        //        vm.send();
-        //    });
-        //}
-        //
-        //function disconnect() {
-        //    if (stompClient != null) {
-        //        stompClient.disconnect();
-        //    }
-        //    console.log("Disconnected");
-        //}
-        //
-        //function send() {
-        //    stompClient.send("api/approve_list", {}, JSON.stringify({ 'page': 0, 'page_size': 10 }));
-        //}
+        vm.connect();
 
-        //function getApproveList() {
-        //    adminAPI.getApproveList().then(function(data) {
-        //        vm.approveList = angular.copy(data);
-        //    });
-        //}
+        $scope.$on('$stateChangeStart', function() {
+            vm.disconnect();
+        })
 
-        //function disconnect() {
-        //    console.log('dicsonnecting');
-        //    $stomp.disconnect(function () {
-        //
-        //    });
-        //}
+        function connect() {
+            var socket = new SockJS('http://localhost:8080/approve_list');
+            stompClient = Stomp.over(socket);
+            stompClient.connect({}, function(frame) {
+                console.log('Connected: ' + frame);
+                stompClient.subscribe('http://localhost:8080/pipe/approve_list', function(greeting){
+                    console.log(greeting);
+                });
 
-        //function getApproveList() {
-        //    $stomp.connect('/ws/approve_list')
-        //        .then(function (frame) {
-        //            console.log('connect success');
-        //            $stomp.subscribe('/ws/pipe/approve_list', function (approveList) {
-        //                console.log(approveList);
-        //                vm.approveList.concat(approveList);
-        //            });
-        //
-        //            $stomp.send('/ws/approve_list', {
-        //                page: 0,
-        //                page_size: 10
-        //            }).then(function() {
-        //                console.log('send success');
-        //            });
-        //        });
-        //}
+                vm.send();
+            });
+        }
+
+        function disconnect() {
+            if (stompClient != null) {
+                stompClient.disconnect();
+            }
+            console.log("Disconnected");
+        }
+
+        function send() {
+            stompClient.send("http://localhost:8080/approve_list", {}, JSON.stringify({ 'page': 0, 'page_size': 10 }));
+        }
+
+        function getApproveList() {
+            adminAPI.getApproveList().then(function(data) {
+                vm.approveList = angular.copy(data);
+            });
+        }
 
         function makeText(type, tableName) {
             switch(type) {

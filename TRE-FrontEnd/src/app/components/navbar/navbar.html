@@ -17,7 +17,8 @@
 				<li ng-class="{activelink: navbar.isActive('mycourses')}"><a ui-sref="mycourses">MY COURSES</a></li>
 				<li ng-class="{activelink: navbar.isActive('browse')}"><a ui-sref="browse">BROWSE</a></li>
 				<li ng-class="{activelink: navbar.isActive('profile')}"><a ui-sref="profile({userId: navbar.user.userId})">PROFILE</a></li>
-				<li ng-class="{activelink: navbar.isActive('admin')}" ng-if="navbar.isAdmin()"><a ui-sref="admin">ADMIN</a></li>
+				<!--<li ng-class="{activelink: navbar.isActive('admin')}" ng-if="navbar.isAdmin()"><a ui-sref="admin">ADMIN</a></li>-->
+				<li ng-class="{activelink: navbar.isActive('admin')}"><a ui-sref="admin">ADMIN</a></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				<li><button ui-sref="step1" class="btn create-btn accent-btn-blue hidden-sm">CREATE COURSE</button></li>

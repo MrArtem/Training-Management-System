@@ -10,35 +10,26 @@
 			</div>
 
 			<div class="row">
-				<div class="col-xs-12 col-sm-4 col-md-3 pull-right no-side-padding">
-					<div class="icon-bar">
-						<div class="row no-margin">
-							<div class="col-xs-3 col-sm-12 item" ui-sref="profile.settings">
-								<p><i class="fa fa-cog"></i></p>
-								<label>Settings</label>
-							</div>
-							<div class="col-xs-3 col-sm-12 item" ui-sref="profile.current">
-								<p><i class="fa fa-book"></i></p>
-								<label>Current courses</label>
-							</div>
-							<div class="col-xs-3 col-sm-12 item" ui-sref="profile.attended">
-								<p><span><i class="fa fa-book"></i></span></p>
-								<label>Attended courses</label>
-							</div>
-							<div class="col-xs-3 col-sm-12 item" ui-sref="profile.waiting">
-								<p><i class="fa fa-hourglass-half"></i></p>
-								<label>Waiting for courses</label>
-							</div>
-							<div class="col-xs-3 col-sm-12 item" ui-sref="profile.feedbacks">
-								<p><i class="fa fa-comments-o"></i></p>
-								<label>Feedbacks</label>
-							</div>
-						</div>
-					</div>
+				<div class="col-xs-12">
+					<ul class="nav navbar-nav router-tabs">
+						<li role="presentation" ng-class="{activelink: profile.isActive('settings')}"><a
+							ui-sref="profile.settings"><i class="fa fa-cog"></i>Settings</a></li>
+						<li role="presentation" ng-class="{activelink: profile.isActive('current')}"><a
+							ui-sref="profile.current"><i class="fa fa-book"></i>Current courses</a></li>
+						<li role="presentation" ng-class="{activelink: profile.isActive('attended')}"><a
+							ui-sref="profile.attended"><i class="fa fa-book"></i>Attended courses</a></li>
+						<li role="presentation" ng-class="{activelink: profile.isActive('waiting')}"><a
+							ui-sref="profile.waiting"><i class="fa fa-hourglass-half"></i>Waiting for courses</a></li>
+						<li role="presentation" ng-class="{activelink: profile.isActive('feedbacks')}"><a
+							ui-sref="profile.feedbacks"><i class="fa fa-comments-o"></i>Feedbacks</a></li>
+					</ul>
 				</div>
+			</div>
+
+			<div class="row">
 
 				<div class="col-xs-12 col-sm-8 col-md-9">
-					<div ui-view>
+					<div ui-view class="profile-view">
 					</div>
 				</div>
 

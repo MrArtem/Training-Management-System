@@ -25,8 +25,8 @@
                 templateUrl: 'app/page.admin/admin.html',
                 controller: 'AdminController',
                 controllerAs: 'admin',
-                auth: true,
-                accessRights: 0
+                //auth: true,
+                //accessRights: 0
             }).state('browse', {
                 url: '/browse',
                 templateUrl: 'app/page.browse/browse.html',

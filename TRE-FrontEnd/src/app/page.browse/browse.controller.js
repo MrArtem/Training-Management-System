@@ -6,9 +6,10 @@
         .controller('BrowseController', BrowseController);
 
     /** @ngInject */
-    function BrowseController(courseAPI) {
+    function BrowseController($filter, courseAPI) {
         var vm = this;
         vm.courseList = [];
+        vm.filteredCourses = [];
         vm.tagList = [];
         vm.selectedTagIds = [];
         vm.isContentLoaded = false;
@@ -50,6 +51,8 @@
             else {
                 vm.selectedTagIds.push(tagId);
             }
+
+            vm.filteredCourses = $filter('filterByTags')(vm.courseList, vm.selectedTagIds);
         }
     }
 })();

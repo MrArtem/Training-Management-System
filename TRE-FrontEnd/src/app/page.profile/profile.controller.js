@@ -6,7 +6,7 @@
         .controller('ProfileController', ProfileController);
 
     /** @ngInject */
-    function ProfileController($scope, $stateParams, userAPI) {
+    function ProfileController($scope, $state, $stateParams, userAPI) {
         var vm = this;
         var userId = $stateParams.userId;
         console.log(userId);
@@ -21,6 +21,7 @@
         $scope.profileInfo = vm.profileInfo;
 
         vm.getProfileInfo = getProfileInfo;
+        vm.isActive = isActive;
 
         vm.getProfileInfo();
 
@@ -35,6 +36,10 @@
             userAPI.getWaitingCourses(userId).then(function(data) {
                 vm.waitingCourses = angular.copy(data);
             });
+        }
+
+        function isActive(state) {
+            return $state.includes(state);
         }
     }
 })();
