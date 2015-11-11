@@ -32,7 +32,7 @@ public class Lesson {
     private Training training;
 
     @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "lesson",cascade = CascadeType.ALL)
     private List<Attendance> attendanceList;
 
     public Lesson() {
