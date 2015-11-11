@@ -4,39 +4,99 @@
             <div class="row managecourse-short">
                 <h1 class="title"><input class="material-input" type="text" name="title"
                                          placeholder="Enter course name"
-                                         ng-model="courseInfo.title" ng-disabled="isEdited" ng-maxlength="50" required></h1>
+                                         ng-model="courseInfo.title" ng-disabled="isEdited" ng-maxlength="50" required>
+                </h1>
 
-                <div ng-if="managecourse.isAdmin()">
-                    <span class="pull-left">Coach: </span>
+                <!--Select coach-->
+                <div class="row" ng-if="managecourse.isAdmin()">
+                    <div class="col-xs-12">
+                        <span class="pull-left">Coach: </span>
 
-                    <div class="dropdown pull-left">
-                        <p class="dropdown-toggle" type="button" id="coachPopover"
-                           popover-placement="bottom" popover-trigger="click"
-                           uib-popover-template="'app/page.managecourse/managecourse.popovers/coachPopover.html'">
-                            <a href="" ng-if="!courseInfo.coachId">select</a>
-                            <a href="" ng-if="courseInfo.coachId">{{managecourse.coachName}}</a>
+                        <div class="dropdown pull-left">
+                            <p class="dropdown-toggle" type="button" id="coachPopover"
+                               popover-placement="bottom" popover-trigger="click"
+                               uib-popover-template="'app/page.managecourse/managecourse.popovers/coachPopover.html'">
+                                <a href="" ng-if="!courseInfo.coachId">select</a>
+                                <a href="" ng-if="courseInfo.coachId">{{managecourse.coachName}}</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!--Select language-->
+                <div class="row">
+                    <div class="col-xs-12">
+                        <span class="pull-left">Language: </span>
+
+                        <div class="dropdown pull-left">
+                            <p class="dropdown-toggle" type="button" id="langPopover"
+                               popover-placement="bottom" popover-trigger="click"
+                               uib-popover-template="'app/page.managecourse/managecourse.popovers/langPopover.html'">
+                                <a href="" ng-if="!courseInfo.language">select</a>
+                                <a href="" ng-if="courseInfo.language">{{managecourse.getLanguage(managecourse.language)}}</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!--Set participants number-->
+                <div class="row">
+                    <div class="col-xs-12">
+                        <p class="pull-left">Number of participants:
+                            <input class="material-input" name="participantsNumber" id="maxSize" type="number"
+                                   placeholder="click to enter" ng-model="courseInfo.maxSize"
+                                   required>
                         </p>
                     </div>
                 </div>
 
-                <p class="field">Language: <span class="info">{{courseinfo.getLanguage(courseInfo.language)}}</span></p>
-
-            </div>
-
-            <div class="row">
-                <ul class="nav navbar-nav router-tabs">
-                    <li role="presentation" ng-class="{activelink: managecourse.isActive('timetable')}"><a
-                            ui-sref="managecourse.timetable"><i class="fa fa-clock-o"></i>Timetable</a></li>
-                    <li role="presentation" ng-class="{activelink: managecourse.isActive('attachments')}"><a
-                            ui-sref="managecourse.attachments"><i class="fa fa-files-o"></i>Materials</a></li>
-                </ul>
-            </div>
-
-            <div class="row">
-                <form name="courseForm">
-                    <div ui-view class="managecourse-view">
+                <!--Set place if admin-->
+                <div class="row" ng-if="managecourse.isAdmin()">
+                    <div class="col-xs-12">
+                        <p class="pull-left">Place:
+                            <input class="material-input" name="place" id="place" type="text"
+                                   placeholder="click to enter" ng-model="courseInfo.place" ng-maxlength="255">
+                        </p>
                     </div>
-                </form>
+                </div>
+
+                <!--Set short info-->
+                <div class="row">
+                    <div class="col-xs-12">
+                        <textarea class="material-input scroll" id="shortInfo" name="shortInfo" placeholder="Click to write short description" ng-model="courseInfo.shortInfo" ng-maxlength="255" required></textarea>
+                    </div>
+                </div>
+
+                <!--Set description-->
+                <div class="row">
+                    <div class="col-xs-12">
+                        <textarea class="material-input scroll" name="description" id="description" rows="5"
+                                  placeholder="Click to write your course description here..." ng-model="courseInfo.description"
+                                  required></textarea>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-xs-12">
+
+                        <ul class="nav navbar-nav router-tabs">
+                            <li role="presentation" ng-class="{activelink: managecourse.isActive('dates')}"><a
+                                    ui-sref="managecourse.dates"><i class="fa fa-clock-o"></i>Timetable</a></li>
+                            <li role="presentation" ng-class="{activelink: managecourse.isActive('files')}"><a
+                                    ui-sref="managecourse.files"><i class="fa fa-files-o"></i>Materials</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <form name="courseForm">
+                            <div ui-view class="managecourse-view">
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -80,8 +140,10 @@
                     <div class="row">
                         <div class="col-xs-12 col-sm-6 no-left-padding">
                             <label>First Name:</label>
-                            <input type='text' name="firstName" ng-model="managecourse.exCoachInfo.firstName" required>
-                            <small ng-show="coachForm.firstName.$invalid && coachForm.firstName.$touched" class="error">This
+                            <input type='text' name="firstName" ng-model="managecourse.exCoachInfo.firstName"
+                                   required>
+                            <small ng-show="coachForm.firstName.$invalid && coachForm.firstName.$touched"
+                                   class="error">This
                                 field is required.
                             </small>
                         </div>
@@ -89,8 +151,10 @@
                     <div class="row">
                         <div class="col-xs-12 col-sm-6 no-left-padding">
                             <label>Last Name:</label>
-                            <input type='text' name="lastName" ng-model="managecourse.exCoachInfo.lastName" required>
-                            <small ng-show="coachForm.lastName.$invalid && coachForm.lastName.$touched" class="error">This
+                            <input type='text' name="lastName" ng-model="managecourse.exCoachInfo.lastName"
+                                   required>
+                            <small ng-show="coachForm.lastName.$invalid && coachForm.lastName.$touched"
+                                   class="error">This
                                 field is required.
                             </small>
                         </div>

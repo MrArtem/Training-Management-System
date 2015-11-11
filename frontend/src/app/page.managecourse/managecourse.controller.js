@@ -6,7 +6,7 @@
         .controller('ManageCourseController', ManageCourseController);
 
     /** @ngInject */
-    function ManageCourseController($scope, $stateParams, courseAPI, userAPI, authService) {
+    function ManageCourseController($scope, $stateParams, $location, courseAPI, userAPI, authService) {
 
         var vm = this;
         vm.exCoachList = [];
@@ -17,12 +17,16 @@
         vm.approveCourse = approveCourse;
         vm.createCourse = createCourse;
         vm.getEditedCourse = getEditedCourse;
+        vm.isActive = isActive;
         vm.isAdmin = isAdmin;
 
         vm.addExCoach = addExCoach;
         vm.getExCoachList = getExCoachList;
         vm.setExCoach = setExCoach;
         vm.setMyselfAsCoach = setMyselfAsCoach;
+
+        vm.getLanguage = getLanguage;
+        vm.setLanguage = setLanguage;
 
         //Load external coaches
         if(vm.isAdmin()) {
@@ -104,6 +108,10 @@
             );
         }
 
+        function isActive(state) {
+            return $location.absUrl().search(state) === -1 ? false : true
+        }
+
         function isAdmin() {
             return authService.getAccessRights() == 0 ? true : false;
         }
@@ -135,6 +143,23 @@
         function setMyselfAsCoach() {
             vm.courseInfo.coachId = authService.getUser().userId;
             vm.coachName = 'me';
+        }
+
+        ///////////////////////////////////////
+
+        function getLanguage(lang) {
+            switch(lang) {
+                case 1:
+                    return 'English';
+                case 2:
+                    return 'Russian';
+                default:
+                    return 'unknown';
+            }
+        }
+
+        function setLanguage(lang) {
+            vm.courseInfo.language = lang;
         }
     }
 })();

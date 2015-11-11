@@ -73,7 +73,6 @@
 
         function isActive(state) {
             return $location.absUrl().search(state) === -1 ? false : true
-
         }
 
     }
