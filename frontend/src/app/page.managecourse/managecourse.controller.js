@@ -25,7 +25,7 @@
         vm.setMyselfAsCoach = setMyselfAsCoach;
 
         //Load external coaches
-        if(isAdmin) {
+        if(vm.isAdmin()) {
             vm.getExCoachList();
         }
 
@@ -122,7 +122,7 @@
         function getExCoachList() {
             courseAPI.getExCoachList().then(function (data) {
                 vm.exCoachList = angular.copy(data);
-                console.log('Got coaches successfuly');
+                console.log('Received coaches: ', vm.exCoachList);
             });
         }
 

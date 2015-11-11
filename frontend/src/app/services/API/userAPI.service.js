@@ -74,7 +74,9 @@
         }
 
         function getWaitingCourses(userId) {
-            //return;
+            return $http.get(urlProvider.getWaitingCoursesForUser(userId)).then(function(result) {
+                return result.data;
+            });
         }
     }
 

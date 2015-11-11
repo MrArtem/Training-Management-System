@@ -73,7 +73,6 @@
             });
         }
 
-        //TODO
         function getExCoachList() {
             return $http.get(urlProvider.getExCoachList()).then(function(result) {
                 return result.data;

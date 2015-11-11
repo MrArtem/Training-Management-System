@@ -8,7 +8,7 @@
     function UrlProvider() {
         var urlProvider = {
             addComment: addComment,
-            addExCoach: addExCoach, //TODO
+            addExCoach: addExCoach,
             addFeedback: addFeedback,
             addParticipant: addParticipant,
             addTag: addTag,
@@ -32,7 +32,7 @@
             getCourseList: getCourseList,
             getCurrentCoursesForUser: getCurrentCoursesForUser,
             getEditedCourse: getEditedCourse,
-            getExCoachList: getExCoachList, //TODO
+            getExCoachList: getExCoachList,
             getFeedback: getFeedback,
             getFeedbacksOnUser: getFeedbacksOnUser,
             getNewsList: getNewsList,
@@ -42,7 +42,7 @@
             getShortInfo: getShortInfo,
             getStatistics: getStatistics,
             getTimetable: getTimetable,
-            getWaitingCoursesForUser: getWaitingCoursesForUser, //TODO
+            getWaitingCoursesForUser: getWaitingCoursesForUser,
             leave: leave,
             login: login,
             logout: logout,
@@ -59,9 +59,9 @@
         return '/api/training/' + courseId + '/add_comment';
     }
 
-    //TODO
+
     function addExCoach() {
-        //
+        return '/api/user_controller/add_ex_coach';
     }
 
     function addFeedback() {
@@ -156,9 +156,8 @@
         return '/api/training/getApproveTraining/' + trainingId;
     }
 
-    //TODO
     function getExCoachList() {
-        //return '/api/';
+        return '/api/user_controller/get_all_ex_coach';
     }
 
     function getFeedbacksOnUser(userId) {
@@ -197,9 +196,8 @@
         return '/api/training/' + courseId + '/lesson_list';
     }
 
-    //TODO
     function getWaitingCoursesForUser(userId) {
-        //return;
+        return '/api/user_controller/waitingTraining/' + userId;
     }
 
     function leave(courseId) {
