@@ -80,7 +80,7 @@ public class MessageGeneratorHTML implements MessageGenerator {
         try {
             Template template = cfg.getTemplate("/changeListener.ftl");
             Map<String, Object> data = new HashMap<String, Object>();
-            data.put("uri", SITE_URI + "trainings/" + id);
+            data.put("uri", SITE_URI + "training/" + id);
             data.put("title", title);
             template.process(data, writer);
         } catch (Exception e) {
@@ -94,7 +94,7 @@ public class MessageGeneratorHTML implements MessageGenerator {
         try {
             Template template = cfg.getTemplate("/confirmTrainer.ftl");
             Map<String, Object> data = new HashMap<String, Object>();
-            data.put("uri", SITE_URI + "trainings/" + id);
+            data.put("uri", SITE_URI + "training/" + id);
             data.put("title", title);
             data.put("answer", answer);
             data.put("state", state);
@@ -110,7 +110,7 @@ public class MessageGeneratorHTML implements MessageGenerator {
         try {
             Template template = cfg.getTemplate("/removalTrainingListener.ftl");
             Map<String, Object> data = new HashMap<String, Object>();
-            data.put("uri", SITE_URI + "trainings/" + id);
+            data.put("uri", SITE_URI + "training/" + id);
             data.put("title", title);
             template.process(data, writer);
         } catch (Exception e) {
@@ -125,7 +125,7 @@ public class MessageGeneratorHTML implements MessageGenerator {
             Template template = cfg.getTemplate("/requestFeedback.ftl");
             Map<String, Object> data = new HashMap<String, Object>();
             data.put("name", nameListener);
-            data.put("uri", SITE_URI + "trainings/" + id);
+            data.put("uri", SITE_URI + "training/" + id);
             data.put("title", title);
             template.process(data, writer);
         } catch (Exception e) {
@@ -140,7 +140,7 @@ public class MessageGeneratorHTML implements MessageGenerator {
             Template template = cfg.getTemplate("/responseFeedback.ftl");
             Map<String, Object> data = new HashMap<String, Object>();
             data.put("nameEmployee", nameListener);
-            data.put("uri", SITE_URI + "trainings/" + id);
+            data.put("uri", SITE_URI + "training/" + id);
             data.put("title", title);
             data.put("nameTrainer", nameTrainer);
             template.process(data, writer);
@@ -156,7 +156,7 @@ public class MessageGeneratorHTML implements MessageGenerator {
             Template template = cfg.getTemplate("/countListener.ftl");
             Map<String, Object> data = new HashMap<String, Object>();
             data.put("isDay", isDay);
-            data.put("uri", SITE_URI + "trainings/" + id);
+            data.put("uri", SITE_URI + "training/" + id);
             data.put("title", title);
             data.put("count", listenerNumber);
             template.process(data, writer);
@@ -174,12 +174,8 @@ public class MessageGeneratorHTML implements MessageGenerator {
             Map<String, Object> data = new HashMap<String, Object>();
             data.put("date", formatDate.format(date));
             data.put("time", formatTime.format(date));
-            data.put("uri", SITE_URI + "trainings/" + id);
+            data.put("uri", SITE_URI + "training/" + id);
             data.put("title", title);
-            data.put("uriYes", SITE_URI + "race/" + id + "/listener/" +
-                    idEmployee + "/answer/" + true);
-            data.put("uriNo", SITE_URI + "race/" + id + "/listener/" +
-                    idEmployee + "/answer/" + false);
             template.process(data, writer);
         } catch (Exception e) {
             System.out.println(e);
@@ -195,10 +191,8 @@ public class MessageGeneratorHTML implements MessageGenerator {
             Map<String, Object> data = new HashMap<String, Object>();
             data.put("date", formatDate.format(date));
             data.put("time", formatTime.format(date));
-            data.put("uri", SITE_URI + "trainings/" + id);
+            data.put("uri", SITE_URI + "training/" + id);
             data.put("title", title);
-            data.put("uriYes", SITE_URI + "race/" + id + "/listener/" +
-                    idEmployee + "/answer/" + true);
             template.process(data, writer);
         } catch (Exception e) {
             System.out.println(e);
@@ -215,7 +209,7 @@ public class MessageGeneratorHTML implements MessageGenerator {
             data.put("name", name);
             data.put("password", password);
             data.put("login", login);
-            data.put("uri", SITE_URI + "trainings/" + idTraining);
+            data.put("uri", SITE_URI + "user_controller/user_info/" + idTraining);
             template.process(data, writer);
         } catch (Exception e) {
             System.out.println(e);
