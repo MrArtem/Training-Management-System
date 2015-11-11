@@ -23,8 +23,8 @@ public class ApproveAction {
     @OneToOne
     private ApproveTraining approveTraining;
 
-    @OneToMany
-    List<ApproveLesson> approveLessonList;
+    @OneToMany(mappedBy = "approveAction")
+    private List<ApproveLesson> approveLessonList;
 
     @Enumerated(value = EnumType.STRING)
     private Type type;
