@@ -2,7 +2,10 @@ package com.exadel.training.controller;
 
 import com.exadel.training.controller.model.CommentModel;
 import com.exadel.training.controller.model.RatingModel;
-import com.exadel.training.controller.model.trainingModels.*;
+import com.exadel.training.controller.model.trainingModels.GetTrainingModel;
+import com.exadel.training.controller.model.trainingModels.ListenerModel;
+import com.exadel.training.controller.model.trainingModels.TrainingListModel;
+import com.exadel.training.controller.model.trainingModels.TrainingShortModel;
 import com.exadel.training.controller.model.userModels.ExUserModel;
 import com.exadel.training.dao.domain.*;
 import com.exadel.training.security.authentication.CustomAuthentication;
@@ -54,7 +57,7 @@ public class TrainingBaseController {
     @LegalID
     @Secured({"ADMIN", "USER", "EX_COACH", "EX_USER"})
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    GetTrainingModel getTrainingMadel(@PathVariable("id") long trainingId) {
+    GetTrainingModel getTrainingModel(@PathVariable("id") long trainingId) {
         GetTrainingModel getTrainingModel = new GetTrainingModel();
         Training training = trainingService.getTraining(trainingId);
         getTrainingModel.setTraining(training);

@@ -11,7 +11,7 @@ public class UserPassword {
 
     private String password;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private User user;
 
     public UserPassword() {

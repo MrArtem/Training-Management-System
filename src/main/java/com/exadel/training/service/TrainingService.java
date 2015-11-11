@@ -64,7 +64,7 @@ public interface TrainingService {
             , long currentUserId
     );
 
-    void removeTraining(Long trainingId);
+    void removeTraining(Long trainingId, Long currentUserId);
 
     List<Training> getTrainingListByTagList(Integer page, Integer pageSize,Boolean isActual, List<Tag> tagList);
 
@@ -74,11 +74,11 @@ public interface TrainingService {
 
     RepeatModel getApproveRepeatModel(long actionId);
 
-    void editLesson(long trainingId, LessonModel lessonModel);
+    void editLesson(long trainingId, LessonModel lessonModel, Long currentUserId);
 
-    void addLesson(long trainingId, LessonModel lessonModel);
+    void addLesson(long trainingId, LessonModel lessonModel, Long currentUserId);
 
-    void removeLesson(long trainingId, LessonModel lessonModel);
+    void removeLesson(long trainingId, LessonModel lessonModel, Long currentUserId);
 
     void confirmLesson(long actionId, ApproveLessonModel approveLessonModel);
 

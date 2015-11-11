@@ -56,26 +56,26 @@ public class Training {
     private ApproveAction approveAction;
 
     @IndexedEmbedded
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private User coach;
 
-    @OneToMany(mappedBy = "training")
+    @OneToMany(mappedBy = "training", cascade = CascadeType.ALL)
     private List<Listener> listenerList;
 
-    @OneToMany(mappedBy = "training", orphanRemoval=true)
+    @OneToMany(mappedBy = "training", orphanRemoval = true, cascade = CascadeType.ALL)
     private List<Lesson> lessonList;
 
-    @OneToMany(mappedBy = "training")
+    @OneToMany(mappedBy = "training", cascade = CascadeType.ALL)
     private List<Comment> commentList;
 
     @IndexedEmbedded
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     private List<Tag> tagList;
 
-    @OneToMany(mappedBy = "training")
+    @OneToMany(mappedBy = "training", cascade = CascadeType.ALL)
     private List<Feedback> feedbackList;
 
-    @OneToMany(mappedBy = "training")
+    @OneToMany(mappedBy = "training", cascade = CascadeType.ALL)
     private List<FileStorage> fileStorageList;
 
     public Training() {

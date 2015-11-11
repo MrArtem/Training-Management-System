@@ -88,13 +88,13 @@ public class User {
     @Analyzer(definition = "customAnalyzer")
     private String phone;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private UserPassword userPassword;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Listener> trainingListListener;
 
-    @OneToMany(mappedBy = "coach")
+    @OneToMany(mappedBy = "coach", cascade = CascadeType.ALL)
     private List<Training> trainingListCoach;
 
     @OneToMany(mappedBy = "user")
