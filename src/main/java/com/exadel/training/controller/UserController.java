@@ -114,6 +114,16 @@ public class UserController {
         return userList;
     }
 
+    @Secured({"ADMIN"})
+    @RequestMapping(value = "/get_all_ex_coach", method = RequestMethod.GET)
+    public  List<UserModel> getAllExCoach() {
+        List<UserModel> userList = new ArrayList<UserModel>();
+        for(User user : userService.getUsersByRole(User.Role.EX_COACH)) {
+            userList.add(new UserModel(user));
+        }
+        return userList;
+    }
+
     @Secured({"EX_COACH"})
     @RequestMapping(value = "/set_password", method = RequestMethod.POST, consumes = "application/json")
     public void setPassword(@RequestBody PasswordExCoach passwordExCoach) {
