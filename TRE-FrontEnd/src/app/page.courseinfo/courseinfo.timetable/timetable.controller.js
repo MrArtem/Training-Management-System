@@ -62,7 +62,7 @@
 
         function setAttendance() {
             console.log('Attendance to be set: ', vm.attendanceList);
-            courseAPI.setAttendance($stateParams.courseId, vm.editedLessonId, vm.attendanceList).then(function(data) {
+            courseAPI.setAttendance(vm.attendanceList).then(function(data) {
                 console.log('Attendance set successfully');
             })
         }

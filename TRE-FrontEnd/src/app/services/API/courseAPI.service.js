@@ -346,6 +346,7 @@
         }
 
         function setAttendance(attendanceList) {
+            console.log(attendanceList);
             return $http.post(urlProvider.setAttendance(), attendanceList).then(function(result) {
                 return result.data;
             });
