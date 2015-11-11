@@ -23,7 +23,7 @@ public class ApproveAction {
     @OneToOne
     private ApproveTraining approveTraining;
 
-    @OneToMany(mappedBy = "approveAction")
+    @OneToMany(mappedBy = "approveAction", cascade = CascadeType.ALL)
     private List<ApproveLesson> approveLessonList;
 
     @Enumerated(value = EnumType.STRING)

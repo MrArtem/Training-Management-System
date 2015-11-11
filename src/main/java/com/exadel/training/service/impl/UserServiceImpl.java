@@ -76,11 +76,11 @@ public class UserServiceImpl implements UserService {
     public long addExternalCoach(ExCoachModel exCoachModel) {
         User user = new User();
         String password = RandomStringUtils.randomAlphabetic(8);
-        String login = exCoachModel.getFirstname().charAt(0) + exCoachModel.getLastname().toLowerCase();
+        String login = exCoachModel.getFirstName().charAt(0) + exCoachModel.getLastName().toLowerCase();
 
         user.setEmail(exCoachModel.getEmail());
-        user.setFirstName(exCoachModel.getFirstname());
-        user.setLastName(exCoachModel.getLastname());
+        user.setFirstName(exCoachModel.getFirstName());
+        user.setLastName(exCoachModel.getLastName());
         user.setPhone(exCoachModel.getPhone());
         user.setLogin(login);
 
@@ -90,9 +90,10 @@ public class UserServiceImpl implements UserService {
         UserPassword userPassword = new UserPassword();
         userPassword.setId(idUser);
         userPassword.setPassword(encode.encode(password));
+        //todo save userpassword
         user.setUserPassword(userPassword);
 
-        notification.send(exCoachModel.getEmail(),"coach", messageGenerator.getTextPasswordForExCoach(exCoachModel.getLastname() + exCoachModel.getFirstname(), 1L, password, login));
+        notification.send(exCoachModel.getEmail(),"coach", messageGenerator.getTextPasswordForExCoach(exCoachModel.getLastName() + exCoachModel.getFirstName(), 1L, password, login));
         return idUser;
     }
 
