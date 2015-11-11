@@ -23,8 +23,9 @@ public class FileStorageDAOImpl implements FileStorageDAO{
     @Override
     public void deleteFile(long idFileStorage) {
         sessionFactory.getCurrentSession()
-                .createQuery("delete from FileStorage as f where f.id = :idFileStorage ")
-                .setParameter("idFileStorage", idFileStorage);
+                .createQuery("delete from FileStorage where id = :idFileStorage")
+                .setParameter("idFileStorage", idFileStorage)
+                .executeUpdate();
     }
 
     @Override

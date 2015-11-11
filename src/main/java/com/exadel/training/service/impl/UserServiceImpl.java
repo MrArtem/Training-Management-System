@@ -153,6 +153,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<Training> waitingTrainings(long idUser) {
+        return userDAO.waitingTrainings(idUser);
+    }
+
+    @Override
     public List<Training> getUserTrainingsByState(long idUser, Listener.State state) {
         return userDAO.getUserTrainingsByState(idUser, state);
     }

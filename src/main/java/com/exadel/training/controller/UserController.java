@@ -77,6 +77,25 @@ public class UserController {
         return trainingListModelList;
     }
 
+    @Secured({"ADMIN", "USER"})
+    @RequestMapping(value = "/waitingTraining/{idUser}", method = RequestMethod.GET)
+    @LegalID
+    public List<TrainingListModel> getWaitingTraining(@PathVariable("idUser") long idUser) {
+        List<TrainingListModel> trainingListModelList = new ArrayList<>();
+
+        for(Training training : userService.waitingTrainings(idUser)) {
+            TrainingListModel trainingListModel = new TrainingListModel(training);
+            Lesson nextLesson = lessonService.getNextLesson(training.getId());
+            if (nextLesson != null) {
+                trainingListModel.setNextDate(nextLesson.getDate());
+                trainingListModel.setNextPlace(nextLesson.getPlace());
+            }
+            trainingListModelList.add(trainingListModel);
+        }
+
+        return trainingListModelList;
+    }
+
     @Secured({"ADMIN"})
     @RequestMapping(value = "/add_ex_user", method = RequestMethod.POST, consumes = "application/json")
     public void addExUser(@RequestBody ExUserModel exUserModel) {
@@ -88,6 +107,16 @@ public class UserController {
     public List<UserModel> addExCoach(@RequestBody ExCoachModel exCoachModel) {
         userService.addExternalCoach(exCoachModel);
 
+        List<UserModel> userList = new ArrayList<UserModel>();
+        for(User user : userService.getUsersByRole(User.Role.EX_COACH)) {
+            userList.add(new UserModel(user));
+        }
+        return userList;
+    }
+
+    @Secured({"ADMIN"})
+    @RequestMapping(value = "/get_all_ex_coach", method = RequestMethod.GET)
+    public  List<UserModel> getAllExCoach() {
         List<UserModel> userList = new ArrayList<UserModel>();
         for(User user : userService.getUsersByRole(User.Role.EX_COACH)) {
             userList.add(new UserModel(user));

@@ -80,6 +80,24 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
+    public List<Training> waitingTrainings(long idUser) {
+        Session session = sessionFactory.getCurrentSession();
+        Criteria criteria = session.createCriteria(Training.class,"training");
+        criteria.createAlias("training.listenerList", "listener");
+        criteria.createAlias("training.lessonList", "lesson");
+
+        Criterion criterionListener = Restrictions.and(Restrictions.eq("listener.user.id", idUser));
+        Criterion criterionWait = Restrictions.and(Restrictions.eq("listener.state", Listener.State.WAITING));
+
+        criteria.add(Restrictions.and(criterionListener,criterionWait));
+        criteria.add(Restrictions.gt("lesson.date", new Date().getTime()));
+
+        criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+        return criteria.list();
+    }
+
+    @Override
     public List<Training> getCoachTrainingsBetweenDates(long idCoach, long startDate, long endDate) {
         Session session = sessionFactory.getCurrentSession();
         Criteria criteria = session.createCriteria(Training.class, "training");
