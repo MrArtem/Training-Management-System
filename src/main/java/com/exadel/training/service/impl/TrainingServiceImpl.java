@@ -12,7 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @Transactional
@@ -108,7 +109,7 @@ public class TrainingServiceImpl implements TrainingService {
                     attendanceDAO.save(attendance);
                 }
             }
-            if (!isConfirmed) {
+            if (!isConfirmed && !isAdmin) {
                 ApproveLesson approveLesson = new ApproveLesson();
                 approveLesson.setLesson(lesson);
                 approveLesson.setDate(lessonModel.getDate());
@@ -218,7 +219,7 @@ public class TrainingServiceImpl implements TrainingService {
             approveAction.setType(ApproveAction.Type.CREATE);
             approveAction.setTraining(training);
         }
-        List<ApproveLesson> approveLessonList = null;
+        List<ApproveLesson> approveLessonList;
         if (isRepeating) {
             approveLessonList = addLessonListRepeating(training, repeatModel
                     , false, true, place, isAdmin);
@@ -226,7 +227,7 @@ public class TrainingServiceImpl implements TrainingService {
             approveLessonList = addLessonListNotRepeating(training, lessonModelList
                     , false, true, place, isAdmin);
         }
-        if (currentUser.getRole() != User.Role.ADMIN){
+        if (!isAdmin) {
             approveAction.setApproveLessonList(approveLessonList);
             approveAction.setType(ApproveAction.Type.CREATE);
             approveActionDAO.addApproveAction(approveAction);
@@ -247,6 +248,12 @@ public class TrainingServiceImpl implements TrainingService {
         }
         trainingDAO.changeTraining(training);
         approveActionDAO.removeApproveAction(approveAction);
+    }
+
+    private void confirmRemoveTraining(Training training) {
+        training.setState(Training.State.REMOVE);
+        trainingDAO.changeTraining(training);
+        newsService.addNews(training.getCoach(), News.TableName.TRAINING, News.ActionType.REMOVE, training.getId());
     }
 
     @Override
@@ -278,10 +285,10 @@ public class TrainingServiceImpl implements TrainingService {
                     , (type == ApproveAction.Type.EDIT)? News.ActionType.EDIT : News.ActionType.CREATE
                     , training.getId());
         } else {
-            training.setState(Training.State.REMOVE);
-            trainingDAO.changeTraining(training);
-            newsService.addNews(training.getCoach(), News.TableName.TRAINING, News.ActionType.REMOVE, training.getId());
+            confirmRemoveTraining(training);
         }
+
+        approveActionDAO.removeApproveAction(approveAction);
     }
 
     @Override
@@ -343,7 +350,7 @@ public class TrainingServiceImpl implements TrainingService {
         approveAction.setApproveLessonList(approveLessonList);
     }
 
-    private void editTrainingNotPrevApprove(Training training, String title
+    private ApproveAction editTrainingNotPrevApprove(Training training, String title
             , String description, String shortInfo
             , Integer language, Integer maxSize, boolean isInner, String place, List<Long> tagIdList
             , String additionalInfo, List<LessonModel> lessonModelList, RepeatModel repeatModel) {
@@ -371,6 +378,7 @@ public class TrainingServiceImpl implements TrainingService {
         approveAction.setApproveLessonList(approveLessonList);
         approveActionDAO.addApproveAction(approveAction);
 
+        return approveAction;
     }
 
     @Override
@@ -380,7 +388,7 @@ public class TrainingServiceImpl implements TrainingService {
         ApproveAction approveAction = approveActionDAO.getApproveActionByTrainingId(trainingId);
         User currentUser = userDAO.getUserByID(currentUserId);
         if (approveAction == null) {
-            editTrainingNotPrevApprove(trainingDAO.getTrainingById(trainingId)
+            approveAction = editTrainingNotPrevApprove(trainingDAO.getTrainingById(trainingId)
                     , title
                     , description
                     , shortInfo
@@ -422,7 +430,7 @@ public class TrainingServiceImpl implements TrainingService {
     }
 
     @Override
-    public void removeTraining(Long trainingId) {
+    public void removeTraining(Long trainingId, Long currentUserId) {
         ApproveAction approveAction = approveActionDAO.getApproveActionByTrainingId(trainingId);
         Training training = trainingDAO.getTrainingById(trainingId);
         if( approveAction != null) {
@@ -440,6 +448,12 @@ public class TrainingServiceImpl implements TrainingService {
         approveAction.setTraining(training);
         approveAction.setDate(Utils.getTime());
         approveActionDAO.addApproveAction(approveAction);
+
+        User user = userDAO.getUserByID(currentUserId);
+        if (user.getRole() == User.Role.ADMIN) {
+            confirmRemoveTraining(training);
+            approveActionDAO.removeApproveAction(approveAction);
+        }
     }
 
     @Override
@@ -485,72 +499,117 @@ public class TrainingServiceImpl implements TrainingService {
     }
 
     @Override
-    public void editLesson(long trainingId, LessonModel lessonModel) {
+    public void editLesson(long trainingId, LessonModel lessonModel, Long currentUserId) {
         Training training = trainingDAO.getTrainingById(trainingId);
-        ApproveAction approveAction = new ApproveAction();
-        approveAction.setDate(Utils.getTime());
-        approveAction.setTraining(training);
-        approveAction.setType(ApproveAction.Type.EDIT);
-
         Lesson lesson = lessonDAO.getLessonByID(lessonModel.getPrevLessonId());
 
-        ApproveLesson approveLesson = new ApproveLesson();
-        approveLesson.setLesson(lesson);
-        approveLesson.setDate(lessonModel.getDate());
-        approveLesson.setPlace(lessonModel.getPlace());
-        lessonApproveDAO.addApprove(approveLesson);
+        User user = userDAO.getUserByID(currentUserId);
+        if (user.getRole() != User.Role.ADMIN) {
+            ApproveAction approveAction = new ApproveAction();
+            approveAction.setDate(Utils.getTime());
+            approveAction.setTraining(training);
+            approveAction.setType(ApproveAction.Type.EDIT);
 
-        List<ApproveLesson> approveLessonList = new ArrayList<ApproveLesson>();
-        approveLessonList.add(approveLesson);
-        approveAction.setApproveLessonList(approveLessonList);
-        approveActionDAO.addApproveAction(approveAction);
+
+            ApproveLesson approveLesson = new ApproveLesson();
+            approveLesson.setLesson(lesson);
+            approveLesson.setDate(lessonModel.getDate());
+            approveLesson.setPlace(lessonModel.getPlace());
+            lessonApproveDAO.addApprove(approveLesson);
+
+            List<ApproveLesson> approveLessonList = new ArrayList<ApproveLesson>();
+            approveLessonList.add(approveLesson);
+            approveAction.setApproveLessonList(approveLessonList);
+            approveActionDAO.addApproveAction(approveAction);
+        } else {
+            lesson.setState(Lesson.State.REMOVAL);
+            for (Attendance attendance : Utils.emptyIfNull(lesson.getAttendanceList())) {
+                attendanceDAO.delete(attendance);
+            }
+            Lesson newLesson = new Lesson();
+            newLesson.setDate(lessonModel.getDate());
+            newLesson.setPlace(lessonModel.getPlace());
+            newLesson.setTraining(training);
+            newLesson.setState(Lesson.State.ADD);
+            lessonDAO.addLesson(newLesson);
+            for (Listener listener : Utils.emptyIfNull(training.getListenerList())) {
+                Attendance attendance = new Attendance();
+                attendance.setUser(listener.getUser());
+                attendance.setLesson(lesson);
+                attendanceDAO.save(attendance);
+            }
+        }
     }
 
     @Override
-    public void addLesson(long trainingId, LessonModel lessonModel) {
+    public void addLesson(long trainingId, LessonModel lessonModel, Long currentUserId) {
         Training training = trainingDAO.getTrainingById(trainingId);
 
-        Lesson lesson = new Lesson();
-        lesson.setState(Lesson.State.REMOVAL);
-        lesson.setTraining(training);
-        lessonDAO.addLesson(lesson);
+        User user = userDAO.getUserByID(currentUserId);
+        if (user.getRole() != User.Role.ADMIN) {
+            Lesson lesson = new Lesson();
+            lesson.setState(Lesson.State.REMOVAL);
+            lesson.setTraining(training);
+            lessonDAO.addLesson(lesson);
 
-        ApproveLesson approveLesson = new ApproveLesson();
-        approveLesson.setDate(lessonModel.getDate());
-        approveLesson.setPlace(lessonModel.getPlace());
-        approveLesson.setLesson(lesson);
-        lessonApproveDAO.addApprove(approveLesson);
+            ApproveLesson approveLesson = new ApproveLesson();
+            approveLesson.setDate(lessonModel.getDate());
+            approveLesson.setPlace(lessonModel.getPlace());
+            approveLesson.setLesson(lesson);
+            lessonApproveDAO.addApprove(approveLesson);
 
-        ApproveAction approveAction = new ApproveAction();
-        approveAction.setTraining(training);
-        approveAction.setDate(Utils.getTime());
-        approveAction.setType(ApproveAction.Type.EDIT);
+            ApproveAction approveAction = new ApproveAction();
+            approveAction.setTraining(training);
+            approveAction.setDate(Utils.getTime());
+            approveAction.setType(ApproveAction.Type.EDIT);
 
-        List<ApproveLesson> approveLessonList = new ArrayList<ApproveLesson>();
-        approveLessonList.add(approveLesson);
-        approveAction.setApproveLessonList(approveLessonList);
-        approveActionDAO.addApproveAction(approveAction);
+            List<ApproveLesson> approveLessonList = new ArrayList<ApproveLesson>();
+            approveLessonList.add(approveLesson);
+            approveAction.setApproveLessonList(approveLessonList);
+            approveActionDAO.addApproveAction(approveAction);
+        } else {
+            Lesson lesson = new Lesson();
+            lesson.setPlace(lessonModel.getPlace());
+            lesson.setDate(lessonModel.getDate());
+            lesson.setState(Lesson.State.ADD);
+            lessonDAO.addLesson(lesson);
+            for (Listener listener : Utils.emptyIfNull(training.getListenerList())) {
+                Attendance attendance = new Attendance();
+                attendance.setUser(listener.getUser());
+                attendance.setLesson(lesson);
+                attendanceDAO.save(attendance);
+            }
+        }
     }
 
     @Override
-    public void removeLesson(long trainingId, LessonModel lessonModel) {
+    public void removeLesson(long trainingId, LessonModel lessonModel, Long currentUserId) {
         Training training = trainingDAO.getTrainingById(trainingId);
 
         Lesson lesson = lessonDAO.getLessonByID(lessonModel.getPrevLessonId());
 
-        ApproveLesson approveLesson = new ApproveLesson();
-        approveLesson.setLesson(lesson);
-        lessonApproveDAO.addApprove(approveLesson);
+        User user = userDAO.getUserByID(currentUserId);
+        if (user.getRole() != User.Role.ADMIN) {
+            ApproveLesson approveLesson = new ApproveLesson();
+            approveLesson.setLesson(lesson);
+            lessonApproveDAO.addApprove(approveLesson);
 
-        ApproveAction approveAction = new ApproveAction();
-        approveAction.setTraining(training);
-        approveAction.setDate(Utils.getTime());
-        approveAction.setType(ApproveAction.Type.EDIT);
+            ApproveAction approveAction = new ApproveAction();
+            approveAction.setTraining(training);
+            approveAction.setDate(Utils.getTime());
+            approveAction.setType(ApproveAction.Type.EDIT);
 
-        List<ApproveLesson> approveLessonList = new ArrayList<ApproveLesson>();
-        approveLessonList.add(approveLesson);
-        approveAction.setApproveLessonList(approveLessonList);
-        approveActionDAO.addApproveAction(approveAction);
+            List<ApproveLesson> approveLessonList = new ArrayList<ApproveLesson>();
+            approveLessonList.add(approveLesson);
+            approveAction.setApproveLessonList(approveLessonList);
+            approveActionDAO.addApproveAction(approveAction);
+        } else {
+            lesson.setState(Lesson.State.REMOVAL);
+            for (Attendance attendance : Utils.emptyIfNull(lesson.getAttendanceList())) {
+                attendanceDAO.delete(attendance);
+            }
+            lessonDAO.changeLesson(lesson);
+        }
     }
 
     @Override

@@ -22,7 +22,7 @@ public class Attendance {
 
     private boolean isSubscribe;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private User user;
 
     @ManyToOne
