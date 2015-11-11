@@ -33,7 +33,7 @@ public class CommentModel {
     public CommentModel() {
     }
 
-    public CommentModel(Comment comment) {
+    public CommentModel(Comment comment, boolean withName) {
         this.setClear(comment.getClear());
         this.setCreativity(comment.getCreativity());
         this.setEffective(comment.getEffective());
@@ -46,7 +46,11 @@ public class CommentModel {
         this.setIsDeleted(comment.getIsDeleted());
         this.setId(comment.getId());
         this.setUserId(comment.getUser().getId());
-        this.setUserName(comment.getUser().getFirstName() + " " + comment.getUser().getLastName());
+        if (withName) {
+            this.setUserName(comment.getUser().getFirstName() + " " + comment.getUser().getLastName());
+        } else {
+            this.setUserName("");
+        }
     }
 
     public Long getId() {

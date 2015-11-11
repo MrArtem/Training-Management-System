@@ -32,15 +32,16 @@ public class TrainingBaseController {
 
     @Autowired
     private TrainingService trainingService;
+
     @Autowired
     private LessonService lessonService;
-    @Autowired
-    private CommentService commentService;
+
     @Autowired
     private TagService tagService;
 
     @Autowired
     private UserService userService;
+
     @Autowired
     private ListenerService listenerService;
 
@@ -100,8 +101,8 @@ public class TrainingBaseController {
 
     @Secured({"ADMIN", "USER"})
     @RequestMapping(value = "/add_tag", method = RequestMethod.POST)
-    public void addTag(@Valid @RequestBody Tag tag) {
-        tagService.addTag(tag);
+    public List<Tag> addTag(@Valid @RequestBody Tag tag) {
+        return tagService.addTag(tag);
     }
 
     @Secured({"ADMIN", "USER"})
@@ -125,16 +126,7 @@ public class TrainingBaseController {
         trainingList = trainingService.getTrainingListByTagList(page, PAGE_SIZE, isActual, tagList);
         List<TrainingListModel> trainingListModelList = new ArrayList<TrainingListModel>();
         for (Training training : trainingList) {
-            TrainingListModel trainingListModel = new TrainingListModel();
-            trainingListModel.setId(training.getId());
-            trainingListModel.setTitle(training.getTitle());
-            trainingListModel.setExcerpt(training.getExcerpt());
-            trainingListModel.setCoachId(training.getCoach().getId());
-            trainingListModel.setCoachName(training.getCoach().getFirstName() +
-                    " " + training.getCoach().getLastName());
-            trainingListModel.setTagList(training.getTagList());
-            User user = new User();
-            trainingListModel.setIsCoach(userService.isCoach(user.getId(), training.getId()));
+            TrainingListModel trainingListModel = new TrainingListModel(training);
             Lesson nextLesson = lessonService.getNextLesson(training.getId());
             trainingListModel.setNextDate(nextLesson.getDate());
             trainingListModel.setNextPlace(nextLesson.getPlace());
@@ -143,59 +135,6 @@ public class TrainingBaseController {
         return trainingListModelList;
     }
 
-    @LegalID
-    @RequestMapping(value = "/{id}/add_comment")
-    @Secured({"ADMIN", "USER", "EX_COACH"})
-    public void addComment(@PathVariable("id") Long trainingId, @RequestBody CommentModel commentModel) {
-        commentService.addComment(commentModel, trainingId);
-    }
-
-    @LegalID
-    @RequestMapping(value = "/{trainingId}/remove_comment/{commentId}")
-    @Secured({"ADMIN", "USER", "EX_COACH"})
-    public void removeComment(@PathVariable("trainingId") Long trainingId,
-                              @PathVariable("commentId") Long commentId) {
-        commentService.removeComment(commentId);
-    }
-
-    @RequestMapping(value = "/{id}/comment_list")
-    @LegalID
-    @Secured({"ADMIN", "USER", "EX_COACH", "EX_USER"})
-    public List<CommentModel> getTrainingCommentList(@PathVariable("id") Long trainingId) {
-        List<Comment> commentList = commentService.getTrainingCommentList(trainingId);
-        List<CommentModel> commentModelList = new ArrayList<CommentModel>();
-        for (Comment comment : commentList) {
-            CommentModel commentModel = new CommentModel(comment);
-            commentModelList.add(commentModel);
-        }
-        return commentModelList;
-    }
-
-    @LegalID
-    @Secured({"ADMIN", "USER"})
-    @RequestMapping(value = "/user/{id}/coach_comment_list")
-    public List<CommentModel> getCoachCommentList(@PathVariable("id") Long coachId) {
-        List<Comment> commentList = commentService.getCoachCommentList(coachId);
-        List<CommentModel> commentModelList = new ArrayList<CommentModel>();
-        for (Comment comment : commentList) {
-            CommentModel commentModel = new CommentModel(comment);
-            commentModelList.add(commentModel);
-        }
-        return commentModelList;
-    }
-
-    @LegalID
-    @Secured({"ADMIN", "USER"})
-    @RequestMapping(value = "/user/{id}/comment_list")
-    public List<CommentModel> getUserCommentList(@PathVariable("id") Long userId) {
-        List<Comment> commentList = commentService.getUserCommentList(userId);
-        List<CommentModel> commentModelList = new ArrayList<CommentModel>();
-        for (Comment comment : commentList) {
-            CommentModel commentModel = new CommentModel(comment);
-            commentModelList.add(commentModel);
-        }
-        return commentModelList;
-    }
     @LegalID
     @Secured({"ADMIN", "USER"})
     @RequestMapping(value = "{id}/addListener", method = RequestMethod.POST)
