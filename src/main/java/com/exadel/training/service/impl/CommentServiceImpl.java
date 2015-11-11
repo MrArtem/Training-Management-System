@@ -66,23 +66,27 @@ public class CommentServiceImpl implements CommentService{
 
     @Override
     @Transactional
-    public void addComment(CommentModel commentModel, Long trainingId) {
-        Comment comment = new Comment();
-        comment.setClear(commentModel.getClear());
-        comment.setCreativity(commentModel.getCreativity());
-        comment.setEffective(commentModel.getEffective());
-        comment.setInteresting(commentModel.getInteresting());
-        comment.setNewMaterial(commentModel.getNewMaterial());
-        comment.setRecommendation(commentModel.getRecommendation());
-        comment.setOther(commentModel.getOther());
+    public List<Comment> addComment(CommentModel commentModel, Long trainingId) {
         CustomAuthentication customUser =
                 (CustomAuthentication) SecurityContextHolder.getContext().getAuthentication();
-        User user = userDAO.getUserByID(customUser.getUserId());
-        comment.setUser(user);
-        comment.setTraining(trainingDAO.getTrainingById(trainingId));
-        comment.setIsPositive(isCommentPositive(comment));
-        comment.setDate(new Date().getTime());
-        commentDAO.addComment(comment);
+        Training training = trainingDAO.getTrainingById(trainingId);
+        if (customUser.getUserId() != training.getCoach().getId()) {
+            Comment comment = new Comment();
+            comment.setClear(commentModel.getClear());
+            comment.setCreativity(commentModel.getCreativity());
+            comment.setEffective(commentModel.getEffective());
+            comment.setInteresting(commentModel.getInteresting());
+            comment.setNewMaterial(commentModel.getNewMaterial());
+            comment.setRecommendation(commentModel.getRecommendation());
+            comment.setOther(commentModel.getOther());
+            User user = userDAO.getUserByID(customUser.getUserId());
+            comment.setUser(user);
+            comment.setTraining(training);
+            comment.setIsPositive(isCommentPositive(comment));
+            comment.setDate(new Date().getTime());
+            commentDAO.addComment(comment);
+        }
+        return training.getCommentList();
     }
 
     @Override

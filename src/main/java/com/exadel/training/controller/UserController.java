@@ -81,7 +81,7 @@ public class UserController {
     @RequestMapping(value = "/waitingTraining/{idUser}", method = RequestMethod.GET)
     @LegalID
     public List<TrainingListModel> getWaitingTraining(@PathVariable("idUser") long idUser) {
-        List<TrainingListModel> trainingListModelList = new ArrayList<>();
+        List<TrainingListModel> trainingListModelList = new ArrayList<TrainingListModel>();
 
         for(Training training : userService.waitingTrainings(idUser)) {
             TrainingListModel trainingListModel = new TrainingListModel(training);
