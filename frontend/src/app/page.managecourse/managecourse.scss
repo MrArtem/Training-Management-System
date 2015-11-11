@@ -1,5 +1,8 @@
 .managecourse {
 
+  $left-pd: 48px;
+  $right-pd: 48px;
+
   .managecourse-h1 {
     font-size: 48px;
     color: #4C4C4C;
@@ -8,6 +11,30 @@
     margin-top: 16px;
     margin-bottom: 0 !important;
     line-height: 58px;
+  }
+
+  .managecourse-short {
+    margin-bottom: 32px;
+
+    .title {
+      margin-bottom: 28px;
+    }
+
+    .short-desc {
+      margin-bottom: 24px;
+    }
+
+    .field {
+      color: $black;
+
+      .info {
+        color: $text-color;
+      }
+    }
+
+    .field, .info {
+      margin-bottom: 8px;
+    }
   }
 
 }

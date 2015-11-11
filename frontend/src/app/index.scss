@@ -520,6 +520,23 @@ table {
 
 }
 
+.popover {
+  width: 200px;
+}
+
+.popover-container {
+  width: auto;
+  max-width: 300px;
+  max-height: 150px;
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  hr {
+    margin-top: 8px;
+    margin-bottom: 8px;
+  }
+}
+
 /**
  *  Do not remove this comments bellow. It's the markers used by gulp-inject to inject
  *  all your sass files automatically

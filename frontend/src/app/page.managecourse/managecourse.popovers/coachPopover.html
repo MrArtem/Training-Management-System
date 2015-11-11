@@ -1,0 +1,25 @@
+<div class="popover-container scroll">
+
+    <div class="row">
+        <div class="select-dropdown">
+            <a href="" data-toggle="modal" data-target="#addExCoachModal"><i class="fa fa-plus"></i>Add coach</a>
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="row">
+        <div class="select-dropdown">
+            <a href="" ng-click="managecourse.setMyselfAsCoach()">me</a>
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="row" ng-repeat="coach in managecourse.exCoachList">
+        <div class="select-dropdown">
+            <a href="" ng-click="managecourse.setExCoach(coach.id)" close-on-click="coachPopover">{{coach.username}}</a>
+        </div>
+    </div>
+
+</div>
