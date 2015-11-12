@@ -35,12 +35,12 @@
         if(vm.isAdmin()) {
             vm.getExCoachList();
         }
-
+        
         if ($stateParams.edit) {
-            vm.courseId = $stateParams.courseId;
-            vm.actionId = $stateParams.id;
+            vm.courseId = parseInt($stateParams.courseId);
+            vm.actionId = parseInt($stateParams.id);
             $scope.isEdited = true;
-            vm.isDraft = ($stateParams.type == 'CREATE') ? true : false;
+            vm.isDraft = $stateParams.type == 'CREATE';
             vm.getEditedCourse();
         }
         else {
@@ -58,6 +58,7 @@
             startDate: "",
             endDate: ""
         };
+
         $scope.courseInfo = vm.courseInfo;
 
         ///////////////////////////////////////
@@ -140,11 +141,11 @@
         function setExCoach(index) {
             var coachId = vm.exCoachList[index].id;
             vm.coachName = vm.exCoachList[index].username;
-            vm.courseInfo.coachId = coachId;
+            $scope.courseInfo.coachId = coachId;
         }
 
         function setMyselfAsCoach() {
-            vm.courseInfo.coachId = authService.getUser().userId;
+            $scope.courseInfo.coachId = authService.getUser().userId;
             vm.coachName = 'me';
         }
 

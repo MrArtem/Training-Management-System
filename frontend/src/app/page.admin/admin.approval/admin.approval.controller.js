@@ -6,7 +6,7 @@
         .controller('ApprovalController', ApprovalController);
 
     /** @ngInject */
-    function ApprovalController($scope, adminAPI) {
+    function ApprovalController($scope, $state, adminAPI) {
         var vm = this;
         //var stompClient = null;
 
@@ -14,6 +14,7 @@
         //vm.disconnect = disconnect;
         vm.getApproveList = getApproveList;
         vm.makeText = makeText;
+        vm.seeDetails = seeDetails;
         //vm.send = send;
         //vm.connect = connect;
 
@@ -68,6 +69,25 @@
                     return (tableName == 'APPROVE_TRAINING') ? ' wants to delete training ' : ' wants to delete lesson from training ';
                 default:
                     return 'unknown type';
+            }
+        }
+
+        function seeDetails(item) {
+            var type = item.type.toString();
+            var tableName = item.tableName;
+            switch(type) {
+                case 'CREATE':
+                    if(tableName == 'APPROVE_TRAINING') {
+                        $state.go('managecourse', {courseId: item.trainingId, edit: true, id: item.id, type: type});
+                    }
+                    break;
+                //case 'EDIT':
+                //    return (tableName == 'APPROVE_TRAINING') ? ' wants to edit training ' : ' wants to edit lesson in training ';
+                //    break;
+                //case 'REMOVE':
+                //    return (tableName == 'APPROVE_TRAINING') ? ' wants to delete training ' : ' wants to delete lesson from training ';
+                default:
+                    return '';
             }
         }
     }

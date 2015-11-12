@@ -52,7 +52,7 @@
                 accessRights: 4,
                 auth: false
             }).state('managecourse', {
-                url: '/managecourse/:courseId:id:type:edit',
+                url: '/managecourse/:courseId/:id/:type/:edit',
                 templateUrl: 'app/page.managecourse/managecourse.html',
                 controller: 'ManageCourseController',
                 controllerAs: 'managecourse',

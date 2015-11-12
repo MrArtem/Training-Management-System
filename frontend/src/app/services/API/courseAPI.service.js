@@ -26,7 +26,7 @@
             getComments: getComments,
             getCourseList: getCourseList,
             getEditedCourse: getEditedCourse,
-            getExCoachList: getExCoachList, //TODO
+            getExCoachList: getExCoachList,
             getParticipants: getParticipants,
             getShortInfo: getShortInfo,
             getTimetable: getTimetable,

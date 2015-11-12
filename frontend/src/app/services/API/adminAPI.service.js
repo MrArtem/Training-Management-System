@@ -14,11 +14,9 @@
         return adminAPI;
 
         function getApproveList() {
-            return $http.get(urlProvider.getApproveList(), {
-                params: {
-                    page_size: 10,
-                    page: 0
-                }
+            return $http.post(urlProvider.getApproveList(), {
+                page_size: 10,
+                page: 0
             }).then(function (results) {
                 return results.data;
             });
@@ -36,7 +34,7 @@
         }
 
         function getStatistics(statisticsModel) {
-            return $http.post(urlProvider.getStatistics(), statisticsModel).then(function(result) {
+            return $http.post(urlProvider.getStatistics(), statisticsModel).then(function (result) {
                 return result.data;
             });
         }
