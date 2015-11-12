@@ -25,9 +25,9 @@ public class WebSocketConfiguration implements WebSocketMessageBrokerConfigurer 
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry stompEndpointRegistry) {
-        stompEndpointRegistry.addEndpoint("/news").setAllowedOrigins("*").withSockJS();
-        stompEndpointRegistry.addEndpoint("/approve_count").setAllowedOrigins("*").withSockJS();
-        stompEndpointRegistry.addEndpoint("/approve_list").setAllowedOrigins("*").withSockJS();
+        stompEndpointRegistry.addEndpoint("/news").withSockJS();
+        stompEndpointRegistry.addEndpoint("/approve_count").withSockJS();
+        stompEndpointRegistry.addEndpoint("/approve_list").withSockJS();
     }
 
     @Override

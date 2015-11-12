@@ -36,10 +36,10 @@ public class NewsController {
     private FeedbackService feedbackService;
 
     @Secured({"ADMIN"})
-    @MessageMapping("/news")
-    @SendTo("/pipe/news")
-//    @RequestMapping("/news")
-//    @ResponseBody
+    //   @MessageMapping("/news")
+//    @SendTo("/pipe/news")
+    @RequestMapping("/news")
+    @ResponseBody
     public List<NewsModel> getNewsList(@RequestBody PageModel pageModel) {
         List<NewsModel> newsModelList = new ArrayList<NewsModel>();
         for(News news : newsService.getNewsList(pageModel.getPage(), pageModel.getPage_size())) {
