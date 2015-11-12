@@ -54,11 +54,13 @@ public class TrainingDAOImpl implements TrainingDAO {
                 CustomAuthentication customUser =
                         (CustomAuthentication) SecurityContextHolder.getContext().getAuthentication();
                 User user = userDAO.getUserByID(customUser.getUserId());
+                Criterion isCoach = Restrictions.eq("training.coach", user);
+
                 criteria.createAlias("training.listenerList", "listener");
-                Criterion isCoach = Restrictions.eq("coach", user);
                 Criterion isSubscribed = Restrictions.eq("listener.user", user);
-                criteria.add(Restrictions.or(isCoach, isSubscribed));
-                criteria.add(Restrictions.eq("listener.state", Listener.State.ACCEPTED));
+                Criterion stateListener = Restrictions.eq("listener.state", Listener.State.ACCEPTED);
+
+                criteria.add(Restrictions.or(isCoach, Restrictions.and(isSubscribed, stateListener)));
             }
             criteria = criteria.add(Restrictions.eq("state", Training.State.NONE));
             Long date = new Date().getTime();
