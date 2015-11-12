@@ -38,7 +38,7 @@ public class FeedbackController {
     @Secured({"ADMIN", "USER"})
     @RequestMapping(value = "/feedbacks_of_user/{idUser}", method = RequestMethod.GET)
     @LegalID
-    public List<FeedbackModel> getFeedbacListOfUser(@PathVariable("idUser") long idUser) {
+    public List<FeedbackModel> getFeedbackListOfUser(@PathVariable("idUser") long idUser) {
         List<FeedbackModel> feedbackModelList = new ArrayList<FeedbackModel>();
 
         for (Feedback feedback : feedbackService.getFeedbackListForUser(idUser)) {
