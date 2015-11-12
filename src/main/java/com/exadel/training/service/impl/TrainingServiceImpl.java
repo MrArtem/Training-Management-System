@@ -217,6 +217,7 @@ public class TrainingServiceImpl implements TrainingService {
             approveAction.setDate(Utils.getTime());
             approveAction.setType(ApproveAction.Type.CREATE);
             approveAction.setTraining(training);
+            approveAction.setApproveTraining(approveTraining);
         }
         List<ApproveLesson> approveLessonList;
         if (isRepeating) {
