@@ -47,7 +47,7 @@ import java.util.List;
                         @Parameter(name = "maxGramSize", value = "10")
                 }),
                 @TokenFilterDef(factory = SynonymFilterFactory.class, params = {
-                        @Parameter(name = "synonyms", value = "searchSynonyms/synonyms.txt"),
+                        @Parameter(name = "synonyms", value = "/searchSynonyms/synonyms.txt"),
                         @Parameter(name = "expand", value = "false")
                 })
         })

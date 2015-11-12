@@ -19,6 +19,9 @@ import javax.persistence.EntityManagerFactory;
 @EnableTransactionManagement
 @Import({WebSecurityConfiguration.class, WebSocketConfiguration.class})
 public class WebApplicationStarter extends SpringBootServletInitializer {
+
+    final int MAX_IN_MEMORY_SIZE = 1048576;
+
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
         return application.sources(WebApplicationStarter.class);
@@ -38,7 +41,7 @@ public class WebApplicationStarter extends SpringBootServletInitializer {
     public CommonsMultipartResolver multipartResolver() {
         CommonsMultipartResolver resolver = new CommonsMultipartResolver();
         resolver.setDefaultEncoding("utf-8");
-        resolver.setMaxInMemorySize(1048576);
+        resolver.setMaxInMemorySize(MAX_IN_MEMORY_SIZE);
         resolver.setMaxUploadSize(Integer.MAX_VALUE);
         return resolver;
     }
