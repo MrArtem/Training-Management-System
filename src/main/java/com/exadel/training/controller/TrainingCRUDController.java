@@ -133,6 +133,8 @@ public class TrainingCRUDController {
             approveTrainingModel.setTagList(approveTraining.getTagList());
             approveTrainingModel.setCoachId(coach.getId());
             approveTrainingModel.setCoachName(coach.getFirstName() + " " + coach.getLastName());
+            approveTrainingModel.setIsInner(approveTraining.getIsInner());
+            approveTrainingModel.setLanguage(approveTraining.getLanguage());
         } else {
             approveTrainingModel.setTitle(training.getTitle());
             approveTrainingModel.setDescription(training.getDescription());
@@ -142,6 +144,8 @@ public class TrainingCRUDController {
             approveTrainingModel.setCoachId(coach.getId());
             approveTrainingModel.setCoachName(coach.getFirstName() + " " + coach.getLastName());
             approveTrainingModel.setTagList(training.getTagList());
+            approveTrainingModel.setIsInner(training.isInner());
+            approveTrainingModel.setLanguage(training.getLanguage());
         }
         approveTrainingModel.setIsRepeating(training.isRepeat());
 

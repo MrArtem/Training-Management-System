@@ -10,6 +10,8 @@ public class ApproveGetTrainingModel extends TrainingModel {
 
     private String additionalInfo;
 
+    private Boolean isInner;
+
     public List<LessonModel> getLessonList() {
         return lessonList;
     }
@@ -32,5 +34,13 @@ public class ApproveGetTrainingModel extends TrainingModel {
 
     public void setRepeatModel(RepeatModel repeatModel) {
         this.repeatModel = repeatModel;
+    }
+
+    public Boolean getIsInner() {
+        return isInner;
+    }
+
+    public void setIsInner(Boolean isInner) {
+        this.isInner = isInner;
     }
 }

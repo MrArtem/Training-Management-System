@@ -107,6 +107,7 @@
         function getEditedCourse() {
             courseAPI.getEditedCourse(vm.actionId).then(function (data) {
                     $scope.courseInfo = angular.copy(data);
+                    vm.coachName = $scope.courseInfo.coachName;
                     console.log($scope.courseInfo);
                 }
             );
