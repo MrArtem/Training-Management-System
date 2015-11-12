@@ -83,6 +83,7 @@ public class UserServiceImpl implements UserService {
         user.setLastName(exCoachModel.getLastName());
         user.setPhone(exCoachModel.getPhone());
         user.setLogin(login);
+        user.setRole(User.Role.EX_COACH);
 
         userDAO.save(user);
         long idUser = user.getId();
@@ -90,7 +91,8 @@ public class UserServiceImpl implements UserService {
         UserPassword userPassword = new UserPassword();
         userPassword.setId(idUser);
         userPassword.setPassword(encode.encode(password));
-        //todo save userpassword
+        userDAO.savePassword(userPassword);
+
         user.setUserPassword(userPassword);
 
         notification.send(exCoachModel.getEmail(),"coach", messageGenerator.getTextPasswordForExCoach(exCoachModel.getLastName() + exCoachModel.getFirstName(), 1L, password, login));

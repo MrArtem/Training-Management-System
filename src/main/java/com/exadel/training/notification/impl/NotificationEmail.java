@@ -63,7 +63,7 @@ public class NotificationEmail implements Notification {
             multipart.addBodyPart(messagePart);
 
             messagePart = new MimeBodyPart();
-            DataSource dataSource = new FileDataSource(Paths.get(".", "messageForm","logo.png").normalize().toFile());
+            DataSource dataSource = new FileDataSource(Paths.get(".", "mail-template","logo.png").normalize().toFile());
             messagePart.setDataHandler(new DataHandler(dataSource));
             messagePart.setHeader("Content-ID", "<image>");
             multipart.addBodyPart(messagePart);
