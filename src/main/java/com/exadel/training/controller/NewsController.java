@@ -11,11 +11,11 @@ import com.exadel.training.service.FeedbackService;
 import com.exadel.training.service.NewsService;
 import com.exadel.training.service.TrainingService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,15 +36,15 @@ public class NewsController {
     private FeedbackService feedbackService;
 
     @Secured({"ADMIN"})
-    @MessageMapping("/news")
-    @SendTo("/pipe/news")
-//    @RequestMapping("/news")
-//    @ResponseBody
+    //   @MessageMapping("/news")
+//    @SendTo("/pipe/news")
+    @RequestMapping("/news")
+    @ResponseBody
     public List<NewsModel> getNewsList(@RequestBody PageModel pageModel) {
         List<NewsModel> newsModelList = new ArrayList<NewsModel>();
-        for(News news : newsService.getNewsList(pageModel.getPage(), pageModel.getPage_size())) {
+        for (News news : newsService.getNewsList(pageModel.getPage(), pageModel.getPage_size())) {
             NewsModel newsModel = new NewsModel(news);
-            switch(news.getTableName()) {
+            switch (news.getTableName()) {
                 case TRAINING:
                     Training training = trainingService.getTraining(news.getIdRow());
                     newsModel.setTitle(training.getTitle());

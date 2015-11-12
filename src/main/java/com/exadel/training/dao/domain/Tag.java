@@ -21,7 +21,7 @@ public class Tag {
 
     @Field(index = org.hibernate.search.annotations.Index.YES, analyze = Analyze.YES, store = Store.YES)
     @Analyzer(definition = "customAnalyzer")
-    @Column(unique=true)
+    @Column(unique = true)
     private String specialty;
 
     public Tag() {

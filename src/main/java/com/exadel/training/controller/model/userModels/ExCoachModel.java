@@ -3,22 +3,21 @@ package com.exadel.training.controller.model.userModels;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 
-import javax.validation.constraints.NotNull;
-
 /**
  * Created by ayudovin on 04.11.2015.
  */
 public class ExCoachModel {
 
-    @Email @NotBlank
+    @Email
+    @NotBlank
     private String email;
     @NotBlank
-    private String firstname;
+    private String firstName;
     @NotBlank
-    private String lastname;
+    private String lastName;
     private String phone;
 
-    public ExCoachModel(){
+    public ExCoachModel() {
     }
 
     public String getEmail() {
@@ -29,20 +28,20 @@ public class ExCoachModel {
         this.email = email;
     }
 
-    public String getFirstname() {
-        return firstname;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public String getLastname() {
-        return lastname;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getPhone() {

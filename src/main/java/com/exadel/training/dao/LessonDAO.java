@@ -1,7 +1,6 @@
 package com.exadel.training.dao;
 
 import com.exadel.training.dao.domain.Lesson;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 

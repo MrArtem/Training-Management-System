@@ -14,24 +14,36 @@ import java.util.List;
  */
 public interface UserService {
     void setPasswordExCoach(PasswordExCoach passowrdExCoach);
+
     void setPhone(String phone, long id);
 
     long addExternalUser(ExUserModel exUserModel);
+
     long addExternalCoach(ExCoachModel exCoachModel);
 
     Boolean isCoach(long idUser, long idTraining);
+
     Boolean isCoachOfCurrentUser(long idCurrentUser, long idCoach);
 
     User getUserById(long id);
+
     User getUserByLogin(String login);
 
     List<User> getUsersByRole(User.Role role);
+
     List<Training> getListenerTrainingListOfUser(long idUser);
+
     List<Training> getCoachTrainingList(long idUser);
+
     List<Training> getCoachTrainingList(long idCoach, long startDate, long endDate);
-    List<Training> visitedTrainings (long idUser);
+
+    List<Training> visitedTrainings(long idUser);
+
     List<Training> actualTrainings(long idUser);
+
     List<Training> waitingTrainings(long idUser);
+
     List<Training> getUserTrainingsByState(long idUser, Listener.State state);
+
     List<Training> getUserTrainingsByState(long idUser, Listener.State state, long startDate, long endDate);
 }

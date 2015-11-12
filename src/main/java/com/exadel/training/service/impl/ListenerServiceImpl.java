@@ -48,7 +48,7 @@ public class ListenerServiceImpl implements ListenerService {
         listener.setUser(user);
         listenerDAO.changeListener(listener);
         List<Lesson> lessonList = lessonDAO.getLessonListActualFrom(trainingId, Utils.getTime());
-        for(Lesson lesson : Utils.emptyIfNull(lessonList)) {
+        for (Lesson lesson : Utils.emptyIfNull(lessonList)) {
             Attendance attendance = new Attendance();
             attendance.setLesson(lesson);
             attendance.setUser(user);
@@ -64,12 +64,12 @@ public class ListenerServiceImpl implements ListenerService {
             listener.setState(Listener.State.LEAVE);
             listenerDAO.changeListener(listener);
             Listener listenerNext = listenerDAO.getNextListenerInWaitList(trainingId);
-            if(listenerNext != null) {
+            if (listenerNext != null) {
                 listenerNext.setState(Listener.State.WAITING);
                 listenerDAO.changeListener(listenerNext);
             }
-            List<Attendance> attendanceList  = attendanceDAO.getAllAttendanceByUserIDFromDate(userId, new Date(Utils.getTime()));
-            for(Attendance attendance : Utils.emptyIfNull(attendanceList)) {
+            List<Attendance> attendanceList = attendanceDAO.getAllAttendanceByUserIDFromDate(userId, new Date(Utils.getTime()));
+            for (Attendance attendance : Utils.emptyIfNull(attendanceList)) {
                 attendanceDAO.delete(attendance);
             }
         }
@@ -88,7 +88,7 @@ public class ListenerServiceImpl implements ListenerService {
 
     @Override
     public List<User> getListenerListByTrainingAndState(long trainingId, Listener.State state) {
-       List<User> userList = new ArrayList<User>();
+        List<User> userList = new ArrayList<User>();
         for (Listener listener : listenerDAO.getListenerListByTrainingAndState(trainingId, state)) {
             userList.add(listener.getUser());
         }
@@ -98,10 +98,10 @@ public class ListenerServiceImpl implements ListenerService {
     @Override
     public boolean canSubscribe(long trainingId, long userId) {
         Listener listener = listenerDAO.getListenerByTrainingAndUser(trainingId, userId);
-        if(listener == null) {
+        if (listener == null) {
             return true;
         }
-        if( listener.getState() == Listener.State.LEAVE ) {
+        if (listener.getState() == Listener.State.LEAVE) {
             return true;
         }
         return false;

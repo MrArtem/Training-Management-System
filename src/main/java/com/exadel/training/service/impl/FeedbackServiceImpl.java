@@ -31,22 +31,22 @@ public class FeedbackServiceImpl implements FeedbackService {
         int coutOfpositive = 0;
 
         if (feedback.isAttendance()) {
-            coutOfpositive ++;
+            coutOfpositive++;
         }
         if (feedback.isAttitude()) {
-            coutOfpositive ++;
+            coutOfpositive++;
         }
         if (feedback.isCommSkills()) {
-            coutOfpositive ++;
+            coutOfpositive++;
         }
         if (feedback.isFocusOnResult()) {
-            coutOfpositive ++;
+            coutOfpositive++;
         }
         if (feedback.isMotivation()) {
-            coutOfpositive ++;
+            coutOfpositive++;
         }
         if (feedback.isQuestions()) {
-            coutOfpositive ++;
+            coutOfpositive++;
         }
 
         return coutOfpositive >= AVERAGE_EFFECTIVE;
@@ -57,6 +57,7 @@ public class FeedbackServiceImpl implements FeedbackService {
     public void addFeedback(AddFeedbackModel addFeedbackModel) {
         feedbackDAO.addFeedback(this.setProperties(addFeedbackModel));
     }
+
     private Feedback setProperties(AddFeedbackModel addFeedbackModel) {
         Feedback feedback = new Feedback();
 

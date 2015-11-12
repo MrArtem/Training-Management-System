@@ -109,7 +109,9 @@ public class TrainingCRUDController {
     @Secured({"ADMIN", "USER"})
     @RequestMapping(value = "/{id}/remove", method = RequestMethod.DELETE)
     void removeTraining(@PathVariable("id") long trainingId) {
-
+        CustomAuthentication customUser =
+                (CustomAuthentication) SecurityContextHolder.getContext().getAuthentication();
+        trainingService.removeTraining(trainingId, customUser.getUserId());
     }
 
     @LegalID
@@ -165,14 +167,18 @@ public class TrainingCRUDController {
     @Secured({"ADMIN", "USER", "EX_COACH"})
     @RequestMapping(value = "/{id}/lesson", method = RequestMethod.PUT)
     void editLesson(@PathVariable("id") long trainingId, @RequestBody LessonModel lessonModel) {
-        trainingService.editLesson(trainingId,lessonModel);
+        CustomAuthentication customUser =
+                (CustomAuthentication) SecurityContextHolder.getContext().getAuthentication();
+        trainingService.editLesson(trainingId, lessonModel, customUser.getUserId());
     }
 
     @LegalID
     @Secured({"ADMIN", "USER", "EX_COACH"})
     @RequestMapping(value = "/{id}/lesson", method = RequestMethod.POST)
     void addLesson(@PathVariable("id") long trainingId, @RequestBody LessonModel lessonModel) {
-        trainingService.addLesson(trainingId, lessonModel);
+        CustomAuthentication customUser =
+                (CustomAuthentication) SecurityContextHolder.getContext().getAuthentication();
+        trainingService.addLesson(trainingId, lessonModel, customUser.getUserId());
     }
 
     @LegalID
@@ -181,7 +187,9 @@ public class TrainingCRUDController {
     void removeLesson(@PathVariable("id") long trainingId, @PathVariable("lessonId") Long lessonId) {
         LessonModel lessonModel = new LessonModel();
         lessonModel.setPrevLessonId(lessonId);
-        trainingService.removeLesson(trainingId, lessonModel);
+        CustomAuthentication customUser =
+                (CustomAuthentication) SecurityContextHolder.getContext().getAuthentication();
+        trainingService.removeLesson(trainingId, lessonModel, customUser.getUserId());
     }
 
     @LegalID

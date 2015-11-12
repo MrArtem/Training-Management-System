@@ -14,68 +14,46 @@ import java.util.List;
 @Table
 @Indexed
 public class Training {
-    public enum State {
-        CREATE, NONE, REMOVE
-    }
-
     @Id
     @GeneratedValue
     private long id;
-
     @NotNull
     @Field(index = org.hibernate.search.annotations.Index.YES, analyze = Analyze.YES, store = Store.YES)
     @Analyzer(definition = "customAnalyzer")
     @Column(length = 50)
     private String title;
-
     @Field(index = Index.YES, analyze = Analyze.YES, store = Store.YES)
     @Analyzer(definition = "customAnalyzer")
     @Column(length = 10000)
     private String description;
-
     private int language;
-
     private int maxSize;
-
     private boolean isInner;
-
     @Field(index = Index.YES, analyze = Analyze.YES, store = Store.YES)
     @Analyzer(definition = "customAnalyzer")
     private String excerpt;
-
     private int sumRating;
-
     private int countListenerRating;
-
     @Enumerated(value = EnumType.STRING)
     private State state;
-
     private boolean isRepeat;
-
     @OneToOne
     private ApproveAction approveAction;
-
     @IndexedEmbedded
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private User coach;
-
-    @OneToMany(mappedBy = "training")
+    @OneToMany(mappedBy = "training", cascade = CascadeType.ALL)
     private List<Listener> listenerList;
-
-    @OneToMany(mappedBy = "training", orphanRemoval=true)
+    @OneToMany(mappedBy = "training", orphanRemoval = true, cascade = CascadeType.ALL)
     private List<Lesson> lessonList;
-
-    @OneToMany(mappedBy = "training")
+    @OneToMany(mappedBy = "training", cascade = CascadeType.ALL)
     private List<Comment> commentList;
-
     @IndexedEmbedded
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     private List<Tag> tagList;
-
-    @OneToMany(mappedBy = "training")
+    @OneToMany(mappedBy = "training", cascade = CascadeType.ALL)
     private List<Feedback> feedbackList;
-
-    @OneToMany(mappedBy = "training")
+    @OneToMany(mappedBy = "training", cascade = CascadeType.ALL)
     private List<FileStorage> fileStorageList;
 
     public Training() {
@@ -143,7 +121,6 @@ public class Training {
     public void setExcerpt(String excerpt) {
         this.excerpt = excerpt;
     }
-
 
     public int getCountListenerRating() {
         return countListenerRating;
@@ -247,5 +224,9 @@ public class Training {
 
     public void setFileStorageList(List<FileStorage> fileStorageList) {
         this.fileStorageList = fileStorageList;
+    }
+
+    public enum State {
+        CREATE, NONE, REMOVE
     }
 }

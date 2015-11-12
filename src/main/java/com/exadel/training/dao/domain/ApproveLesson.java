@@ -1,7 +1,6 @@
 package com.exadel.training.dao.domain;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Table
@@ -12,7 +11,10 @@ public class ApproveLesson {
     private Long id;
 
     @OneToOne
-    Lesson lesson;
+    private Lesson lesson;
+
+    @ManyToOne
+    private ApproveAction approveAction;
 
     private Long date;
 
@@ -47,5 +49,13 @@ public class ApproveLesson {
 
     public void setPlace(String place) {
         this.place = place;
+    }
+
+    public ApproveAction getApproveAction() {
+        return approveAction;
+    }
+
+    public void setApproveAction(ApproveAction approveAction) {
+        this.approveAction = approveAction;
     }
 }

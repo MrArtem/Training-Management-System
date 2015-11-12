@@ -8,7 +8,6 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import javax.transaction.Transactional;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -47,7 +46,7 @@ public class LessonDAOImpl implements LessonDAO {
 
     @Override
     public Lesson getLessonByID(long idLesson) {
-        return (Lesson)sessionFactory.getCurrentSession()
+        return (Lesson) sessionFactory.getCurrentSession()
                 .createQuery("select l from Lesson as l where l.id = :idLesson")
                 .setParameter("idLesson", idLesson)
                 .uniqueResult();
@@ -124,7 +123,7 @@ public class LessonDAOImpl implements LessonDAO {
     public List<Lesson> getLessonListActualFrom(long trainingId, long startDate) {
         Session session = sessionFactory.getCurrentSession();
         Training training = session.load(Training.class, trainingId);
-        return sessionFactory.getCurrentSession(). createQuery(" from Lesson less where less.date >= :startDate and " +
+        return sessionFactory.getCurrentSession().createQuery(" from Lesson less where less.date >= :startDate and " +
                 " less.state != :state and less.training = :training")
                 .setParameter("state", Lesson.State.REMOVAL)
                 .setParameter("startDate", startDate)

@@ -10,5 +10,6 @@ import java.util.List;
  */
 public interface SearchService {
     List<User> searchUser(String searchWord);
+
     List<Training> searchTraining(String searchWord);
 }

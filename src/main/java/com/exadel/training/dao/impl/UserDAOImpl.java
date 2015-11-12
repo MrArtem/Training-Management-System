@@ -1,19 +1,18 @@
 package com.exadel.training.dao.impl;
 
 import com.exadel.training.dao.UserDAO;
-import com.exadel.training.dao.domain.Lesson;
 import com.exadel.training.dao.domain.Listener;
 import com.exadel.training.dao.domain.Training;
 import com.exadel.training.dao.domain.User;
+import com.exadel.training.dao.domain.UserPassword;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.*;
-import org.hibernate.internal.CriteriaImpl;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import javax.jws.soap.SOAPBinding;
 import java.util.Date;
 import java.util.List;
 
@@ -33,12 +32,17 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public void update(User user) {
-         sessionFactory.getCurrentSession().update(user);
+        sessionFactory.getCurrentSession().update(user);
+    }
+
+    @Override
+    public void savePassword(UserPassword userPassword) {
+        sessionFactory.getCurrentSession().save(userPassword);
     }
 
     @Override
     public Boolean isCoachOfCurrentUser(long idCurrentUser, long idCoach) {
-        return (Boolean)sessionFactory.getCurrentSession()
+        return (Boolean) sessionFactory.getCurrentSession()
                 .createQuery("select case when (count(l)>0) then true else false end from Listener as l inner join l.training as t where l.user.id = :idCurrentUser and t.coach.id = :idCoach")
                 .setParameter("idCurrentUser", idCurrentUser)
                 .setParameter("idCoach", idCoach)
@@ -72,7 +76,7 @@ public class UserDAOImpl implements UserDAO {
         Criterion criterionListener = Restrictions.and(Restrictions.eq("listener.user.id", idUser));
         Criterion criterionCoach = Restrictions.and(Restrictions.eq("training.coach.id", idUser));
 
-        criteria.add(Restrictions.or(criterionListener,criterionCoach));
+        criteria.add(Restrictions.or(criterionListener, criterionCoach));
         criteria.add(Restrictions.gt("lesson.date", new Date().getTime()));
 
         criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
@@ -83,14 +87,14 @@ public class UserDAOImpl implements UserDAO {
     @SuppressWarnings("unchecked")
     public List<Training> waitingTrainings(long idUser) {
         Session session = sessionFactory.getCurrentSession();
-        Criteria criteria = session.createCriteria(Training.class,"training");
+        Criteria criteria = session.createCriteria(Training.class, "training");
         criteria.createAlias("training.listenerList", "listener");
         criteria.createAlias("training.lessonList", "lesson");
 
         Criterion criterionListener = Restrictions.and(Restrictions.eq("listener.user.id", idUser));
         Criterion criterionWait = Restrictions.and(Restrictions.eq("listener.state", Listener.State.WAITING));
 
-        criteria.add(Restrictions.and(criterionListener,criterionWait));
+        criteria.add(Restrictions.and(criterionListener, criterionWait));
         criteria.add(Restrictions.gt("lesson.date", new Date().getTime()));
 
         criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
@@ -138,7 +142,7 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public User getUserByLogin(String userLogin) {
-        return (User)sessionFactory.getCurrentSession()
+        return (User) sessionFactory.getCurrentSession()
                 .createQuery("from User as u where u.login = :userLogin")
                 .setParameter("userLogin", userLogin)
                 .uniqueResult();

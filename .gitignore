@@ -151,3 +151,9 @@ crashlytics-build.properties
 .idea/
 /frontend/.tmp/
 /frontend/dist/
+/frontend/node/
+/src/main/webapp
+
+
+#Application.properties
+application.properties

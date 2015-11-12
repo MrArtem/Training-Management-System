@@ -26,8 +26,8 @@ public class WebSecurityConfiguration {
     private String ldapBase;
 
     @Bean
-    public LdapContextSource contextSource () {
-        LdapContextSource contextSource= new LdapContextSource();
+    public LdapContextSource contextSource() {
+        LdapContextSource contextSource = new LdapContextSource();
         contextSource.setUrl(ldapUrl);
         contextSource.setUserDn(ldapUsername);
         contextSource.setPassword(ldapPassword);

@@ -7,25 +7,16 @@ import java.util.List;
 @Table
 public class ApproveAction {
 
-    public enum Type {
-        CREATE, EDIT, REMOVE
-    }
-
     @Id
     @GeneratedValue
     private Long id;
-
     private Long date;
-
     @OneToOne
     private Training training;
-
     @OneToOne
     private ApproveTraining approveTraining;
-
-    @OneToMany
-    List<ApproveLesson> approveLessonList;
-
+    @OneToMany(mappedBy = "approveAction", cascade = CascadeType.ALL)
+    private List<ApproveLesson> approveLessonList;
     @Enumerated(value = EnumType.STRING)
     private Type type;
 
@@ -74,5 +65,9 @@ public class ApproveAction {
 
     public void setType(Type type) {
         this.type = type;
+    }
+
+    public enum Type {
+        CREATE, EDIT, REMOVE
     }
 }

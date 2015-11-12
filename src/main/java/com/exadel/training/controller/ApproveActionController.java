@@ -7,12 +7,11 @@ import com.exadel.training.dao.domain.Training;
 import com.exadel.training.dao.domain.User;
 import com.exadel.training.service.ApproveActionService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.SendTo;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,10 +27,10 @@ public class ApproveActionController {
     private ApproveActionService approveActionService;
 
     @Secured("ADMIN")
-    @MessageMapping("/approve_list")
-    @SendTo("/pipe/approve_list")
-//    @RequestMapping("/approve_list")
-//    @ResponseBody
+    //@MessageMapping("/approve_list")
+    //@SendTo("/pipe/approve_list")
+    @RequestMapping("/approve_list")
+    @ResponseBody
     public List<ApproveActionModel> getApproveActionList(@RequestBody PageModel pageModel) {
         List<ApproveActionModel> approveActionModelList = new ArrayList<ApproveActionModel>();
         for (ApproveAction approveAction :
@@ -57,10 +56,10 @@ public class ApproveActionController {
     }
 
     @Secured("ADMIN")
-    @MessageMapping("/approve_count")
-    @SendTo("/pipe/approve_count")
-//    @RequestMapping("/approve_count")
-//    @ResponseBody
+//    @MessageMapping("/approve_count")
+//    @SendTo("/pipe/approve_count")
+    @RequestMapping("/approve_count")
+    @ResponseBody
     public Long getApproveActionCount() {
         return approveActionService.getActionNumber();
     }

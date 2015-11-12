@@ -30,7 +30,7 @@ public class SearchController {
     public List<UserModel> searchUser(@RequestBody String searchWord) {
         List<UserModel> userModelList = new ArrayList<UserModel>();
 
-        for(User user : searchService.searchUser(searchWord)) {
+        for (User user : searchService.searchUser(searchWord)) {
             userModelList.add(new UserModel(user));
         }
 
@@ -42,10 +42,10 @@ public class SearchController {
     public List<TrainingListModel> searchTraining(@RequestBody String searchWord) {
         List<TrainingListModel> trainingListModels = new ArrayList<TrainingListModel>();
 
-         for(Training training : searchService.searchTraining(searchWord)) {
-             trainingListModels.add(new TrainingListModel(training));
-         }
+        for (Training training : searchService.searchTraining(searchWord)) {
+            trainingListModels.add(new TrainingListModel(training));
+        }
 
-         return trainingListModels;
+        return trainingListModels;
     }
 }

@@ -1,19 +1,16 @@
 package com.exadel.training.controller;
 
 import com.exadel.training.controller.model.fileModels.FileDownload;
-import com.exadel.training.controller.model.fileModels.FileUpload;
 import com.exadel.training.dao.domain.FileStorage;
 import com.exadel.training.service.FileStorageService;
 import com.exadel.training.validate.annotation.LegalID;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sun.corba.se.impl.encoding.OSFCodeSetRegistry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.validation.Validator;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
-
-import org.springframework.validation.Validator;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -30,11 +27,10 @@ import java.util.Map;
 public class FileController {
 
     @Autowired
-    private FileStorageService fileStorageService;
-
-    @Autowired
     @Qualifier("fileUploadValidator")
     Validator fileUploadValidator;
+    @Autowired
+    private FileStorageService fileStorageService;
 
     @InitBinder
     private void initBinder(WebDataBinder webDataBinder) {
@@ -43,17 +39,17 @@ public class FileController {
 
     @Secured({"ADMIN", "USER", "EX_COACH"})
     @RequestMapping(value = "/add_files", method = RequestMethod.POST)
-    public List<FileDownload> uploadFile(@RequestParam(value="file", required=false) MultipartFile file,
-                           @RequestParam(value="files") Object data, @RequestParam(value="idTraining") String idTraining) throws IOException {
+    public List<FileDownload> uploadFile(@RequestParam(value = "file", required = false) MultipartFile file,
+                                         @RequestParam(value = "files") Object data, @RequestParam(value = "idTraining") String idTraining) throws IOException {
         Map<String, String> result = new ObjectMapper().readValue(data.toString(), HashMap.class);
 
-        for(Map.Entry<String, String> entry : result.entrySet()) {
+        for (Map.Entry<String, String> entry : result.entrySet()) {
             fileStorageService.addFile(entry, Long.parseLong(idTraining));
         }
 
         List<FileDownload> fileDownloadList = new ArrayList<FileDownload>();
 
-        for(FileStorage fileStorage : fileStorageService.getAllFileByTraining(Long.parseLong(idTraining))) {
+        for (FileStorage fileStorage : fileStorageService.getAllFileByTraining(Long.parseLong(idTraining))) {
             fileDownloadList.add(new FileDownload(fileStorage));
         }
 
@@ -66,7 +62,7 @@ public class FileController {
     public List<FileDownload> getFiles(@PathVariable("idTraining") long idTraining) {
         List<FileDownload> fileDownloadList = new ArrayList<FileDownload>();
 
-        for(FileStorage fileStorage : fileStorageService.getAllFileByTraining(idTraining)) {
+        for (FileStorage fileStorage : fileStorageService.getAllFileByTraining(idTraining)) {
             fileDownloadList.add(new FileDownload(fileStorage));
         }
 
@@ -81,7 +77,7 @@ public class FileController {
 
         List<FileDownload> fileDownloadList = new ArrayList<FileDownload>();
 
-        for(FileStorage fileStorage : fileStorageService.getAllFileByTraining(idTraining)) {
+        for (FileStorage fileStorage : fileStorageService.getAllFileByTraining(idTraining)) {
             fileDownloadList.add(new FileDownload(fileStorage));
         }
 

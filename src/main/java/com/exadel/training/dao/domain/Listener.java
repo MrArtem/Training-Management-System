@@ -5,23 +5,15 @@ import javax.persistence.*;
 @Entity
 @Table
 public class Listener {
-    public enum State {
-        WAITING, LEAVE, ACCEPTED
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
-
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private User user;
-
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private Training training;
-
     @Enumerated(value = EnumType.STRING)
     private State state;
-
     private boolean canRate;
 
     public Listener() {
@@ -66,5 +58,9 @@ public class Listener {
 
     public void setCanRate(boolean canRate) {
         this.canRate = canRate;
+    }
+
+    public enum State {
+        WAITING, LEAVE, ACCEPTED
     }
 }

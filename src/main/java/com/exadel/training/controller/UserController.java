@@ -28,10 +28,9 @@ import java.util.List;
 public class UserController {
 
     @Autowired
-    private UserService userService;
-    @Autowired
     LessonService lessonService;
-
+    @Autowired
+    private UserService userService;
 
     @Secured({"ADMIN", "USER", "EX_COACH"})
     @RequestMapping(value = "/user_info/{idUser}", method = RequestMethod.GET)
@@ -51,7 +50,7 @@ public class UserController {
     public List<TrainingListModel> getVisitedTraining(@PathVariable("idUser") long idUser) {
         List<TrainingListModel> trainingListModelList = new ArrayList<TrainingListModel>();
 
-        for(Training training : userService.visitedTrainings(idUser)) {
+        for (Training training : userService.visitedTrainings(idUser)) {
             trainingListModelList.add(new TrainingListModel(training));
         }
 
@@ -64,7 +63,7 @@ public class UserController {
     public List<TrainingListModel> getActualTraining(@PathVariable("idUser") long idUser) {
         List<TrainingListModel> trainingListModelList = new ArrayList<TrainingListModel>();
 
-        for(Training training : userService.actualTrainings(idUser)) {
+        for (Training training : userService.actualTrainings(idUser)) {
             TrainingListModel trainingListModel = new TrainingListModel(training);
             Lesson nextLesson = lessonService.getNextLesson(training.getId());
             if (nextLesson != null) {
@@ -81,9 +80,9 @@ public class UserController {
     @RequestMapping(value = "/waitingTraining/{idUser}", method = RequestMethod.GET)
     @LegalID
     public List<TrainingListModel> getWaitingTraining(@PathVariable("idUser") long idUser) {
-        List<TrainingListModel> trainingListModelList = new ArrayList<>();
+        List<TrainingListModel> trainingListModelList = new ArrayList<TrainingListModel>();
 
-        for(Training training : userService.waitingTrainings(idUser)) {
+        for (Training training : userService.waitingTrainings(idUser)) {
             TrainingListModel trainingListModel = new TrainingListModel(training);
             Lesson nextLesson = lessonService.getNextLesson(training.getId());
             if (nextLesson != null) {
@@ -108,7 +107,7 @@ public class UserController {
         userService.addExternalCoach(exCoachModel);
 
         List<UserModel> userList = new ArrayList<UserModel>();
-        for(User user : userService.getUsersByRole(User.Role.EX_COACH)) {
+        for (User user : userService.getUsersByRole(User.Role.EX_COACH)) {
             userList.add(new UserModel(user));
         }
         return userList;
@@ -116,9 +115,9 @@ public class UserController {
 
     @Secured({"ADMIN"})
     @RequestMapping(value = "/get_all_ex_coach", method = RequestMethod.GET)
-    public  List<UserModel> getAllExCoach() {
+    public List<UserModel> getAllExCoach() {
         List<UserModel> userList = new ArrayList<UserModel>();
-        for(User user : userService.getUsersByRole(User.Role.EX_COACH)) {
+        for (User user : userService.getUsersByRole(User.Role.EX_COACH)) {
             userList.add(new UserModel(user));
         }
         return userList;

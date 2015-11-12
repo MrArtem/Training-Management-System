@@ -2,7 +2,6 @@ package com.exadel.training.dao.domain;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.Date;
 
 /**
  * Created by ayudovin on 05.10.2015.
@@ -32,13 +31,13 @@ public class Feedback {
     @NotNull
     private long date;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private User user;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private Training training;
 
-    public Feedback(){
+    public Feedback() {
     }
 
     public long getId() {

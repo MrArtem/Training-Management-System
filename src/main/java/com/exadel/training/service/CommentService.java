@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface CommentService {
 
-    void addComment(CommentModel commentModel, Long trainingId);
+    List<Comment> addComment(CommentModel commentModel, Long trainingId);
 
     void removeComment(Long commentId);
 
