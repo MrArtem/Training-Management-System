@@ -23,6 +23,8 @@ public class GetTrainingModel extends TrainingModel {
     }
 
     public void setTraining(Training training) {
+        setTrainingId(training.getId());
+        setMaxSize(training.getMaxSize());
         setTitle(training.getTitle());
         setShortInfo(training.getExcerpt());
         setDescription(training.getDescription());
