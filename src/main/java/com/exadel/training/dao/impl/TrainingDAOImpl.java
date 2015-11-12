@@ -4,7 +4,6 @@ import com.exadel.training.dao.TrainingDAO;
 import com.exadel.training.dao.UserDAO;
 import com.exadel.training.dao.domain.*;
 import com.exadel.training.security.authentication.CustomAuthentication;
-import com.exadel.training.utils.Utils;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -34,7 +33,7 @@ public class TrainingDAOImpl implements TrainingDAO {
     @Override
     public void addTraining(Training training) {
         sessionFactory.getCurrentSession().save(training);
-}
+    }
 
     @Override
     public void changeTraining(Training training) {
@@ -43,7 +42,7 @@ public class TrainingDAOImpl implements TrainingDAO {
 
     @Override
     public Training getTrainingById(long id) {
-        return sessionFactory.getCurrentSession().load(Training.class,id);
+        return sessionFactory.getCurrentSession().load(Training.class, id);
     }
 
     @Override
@@ -109,7 +108,7 @@ public class TrainingDAOImpl implements TrainingDAO {
     @Override
     public List<Listener> getListenerList(long trainingId) {
         Session session = sessionFactory.getCurrentSession();
-        Training training  = session.load(Training.class, trainingId);
+        Training training = session.load(Training.class, trainingId);
         return training.getListenerList();
     }
 

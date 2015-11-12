@@ -2,16 +2,9 @@ package com.exadel.training.controller.model;
 
 public class StatisticsModel {
 
-    public enum StatisticsType {
-        USER, TRAINING
-    }
-
     private StatisticsType statisticsType;
-
     private Long startDate;
-
     private Long endDate;
-
     private Long id;
 
     public StatisticsModel() {
@@ -47,5 +40,9 @@ public class StatisticsModel {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public enum StatisticsType {
+        USER, TRAINING
     }
 }

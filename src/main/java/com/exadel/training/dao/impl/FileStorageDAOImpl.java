@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
  * Created by ayudovin on 31.10.2015.
  */
 @Repository
-public class FileStorageDAOImpl implements FileStorageDAO{
+public class FileStorageDAOImpl implements FileStorageDAO {
 
     @Autowired
     private SessionFactory sessionFactory;

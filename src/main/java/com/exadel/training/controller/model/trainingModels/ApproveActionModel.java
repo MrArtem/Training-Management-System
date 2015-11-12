@@ -1,7 +1,6 @@
 package com.exadel.training.controller.model.trainingModels;
 
 import com.exadel.training.dao.domain.ApproveAction;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class ApproveActionModel {
 

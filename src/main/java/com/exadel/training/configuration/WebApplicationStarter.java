@@ -36,7 +36,7 @@ public class WebApplicationStarter extends SpringBootServletInitializer {
 
     @Bean
     public CommonsMultipartResolver multipartResolver() {
-        CommonsMultipartResolver resolver=new CommonsMultipartResolver();
+        CommonsMultipartResolver resolver = new CommonsMultipartResolver();
         resolver.setDefaultEncoding("utf-8");
         resolver.setMaxInMemorySize(1048576);
         resolver.setMaxUploadSize(Integer.MAX_VALUE);

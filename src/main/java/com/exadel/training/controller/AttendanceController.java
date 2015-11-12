@@ -6,11 +6,9 @@ import com.exadel.training.service.AttendanceService;
 import com.exadel.training.validate.annotation.LegalID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -26,7 +24,7 @@ public class AttendanceController {
     public List<AttendanceModel> getAllAttendanceByLessonID(@PathVariable("idLesson") long idLesson) {
         List<AttendanceModel> attendanceModelList = new ArrayList<AttendanceModel>();
 
-        for(Attendance attendance : attendanceService.getAllAttendanceByLessonID(idLesson)) {
+        for (Attendance attendance : attendanceService.getAllAttendanceByLessonID(idLesson)) {
             attendanceModelList.add(new AttendanceModel(attendance));
         }
 
@@ -36,7 +34,7 @@ public class AttendanceController {
     @Secured({"ADMIN", "USER"})
     @RequestMapping(value = "/update_attendance", method = RequestMethod.POST, consumes = "application/json")
     public void updateAttendance(@RequestBody List<AttendanceModel> attendanceModelList) {
-      for(AttendanceModel attendance : attendanceModelList)
-        attendanceService.updateAttendance(attendance);
+        for (AttendanceModel attendance : attendanceModelList)
+            attendanceService.updateAttendance(attendance);
     }
 }

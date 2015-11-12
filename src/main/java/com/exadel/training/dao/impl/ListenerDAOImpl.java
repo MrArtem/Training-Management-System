@@ -26,8 +26,8 @@ public class ListenerDAOImpl implements ListenerDAO {
         return sessionFactory.getCurrentSession()
                 .createQuery("from Listener lis " +
                         "where lis.state != :state and lis.training = :training")
-                .setParameter("state",Listener.State.LEAVE)
-                .setParameter("training",training)
+                .setParameter("state", Listener.State.LEAVE)
+                .setParameter("training", training)
                 .list();
     }
 
@@ -39,8 +39,8 @@ public class ListenerDAOImpl implements ListenerDAO {
         return sessionFactory.getCurrentSession()
                 .createQuery("from Listener lis " +
                         "where lis.state = :state and lis.training = :training")
-                .setParameter("state",Listener.State.ACCEPTED)
-                .setParameter("training",training)
+                .setParameter("state", Listener.State.ACCEPTED)
+                .setParameter("training", training)
                 .list();
     }
 
@@ -58,12 +58,12 @@ public class ListenerDAOImpl implements ListenerDAO {
     public Listener getListenerByTrainingUser(long trainingId, long userId) {
         Session session = sessionFactory.getCurrentSession();
         Training training = session.load(Training.class, trainingId);
-        User user =  session.load(User.class, userId);
+        User user = session.load(User.class, userId);
         return (Listener) sessionFactory.getCurrentSession()
                 .createQuery("from Listener lis " +
                         "where lis.user = :user and lis.training = :training")
-                .setParameter("user",user)
-                .setParameter("training",training)
+                .setParameter("user", user)
+                .setParameter("training", training)
                 .uniqueResult();
     }
 
@@ -78,7 +78,7 @@ public class ListenerDAOImpl implements ListenerDAO {
         Training training = session.load(Training.class, trainingId);
         return (Listener) session
                 .createQuery("from Listener lis where lis.state = :state and lis.id = (select min(l.id) from Listener l where l.training = :training)")
-                .setParameter("training",training)
+                .setParameter("training", training)
                 .setParameter("state", Listener.State.WAITING)
                 .uniqueResult();
     }

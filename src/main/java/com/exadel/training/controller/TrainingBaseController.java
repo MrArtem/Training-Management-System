@@ -1,13 +1,15 @@
 package com.exadel.training.controller;
 
-import com.exadel.training.controller.model.CommentModel;
 import com.exadel.training.controller.model.RatingModel;
 import com.exadel.training.controller.model.trainingModels.GetTrainingModel;
 import com.exadel.training.controller.model.trainingModels.ListenerModel;
 import com.exadel.training.controller.model.trainingModels.TrainingListModel;
 import com.exadel.training.controller.model.trainingModels.TrainingShortModel;
 import com.exadel.training.controller.model.userModels.ExUserModel;
-import com.exadel.training.dao.domain.*;
+import com.exadel.training.dao.domain.Lesson;
+import com.exadel.training.dao.domain.Tag;
+import com.exadel.training.dao.domain.Training;
+import com.exadel.training.dao.domain.User;
 import com.exadel.training.security.authentication.CustomAuthentication;
 import com.exadel.training.service.*;
 import com.exadel.training.utils.Utils;
@@ -68,8 +70,8 @@ public class TrainingBaseController {
                 (CustomAuthentication) SecurityContextHolder.getContext().getAuthentication();
         getTrainingModel.setCanRate(trainingService.canRate(trainingId, customUser.getUserId()));
         boolean isCoach = customUser.getUserId() == training.getCoach().getId();
-        getTrainingModel.setIsCoach( isCoach );
-        getTrainingModel.setCanSubscribe( !isCoach && listenerService.canSubscribe(trainingId, customUser.getUserId()));
+        getTrainingModel.setIsCoach(isCoach);
+        getTrainingModel.setCanSubscribe(!isCoach && listenerService.canSubscribe(trainingId, customUser.getUserId()));
         return getTrainingModel;
     }
 
@@ -114,7 +116,7 @@ public class TrainingBaseController {
     @Secured({"ADMIN", "USER"})
     @RequestMapping(value = "/training_list", method = RequestMethod.GET)
     public List<TrainingListModel> getTrainingList(@RequestParam("is_actual") Boolean isActual,
-                                          @RequestParam("page") Integer page,
+                                                   @RequestParam("page") Integer page,
                                                    @RequestParam(value = "tag", required = false) List<String> specialtyList) {
         List<Tag> tagList = new ArrayList<Tag>();
         if (specialtyList != null) {
@@ -166,9 +168,9 @@ public class TrainingBaseController {
     @LegalID
     @Secured({"ADMIN"})
     @RequestMapping(value = "{id}/addExListener", method = RequestMethod.POST)
-    public List<ListenerModel> addListener(@PathVariable("id") long trainingId,@RequestBody ExUserModel exUserModel) {
+    public List<ListenerModel> addListener(@PathVariable("id") long trainingId, @RequestBody ExUserModel exUserModel) {
         Long userId = userService.addExternalUser(exUserModel);
-        listenerService.addListener(trainingId,userId);
+        listenerService.addListener(trainingId, userId);
         return getListenerList(trainingId);
     }
 

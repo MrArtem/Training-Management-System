@@ -9,7 +9,7 @@ import java.io.Serializable;
 /**
  * Created by ayudovin on 31.10.2015.
  */
-public class FileDownload implements Serializable{
+public class FileDownload implements Serializable {
 
     @JsonIgnore
     private BASE64Encoder encoder = new BASE64Encoder();

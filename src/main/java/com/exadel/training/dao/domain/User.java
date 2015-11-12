@@ -47,66 +47,50 @@ import java.util.List;
                         @Parameter(name = "maxGramSize", value = "10")
                 }),
                 @TokenFilterDef(factory = SynonymFilterFactory.class, params = {
-                @Parameter(name = "synonyms", value = "searchSynonyms/synonyms.txt"),
-                @Parameter(name = "expand", value = "false")
+                        @Parameter(name = "synonyms", value = "searchSynonyms/synonyms.txt"),
+                        @Parameter(name = "expand", value = "false")
                 })
         })
 public class User {
 
-    public enum Role{
-        ADMIN, USER, EX_COACH, EX_USER
-    }
-
     @Id
     @GeneratedValue
     private long id;
-
     @NotNull
     @Enumerated(EnumType.STRING)
     private Role role;
-
     @NotBlank
     private String login;
-
     @NotBlank
     @Field(index = Index.YES, analyze = Analyze.YES, store = Store.YES)
     @Analyzer(definition = "customAnalyzer")
     private String firstName;
-
     @NotBlank
     @Field(index = Index.YES, analyze = Analyze.YES, store = Store.YES)
     @Analyzer(definition = "customAnalyzer")
     private String lastName;
-
     @NotBlank
     @Field(index = Index.YES, analyze = Analyze.YES, store = Store.YES)
     @Analyzer(definition = "customAnalyzer")
     @Email
     private String email;
-
     @Field(index = Index.YES, analyze = Analyze.YES, store = Store.YES)
     @Analyzer(definition = "customAnalyzer")
     private String phone;
-
     @OneToOne(cascade = CascadeType.ALL)
     private UserPassword userPassword;
-
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Listener> trainingListListener;
-
     @OneToMany(mappedBy = "coach", cascade = CascadeType.ALL)
     private List<Training> trainingListCoach;
-
     @OneToMany(mappedBy = "user")
     private List<Feedback> feedbackList;
-
     @OneToMany(mappedBy = "user")
     private List<Comment> comments;
-
     @OneToMany(mappedBy = "user")
     private List<Attendance> attendances;
 
-    public  User(){
+    public User() {
     }
 
     public long getId() {
@@ -145,16 +129,16 @@ public class User {
         return email;
     }
 
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public Role getRole() {
         return role;
     }
 
     public void setRole(Role role) {
         this.role = role;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public String getPhone() {
@@ -211,5 +195,9 @@ public class User {
 
     public void setTrainingListListener(List<Listener> trainingListListener) {
         this.trainingListListener = trainingListListener;
+    }
+
+    public enum Role {
+        ADMIN, USER, EX_COACH, EX_USER
     }
 }

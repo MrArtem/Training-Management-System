@@ -56,7 +56,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
             User user = userDAO.getUserByLogin(authentication.getName());
             if (user != null && user.getRole() == User.Role.EX_COACH) {
                 if (passwordEncoder.matches(authentication.getCredentials().toString(),
-                        user.getUserPassword().getPassword())){
+                        user.getUserPassword().getPassword())) {
                     List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
                     authorities.add(new SimpleGrantedAuthority(user.getRole().toString()));
                     auth = new CustomAuthentication(authentication.getName(), authentication.getCredentials().toString(),

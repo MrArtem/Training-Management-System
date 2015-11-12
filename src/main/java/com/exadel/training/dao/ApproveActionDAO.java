@@ -1,7 +1,6 @@
 package com.exadel.training.dao;
 
 import com.exadel.training.dao.domain.ApproveAction;
-import com.exadel.training.dao.domain.Training;
 
 import java.util.List;
 

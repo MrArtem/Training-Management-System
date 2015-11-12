@@ -1,12 +1,6 @@
 package com.exadel.training.controller.model.feedbackModels;
 
 import com.exadel.training.dao.domain.Feedback;
-import com.exadel.training.dao.domain.Training;
-import com.exadel.training.dao.domain.User;
-
-import javax.persistence.CascadeType;
-import javax.persistence.ManyToOne;
-import javax.validation.constraints.NotNull;
 
 /**
  * Created by ayudovin on 03.11.2015.

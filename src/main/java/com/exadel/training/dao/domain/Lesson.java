@@ -9,28 +9,19 @@ import java.util.List;
 @Table
 public class Lesson {
 
-    public  enum State {
-        NONE, REMOVAL, ADD
-    }
     @Id
     @GeneratedValue
     private long id;
-
     private long date;
-
     private String place;
-
     @Enumerated(EnumType.STRING)
     private State state;
-
     @JsonIgnore
     @OneToOne(optional = false)
     private ApproveLesson approveLesson;
-
     @JsonIgnore
     @ManyToOne
     private Training training;
-
     @JsonIgnore
     @OneToMany(mappedBy = "lesson", cascade = CascadeType.ALL)
     private List<Attendance> attendanceList;
@@ -93,5 +84,9 @@ public class Lesson {
 
     public void setState(State state) {
         this.state = state;
+    }
+
+    public enum State {
+        NONE, REMOVAL, ADD
     }
 }

@@ -2,7 +2,6 @@ package com.exadel.training.dao.impl;
 
 import com.exadel.training.dao.CommentDAO;
 import com.exadel.training.dao.domain.Comment;
-import com.exadel.training.dao.domain.Feedback;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -14,7 +13,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public class CommentDAOImpl implements CommentDAO{
+public class CommentDAOImpl implements CommentDAO {
 
     @Autowired
     private SessionFactory sessionFactory;

@@ -51,7 +51,7 @@ public class TrainingServiceImpl implements TrainingService {
     @Override
     public boolean canRate(long trainingId, long userId) {
         Listener listener = listenerDAO.getListenerByTrainingAndUser(trainingId, userId);
-        if( listener == null) {
+        if (listener == null) {
             return false;
         }
         return listener.isCanRate();
@@ -119,7 +119,7 @@ public class TrainingServiceImpl implements TrainingService {
                     approveLesson.setPlace(place);
                 }
                 lessonApproveDAO.addApprove(approveLesson);
-                if(lesson != null) {
+                if (lesson != null) {
                     lesson.setApproveLesson(approveLesson);
                 }
                 approveLessonList.add(approveLesson);
@@ -132,7 +132,7 @@ public class TrainingServiceImpl implements TrainingService {
             , boolean isConfirmed, boolean createLesson, String place, boolean isAdmin) {
         List<ApproveLesson> approveLessonList = new ArrayList<ApproveLesson>();
         LessonModel[] lessonModelList = repeatModel.getLessonList();
-        int dayOfWeekStart = Utils. getDayOfWeek(repeatModel.getStartDate());
+        int dayOfWeekStart = Utils.getDayOfWeek(repeatModel.getStartDate());
         for (int i = 0; i < 7; i++) {
             if (lessonModelList[i] == null) {
                 continue;
@@ -170,7 +170,7 @@ public class TrainingServiceImpl implements TrainingService {
                     lessonApproveDAO.addApprove(approveLesson);
                     approveLessonList.add(approveLesson);
 
-                    if(lesson != null) {
+                    if (lesson != null) {
                         lesson.setApproveLesson(approveLesson);
                     }
                 }
@@ -186,7 +186,6 @@ public class TrainingServiceImpl implements TrainingService {
             , List<LessonModel> lessonModelList, RepeatModel repeatModel, long currentUserId) {
 
 
-
         User currentUser = userDAO.getUserByID(currentUserId);
         boolean isAdmin = currentUser.getRole() == User.Role.ADMIN;
         User coach = userDAO.getUserByID(coachId);
@@ -200,12 +199,12 @@ public class TrainingServiceImpl implements TrainingService {
                 , coach);
         List<Tag> tagList = getTagList(tagIdList);
         training.setTagList(tagList);
-        if(isAdmin) {
+        if (isAdmin) {
             training.setState(Training.State.NONE);
         }
         trainingDAO.addTraining(training);
         ApproveAction approveAction = new ApproveAction();
-        if( !isAdmin ) {
+        if (!isAdmin) {
             ApproveTraining approveTraining = getApproveTraining(title
                     , description
                     , shortInfo
@@ -239,11 +238,11 @@ public class TrainingServiceImpl implements TrainingService {
         List<Lesson> lessonList = training.getLessonList();
         for (Lesson lesson : Utils.emptyIfNull(training.getLessonList())) {
             lessonApproveDAO.removeApprove(lesson.getApproveLesson());
-            if ( removeLesson) {
+            if (removeLesson) {
                 lessonDAO.removeLesson(lesson);
             }
         }
-        if(removeLesson && lessonList != null) {
+        if (removeLesson && lessonList != null) {
             lessonList.clear();
         }
         trainingDAO.changeTraining(training);
@@ -265,7 +264,7 @@ public class TrainingServiceImpl implements TrainingService {
         removeApproveLessonList(approveAction, true);
         Training training = approveAction.getTraining();
 
-        if( type != ApproveAction.Type.REMOVE ) {
+        if (type != ApproveAction.Type.REMOVE) {
             training.setTitle(title);
             training.setDescription(description);
             training.setExcerpt(shortInfo);
@@ -282,7 +281,7 @@ public class TrainingServiceImpl implements TrainingService {
             trainingDAO.changeTraining(training);
             newsService.addNews(training.getCoach()
                     , News.TableName.TRAINING
-                    , (type == ApproveAction.Type.EDIT)? News.ActionType.EDIT : News.ActionType.CREATE
+                    , (type == ApproveAction.Type.EDIT) ? News.ActionType.EDIT : News.ActionType.CREATE
                     , training.getId());
         } else {
             confirmRemoveTraining(training);
@@ -414,7 +413,7 @@ public class TrainingServiceImpl implements TrainingService {
                     , lessonModelList
                     , repeatModel);
         }
-        if( currentUser.getRole() == User.Role.ADMIN ) {
+        if (currentUser.getRole() == User.Role.ADMIN) {
             confirmTraining(approveAction.getId()
                     , title
                     , description
@@ -433,9 +432,9 @@ public class TrainingServiceImpl implements TrainingService {
     public void removeTraining(Long trainingId, Long currentUserId) {
         ApproveAction approveAction = approveActionDAO.getApproveActionByTrainingId(trainingId);
         Training training = trainingDAO.getTrainingById(trainingId);
-        if( approveAction != null) {
+        if (approveAction != null) {
             ApproveTraining approveTraining = approveAction.getApproveTraining();
-            if(approveTraining != null) {
+            if (approveTraining != null) {
                 trainingApproveDAO.removeApprove(approveTraining);
             }
             for (ApproveLesson approveLesson : Utils.emptyIfNull(approveAction.getApproveLessonList())) {
@@ -618,31 +617,31 @@ public class TrainingServiceImpl implements TrainingService {
         ApproveLesson approveLesson = approveAction.getApproveLessonList().get(0);
         Lesson lesson = approveLesson.getLesson();
         Training training = approveAction.getTraining();
-        if(lesson.getState() == Lesson.State.REMOVAL) {
+        if (lesson.getState() == Lesson.State.REMOVAL) {
             lesson.setPlace(approveLessonModel.getNewPlace());
             lesson.setDate(approveLessonModel.getNewDate());
             lesson.setState(Lesson.State.ADD);
             lessonDAO.changeLesson(lesson);
-            for( Listener listener : Utils.emptyIfNull(training.getListenerList())) {
+            for (Listener listener : Utils.emptyIfNull(training.getListenerList())) {
                 Attendance attendance = new Attendance();
                 attendance.setUser(listener.getUser());
                 attendance.setLesson(lesson);
                 attendanceDAO.save(attendance);
             }
         }
-        if(lesson.getState() == Lesson.State.NONE) {
+        if (lesson.getState() == Lesson.State.NONE) {
             lesson.setState(Lesson.State.REMOVAL);
-            for( Attendance attendance : Utils.emptyIfNull(lesson.getAttendanceList()) ) {
+            for (Attendance attendance : Utils.emptyIfNull(lesson.getAttendanceList())) {
                 attendanceDAO.delete(attendance);
             }
-            if( approveLesson.getDate() != null) {
+            if (approveLesson.getDate() != null) {
                 Lesson newLesson = new Lesson();
                 newLesson.setDate(approveLessonModel.getNewDate());
                 newLesson.setPlace(approveLessonModel.getNewPlace());
                 newLesson.setTraining(training);
                 newLesson.setState(Lesson.State.ADD);
                 lessonDAO.addLesson(newLesson);
-                for( Listener listener : Utils.emptyIfNull(training.getListenerList())) {
+                for (Listener listener : Utils.emptyIfNull(training.getListenerList())) {
                     Attendance attendance = new Attendance();
                     attendance.setUser(listener.getUser());
                     attendance.setLesson(lesson);
@@ -682,7 +681,7 @@ public class TrainingServiceImpl implements TrainingService {
     @Override
     public ApproveLesson getApproveLesson(long actionId) {
         ApproveAction approveAction = approveActionDAO.getApproveAction(actionId);
-        return  approveAction.getApproveLessonList().get(0);
+        return approveAction.getApproveLessonList().get(0);
     }
 
     @Override
@@ -692,7 +691,7 @@ public class TrainingServiceImpl implements TrainingService {
         Lesson lesson = approveLesson.getLesson();
         lessonApproveDAO.removeApprove(approveLesson);
         approveActionDAO.removeApproveAction(approveAction);
-        if(lesson.getState() == Lesson.State.REMOVAL) {
+        if (lesson.getState() == Lesson.State.REMOVAL) {
             lessonDAO.removeLesson(lesson);
         } else {
             lesson.setState(Lesson.State.NONE);

@@ -4,7 +4,6 @@ package com.exadel.training.validate;
 import com.exadel.training.controller.model.fileModels.FileUpload;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
-import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 /**
@@ -19,17 +18,18 @@ public class FileUploadValidator implements Validator {
 
     @Override
     public void validate(Object o, Errors errors) {
-        FileUpload fileUpload = (FileUpload)o;
+        FileUpload fileUpload = (FileUpload) o;
 
         if (this.isValidID(fileUpload.getIdTraining())) {
-          errors.reject("id <= 0");
+            errors.reject("id <= 0");
         }
 
-       if (fileUpload.getFiles() == null ) {
+        if (fileUpload.getFiles() == null) {
             errors.reject("null can't be in a model for upload files");
         }
 
     }
+
     private boolean isValidID(long id) {
         return id <= 0;
     }

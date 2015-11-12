@@ -3,7 +3,6 @@ package com.exadel.training.service.impl;
 import com.exadel.training.controller.model.StatisticsModel;
 import com.exadel.training.dao.domain.*;
 import com.exadel.training.service.*;
-import com.exadel.training.utils.Utils;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
@@ -11,13 +10,10 @@ import com.itextpdf.text.pdf.PdfWriter;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
 
 import javax.transaction.Transactional;
 import java.io.ByteArrayOutputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -70,7 +66,7 @@ public class StatisticsServiceImpl implements StatisticsService {
     @Autowired
     private ListenerService listenerService;
 
-    private void drawMainInfo(Document document, String title, String text)  throws DocumentException {
+    private void drawMainInfo(Document document, String title, String text) throws DocumentException {
         Paragraph paragraph = new Paragraph();
         paragraph.add(new Chunk(title + ": ", INFO_TITLE_FONT));
         paragraph.add(new Chunk(text, MAIN_FONT));
@@ -103,7 +99,7 @@ public class StatisticsServiceImpl implements StatisticsService {
         drawMainInfo(document, "Maximum number of listeners", Long.toString(training.getMaxSize()));
         drawMainInfo(document, "Rating",
                 Double.toString((double) training.getSumRating() / training.getCountListenerRating()));
-        switch(training.getState()) {
+        switch (training.getState()) {
             case CREATE:
                 drawMainInfo(document, "State", "waiting for creation approve");
                 break;
@@ -119,7 +115,7 @@ public class StatisticsServiceImpl implements StatisticsService {
         drawMainInfo(document, "Excerpt", training.getExcerpt());
         drawMainInfo(document, "Start date", format.format(lessonService.getStartDateByTraining(training.getId())));
         drawMainInfo(document, "End date", format.format(lessonService.getEndDateByTraining(training.getId())));
-        switch(training.getState()) {
+        switch (training.getState()) {
             case CREATE:
                 drawMainInfo(document, "State", "waiting for creation approve");
                 break;
@@ -179,7 +175,7 @@ public class StatisticsServiceImpl implements StatisticsService {
         return new ArrayList<Attendance>();
     }
 
-    private void drawPresenceComments(Document document,List<Attendance> attendancesWithComments,
+    private void drawPresenceComments(Document document, List<Attendance> attendancesWithComments,
                                       Boolean isUserStatistics) throws DocumentException {
         if (attendancesWithComments != null && !attendancesWithComments.isEmpty()) {
             for (Attendance attendance : attendancesWithComments) {
@@ -197,7 +193,7 @@ public class StatisticsServiceImpl implements StatisticsService {
 
     private void drawUserTrainings(Document document, List<Training> trainingList,
                                    String title, Boolean drawTable, Long id, Long startDate, Long endDate)
-            throws DocumentException{
+            throws DocumentException {
         if (trainingList != null && !trainingList.isEmpty()) {
             drawTitle(document, title);
             for (Training training : trainingList) {
@@ -215,7 +211,7 @@ public class StatisticsServiceImpl implements StatisticsService {
                         attendanceList = attendanceList.subList((attendanceList.size() > MAX_COLUMN_NUMBER)
                                 ? MAX_COLUMN_NUMBER : attendanceList.size(), attendanceList.size());
                     } while (attendanceList.size() > MAX_COLUMN_NUMBER);
-                    if (attendancesWithComments.size() != 0){
+                    if (attendancesWithComments.size() != 0) {
                         drawTitle(document, "Comments to presence");
                         drawPresenceComments(document, attendancesWithComments, true);
                     }
@@ -343,6 +339,7 @@ public class StatisticsServiceImpl implements StatisticsService {
             drawMainInfo(document, title, users.toString());
         }
     }
+
     private void drawTrainingTable(Document document, List<Lesson> lessonList) throws DocumentException {
         if (lessonList != null && !lessonList.isEmpty()) {
             Integer columnNumber = lessonList.size() + 1;
@@ -426,7 +423,7 @@ public class StatisticsServiceImpl implements StatisticsService {
             drawFeedbacks(document, feedbackList, true);
         }
         List<Comment> commentList = commentService.getUserCommentListByDate(id, startDate, endDate);
-        if(commentList != null && !commentList.isEmpty()) {
+        if (commentList != null && !commentList.isEmpty()) {
             drawTitle(document, "Comments from this user");
             drawComments(document, commentList, true);
         }
@@ -458,7 +455,7 @@ public class StatisticsServiceImpl implements StatisticsService {
             drawFeedbacks(document, feedbackList, false);
         }
         List<Comment> commentList = commentService.getTrainingCommentListByDate(id, startDate, endDate);
-        if(commentList != null && !commentList.isEmpty()) {
+        if (commentList != null && !commentList.isEmpty()) {
             drawTitle(document, "Comments to this training");
             drawComments(document, commentList, false);
         }
@@ -474,7 +471,7 @@ public class StatisticsServiceImpl implements StatisticsService {
                     statisticsModel.getStartDate(), statisticsModel.getEndDate());
         } else {
             return getTrainingStatistics(statisticsModel.getId(),
-                        statisticsModel.getStartDate(), statisticsModel.getEndDate());
+                    statisticsModel.getStartDate(), statisticsModel.getEndDate());
         }
     }
 }

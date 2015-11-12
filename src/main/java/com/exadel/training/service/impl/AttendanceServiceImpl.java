@@ -2,7 +2,6 @@ package com.exadel.training.service.impl;
 
 import com.exadel.training.controller.model.attendanceModels.AttendanceModel;
 import com.exadel.training.dao.AttendanceDAO;
-import com.exadel.training.dao.LessonDAO;
 import com.exadel.training.dao.domain.Attendance;
 import com.exadel.training.dao.domain.Lesson;
 import com.exadel.training.service.AttendanceService;
@@ -19,7 +18,7 @@ import java.util.List;
  */
 @Service
 @Transactional
-public class AttendanceServiceImpl implements AttendanceService{
+public class AttendanceServiceImpl implements AttendanceService {
 
     @Autowired
     LessonService lessonService;

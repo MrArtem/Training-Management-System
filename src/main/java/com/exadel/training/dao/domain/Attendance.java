@@ -28,12 +28,16 @@ public class Attendance {
     @ManyToOne
     private Lesson lesson;
 
-    public Attendance(){
+    public Attendance() {
         this.presence = true;
     }
 
     public long getId() {
         return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public boolean isSubscribe() {
@@ -42,10 +46,6 @@ public class Attendance {
 
     public void setIsSubscribe(boolean isSubscribe) {
         this.isSubscribe = isSubscribe;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public String getComment() {

@@ -1,6 +1,5 @@
 package com.exadel.training.service.impl;
 
-import com.exadel.training.controller.model.fileModels.FileUpload;
 import com.exadel.training.dao.FileStorageDAO;
 import com.exadel.training.dao.domain.FileStorage;
 import com.exadel.training.service.FileStorageService;
@@ -28,14 +27,14 @@ public class FileStorageServiceImpl implements FileStorageService {
     private TrainingService trainingService;
 
     @Override
-    public void addFile(Map.Entry<String,String> entry, long idTraining) throws IOException {
-            FileStorage fileStorage = new FileStorage();
+    public void addFile(Map.Entry<String, String> entry, long idTraining) throws IOException {
+        FileStorage fileStorage = new FileStorage();
 
-            fileStorage.setName(entry.getKey());
-            fileStorage.setFile(entry.getValue());
-            fileStorage.setTraining(trainingService.getTraining(idTraining));
+        fileStorage.setName(entry.getKey());
+        fileStorage.setFile(entry.getValue());
+        fileStorage.setTraining(trainingService.getTraining(idTraining));
 
-            fileStorageDAO.addFile(fileStorage);
+        fileStorageDAO.addFile(fileStorage);
     }
 
     @Override

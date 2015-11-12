@@ -16,7 +16,10 @@ public interface FeedbackService {
     Feedback getFeedback(Long id);
 
     List<Feedback> getFeedbackListForUser(long id);
+
     List<Feedback> getFeedbackListAboutUser(long idUser, long startDate, long endDate);
+
     List<Feedback> getFeedbackListFromTrainingForUser(long idUser, long idTraining);
+
     List<Feedback> getFeedbackListFromTraining(long idTraining, long startDate, long endDate);
 }

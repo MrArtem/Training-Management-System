@@ -1,6 +1,5 @@
 package com.exadel.training.validate;
 
-import com.exadel.training.validate.annotation.LegalID;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
@@ -21,6 +20,16 @@ import java.util.List;
 @Component
 public class Validate {
 
+    @Before("@annotation(com.exadel.training.validate.annotation.LegalID)")
+    public void idCheck(JoinPoint joinPoint) {
+        MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
+        for (MethodArgument argument : MethodArgument.of(joinPoint)) {
+            if (argument.getValue() instanceof Long && (Long) argument.getValue() == 0) {
+                throw new IllegalArgumentException("id == 0 in" + methodSignature.getName());
+            }
+        }
+    }
+
     private static class MethodArgument {
 
         private final int index;
@@ -37,6 +46,20 @@ public class Validate {
             this.name = name;
             this.annotations = Collections.unmodifiableList(annotations);
             this.value = value;
+        }
+
+        public static List<MethodArgument> of(JoinPoint joinPoint) {
+            List<MethodArgument> arguments = new ArrayList<MethodArgument>();
+            CodeSignature codeSignature = (CodeSignature) joinPoint.getSignature();
+            String[] names = codeSignature.getParameterNames();
+            MethodSignature methodSignature =
+                    (MethodSignature) joinPoint.getStaticPart().getSignature();
+            Annotation[][] annotations = methodSignature.getMethod().getParameterAnnotations();
+            Object[] values = joinPoint.getArgs();
+            for (int i = 0; i < values.length; i++)
+                arguments.add(new MethodArgument(
+                        i, names[i], Arrays.asList(annotations[i]), values[i]));
+            return Collections.unmodifiableList(arguments);
         }
 
         public int getIndex() {
@@ -62,29 +85,5 @@ public class Validate {
             return value;
         }
 
-        public static List<MethodArgument> of(JoinPoint joinPoint) {
-            List<MethodArgument> arguments = new ArrayList<MethodArgument>();
-            CodeSignature codeSignature = (CodeSignature) joinPoint.getSignature();
-            String[] names = codeSignature.getParameterNames();
-            MethodSignature methodSignature =
-                    (MethodSignature) joinPoint.getStaticPart().getSignature();
-            Annotation[][] annotations = methodSignature.getMethod().getParameterAnnotations();
-            Object[] values = joinPoint.getArgs();
-            for (int i = 0; i < values.length; i++)
-                arguments.add(new MethodArgument(
-                        i, names[i], Arrays.asList(annotations[i]), values[i]));
-            return Collections.unmodifiableList(arguments);
-        }
-
-    }
-
-    @Before("@annotation(com.exadel.training.validate.annotation.LegalID)")
-    public void idCheck(JoinPoint joinPoint) {
-        MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
-        for (MethodArgument argument : MethodArgument.of(joinPoint)) {
-            if (argument.getValue() instanceof Long && (Long) argument.getValue() == 0) {
-                throw new IllegalArgumentException("id == 0 in" + methodSignature.getName());
-            }
-        }
     }
 }

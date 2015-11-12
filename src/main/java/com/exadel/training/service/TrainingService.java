@@ -66,7 +66,7 @@ public interface TrainingService {
 
     void removeTraining(Long trainingId, Long currentUserId);
 
-    List<Training> getTrainingListByTagList(Integer page, Integer pageSize,Boolean isActual, List<Tag> tagList);
+    List<Training> getTrainingListByTagList(Integer page, Integer pageSize, Boolean isActual, List<Tag> tagList);
 
     ApproveAction getApproveAction(long actionId);
 
@@ -87,6 +87,6 @@ public interface TrainingService {
     ApproveLesson getApproveLesson(long actionId);
 
     void canceledLesson(long actionId);
-    
+
     List<Training> getTrainingListForStatistic();
 }

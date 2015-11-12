@@ -17,7 +17,7 @@ public class AddFeedbackModelValidator implements Validator {
 
     @Override
     public void validate(Object o, Errors errors) {
-        AddFeedbackModel addFeedbackModel = (AddFeedbackModel)o;
+        AddFeedbackModel addFeedbackModel = (AddFeedbackModel) o;
 
         long idTraining = addFeedbackModel.getTrainingID();
         long idUser = addFeedbackModel.getUserID();
@@ -27,6 +27,7 @@ public class AddFeedbackModelValidator implements Validator {
         }
 
     }
+
     private boolean isValidID(long id) {
         return id <= 0;
     }

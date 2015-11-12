@@ -37,7 +37,7 @@ public class Feedback {
     @ManyToOne
     private Training training;
 
-    public Feedback(){
+    public Feedback() {
     }
 
     public long getId() {

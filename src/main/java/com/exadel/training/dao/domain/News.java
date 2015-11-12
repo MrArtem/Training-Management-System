@@ -6,28 +6,15 @@ import javax.persistence.*;
 @Table
 public class News {
 
-    public enum TableName {
-        TRAINING, COMMENT, FEEDBACK
-    }
-
-    public enum ActionType {
-        EDIT, CREATE, REMOVE, SET_ATTENDANCE, LEAVE, JOIN, RATE, ADD_FILE, REMOVE_FILE
-    }
-
     @Id
     @GeneratedValue
     private Long id;
-
     @ManyToOne
     private User user;
-
     private Long idRow;
-
     private Long date;
-
     @Enumerated(value = EnumType.STRING)
     private TableName tableName;
-
     @Enumerated(value = EnumType.STRING)
     private ActionType actionType;
 
@@ -76,5 +63,13 @@ public class News {
 
     public void setActionType(ActionType actionType) {
         this.actionType = actionType;
+    }
+
+    public enum TableName {
+        TRAINING, COMMENT, FEEDBACK
+    }
+
+    public enum ActionType {
+        EDIT, CREATE, REMOVE, SET_ATTENDANCE, LEAVE, JOIN, RATE, ADD_FILE, REMOVE_FILE
     }
 }

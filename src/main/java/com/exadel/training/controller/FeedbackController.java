@@ -6,7 +6,6 @@ import com.exadel.training.controller.model.feedbackModels.FullFeedback;
 import com.exadel.training.dao.domain.Feedback;
 import com.exadel.training.service.FeedbackService;
 import com.exadel.training.validate.annotation.LegalID;
-import org.bouncycastle.ocsp.Req;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.access.annotation.Secured;
@@ -40,9 +39,9 @@ public class FeedbackController {
     @RequestMapping(value = "/feedbacks_of_user/{idUser}", method = RequestMethod.GET)
     @LegalID
     public List<FeedbackModel> getFeedbacListOfUser(@PathVariable("idUser") long idUser) {
-         List<FeedbackModel> feedbackModelList = new ArrayList<FeedbackModel>();
+        List<FeedbackModel> feedbackModelList = new ArrayList<FeedbackModel>();
 
-        for(Feedback feedback : feedbackService.getFeedbackListForUser(idUser)) {
+        for (Feedback feedback : feedbackService.getFeedbackListForUser(idUser)) {
             FeedbackModel feedbackModel = new FeedbackModel(feedback);
             feedbackModelList.add(feedbackModel);
         }

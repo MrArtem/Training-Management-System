@@ -19,7 +19,7 @@ import java.util.List;
  * Created by ayudovin on 08.10.2015.
  */
 @Repository
-public class  SearchDAOImpl implements SearchDAO{
+public class SearchDAOImpl implements SearchDAO {
 
 
     @Autowired
@@ -68,8 +68,8 @@ public class  SearchDAOImpl implements SearchDAO{
                 .fuzzy()
                 .withPrefixLength(5)
                 .onFields("title", "description", "excerpt", "coach.firstName", "coach.lastName", "coach.email", "coach.phone", "tagList.specialty")
-                        .matching(searchWord)
-                        .createQuery();
+                .matching(searchWord)
+                .createQuery();
 
         FullTextQuery fullTextQuery = fullTextSession.createFullTextQuery(query, Training.class);
         List<Training> result = fullTextQuery.list();

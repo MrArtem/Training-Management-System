@@ -16,7 +16,7 @@ public class NewsModel {
 
     private Long date;
 
-    public NewsModel (News news) {
+    public NewsModel(News news) {
         User user = news.getUser();
         this.userName = user.getFirstName() + " " + user.getLastName();
         this.userId = user.getId();

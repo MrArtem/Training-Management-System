@@ -7,11 +7,11 @@ import com.exadel.training.dao.UserDAO;
 import com.exadel.training.dao.domain.Comment;
 import com.exadel.training.dao.domain.Training;
 import com.exadel.training.dao.domain.User;
+import com.exadel.training.security.authentication.CustomAuthentication;
 import com.exadel.training.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import com.exadel.training.security.authentication.CustomAuthentication;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
@@ -19,7 +19,7 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-public class CommentServiceImpl implements CommentService{
+public class CommentServiceImpl implements CommentService {
     private final int AVERAGE_EFFECTIVE = 3;
     private final int BOOLEAN_FIELDS_NUMBER = 5;
 
@@ -33,32 +33,31 @@ public class CommentServiceImpl implements CommentService{
     private UserDAO userDAO;
 
 
-
     private Boolean isCommentPositive(Comment comment) {
         int countPositive = 0;
         int countFields = BOOLEAN_FIELDS_NUMBER;
-        if (comment.getClear()){
+        if (comment.getClear()) {
             countPositive++;
         }
-        if (comment.getCreativity()){
+        if (comment.getCreativity()) {
             countPositive++;
         }
-        if (comment.getInteresting()){
+        if (comment.getInteresting()) {
             countPositive++;
         }
-        if (comment.getNewMaterial()){
+        if (comment.getNewMaterial()) {
             countPositive++;
         }
-        if (comment.getRecommendation()){
+        if (comment.getRecommendation()) {
             countPositive++;
         }
-        if (comment.getEffective() > AVERAGE_EFFECTIVE){
+        if (comment.getEffective() > AVERAGE_EFFECTIVE) {
             countPositive++;
         }
-        if (comment.getEffective() != AVERAGE_EFFECTIVE){
+        if (comment.getEffective() != AVERAGE_EFFECTIVE) {
             countFields++;
         }
-        if(countPositive * 2 >= countFields) {
+        if (countPositive * 2 >= countFields) {
             return true;
         }
         return false;

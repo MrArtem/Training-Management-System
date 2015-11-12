@@ -30,16 +30,15 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     @Autowired
+    MessageGenerator messageGenerator;
+    @Autowired
+    Notification notification;
+    @Autowired
     private UserDAO userDAO;
     @Autowired
     private TrainingDAO trainingDAO;
     @Autowired
     private PasswordEncoder encode;
-    @Autowired
-    MessageGenerator messageGenerator;
-    @Autowired
-    Notification notification;
-
 
     @Override
     public void setPasswordExCoach(PasswordExCoach passowrdExCoach) {
@@ -95,7 +94,7 @@ public class UserServiceImpl implements UserService {
 
         user.setUserPassword(userPassword);
 
-        notification.send(exCoachModel.getEmail(),"coach", messageGenerator.getTextPasswordForExCoach(exCoachModel.getLastName() + exCoachModel.getFirstName(), 1L, password, login));
+        notification.send(exCoachModel.getEmail(), "coach", messageGenerator.getTextPasswordForExCoach(exCoachModel.getLastName() + exCoachModel.getFirstName(), 1L, password, login));
         return idUser;
     }
 

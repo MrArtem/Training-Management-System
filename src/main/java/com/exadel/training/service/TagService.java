@@ -1,7 +1,6 @@
 package com.exadel.training.service;
 
 import com.exadel.training.dao.domain.Tag;
-import com.exadel.training.dao.domain.Training;
 
 import java.util.List;
 

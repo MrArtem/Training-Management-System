@@ -48,7 +48,7 @@ public class AttendanceDAOImpl implements AttendanceDAO {
 
     @Override
     public Attendance getAttendanceByUserIDAndLessonID(long idUser, long idLesson) {
-        return (Attendance)sessionFactory.getCurrentSession()
+        return (Attendance) sessionFactory.getCurrentSession()
                 .createQuery("select a from Attendance as a where a.user.id = :idUser and a.lesson.id = :idLesson")
                 .setParameter("idUser", idUser)
                 .setParameter("idLesson", idLesson)
