@@ -28,6 +28,9 @@
         vm.getLanguage = getLanguage;
         vm.setLanguage = setLanguage;
 
+        vm.getType = getType;
+        vm.setType = setType;
+
         //Load external coaches
         if(vm.isAdmin()) {
             vm.getExCoachList();
@@ -87,12 +90,12 @@
 
                 }
             }
-            $scope.courseInfo.language = parseInt($scope.courseInfo.language);
 
             //if admin is logged, he must choose a coach for training
             if (!vm.isAdmin()) {
                 $scope.courseInfo.coachId = authService.getUser().userId;
             }
+
             courseAPI.createCourse($scope.courseInfo).then(function (data) {
                 console.log("request success")
             }); //some then with alert?
@@ -159,7 +162,24 @@
         }
 
         function setLanguage(lang) {
-            vm.courseInfo.language = lang;
+            $scope.courseInfo.language = lang;
+        }
+
+        ///////////////////////////////////////
+
+        function getType(type) {
+            switch(type) {
+                case true:
+                    return 'Internal';
+                case false:
+                    return 'External';
+                default:
+                    return 'unknown';
+            }
+        }
+
+        function setType(type) {
+            $scope.courseInfo.isInner = type;
         }
     }
 })();

@@ -19,6 +19,8 @@ $btn-green: #57ad68;
 $btn-green-border: #a9d8b2;
 $btn-green-hover: #468c54;
 $btn-green-border-hover: $btn-green;
+$btn-green-accent: #8dc540;
+$btn-green-accent-hover: #7fb239;
 
 $btn-red: #ef3e36;
 $btn-red-border: $btn-red;
@@ -77,6 +79,16 @@ body {
   box-shadow: none !important;
 }
 
+.bordered-input {
+    background-color: white !important;
+    border: 1px solid rgba(0,0,0,0.10) !important;
+    cursor: pointer !important;
+}
+
+.bordered-input[disabled] {
+  cursor: pointer;
+}
+
 ///// UTILITY CLASSES /////
 
 .no-left-padding {
@@ -111,6 +123,10 @@ body {
 
 .bottom-mg-25 {
   margin-bottom: 25px;
+}
+
+.top-mg-15 {
+  margin-top: 15px;
 }
 
 .top-mg-25 {
@@ -366,7 +382,20 @@ table {
 .accent-btn-blue:hover {
   color: white !important;
   background-color: $btn-blue-accent !important;
-  border-color: rgb(0, 109, 170) !important;
+  border-color: $btn-blue-accent !important;
+}
+
+.accent-btn-green {
+  @extend .accent-btn;
+  color: white !important;
+  background-color: $btn-green-accent !important;
+  border-color: $btn-green-accent !important;
+}
+
+.accent-btn-green:hover {
+  color: white !important;
+  background-color: $btn-green-accent-hover !important;
+  border-color: $btn-green-accent-hover !important;
 }
 
 .btn-file {

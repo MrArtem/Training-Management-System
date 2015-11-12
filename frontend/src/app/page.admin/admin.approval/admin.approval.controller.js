@@ -8,44 +8,47 @@
     /** @ngInject */
     function ApprovalController($scope, adminAPI) {
         var vm = this;
-        var stompClient = null;
+        //var stompClient = null;
 
         vm.approveList = [];
-        vm.disconnect = disconnect;
+        //vm.disconnect = disconnect;
+        vm.getApproveList = getApproveList;
         vm.makeText = makeText;
-        vm.send = send;
-        vm.connect = connect;
+        //vm.send = send;
+        //vm.connect = connect;
 
-        vm.connect();
+        vm.getApproveList();
 
-        $scope.$on('$stateChangeStart', function() {
-            vm.disconnect();
-        })
+        //vm.connect();
+        //
+        //$scope.$on('$stateChangeStart', function() {
+        //    vm.disconnect();
+        //})
+        //
+        //function connect() {
+        //    var socket = new SockJS('http://localhost:8080/approve_list');
+        //    stompClient = Stomp.over(socket);
+        //    stompClient.connect({}, {}, function(frame) {
+        //        console.log('Connected: ' + frame);
+        //        stompClient.subscribe('/pipe/approve_list', function(greeting){
+        //            console.log(greeting);
+        //        });
+        //
+        //        vm.send();
+        //    });
+        //}
 
-        function connect() {
-            var socket = new SockJS('http://localhost:8080/approve_list');
-            stompClient = Stomp.over(socket);
-            stompClient.connect({}, {}, function(frame) {
-                console.log('Connected: ' + frame);
-                stompClient.subscribe('/pipe/approve_list', function(greeting){
-                    console.log(greeting);
-                });
-
-                vm.send();
-            });
-        }
-
-        function disconnect() {
-            if (stompClient != null) {
-                stompClient.disconnect();
-            }
-            console.log("Disconnected");
-        }
-
-        function send() {
-            debugger;
-            stompClient.send("/approve_list", {}, JSON.stringify({ 'page': 0, 'page_size': 10 }))
-        }
+        //function disconnect() {
+        //    if (stompClient != null) {
+        //        stompClient.disconnect();
+        //    }
+        //    console.log("Disconnected");
+        //}
+        //
+        //function send() {
+        //    debugger;
+        //    stompClient.send("/approve_list", {}, JSON.stringify({ 'page': 0, 'page_size': 10 }))
+        //}
 
         function getApproveList() {
             adminAPI.getApproveList().then(function(data) {

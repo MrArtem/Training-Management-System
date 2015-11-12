@@ -11,9 +11,9 @@
 		vm.addDate = addDate;
 		vm.changeTab = changeTab;
 
+		vm.dates = [];
 		vm.days = ['M', 'T', 'W', 'Th', 'F', 'Sa', 'S'];
 		vm.onDays = [false, false, false, false, false, false, false];
-		vm.dates = [];
 
 		function addDate() {
 			$scope.courseInfo.lessonList.push({
