@@ -45,22 +45,25 @@ public class TrainingDAOImpl implements TrainingDAO {
         return sessionFactory.getCurrentSession().load(Training.class, id);
     }
 
+    private Criterion isActualCriterion(Criteria criteria) {
+        CustomAuthentication customUser =
+                (CustomAuthentication) SecurityContextHolder.getContext().getAuthentication();
+        User user = userDAO.getUserByID(customUser.getUserId());
+        Criterion isCoach = Restrictions.eq("training.coach", user);
+
+        criteria.createAlias("training.listenerList", "listener");
+        Criterion isSubscribed = Restrictions.eq("listener.user", user);
+        Criterion stateListener = Restrictions.eq("listener.state", Listener.State.ACCEPTED);
+        return Restrictions.or(isCoach, Restrictions.and(isSubscribed, stateListener));
+    }
+
     @Override
     @SuppressWarnings("unchecked")
     public List<Training> getTrainingListByTagList(Integer page, Integer pageSize, Boolean isActual, List<Tag> tagList) {
         Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Training.class, "training");
         if (tagList.size() == 0) {
             if (isActual) {
-                CustomAuthentication customUser =
-                        (CustomAuthentication) SecurityContextHolder.getContext().getAuthentication();
-                User user = userDAO.getUserByID(customUser.getUserId());
-                Criterion isCoach = Restrictions.eq("training.coach", user);
-
-                criteria.createAlias("training.listenerList", "listener");
-                Criterion isSubscribed = Restrictions.eq("listener.user", user);
-                Criterion stateListener = Restrictions.eq("listener.state", Listener.State.ACCEPTED);
-
-                criteria.add(Restrictions.or(isCoach, Restrictions.and(isSubscribed, stateListener)));
+                criteria.add(isActualCriterion(criteria));
             }
             criteria = criteria.add(Restrictions.eq("state", Training.State.NONE));
             Long date = new Date().getTime();
@@ -69,17 +72,10 @@ public class TrainingDAOImpl implements TrainingDAO {
             criteria = criteria.addOrder(Order.asc("date"));
             return criteria.list();
         } else {
-            criteria = criteria.add(Restrictions.eq("state", Training.State.NONE));
             if (isActual) {
-                CustomAuthentication customUser =
-                        (CustomAuthentication) SecurityContextHolder.getContext().getAuthentication();
-                User user = userDAO.getUserByID(customUser.getUserId());
-                criteria.createAlias("training.listenerList", "listener");
-                Criterion isCoach = Restrictions.eq("coach", user);
-                Criterion isSubscribed = Restrictions.eq("listener.user", user);
-                criteria.add(Restrictions.or(isCoach, isSubscribed));
-                criteria.add(Restrictions.eq("listener.state", Listener.State.ACCEPTED));
+                criteria.add(isActualCriterion(criteria));
             }
+            criteria = criteria.add(Restrictions.eq("state", Training.State.NONE));
             Long date = new Date().getTime();
             DetachedCriteria detachedCriteria = DetachedCriteria.forClass(Training.class);
             detachedCriteria = detachedCriteria.add(Restrictions.eq("state", Training.State.NONE));
