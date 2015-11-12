@@ -28,10 +28,10 @@ public class ApproveActionController {
     private ApproveActionService approveActionService;
 
     @Secured("ADMIN")
-    @MessageMapping("/approve_list")
-    @SendTo("/pipe/approve_list")
-//    @RequestMapping("/approve_list")
-//    @ResponseBody
+    //@MessageMapping("/approve_list")
+    //@SendTo("/pipe/approve_list")
+    @RequestMapping("/approve_list")
+    @ResponseBody
     public List<ApproveActionModel> getApproveActionList(@RequestBody PageModel pageModel) {
         List<ApproveActionModel> approveActionModelList = new ArrayList<ApproveActionModel>();
         for (ApproveAction approveAction :
@@ -57,10 +57,10 @@ public class ApproveActionController {
     }
 
     @Secured("ADMIN")
-    @MessageMapping("/approve_count")
-    @SendTo("/pipe/approve_count")
-//    @RequestMapping("/approve_count")
-//    @ResponseBody
+//    @MessageMapping("/approve_count")
+//    @SendTo("/pipe/approve_count")
+    @RequestMapping("/approve_count")
+    @ResponseBody
     public Long getApproveActionCount() {
         return approveActionService.getActionNumber();
     }

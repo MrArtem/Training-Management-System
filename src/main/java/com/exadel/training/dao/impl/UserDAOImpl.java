@@ -1,10 +1,7 @@
 package com.exadel.training.dao.impl;
 
 import com.exadel.training.dao.UserDAO;
-import com.exadel.training.dao.domain.Lesson;
-import com.exadel.training.dao.domain.Listener;
-import com.exadel.training.dao.domain.Training;
-import com.exadel.training.dao.domain.User;
+import com.exadel.training.dao.domain.*;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -34,6 +31,11 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public void update(User user) {
          sessionFactory.getCurrentSession().update(user);
+    }
+
+    @Override
+    public void savePassword(UserPassword userPassword) {
+        sessionFactory.getCurrentSession().save(userPassword);
     }
 
     @Override
