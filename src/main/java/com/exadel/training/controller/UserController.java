@@ -11,6 +11,7 @@ import com.exadel.training.dao.domain.User;
 import com.exadel.training.security.authentication.CustomAuthentication;
 import com.exadel.training.service.LessonService;
 import com.exadel.training.service.UserService;
+import com.exadel.training.utils.Utils;
 import com.exadel.training.validate.annotation.LegalID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
@@ -63,14 +64,8 @@ public class UserController {
     public List<TrainingListModel> getActualTraining(@PathVariable("idUser") long idUser) {
         List<TrainingListModel> trainingListModelList = new ArrayList<TrainingListModel>();
 
-        for (Training training : userService.actualTrainings(idUser)) {
-            TrainingListModel trainingListModel = new TrainingListModel(training);
-            Lesson nextLesson = lessonService.getNextLesson(training.getId());
-            if (nextLesson != null) {
-                trainingListModel.setNextDate(nextLesson.getDate());
-                trainingListModel.setNextPlace(nextLesson.getPlace());
-            }
-            trainingListModelList.add(trainingListModel);
+        for (Training training : Utils.emptyIfNull(userService.actualTrainings(idUser))) {
+            trainingListModelList.add(this.createTrainingListModel(training));
         }
 
         return trainingListModelList;
@@ -82,17 +77,21 @@ public class UserController {
     public List<TrainingListModel> getWaitingTraining(@PathVariable("idUser") long idUser) {
         List<TrainingListModel> trainingListModelList = new ArrayList<TrainingListModel>();
 
-        for (Training training : userService.waitingTrainings(idUser)) {
-            TrainingListModel trainingListModel = new TrainingListModel(training);
-            Lesson nextLesson = lessonService.getNextLesson(training.getId());
-            if (nextLesson != null) {
-                trainingListModel.setNextDate(nextLesson.getDate());
-                trainingListModel.setNextPlace(nextLesson.getPlace());
-            }
-            trainingListModelList.add(trainingListModel);
+        for (Training training : Utils.emptyIfNull(userService.waitingTrainings(idUser))) {
+            trainingListModelList.add(this.createTrainingListModel(training));
         }
 
         return trainingListModelList;
+    }
+    private TrainingListModel createTrainingListModel(Training training) {
+        TrainingListModel trainingListModel = new TrainingListModel(training);
+        Lesson nextLesson = lessonService.getNextLesson(training.getId());
+        if (nextLesson != null) {
+            trainingListModel.setNextDate(nextLesson.getDate());
+            trainingListModel.setNextPlace(nextLesson.getPlace());
+        }
+
+        return trainingListModel;
     }
 
     @Secured({"ADMIN"})
