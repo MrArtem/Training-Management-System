@@ -1,0 +1,39 @@
+<div class="nested-view manual-tab">
+	<div class="row">
+		<div class="col-xs-10 col-sm-11">
+
+			<div class="calendar">
+				<a class="dropdown-toggle" id="dropdown1" role="button" data-toggle="dropdown">
+					<div class="input-group">
+						<input type="text" class="form-control"
+							   ng-value="dates.tempDate | date: 'MMM d, y h:mm a'"
+							   placeholder="click to add date"
+							   disabled>
+							<span class="input-group-addon addon-calendar">
+								<i class="fa fa-calendar"></i>
+							</span>
+					</div>
+				</a>
+
+				<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+					<datetimepicker ng-model="dates.tempDate"
+									data-datetimepicker-config="{ dropdownSelector: '#dropdown1', minuteStep: 15 }"></datetimepicker>
+				</ul>
+			</div>
+
+		</div>
+		<div class="col-xs-2 col-sm-1">
+			<a href="" class="btn default-btn-blue" ng-click="dates.addDate()">Add date</a>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="scrollable-div">
+			<table>
+				<tr ng-repeat="lesson in courseInfo.lessonList track by $index">
+					<td>{{lesson.date |  date: "MMM d, y h:mm a"}}</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+</div>
