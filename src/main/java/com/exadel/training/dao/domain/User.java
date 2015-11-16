@@ -5,7 +5,6 @@ import org.apache.lucene.analysis.core.WhitespaceTokenizerFactory;
 import org.apache.lucene.analysis.miscellaneous.WordDelimiterFilterFactory;
 import org.apache.lucene.analysis.ngram.NGramFilterFactory;
 import org.apache.lucene.analysis.snowball.SnowballPorterFilterFactory;
-import org.apache.lucene.analysis.synonym.SynonymFilterFactory;
 import org.hibernate.search.annotations.*;
 import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.Parameter;
@@ -45,11 +44,11 @@ import java.util.List;
                 @TokenFilterDef(factory = NGramFilterFactory.class, params = {
                         @Parameter(name = "minGramSize", value = "3"),
                         @Parameter(name = "maxGramSize", value = "10")
-                }),
+                }/*),
                 @TokenFilterDef(factory = SynonymFilterFactory.class, params = {
-                        @Parameter(name = "synonyms", value = "/searchSynonyms/synonyms.txt"),
+                        @Parameter(name = "synonyms", value = "searchSynonyms/synonyms.txt"),
                         @Parameter(name = "expand", value = "false")
-                })
+                }*/)
         })
 public class User {
 
