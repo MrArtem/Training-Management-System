@@ -17,7 +17,7 @@ public class Lesson {
     @Enumerated(EnumType.STRING)
     private State state;
     @JsonIgnore
-    @OneToOne(optional = false)
+    @OneToOne
     private ApproveLesson approveLesson;
     @JsonIgnore
     @ManyToOne
