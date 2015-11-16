@@ -6,7 +6,7 @@
         .controller('CourseInfoController', CourseInfoController);
 
     /** @ngInject */
-    function CourseInfoController($scope, $state, $stateParams, $location, courseAPI, authService) {
+    function CourseInfoController($scope, $stateParams, $location, courseAPI, authService) {
         var vm = this;
 
         vm.courseInfo = {};
@@ -17,6 +17,7 @@
         vm.isContentLoaded = false;
         vm.rating = 0;
 
+        vm.deleteCourse = deleteCourse;
         vm.getLanguage = getLanguage;
         vm.getShortInfo = getShortInfo;
         vm.isActive = isActive;
@@ -28,6 +29,12 @@
         $scope.courseInfo = vm.courseInfo;
 
         vm.getShortInfo();
+
+        function deleteCourse() {
+            courseAPI.deleteCourse($stateParams.courseId).then(function(data) {
+                //
+            });
+        }
 
         function getLanguage(lang) {
             switch(lang) {

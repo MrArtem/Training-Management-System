@@ -6,7 +6,7 @@
         .controller('ProfileController', ProfileController);
 
     /** @ngInject */
-    function ProfileController($scope, $state, $stateParams, userAPI) {
+    function ProfileController($scope, $location, $stateParams, userAPI) {
         var vm = this;
         var userId = $stateParams.userId;
         console.log(userId);
@@ -34,14 +34,8 @@
             });
         }
 
-        function getWaitingCourses() {
-            userAPI.getWaitingCourses(userId).then(function(data) {
-                vm.waitingCourses = angular.copy(data);
-            });
-        }
-
         function isActive(state) {
-            return $state.includes(state);
+            return $location.absUrl().search(state) === -1 ? false : true
         }
     }
 })();

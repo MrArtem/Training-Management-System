@@ -16,6 +16,7 @@
             cancelCreate: cancelCreate,
             cancelEdit: cancelEdit,
             createCourse: createCourse,
+            deleteCourse: deleteCourse,
             deleteFile: deleteFile,
             deleteLesson: deleteLesson,
             deleteParticipant: deleteParticipant,
@@ -223,6 +224,14 @@
                 console.log('Course canceled successfully!');
                 $state.transitionTo('mycourses');
                 return results.data;
+            });
+        }
+
+        function deleteCourse(courseId) {
+            return $http.delete(urlProvider.deleteCourse(courseId)).then(function(result) {
+                console.log('Course deleted successfully!');
+                $state.transitionTo('mycourses');
+                return result.data;
             });
         }
 

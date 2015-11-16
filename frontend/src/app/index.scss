@@ -91,6 +91,10 @@ body {
 
 ///// UTILITY CLASSES /////
 
+.inline {
+  display: inline !important;
+}
+
 .no-left-padding {
   padding-left: 0 !important;
 }

@@ -56,6 +56,7 @@
         }
         else {
             $scope.isEdited = false;
+            vm.isDraft = true;
             vm.courseInfo.isRepeating = false;
             vm.courseInfo.lessonList = [];
             vm.courseInfo.tagList = [];

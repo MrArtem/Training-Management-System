@@ -18,6 +18,7 @@
             changePassword: changePassword,
             confirm: confirm,
             createCourse: createCourse,
+            deleteCourse: deleteCourse,
             deleteFile: deleteFile,
             deleteLesson: deleteLesson,
             deleteParticipant: deleteParticipant,
@@ -98,6 +99,10 @@
 
     function createCourse() {
         return '/api/training/create';
+    }
+
+    function deleteCourse(courseId) {
+        return '/api/training/' + courseId + '/remove';
     }
 
     function deleteFile(fileId) {
