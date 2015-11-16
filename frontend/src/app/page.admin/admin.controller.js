@@ -6,12 +6,12 @@
 		.controller('AdminController', AdminController);
 
 	/** @ngInject */
-	function AdminController($state) {
+	function AdminController($location) {
 		var vm = this;
 		vm.isActive = isActive;
 
 		function isActive(state) {
-			return $state.includes(state);
+			return $location.absUrl().search(state) === -1 ? false : true
 		}
 
 	}

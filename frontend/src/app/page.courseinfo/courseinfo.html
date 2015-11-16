@@ -2,7 +2,10 @@
     <div class="row">
         <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
             <div class="row courseinfo-short">
-                <h1 class="title">{{courseInfo.title}}</h1>
+                <h1 class="title"><span>{{courseInfo.title}}</span>
+                    <a ng-if="courseInfo.isCoach || courseinfo.isAdmin()" href="" ui-sref="managecourse({courseId: courseInfo.trainingId, edit: true})"><span
+                        class="pull-right edit-course"><i class="fa fa-pencil-square-o"></i></span></a></h1>
+
 
                 <!--Uncomment when checked-->
                 <!--<uib-rating ng-model="courseInfo.rating" max="5" readonly="!courseInfo.canRate"-->
@@ -23,6 +26,9 @@
 
                 <p class="field">Language: <span class="info">{{courseinfo.getLanguage(courseInfo.language)}}</span></p>
 
+            </div>
+
+            <div class="row bottom-mg-50">
                 <a ng-if="courseInfo.canSubscribe" href="" class="btn default-btn-blue"
                    ng-click="courseinfo.subscribe()">Subscribe</a>
                 <a ng-if="!courseInfo.canSubscribe && !courseInfo.isCoach" href=""

@@ -9,7 +9,7 @@
   $right-pd: 48px;
 
   .courseinfo-short {
-    margin-bottom: 32px;
+    margin-bottom: 15px;
 
     .title {
       margin-bottom: 28px;
@@ -30,6 +30,10 @@
     .field, .info {
       margin-bottom: 8px;
     }
+  }
+
+  .edit-course {
+    color: rgba(0,0,0,0.28);
   }
 
   .courseinfo-view {

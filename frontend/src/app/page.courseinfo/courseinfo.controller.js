@@ -6,7 +6,7 @@
         .controller('CourseInfoController', CourseInfoController);
 
     /** @ngInject */
-    function CourseInfoController($scope, $state, $stateParams, courseAPI, $location) {
+    function CourseInfoController($scope, $state, $stateParams, $location, courseAPI, authService) {
         var vm = this;
 
         vm.courseInfo = {};
@@ -20,6 +20,7 @@
         vm.getLanguage = getLanguage;
         vm.getShortInfo = getShortInfo;
         vm.isActive = isActive;
+        vm.isAdmin = isAdmin;
         vm.leave = leave;
         vm.setRating = setRating; //TODO
         vm.subscribe = subscribe;
@@ -66,13 +67,18 @@
 
         function subscribe() {
             courseAPI.subscribe($stateParams.courseId).then(function(data) {
-                vm.courseInfo.canSubscribe = false;
+                debugger;
+                $scope.courseInfo.canSubscribe = false;
                 console.log('Subscribed successfully');
             })
         }
 
         function isActive(state) {
             return $location.absUrl().search(state) === -1 ? false : true
+        }
+
+        function isAdmin() {
+            return authService.getAccessRights() == 0 ? true : false;
         }
 
     }

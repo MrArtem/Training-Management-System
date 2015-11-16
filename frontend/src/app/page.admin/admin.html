@@ -4,14 +4,14 @@
 			<div class="row">
 
 				<ul class="nav nav-tabs router-tabs">
-					<li role="presentation" ng-class="{active: admin.isActive('approval')}"><a ui-sref="admin.approval">Approval</a></li>
-					<li role="presentation" ng-class="{active: admin.isActive('statistics')}"><a ui-sref="admin.statistics">Statistics</a></li>
-					<li role="presentation" ng-class="{active: admin.isActive('news')}"><a ui-sref="admin.news">News</a></li>
+					<li role="presentation" ng-class="{activelink: admin.isActive('approval')}"><a ui-sref="admin.approval">Approval</a></li>
+					<li role="presentation" ng-class="{activelink: admin.isActive('statistics')}"><a ui-sref="admin.statistics">Statistics</a></li>
+					<li role="presentation" ng-class="{activelink: admin.isActive('news')}"><a ui-sref="admin.news">News</a></li>
 				</ul>
 
 			</div>
 
-			<div ui-view class="row">
+			<div ui-view class="row admin-view">
 			</div>
 		</div>
 	</div>

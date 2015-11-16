@@ -3,7 +3,7 @@
         <div class="col-xs-12 col-md-11">
             <h4 class="tab-heading">Timetable</h4>
 
-            <a class="btn default-btn-blue bottom-mg-25" data-toggle="modal" data-target="#addLessonModal"><i class="fa fa-plus"></i>Add
+            <a ng-if="courseInfo.isCoach || courseinfo.isAdmin()" class="btn default-btn-blue bottom-mg-25" data-toggle="modal" data-target="#addLessonModal"><i class="fa fa-plus"></i>Add
                 date</a>
 
 
@@ -15,8 +15,8 @@
                         <th>Lesson</th>
                         <th>When</th>
                         <th>Where</th>
-                        <th>Attendance</th>
-                        <th></th>
+                        <th ng-if="courseInfo.isCoach">Attendance</th>
+                        <th ng-if="courseInfo.isCoach || courseinfo.isAdmin()"></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -24,9 +24,9 @@
                         <td>{{$index + 1}}</td>
                         <td>{{lesson.date | date: "MMM d, y h:mm a"}}</td>
                         <td>{{lesson.place}}</td>
-                        <td><a href="" data-toggle="modal" data-target="#attendanceModal"
+                        <td ng-if="courseInfo.isCoach"><a href="" data-toggle="modal" data-target="#attendanceModal"
                                ng-click="timetable.getAttendance($index)">Edit</a></td></td>
-                        <td><a href="" data-toggle="modal" data-target="#editLessonModal"
+                        <td ng-if="courseInfo.isCoach || courseinfo.isAdmin()"><a href="" data-toggle="modal" data-target="#editLessonModal"
                                ng-click="timetable.getLessonId($index)">Edit</a></td>
                     </tr>
                     </tbody>

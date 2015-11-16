@@ -82,9 +82,11 @@
                         $state.go('managecourse', {courseId: item.trainingId, edit: true, id: item.id, type: type});
                     }
                     break;
-                //case 'EDIT':
-                //    return (tableName == 'APPROVE_TRAINING') ? ' wants to edit training ' : ' wants to edit lesson in training ';
-                //    break;
+                case 'EDIT':
+                    if(tableName == 'APPROVE_TRAINING') {
+                        $state.go('managecourse', {courseId: item.trainingId, edit: true, id: item.id, type: type});
+                    }
+                    break;
                 //case 'REMOVE':
                 //    return (tableName == 'APPROVE_TRAINING') ? ' wants to delete training ' : ' wants to delete lesson from training ';
                 default:

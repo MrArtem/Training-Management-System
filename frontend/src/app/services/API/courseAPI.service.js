@@ -125,80 +125,80 @@
             });
         }
 
-        function editCourse(courseId, courseData, isDraft, justEdit) {
-            var fd = new FormData();
-            if (isDraft) {
-                console.log("Course just created");
-                if (justEdit) {
-                    fd.append('courseInfo', JSON.stringify(courseData));
-                    return $http.put(urlProvider.editCourse(courseId), fd, {
-                        headers: {
-                            'Content-Type': undefined
-                        },
-                        transformRequest: angular.identity
-                    })
-                        .then(function (results) {
-                            console.log('Course edited successfully!');
-                            $state.transitionTo('mycourses');
-                            return results.data;
-                        });
-                }
-                else {
-                    console.log("admin approves course!");
-                    fd.append('courseInfo', JSON.stringify(courseData));
-                    return $http.put(urlProvider.confirm(courseId), fd, {
-                        headers: {
-                            'Content-Type': undefined
-                        },
-                        transformRequest: angular.identity
-                    })
-                        .then(function (results) {
-                            console.log('Course edited successfully!');
-                            $state.transitionTo('mycourses');
-                            return results.data;
-                        });
-                }
-
-            }
-            else {
-                console.log("isnt draft");
-                //courseData.additional = "";
-                //courseData.dateTime = [""];
-                //courseData.places = [""];
-
-                fd.append('courseInfo', JSON.stringify(courseData));
-
-                if (justEdit) {
-                    console.log(courseData);
-                    fd.append('courseInfo', JSON.stringify(courseData));
-                    return $http.put(urlProvider.editCourse(courseId), fd, {
-                        headers: {
-                            'Content-Type': undefined
-                        },
-                        transformRequest: angular.identity
-                    })
-                        .then(function (results) {
-                            console.log('Course edited successfully!');
-                            $state.transitionTo('mycourses');
-                            return results.data;
-                        });
-                }
-                else {
-                    return $http.put(urlProvider.confirm(courseId), fd, {
-                        headers: {
-                            'Content-Type': undefined
-                        },
-                        transformRequest: angular.identity
-                    })
-                        .then(function (results) {
-                            console.log('Course approved successfully!');
-                            $state.transitionTo('mycourses');
-                            return results.data;
-                        });
-
-                }
-            }
-        }
+        //function editCourse(courseId, courseData, isDraft, justEdit) {
+        //    var fd = new FormData();
+        //    if (isDraft) {
+        //        console.log("Course just created");
+        //        if (justEdit) {
+        //            fd.append('courseInfo', JSON.stringify(courseData));
+        //            return $http.put(urlProvider.editCourse(courseId), fd, {
+        //                headers: {
+        //                    'Content-Type': undefined
+        //                },
+        //                transformRequest: angular.identity
+        //            })
+        //                .then(function (results) {
+        //                    console.log('Course edited successfully!');
+        //                    $state.transitionTo('mycourses');
+        //                    return results.data;
+        //                });
+        //        }
+        //        else {
+        //            console.log("admin approves course!");
+        //            fd.append('courseInfo', JSON.stringify(courseData));
+        //            return $http.put(urlProvider.confirm(courseId), fd, {
+        //                headers: {
+        //                    'Content-Type': undefined
+        //                },
+        //                transformRequest: angular.identity
+        //            })
+        //                .then(function (results) {
+        //                    console.log('Course edited successfully!');
+        //                    $state.transitionTo('mycourses');
+        //                    return results.data;
+        //                });
+        //        }
+        //
+        //    }
+        //    else {
+        //        console.log("isnt draft");
+        //        //courseData.additional = "";
+        //        //courseData.dateTime = [""];
+        //        //courseData.places = [""];
+        //
+        //        fd.append('courseInfo', JSON.stringify(courseData));
+        //
+        //        if (justEdit) {
+        //            console.log(courseData);
+        //            fd.append('courseInfo', JSON.stringify(courseData));
+        //            return $http.put(urlProvider.editCourse(courseId), fd, {
+        //                headers: {
+        //                    'Content-Type': undefined
+        //                },
+        //                transformRequest: angular.identity
+        //            })
+        //                .then(function (results) {
+        //                    console.log('Course edited successfully!');
+        //                    $state.transitionTo('mycourses');
+        //                    return results.data;
+        //                });
+        //        }
+        //        else {
+        //            return $http.put(urlProvider.confirm(courseId), fd, {
+        //                headers: {
+        //                    'Content-Type': undefined
+        //                },
+        //                transformRequest: angular.identity
+        //            })
+        //                .then(function (results) {
+        //                    console.log('Course approved successfully!');
+        //                    $state.transitionTo('mycourses');
+        //                    return results.data;
+        //                });
+        //
+        //        }
+        //    }
+        //}
 
         function cancelCreate(courseId) {
             return $http.put(urlProvider.cancelCreate(courseId), {
@@ -223,6 +223,14 @@
                 console.log('Course canceled successfully!');
                 $state.transitionTo('mycourses');
                 return results.data;
+            });
+        }
+
+        function editCourse(courseId, courseData) {
+            return $http.put(urlProvider.editCourse(courseId), courseData).then(function(result) {
+                console.log('Course edited successfully!');
+                $state.transitionTo('mycourses');
+                return result.data;
             });
         }
 

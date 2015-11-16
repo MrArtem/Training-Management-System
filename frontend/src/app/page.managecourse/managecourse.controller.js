@@ -16,7 +16,9 @@
 
         vm.approveCourse = approveCourse;
         vm.createCourse = createCourse;
+        vm.getCourseToEdit = getCourseToEdit;
         vm.getEditedCourse = getEditedCourse;
+        vm.editCourse = editCourse;
         vm.isActive = isActive;
         vm.isAdmin = isAdmin;
 
@@ -32,16 +34,25 @@
         vm.setType = setType;
 
         //Load external coaches
-        if(vm.isAdmin()) {
+        if (vm.isAdmin()) {
             vm.getExCoachList();
         }
-        
+
         if ($stateParams.edit) {
             vm.courseId = parseInt($stateParams.courseId);
             vm.actionId = parseInt($stateParams.id);
             $scope.isEdited = true;
             vm.isDraft = $stateParams.type == 'CREATE';
-            vm.getEditedCourse();
+
+            if (vm.isDraft) {
+                //if admin approves
+                vm.getEditedCourse();
+            }
+            else {
+                //if admin/user wants to edit
+                vm.getCourseToEdit();
+
+            }
         }
         else {
             $scope.isEdited = false;
@@ -104,6 +115,18 @@
             console.log($scope.courseInfo);
         }
 
+        function getCourseToEdit() {
+            courseAPI.getShortInfo($stateParams.courseId).then(function (data) {
+                $scope.courseInfo = angular.copy(data);
+                courseAPI.getTimetable($stateParams.courseId).then(function (data) {
+                    $scope.courseInfo.lessonList = angular.copy(data);
+                    vm.coachName = $scope.courseInfo.coachName;
+                    vm.isContentLoaded = true;
+                    console.log('Received course: ', $scope.courseInfo);
+                });
+            });
+        }
+
         function getEditedCourse() {
             courseAPI.getEditedCourse(vm.actionId).then(function (data) {
                     $scope.courseInfo = angular.copy(data);
@@ -111,6 +134,12 @@
                     console.log($scope.courseInfo);
                 }
             );
+        }
+
+        function editCourse() {
+            courseAPI.editCourse($stateParams.courseId, $scope.courseInfo).then(function(data) {
+                //do something
+            });
         }
 
         function isActive(state) {
@@ -153,7 +182,7 @@
         ///////////////////////////////////////
 
         function getLanguage(lang) {
-            switch(lang) {
+            switch (lang) {
                 case 1:
                     return 'English';
                 case 2:
@@ -170,7 +199,7 @@
         ///////////////////////////////////////
 
         function getType(type) {
-            switch(type) {
+            switch (type) {
                 case true:
                     return 'Internal';
                 case false:

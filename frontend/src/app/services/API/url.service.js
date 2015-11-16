@@ -112,8 +112,8 @@
         return '/api/training/' + courseId + '/leave/' + userId;
     }
 
-    function editCourse(trainingId) {
-        return '/api/training/edit/' + trainingId;
+    function editCourse(courseId) {
+        return '/api/training/edit/' + courseId;
     }
 
     function findTrainings(searchQuery) {

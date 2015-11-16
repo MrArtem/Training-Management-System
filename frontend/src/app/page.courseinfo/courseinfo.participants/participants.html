@@ -3,7 +3,7 @@
         <div class="col-xs-12 col-md-11">
 
             <h4 class="tab-heading">Participants</h4>
-            <a class="btn default-btn-blue bottom-mg-25" data-toggle="modal" data-target="#addParticipantModal"><i class="fa fa-plus"></i>Add participant</a>
+            <a ng-if="courseinfo.isAdmin()" class="btn default-btn-blue bottom-mg-25" data-toggle="modal" data-target="#addParticipantModal"><i class="fa fa-plus"></i>Add participant</a>
 
             <div class="scrollable-div">
 
@@ -14,7 +14,7 @@
                         <th>#</th>
                         <th>Name</th>
                         <th>Email</th>
-                        <th></th>
+                        <th ng-if="courseinfo.isAdmin()"></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -23,7 +23,7 @@
                         <td><a href="" ui-sref="profile({userId: participant.userId})">{{participant.username}}</a></td>
                         <td>{{participant.email}}</td>
                         <td><a href="" data-toggle="modal" data-target="#addFeedbackModal" ng-click="participants.getUserId($index)">Leave feedback</a></td>
-                        <td class="hiddenCell" ng-click="participants.deleteParticipant($index)"><i class="fa fa-times"></i></td>
+                        <td ng-if="courseinfo.isAdmin()" class="hiddenCell" ng-click="participants.deleteParticipant($index)"><i class="fa fa-times"></i></td>
                     </tr>
                     </tbody>
                 </table>

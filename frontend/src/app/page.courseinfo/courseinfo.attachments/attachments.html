@@ -40,7 +40,7 @@
                 <h4 class="modal-title" id="addTitle">Upload files</h4>
             </div>
             <div class="modal-body">
-                <div class="row" ng-controller="FileUploadController as upload">
+                <div ng-if="courseInfo.isCoach || courseinfo.isAdmin()" class="row" ng-controller="FileUploadController as upload">
                     <div class="col-xs-12 col-sm-6">
                         <button class="btn btn-file default-btn-blue" id="uploadFileBtn">
                             <i class="fa fa-plus"></i> Add file
@@ -53,7 +53,7 @@
                     <table ng-if="filesToUpload.length != 0">
                         <tr ng-repeat="file in filesToUpload" class="rowWithSecret">
                             <td>{{file.name}}</td>
-                            <td class="hiddenCell" ng-click="deleteFile($index)"><i class="fa fa-times"></i></td>
+                            <td ng-if="courseInfo.isCoach || courseinfo.isAdmin()" class="hiddenCell" ng-click="deleteFile($index)"><i class="fa fa-times"></i></td>
                         </tr>
                     </table>
                     <p ng-if="filesToUpload.length == 0">No files uploaded yet</p>
