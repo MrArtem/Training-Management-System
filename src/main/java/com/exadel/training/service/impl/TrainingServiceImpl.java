@@ -86,8 +86,17 @@ public class TrainingServiceImpl implements TrainingService {
         return tagList;
     }
 
+    private void addAttendance(Lesson lesson, List<Listener> listenerList) {
+        for (Listener listener : Utils.emptyIfNull(listenerList)) {
+            Attendance attendance = new Attendance();
+            attendance.setLesson(lesson);
+            attendance.setUser(listener.getUser());
+            attendanceDAO.save(attendance);
+        }
+    }
 
-    private List<ApproveLesson> addLessonListNotRepeating(Training training
+
+    private List<ApproveLesson> addLessonListNotRepeating(Training training, ApproveAction approveAction
             , List<LessonModel> lessonModelList, boolean isConfirmed, boolean createLesson, String place, boolean isAdmin) {
         List<ApproveLesson> approveLessonList = new ArrayList<ApproveLesson>();
         for (LessonModel lessonModel : lessonModelList) {
@@ -102,17 +111,13 @@ public class TrainingServiceImpl implements TrainingService {
                     lesson.setPlace(place);
                 }
                 lessonDAO.addLesson(lesson);
-                for (Listener listener : Utils.emptyIfNull(training.getListenerList())) {
-                    Attendance attendance = new Attendance();
-                    attendance.setLesson(lesson);
-                    attendance.setUser(listener.getUser());
-                    attendanceDAO.save(attendance);
-                }
+                addAttendance(lesson, training.getListenerList());
             }
             if (!isConfirmed && !isAdmin) {
                 ApproveLesson approveLesson = new ApproveLesson();
                 approveLesson.setLesson(lesson);
                 approveLesson.setDate(lessonModel.getDate());
+                approveLesson.setApproveAction(approveAction);
                 if (place == null) {
                     approveLesson.setPlace(lessonModel.getPlace());
                 } else {
@@ -128,7 +133,7 @@ public class TrainingServiceImpl implements TrainingService {
         return approveLessonList;
     }
 
-    private List<ApproveLesson> addLessonListRepeating(Training training, RepeatModel repeatModel
+    private List<ApproveLesson> addLessonListRepeating(Training training, ApproveAction approveAction, RepeatModel repeatModel
             , boolean isConfirmed, boolean createLesson, String place, boolean isAdmin) {
         List<ApproveLesson> approveLessonList = new ArrayList<ApproveLesson>();
         LessonModel[] lessonModelList = repeatModel.getLessonList();
@@ -151,17 +156,13 @@ public class TrainingServiceImpl implements TrainingService {
                         lesson.setPlace(place);
                     }
                     lessonDAO.addLesson(lesson);
-                    for (Listener listener : Utils.emptyIfNull(training.getListenerList())) {
-                        Attendance attendance = new Attendance();
-                        attendance.setLesson(lesson);
-                        attendance.setUser(listener.getUser());
-                        attendanceDAO.save(attendance);
-                    }
+                    addAttendance(lesson, training.getListenerList());
                 }
                 if (!isConfirmed && !isAdmin) {
                     ApproveLesson approveLesson = new ApproveLesson();
                     approveLesson.setLesson(lesson);
                     approveLesson.setDate(dateLesson);
+                    approveLesson.setApproveAction(approveAction);
                     if (place == null) {
                         approveLesson.setPlace(lessonModelList[i].getPlace());
                     } else {
@@ -221,10 +222,10 @@ public class TrainingServiceImpl implements TrainingService {
         }
         List<ApproveLesson> approveLessonList;
         if (isRepeating) {
-            approveLessonList = addLessonListRepeating(training, repeatModel
+            approveLessonList = addLessonListRepeating(training, approveAction, repeatModel
                     , false, true, place, isAdmin);
         } else {
-            approveLessonList = addLessonListNotRepeating(training, lessonModelList
+            approveLessonList = addLessonListNotRepeating(training, approveAction, lessonModelList
                     , false, true, place, isAdmin);
         }
         if (!isAdmin) {
@@ -274,9 +275,9 @@ public class TrainingServiceImpl implements TrainingService {
             training.setIsInner(isInner);
             training.setTagList(getTagList(tagIdList));
             if (training.isRepeat()) {
-                addLessonListRepeating(training, repeatModel, true, true, place, false);
+                addLessonListRepeating(training, null, repeatModel, true, true, place, false);
             } else {
-                addLessonListNotRepeating(training, lessonModelList, true, true, place, false);
+                addLessonListNotRepeating(training, null, lessonModelList, true, true, place, false);
             }
             training.setState(Training.State.NONE);
             trainingDAO.changeTraining(training);
@@ -343,9 +344,9 @@ public class TrainingServiceImpl implements TrainingService {
 
         List<ApproveLesson> approveLessonList;
         if (training.isRepeat()) {
-            approveLessonList = addLessonListRepeating(training, repeatModel, false, false, place, false);
+            approveLessonList = addLessonListRepeating(training, approveAction, repeatModel, false, false, place, false);
         } else {
-            approveLessonList = addLessonListNotRepeating(training, lessonModelList, false, false, place, false);
+            approveLessonList = addLessonListNotRepeating(training, approveAction, lessonModelList, false, false, place, false);
         }
         approveAction.setApproveLessonList(approveLessonList);
     }
@@ -370,9 +371,9 @@ public class TrainingServiceImpl implements TrainingService {
         approveAction.setType(ApproveAction.Type.EDIT);
         List<ApproveLesson> approveLessonList;
         if (training.isRepeat()) {
-            approveLessonList = addLessonListRepeating(training, repeatModel, false, false, place, false);
+            approveLessonList = addLessonListRepeating(training, approveAction, repeatModel, false, false, place, false);
         } else {
-            approveLessonList = addLessonListNotRepeating(training, lessonModelList, false, false, place, false);
+            approveLessonList = addLessonListNotRepeating(training, approveAction, lessonModelList, false, false, place, false);
         }
 
         approveAction.setApproveLessonList(approveLessonList);

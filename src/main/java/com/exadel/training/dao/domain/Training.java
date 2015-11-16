@@ -24,7 +24,7 @@ public class Training {
     private String title;
     @Field(index = Index.YES, analyze = Analyze.YES, store = Store.YES)
     @Analyzer(definition = "customAnalyzer")
-    @Column(length = 10000)
+    @Column(length = 50000)
     private String description;
     private int language;
     private int maxSize;
