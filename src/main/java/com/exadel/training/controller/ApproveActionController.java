@@ -46,9 +46,9 @@ public class ApproveActionController {
             approveActionModel.setCoachName(coach.getFirstName() + " " + coach.getLastName());
             approveActionModel.setId(approveAction.getId());
             if (approveAction.getApproveTraining() == null) {
-                approveActionModel.setTableName(trainingTableName);
-            } else {
                 approveActionModel.setTableName(lessonTableName);
+            } else {
+                approveActionModel.setTableName(trainingTableName);
             }
             approveActionModelList.add(approveActionModel);
         }
