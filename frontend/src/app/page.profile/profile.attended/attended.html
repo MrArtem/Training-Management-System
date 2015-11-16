@@ -3,11 +3,11 @@
         <div class="row">
             <div class="col-xs-12 col-md-11">
                 <div class="attended-courses">
-                    <h4 class="tab-heading">Attended courses</h4>
+                    <h4 class="tab-heading">Attended trainings</h4>
 
                     <div class="scrollable-div">
 
-                        <table class="table fullwidth-table">
+                        <table ng-if="profileInfo.pastCourses.length != 0" class="table fullwidth-table">
                             <thead>
                             <tr>
                                 <th>Coach</th>
@@ -21,6 +21,7 @@
                             </tr>
                             </tbody>
                         </table>
+                        <p ng-if="profileInfo.pastCourses.length == 0">This user hasn't attended any trainings.</p>
 
                     </div>
                 </div>

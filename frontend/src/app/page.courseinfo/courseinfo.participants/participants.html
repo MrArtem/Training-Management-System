@@ -7,7 +7,7 @@
 
             <div class="scrollable-div">
 
-                <table class="table fullwidth-table">
+                <table ng-if="courseInfo.participantsList.length != 0" class="table fullwidth-table">
                     <!--ng-show="courseInfo.participantsList.length != 0"-->
                     <thead>
                     <tr>
@@ -27,7 +27,7 @@
                     </tr>
                     </tbody>
                 </table>
-                <p ng-show="courseInfo.participantsList.length == 0">Nobody subscribed yet</p>
+                <p ng-if="courseInfo.participantsList.length == 0">Nobody subscribed yet</p>
             </div>
 
         </div>

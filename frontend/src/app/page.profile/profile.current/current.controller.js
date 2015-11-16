@@ -14,7 +14,6 @@
 
         function getCurrentCourses() {
             userAPI.getCurrentCourses($stateParams.userId).then(function(data) {
-                debugger;
                 $scope.$parent.profileInfo.currentCourses = angular.copy(data);
                 console.log("Received courses: ");
                 console.log($scope.$parent.profileInfo.currentCourses);

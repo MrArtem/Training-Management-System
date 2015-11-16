@@ -1,7 +1,22 @@
 .admin {
 
   .approve-item {
-    border-bottom: 1px solid $text-color;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+
+    .approve-text {
+      margin-top: 10px;
+    }
+
+    .see-details {
+      font-size: 20px;
+      color: $text-color;
+    }
+
+    .see-details:hover {
+      color: $text-color;
+    }
   }
 
 }

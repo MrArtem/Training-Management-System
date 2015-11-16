@@ -54,6 +54,7 @@
         function getApproveList() {
             adminAPI.getApproveList().then(function(data) {
                 vm.approveList = angular.copy(data);
+                console.log('Received approvals: ', vm.approveList);
             });
         }
 

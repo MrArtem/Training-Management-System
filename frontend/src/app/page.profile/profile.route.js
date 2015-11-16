@@ -8,12 +8,6 @@
     /** @ngInject */
     function routeConfig($stateProvider, $urlRouterProvider) {
         $stateProvider
-            .state('profile.settings', {
-                url: '/settings',
-                templateUrl: 'app/page.profile/profile.settings/settings.html',
-                controller: 'SettingsController',
-                controllerAs: 'settings'
-            })
             .state('profile.attended', {
                 url: '/attended',
                 templateUrl: 'app/page.profile/profile.attended/attended.html',

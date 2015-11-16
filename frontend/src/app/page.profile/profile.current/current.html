@@ -6,7 +6,7 @@
 
             <div class="scrollable-div">
 
-                <table class="table fullwidth-table">
+                <table ng-if="profileInfo.currentCourses.length != 0" class="table fullwidth-table">
                     <thead>
                     <tr>
                         <th>Coach</th>
@@ -20,6 +20,7 @@
                     </tr>
                     </tbody>
                 </table>
+                <p ng-if="profileInfo.currentCourses.length == 0">This user has no current trainings.</p>
 
             </div>
 

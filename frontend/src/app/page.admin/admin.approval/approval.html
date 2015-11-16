@@ -2,18 +2,19 @@
 	<div class="row">
 		<div class="col-xs-12">
 
-			<div class="scrollable-div">
+			<div ng-if="approval.approveList.length != 0" class="scrollable-div">
 
 				<div class="approve-item" ng-repeat="item in approval.approveList track by $index">
-					<p><a ui-sref="profile({userId: item.coachId})">{{item.coachName}}</a>
-						{{approval.makeText(item.type, item.tableName)}} <a
-							ui-sref="step1({courseId: item.trainingId, type: item.type, edit: true, id: item.id})">{{item.trainingName}}</a>
+					<p><span><a ui-sref="profile({userId: item.coachId})" >{{item.coachName}}</a>
+						{{approval.makeText(item.type, item.tableName)}} <a href=""
+							ui-sref="step1({courseId: item.trainingId, type: item.type, edit: true, id: item.id})">{{item.trainingTitle}}</a></span>
+						<a href="" ng-click="approval.seeDetails(item)"><span class="pull-right see-details"><i class="fa fa-eye"></i></span></a>
 					</p>
-					<p class="top-mg-15">{{item.date | date: "MMM d, y h:mm a"}}</p>
-					<p class="top-mg-15"><a href="" ng-click="approval.seeDetails(item)">see details</a></p>
+					<p class="top-mg-25"><i class="fa fa-clock-o"></i> {{item.date | date: "MMM d, y h:mm a"}}</p>
 				</div>
 
 			</div>
+			<p ng-if="approval.approveList.length == 0">You have nothing to approve.</p>
 
 		</div>
 	</div>
