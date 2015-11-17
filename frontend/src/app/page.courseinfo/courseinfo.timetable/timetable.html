@@ -68,7 +68,7 @@
                             </ul>
                         </span>
                     </div>
-                    <div class="col-xs-12 col-sm-6">
+                    <div ng-if="courseinfo.isAdmin()" class="col-xs-12 col-sm-6">
                         <label>New place: </label>
                         <input type="text" class="form-control bordered-input" placeholder="click to enter place"
                                ng-model="timetable.newPlace">

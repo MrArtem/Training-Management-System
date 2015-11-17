@@ -107,3 +107,61 @@
 		</div>
 	</div>
 </div>
+
+<!--Create lesson modal-->
+<div class="modal fade" id="editLessonModal" tabindex="-1" role="dialog" aria-labelledby="editTitle">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+						aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="editTitle"></h4>
+			</div>
+			<div class="modal-body">
+
+				<div class="row">
+					<div class="col-xs-12 col-sm-6">
+						<p>Can {{approval.coachNameToApprove}} edit lesson from his training <a ui-sref="courseinfo({courseId: approval.trainingIdToApprove})">{{approval.trainingNameToApprove}}</a>?</p>
+						<p>If you agree, please specify a place for the lesson.</p>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-6">
+						<p>Old date: </p>
+						<input type="text" class="form-control bordered-input"
+							   ng-value="approval.lessonToApprove.oldDate | date: 'MMM d, y h:mm a'" disabled>
+					</div>
+					<div class="col-xs-6">
+						<p>Old place: </p>
+						<input type="text" class="form-control bordered-input"
+							   ng-model="approval.lessonToApprove.oldPlace" disabled>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-xs-6">
+						<p>New date: </p>
+						<input type="text" class="form-control bordered-input"
+							   ng-value="approval.lessonToApprove.newDate | date: 'MMM d, y h:mm a'" disabled>
+					</div>
+					<div class="col-xs-6">
+						<p>New place: </p>
+						<input type="text" class="form-control bordered-input"
+							   ng-model="approval.lessonToApprove.newPlace">
+					</div>
+				</div>
+
+			</div>
+			<div class="modal-footer">
+
+				<button href="" class="btn default-btn pull-left" data-dismiss="modal">Cancel</button>
+				<button href="" class="btn default-btn-red" data-dismiss="modal"
+						ng-click="approval.cancelEditLesson()">No
+				</button>
+				<button href="" class="btn default-btn-green" data-dismiss="modal"
+						ng-click="approval.approveEditLesson()">Yes
+				</button>
+			</div>
+		</div>
+	</div>
+</div>

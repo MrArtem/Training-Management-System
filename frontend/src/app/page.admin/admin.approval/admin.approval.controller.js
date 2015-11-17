@@ -14,7 +14,9 @@
 
         //vm.disconnect = disconnect;
         vm.approveAddLesson = approveAddLesson;
+        vm.approveEditLesson = approveEditLesson;
         vm.cancelAddLesson = cancelAddLesson;
+        vm.cancelEditLesson = cancelEditLesson;
         vm.cancelDeleteCourse = cancelDeleteCourse;
         vm.deleteCourse = deleteCourse;
         vm.getApproveList = getApproveList;
@@ -63,10 +65,24 @@
             });
         }
 
+        function approveEditLesson() {
+            courseAPI.approveLesson(vm.actionIdToApprove, vm.lessonToApprove).then(function(data) {
+                console.log('Approved lesson edit');
+                $('#editLessonModal').modal('hide');
+            });
+        }
+
         function cancelAddLesson() {
             courseAPI.cancelLesson(vm.actionIdToApprove).then(function(data) {
                 console.log('Canceled lesson adding');
                 $('#addLessonModal').modal('hide');
+            });
+        }
+
+        function cancelEditLesson() {
+            courseAPI.cancelLesson(vm.actionIdToApprove).then(function(data) {
+                console.log('Canceled lesson edit');
+                $('#editLessonModal').modal('hide');
             });
         }
 
@@ -114,9 +130,10 @@
                         $state.go('managecourse', {courseId: item.trainingId, edit: true, id: item.id, type: type});
                     }
                     else {
-                        vm.lessonIdToApprove = item.lessonId;
                         vm.actionIdToApprove = item.id;
                         vm.coachNameToApprove = item.coachName;
+                        vm.lessonIdToApprove = item.lessonId;
+                        vm.trainingNameToApprove = item.trainingTitle;
                         $('#createLessonModal').modal();
                     }
                     break;
@@ -125,15 +142,19 @@
                         $state.go('managecourse', {courseId: item.trainingId, edit: true, id: item.id, type: type});
                     }
                     else {
-
+                        vm.actionIdToApprove = item.id;
+                        vm.coachNameToApprove = item.coachName;
+                        vm.lessonIdToApprove = item.lessonId;
+                        vm.trainingNameToApprove = item.trainingTitle;
+                        $('#editLessonModal').modal();
                     }
                     break;
                 case 'REMOVE':
                     if(tableName == 'APPROVE_TRAINING') {
-                        vm.trainingIdToApprove = item.trainingId;
-                        vm.trainingNameToApprove = item.trainingTitle;
                         vm.actionIdToApprove = item.id;
                         vm.coachNameToApprove = item.coachName;
+                        vm.trainingIdToApprove = item.trainingId;
+                        vm.trainingNameToApprove = item.trainingTitle;
                         $('#deleteTrainingModal').modal();
                     }
                     else {
