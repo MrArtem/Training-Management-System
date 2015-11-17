@@ -275,7 +275,8 @@
 
         function addLesson(courseId, newDate, newPlace) {
             var lessonInfo = {
-                date: newDate,
+                prevLessonId: null,
+                date: newDate.getTime(),
                 place: newPlace
             };
             return $http.post(urlProvider.manageLesson(courseId), lessonInfo).then(function (result) {
