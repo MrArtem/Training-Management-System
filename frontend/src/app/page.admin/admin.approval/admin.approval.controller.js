@@ -9,9 +9,12 @@
     function ApprovalController($state, adminAPI, courseAPI) {
         var vm = this;
         vm.approveList = [];
+        vm.lessonToApprove = {};
         //var stompClient = null;
 
         //vm.disconnect = disconnect;
+        vm.approveAddLesson = approveAddLesson;
+        vm.cancelAddLesson = cancelAddLesson;
         vm.cancelDeleteCourse = cancelDeleteCourse;
         vm.deleteCourse = deleteCourse;
         vm.getApproveList = getApproveList;
@@ -53,15 +56,29 @@
         //    stompClient.send("/approve_list", {}, JSON.stringify({ 'page': 0, 'page_size': 10 }))
         //}
 
+        function approveAddLesson() {
+            courseAPI.approveLesson(vm.actionIdToApprove, vm.lessonToApprove).then(function(data) {
+                console.log('Approved lesson adding');
+                $('#addLessonModal').modal('hide');
+            });
+        }
+
+        function cancelAddLesson() {
+            courseAPI.cancelLesson(vm.actionIdToApprove).then(function(data) {
+                console.log('Canceled lesson adding');
+                $('#addLessonModal').modal('hide');
+            });
+        }
+
         function cancelDeleteCourse() {
-            courseAPI.cancelDeleteCourse(vm.actionToDelete).then(function(data) {
+            courseAPI.cancelChange(vm.actionIdToApprove).then(function(data) {
                 console.log('Canceled course deleting');
                 $('#deleteTrainingModal').modal('hide');
             });
         }
 
         function deleteCourse() {
-            courseAPI.deleteCourse(vm.idToDelete).then(function(data) {
+            courseAPI.deleteCourse(vm.trainingIdToApprove).then(function(data) {
                 $('#deleteTrainingModal').modal('hide');
             });
         }
@@ -96,17 +113,27 @@
                     if(tableName == 'APPROVE_TRAINING') {
                         $state.go('managecourse', {courseId: item.trainingId, edit: true, id: item.id, type: type});
                     }
+                    else {
+                        vm.lessonIdToApprove = item.lessonId;
+                        vm.actionIdToApprove = item.id;
+                        vm.coachNameToApprove = item.coachName;
+                        $('#createLessonModal').modal();
+                    }
                     break;
                 case 'EDIT':
                     if(tableName == 'APPROVE_TRAINING') {
                         $state.go('managecourse', {courseId: item.trainingId, edit: true, id: item.id, type: type});
                     }
+                    else {
+
+                    }
                     break;
                 case 'REMOVE':
                     if(tableName == 'APPROVE_TRAINING') {
-                        vm.idToDelete = item.trainingId;
-                        vm.actionToDelete = item.id;
-                        vm.coachDeleting = item.coachName;
+                        vm.trainingIdToApprove = item.trainingId;
+                        vm.trainingNameToApprove = item.trainingTitle;
+                        vm.actionIdToApprove = item.id;
+                        vm.coachNameToApprove = item.coachName;
                         $('#deleteTrainingModal').modal();
                     }
                     else {

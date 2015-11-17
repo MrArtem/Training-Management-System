@@ -3,7 +3,7 @@
         <div class="col-xs-12 col-md-11">
 
             <h4 class="tab-heading">Participants</h4>
-            <a ng-if="courseinfo.isAdmin()" class="btn default-btn-blue bottom-mg-25" data-toggle="modal" data-target="#addParticipantModal"><i class="fa fa-plus"></i>Add participant</a>
+            <a ng-if="courseinfo.isAdmin()" class="btn default-btn-blue bottom-mg-25" data-toggle="modal" data-target="#addParticipantModal" ng-click="participants.clearInfo()"><i class="fa fa-plus"></i>Add participant</a>
 
             <div class="scrollable-div">
 
@@ -44,39 +44,43 @@
                 <h4 class="modal-title" id="addTitle">Add participant</h4>
             </div>
             <div class="modal-body">
-                <form name="participantForm" novalidate>
+                <form name="participantForm" class="form-inline" novalidate>
 
                     <div class="row">
-                        <div class="col-xs-12 col-sm-6">
+                        <div class="col-xs-12 form-group">
                             <label>First Name:</label>
-                            <input type='text' name="firstName" ng-model="participants.participantInfo.firstName" required>
+                            <input type="text" name="firstName" class="form-control" placeholder="click to enter"
+                                   ng-model="participants.participantInfo.firstName" required>
                             <small ng-show="participantForm.firstName.$invalid && participantForm.firstName.$touched" class="error">This
                                 field is required.
                             </small>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-xs-12 col-sm-6">
+                        <div class="col-xs-12 form-group">
                             <label>Last Name:</label>
-                            <input type='text' name="lastName" ng-model="participants.participantInfo.lastName" required>
+                            <input type="text" name="lastName" class="form-control" placeholder="click to enter"
+                                   ng-model="participants.participantInfo.lastName" required>
                             <small ng-show="participantForm.lastName.$invalid && participantForm.lastName.$touched" class="error">This
                                 field is required.
                             </small>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-xs-12 col-sm-6">
+                        <div class="col-xs-12 form-group">
                             <label>Email:</label>
-                            <input type='email' name="email" ng-model="participants.participantInfo.email" required>
+                            <input type="email" name="email" class="form-control" placeholder="click to enter"
+                                   ng-model="participants.participantInfo.email" required>
                             <small ng-show="participantForm.email.$invalid && participantForm.email.$touched" class="error">This
                                 field is required.
                             </small>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-xs-12 col-sm-6">
+                        <div class="col-xs-12 form-group">
                             <label>Phone number:</label>
-                            <input type='text' ng-model="participants.participantInfo.phone">
+                            <input type="text" class="form-control" placeholder="click to enter"
+                                   ng-model="participants.participantInfo.phone">
                         </div>
                     </div>
                 </form>

@@ -21,6 +21,7 @@
 
         vm.addFeedbackOnUser = addFeedbackOnUser;
         vm.addParticipant = addParticipant;
+        vm.clearInfo = clearInfo;
         vm.deleteParticipant = deleteParticipant;
         vm.getParticipants = getParticipants;
         vm.getUserId = getUserId;
@@ -43,6 +44,11 @@
             });
         }
 
+        function clearInfo() {
+            $scope.participantForm.$setUntouched();
+            vm.participantInfo = {};
+        }
+
         function deleteParticipant(index) {
             var userId = $scope.$parent.courseInfo.participantsList[index].id;
             courseAPI.deleteParticipant($stateParams.courseId, userId).then(function(data) {
@@ -59,6 +65,7 @@
         }
 
         function getUserId(index) {
+            vm.clearInfo();
             vm.selectedUserId = $scope.$parent.courseInfo.participantsList[index].userId;
         }
 
