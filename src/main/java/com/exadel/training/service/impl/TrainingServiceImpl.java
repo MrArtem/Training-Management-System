@@ -239,7 +239,9 @@ public class TrainingServiceImpl implements TrainingService {
         Training training = approveAction.getTraining();
         List<Lesson> lessonList = training.getLessonList();
         for (Lesson lesson : Utils.emptyIfNull(training.getLessonList())) {
-            lessonApproveDAO.removeApprove(lesson.getApproveLesson());
+            if (lesson.getApproveLesson() != null) {
+                lessonApproveDAO.removeApprove(lesson.getApproveLesson());
+            }
             if (removeLesson) {
                 lessonDAO.removeLesson(lesson);
             }
@@ -317,6 +319,11 @@ public class TrainingServiceImpl implements TrainingService {
             , String additionalInfo, List<LessonModel> lessonModelList, RepeatModel repeatModel) {
         approveAction.setDate(Utils.getTime());
         ApproveTraining approveTraining = approveAction.getApproveTraining();
+        if (approveTraining == null) {
+            approveTraining = new ApproveTraining();
+            trainingApproveDAO.addApprove(approveTraining);
+            approveAction.setApproveTraining(approveTraining);
+        }
 
         Training training = approveAction.getTraining();
         if (!training.getTitle().equals(title)) {

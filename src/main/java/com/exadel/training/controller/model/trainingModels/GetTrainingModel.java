@@ -18,6 +18,8 @@ public class GetTrainingModel extends TrainingModel {
 
     private boolean canRate;
 
+    private boolean isInner;
+
 
     public GetTrainingModel() {
     }
@@ -39,6 +41,7 @@ public class GetTrainingModel extends TrainingModel {
         setCoachName(coach.getFirstName() + " " + coach.getLastName());
         setCoachId(coach.getId());
         setIsRepeating(training.isRepeat());
+        setIsInner(training.isInner());
     }
 
     public boolean isCanSubscribe() {
@@ -87,5 +90,14 @@ public class GetTrainingModel extends TrainingModel {
 
     public void setCanRate(boolean canRate) {
         this.canRate = canRate;
+    }
+
+
+    public boolean getIsInner() {
+        return isInner;
+    }
+
+    public void setIsInner(boolean inner) {
+        isInner = inner;
     }
 }

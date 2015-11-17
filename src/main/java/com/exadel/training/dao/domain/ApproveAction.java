@@ -13,7 +13,7 @@ public class ApproveAction {
     private Long date;
     @OneToOne
     private Training training;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private ApproveTraining approveTraining;
     @OneToMany(mappedBy = "approveAction", cascade = CascadeType.ALL)
     private List<ApproveLesson> approveLessonList;
