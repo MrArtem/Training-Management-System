@@ -15,9 +15,11 @@
         //vm.disconnect = disconnect;
         vm.approveAddLesson = approveAddLesson;
         vm.approveEditLesson = approveEditLesson;
+        vm.approveDeleteLesson = approveDeleteLesson;
         vm.cancelAddLesson = cancelAddLesson;
         vm.cancelEditLesson = cancelEditLesson;
         vm.cancelDeleteCourse = cancelDeleteCourse;
+        vm.cancelDeleteLesson = cancelDeleteLesson;
         vm.deleteCourse = deleteCourse;
         vm.getApproveList = getApproveList;
         vm.getLessonInfo = getLessonInfo;
@@ -73,6 +75,13 @@
             });
         }
 
+        function approveDeleteLesson() {
+            courseAPI.approveLesson(vm.actionIdToApprove, vm.lessonToApprove).then(function(data) {
+                console.log('Approved lesson delete');
+                $('#deleteLessonModal').modal('hide');
+            });
+        }
+
         function cancelAddLesson() {
             courseAPI.cancelLesson(vm.actionIdToApprove).then(function(data) {
                 console.log('Canceled lesson adding');
@@ -91,6 +100,13 @@
             courseAPI.cancelChange(vm.actionIdToApprove).then(function(data) {
                 console.log('Canceled course deleting');
                 $('#deleteTrainingModal').modal('hide');
+            });
+        }
+
+        function cancelDeleteLesson() {
+            courseAPI.cancelChange(vm.actionIdToApprove).then(function(data) {
+                console.log('Canceled lesson deleting');
+                $('#deleteLessonModal').modal('hide');
             });
         }
 
@@ -168,7 +184,12 @@
                         $('#deleteTrainingModal').modal();
                     }
                     else {
-
+                        vm.actionIdToApprove = item.id;
+                        vm.coachNameToApprove = item.coachName;
+                        vm.trainingIdToApprove = item.trainingId;
+                        vm.trainingNameToApprove = item.trainingTitle;
+                        vm.getLessonInfo();
+                        $('#deleteLessonModal').modal();
                     }
                 default:
                     return '';
