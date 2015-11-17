@@ -20,6 +20,7 @@
         vm.cancelDeleteCourse = cancelDeleteCourse;
         vm.deleteCourse = deleteCourse;
         vm.getApproveList = getApproveList;
+        vm.getLessonInfo = getLessonInfo;
         vm.makeText = makeText;
         vm.seeDetails = seeDetails;
         //vm.send = send;
@@ -106,6 +107,13 @@
             });
         }
 
+        function getLessonInfo() {
+            adminAPI.getLessonToApprove(vm.actionIdToApprove).then(function(result) {
+                vm.lessonToApprove = angular.copy(result.data);
+                console.log('Received lesson info: ', result.data);
+            });
+        }
+
         function makeText(type, tableName) {
             switch(type) {
                 case 'CREATE':
@@ -134,7 +142,8 @@
                         vm.coachNameToApprove = item.coachName;
                         vm.lessonIdToApprove = item.lessonId;
                         vm.trainingNameToApprove = item.trainingTitle;
-                        $('#createLessonModal').modal();
+                        vm.getLessonInfo();
+                        $('#addLessonModal').modal();
                     }
                     break;
                 case 'EDIT':
@@ -146,6 +155,7 @@
                         vm.coachNameToApprove = item.coachName;
                         vm.lessonIdToApprove = item.lessonId;
                         vm.trainingNameToApprove = item.trainingTitle;
+                        vm.getLessonInfo();
                         $('#editLessonModal').modal();
                     }
                     break;

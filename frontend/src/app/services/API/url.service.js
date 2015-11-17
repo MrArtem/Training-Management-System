@@ -39,6 +39,7 @@
             getExCoachList: getExCoachList,
             getFeedback: getFeedback,
             getFeedbacksOnUser: getFeedbacksOnUser,
+            getLessonToApprove: getLessonToApprove,
             getNewsList: getNewsList,
             getParticipants: getParticipants,
             getPastCoursesForUser: getPastCoursesForUser,
@@ -186,6 +187,10 @@
 
     function getFeedback(fbId) {
         return '/api/feedback_controller/get_feedback/' + fbId;
+    }
+
+    function getLessonToApprove(actionId) {
+        return '/api/training/' + actionId + '/approve_lesson';
     }
 
     function getNewsList() {

@@ -8,6 +8,7 @@
     function adminAPI($http, urlProvider) {
         var adminAPI = {
             getApproveList: getApproveList,
+            getLessonToApprove: getLessonToApprove,
             getNewsList: getNewsList,
             getStatistics: getStatistics
         }
@@ -19,6 +20,12 @@
                 page: 0
             }).then(function (results) {
                 return results.data;
+            });
+        }
+
+        function getLessonToApprove(actionId) {
+            return $http.get(urlProvider.getLessonToApprove(actionId)).then(function(result) {
+                return result;
             });
         }
 

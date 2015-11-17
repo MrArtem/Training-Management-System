@@ -212,7 +212,7 @@
         function editLesson(courseId, lessonId, newDate, newPlace) {
             var lessonInfo = {
                 prevLessonId: lessonId,
-                date: (new Date(newDate)).getTime(),
+                date: newDate.getTime(),
                 place: newPlace
             };
             return $http.put(urlProvider.manageLesson(courseId), lessonInfo).then(function (result) {
