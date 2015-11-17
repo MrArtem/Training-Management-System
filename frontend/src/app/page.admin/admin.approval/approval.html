@@ -36,8 +36,12 @@
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button href="" class="btn default-btn" data-dismiss="modal">No</button>
-				<button href="" class="btn default-btn-blue" data-dismiss="modal"
+
+				<button href="" class="btn default-btn pull-left" data-dismiss="modal">Cancel</button>
+				<button href="" class="btn default-btn-red" data-dismiss="modal"
+						ng-click="approval.cancelDeleteCourse()">No
+				</button>
+				<button href="" class="btn default-btn-green" data-dismiss="modal"
 						ng-click="approval.deleteCourse()">Yes
 				</button>
 			</div>

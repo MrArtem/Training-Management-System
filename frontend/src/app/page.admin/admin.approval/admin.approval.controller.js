@@ -12,6 +12,7 @@
         //var stompClient = null;
 
         //vm.disconnect = disconnect;
+        vm.cancelDeleteCourse = cancelDeleteCourse;
         vm.deleteCourse = deleteCourse;
         vm.getApproveList = getApproveList;
         vm.makeText = makeText;
@@ -51,6 +52,13 @@
         //    debugger;
         //    stompClient.send("/approve_list", {}, JSON.stringify({ 'page': 0, 'page_size': 10 }))
         //}
+
+        function cancelDeleteCourse() {
+            courseAPI.cancelDeleteCourse(vm.actionToDelete).then(function(data) {
+                console.log('Canceled course deleting');
+                $('#deleteTrainingModal').modal('hide');
+            });
+        }
 
         function deleteCourse() {
             courseAPI.deleteCourse(vm.idToDelete).then(function(data) {
@@ -97,6 +105,7 @@
                 case 'REMOVE':
                     if(tableName == 'APPROVE_TRAINING') {
                         vm.idToDelete = item.trainingId;
+                        vm.actionToDelete = item.id;
                         vm.coachDeleting = item.coachName;
                         $('#deleteTrainingModal').modal();
                     }
