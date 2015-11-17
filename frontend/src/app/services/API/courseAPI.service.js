@@ -13,9 +13,11 @@
             addParticipant: addParticipant,
             addTag: addTag,
             approveCourse: approveCourse,
+            approveLesson: approveLesson,
+            cancelChange: cancelChange,
             cancelCreate: cancelCreate,
-            cancelDeleteCourse: cancelDeleteCourse,
             cancelEdit: cancelEdit,
+            cancelLesson: cancelLesson,
             createCourse: createCourse,
             deleteCourse: deleteCourse,
             deleteFile: deleteFile,
@@ -114,6 +116,12 @@
             });
         }
 
+        function approveLesson(actionId, lessonData) {
+            return $http.put(urlProvider.approveLesson(actionId), lessonData).then(function(result) {
+                return result.data;
+            });
+        }
+
         function createCourse(courseData) {
             console.log(courseData);
             return $http.post(urlProvider.createCourse(), courseData, {
@@ -202,6 +210,12 @@
         //    }
         //}
 
+        function cancelChange(actionId) {
+            return $http.put(urlProvider.cancelChange(actionId)).then(function(result) {
+                return result.data;
+            });
+        }
+
         function cancelCreate(courseId) {
             return $http.put(urlProvider.cancelCreate(courseId), {
                 headers: {
@@ -215,12 +229,6 @@
             });
         }
 
-        function cancelDeleteCourse(actionId) {
-            return $http.put(urlProvider.cancelDeleteCourse(actionId)).then(function(result) {
-                return result.data;
-            });
-        }
-
         function cancelEdit(courseId) {
             return $http.put(urlProvider.cancelEdit(courseId), {
                 headers: {
@@ -231,6 +239,12 @@
                 console.log('Course canceled successfully!');
                 $state.transitionTo('mycourses');
                 return results.data;
+            });
+        }
+
+        function cancelLesson(actionId) {
+            return $http.put(urlProvider.cancelLesson(actionId)).then(function(result) {
+                return result.data;
             });
         }
 

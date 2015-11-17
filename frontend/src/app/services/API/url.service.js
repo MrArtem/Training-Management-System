@@ -13,9 +13,11 @@
             addParticipant: addParticipant,
             addTag: addTag,
             approveCourse: approveCourse,
+            approveLesson: approveLesson,
+            cancelChange: cancelChange,
             cancelCreate: cancelCreate,
-            cancelDeleteCourse: cancelDeleteCourse,
             cancelEdit: cancelEdit,
+            cancelLesson: cancelLesson,
             changePassword: changePassword,
             confirm: confirm,
             createCourse: createCourse,
@@ -82,16 +84,24 @@
         return '/api/training/confirm/' + actionId;
     }
 
+    function approveLesson(actionId) {
+        return '/api/training/' + actionId + '/confirm/lesson';
+    }
+
     function cancelCreate(trainingId) {
         return '/api/training/cancel_create/' + trainingId;
     }
 
-    function cancelDeleteCourse(actionId) {
+    function cancelChange(actionId) {
         return '/api/training/cancel_change/' + actionId;
     }
 
     function cancelEdit(trainingId) {
         return '/api/training/cancel_edit/' + trainingId;
+    }
+
+    function cancelLesson(actionId) {
+        return '/api/training/' + actionId + '/canceled_lesson';
     }
 
     function changePassword() {

@@ -50,12 +50,28 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-xs-12 col-sm-6">
-                        <label>New date</label>
-                        <input type='text' ng-model="timetable.newDate" tre-datepicker="">
+                        <label>New date: </label>
+                        <span class="calendar">
+                            <a class="dropdown-toggle" id="dropdown2" role="button" data-toggle="dropdown">
+                                <div class="input-group">
+                                    <input type="text" class="form-control"
+                                           ng-value="timetable.newDate | date: 'MMM d, y h:mm a'"
+                                           placeholder="click to add date"
+                                           disabled>
+                                    <span class="input-group-addon addon-calendar">
+                                        <i class="fa fa-calendar"></i>
+                                    </span>
+                                </div>
+                            </a>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                <datetimepicker ng-model="timetable.newDate" data-datetimepicker-config="{ dropdownSelector: '#dropdown2', minuteStep: 15 }"></datetimepicker>
+                            </ul>
+                        </span>
                     </div>
                     <div class="col-xs-12 col-sm-6">
-                        <label>New place</label>
-                        <input type='text' ng-model="timetable.newPlace">
+                        <label>New place: </label>
+                        <input type="text" class="form-control bordered-input" placeholder="click to enter place"
+                               ng-model="timetable.newPlace">
                     </div>
                 </div>
             </div>
@@ -81,11 +97,27 @@
                 <div class="row">
                     <div class="col-xs-12 col-sm-6">
                         <label>New date: </label>
-                        <input type='text' ng-model="timetable.editedDate" tre-datepicker="">
+                        <span class="calendar">
+                            <a class="dropdown-toggle" id="dropdown1" role="button" data-toggle="dropdown">
+                                <div class="input-group">
+                                    <input type="text" class="form-control"
+                               ng-value="timetable.editedDate | date: 'MMM d, y h:mm a'"
+                               placeholder="click to add date"
+                               disabled>
+                                    <span class="input-group-addon addon-calendar">
+                                        <i class="fa fa-calendar"></i>
+                                    </span>
+                                </div>
+                            </a>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                <datetimepicker ng-model="timetable.editedDate" data-datetimepicker-config="{ dropdownSelector: '#dropdown1', minuteStep: 15 }"></datetimepicker>
+                            </ul>
+                        </span>
                     </div>
                     <div class="col-xs-12 col-sm-6">
                         <label>New place: </label>
-                        <input type='text' ng-model="timetable.editedPlace">
+                        <input type="text" class="form-control bordered-input" placeholder="click to enter place"
+                               ng-model="timetable.editedPlace">
                     </div>
                 </div>
             </div>
