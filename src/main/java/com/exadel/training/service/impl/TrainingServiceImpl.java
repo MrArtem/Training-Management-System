@@ -510,6 +510,10 @@ public class TrainingServiceImpl implements TrainingService {
     public void editLesson(long trainingId, LessonModel lessonModel, Long currentUserId) {
         Training training = trainingDAO.getTrainingById(trainingId);
         Lesson lesson = lessonDAO.getLessonByID(lessonModel.getPrevLessonId());
+        ApproveAction prevApproveAction = approveActionDAO.getApproveActionByTrainingId(trainingId);
+        if (prevApproveAction != null) {
+            canceledLesson(prevApproveAction.getId());
+        }
 
         User user = userDAO.getUserByID(currentUserId);
         if (user.getRole() != User.Role.ADMIN) {
@@ -523,6 +527,7 @@ public class TrainingServiceImpl implements TrainingService {
             approveLesson.setLesson(lesson);
             approveLesson.setDate(lessonModel.getDate());
             approveLesson.setPlace(lessonModel.getPlace());
+            approveLesson.setApproveAction(approveAction);
             lessonApproveDAO.addApprove(approveLesson);
         } else {
             lesson.setState(Lesson.State.REMOVAL);
@@ -542,8 +547,12 @@ public class TrainingServiceImpl implements TrainingService {
     @Override
     public void addLesson(long trainingId, LessonModel lessonModel, Long currentUserId) {
         Training training = trainingDAO.getTrainingById(trainingId);
-
         User user = userDAO.getUserByID(currentUserId);
+        ApproveAction prevApproveAction = approveActionDAO.getApproveActionByTrainingId(trainingId);
+        if (prevApproveAction != null) {
+            canceledLesson(prevApproveAction.getId());
+        }
+
         if (user.getRole() != User.Role.ADMIN) {
             Lesson lesson = new Lesson();
             lesson.setState(Lesson.State.REMOVAL);
@@ -577,10 +586,13 @@ public class TrainingServiceImpl implements TrainingService {
     @Override
     public void removeLesson(long trainingId, LessonModel lessonModel, Long currentUserId) {
         Training training = trainingDAO.getTrainingById(trainingId);
-
         Lesson lesson = lessonDAO.getLessonByID(lessonModel.getPrevLessonId());
-
         User user = userDAO.getUserByID(currentUserId);
+        ApproveAction prevApproveAction = approveActionDAO.getApproveActionByTrainingId(trainingId);
+        if (prevApproveAction != null) {
+            canceledLesson(prevApproveAction.getId());
+        }
+
         if (user.getRole() != User.Role.ADMIN) {
             ApproveAction approveAction = new ApproveAction();
             approveAction.setTraining(training);
