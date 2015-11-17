@@ -54,7 +54,7 @@
             }
 
             function isAdmin() {
-                return authService.getAccessRights() == 0 ? true : false;
+                return authService.getAccessRights() === 0 ? true : false;
             }
 
             function isActive(state) {
@@ -81,17 +81,17 @@
                 if(vm.isAdmin()) {
                     searchAPI.findTrainings(vm.searchQuery).then(function(data) {
                         vm.foundTrainings = angular.copy(data);
-                        vm.searchAnswer = (data.length == 0) ? 'no trainings found' : '';
+                        vm.searchAnswer = (data.length === 0) ? 'no trainings found' : '';
                     });
                     searchAPI.findUsers(vm.searchQuery).then(function(data) {
                         vm.foundUsers = angular.copy(data);
-                        vm.searchAnswer = (data.length == 0) ? 'no users found' : '';
+                        vm.searchAnswer = (data.length === 0) ? 'no users found' : '';
                     });
                 }
                 else {
                     searchAPI.findTrainings(vm.searchQuery).then(function(data) {
                         vm.foundTrainings = angular.copy(data);
-                        vm.searchAnswer = (data.length == 0) ? 'no trainings found' : '';
+                        vm.searchAnswer = (data.length === 0) ? 'no trainings found' : '';
                     });
                 }
             }

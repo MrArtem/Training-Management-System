@@ -100,16 +100,18 @@
 
         function accessRightsFromString(accessString) {
 
-            if (accessString === "ADMIN")
-                return this.admin;
-            if (accessString === "USER")
-                return this.user;
-            if (accessString === "EX_COACH")
-                return this.exCoach;
-            if (accessString === "EX_USER")
-                return this.exUser;
-
-            return this.noRights;
+            switch(accessString) {
+                case 'ADMIN':
+                    return this.admin;
+                case 'USER':
+                    return this.user;
+                case 'EX_COACH':
+                    return this.exCoach;
+                case 'EX_USER':
+                    return this.exUser;
+                default:
+                    return this.noRights;
+            }
         }
 
         function putUserCreds(user) {

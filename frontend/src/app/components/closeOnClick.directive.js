@@ -16,8 +16,8 @@
                 elem.click(function () {
                     setTimeout(function () {
                         toggledElement.trigger('click');
-                    }, 0)
-                })
+                    }, 0);
+                });
 
             }
         };

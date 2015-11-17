@@ -9,7 +9,7 @@
         var authAPI = {
             login: login,
             logout: logout
-        }
+        };
 
         return authAPI;
 

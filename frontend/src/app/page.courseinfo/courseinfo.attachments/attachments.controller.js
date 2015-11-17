@@ -6,7 +6,7 @@
         .controller('AttachmentsController', AttachmentsController);
 
     /** @ngInject */
-    function AttachmentsController($scope, $stateParams, courseAPI, fileReader) {
+    function AttachmentsController($scope, $stateParams, courseAPI) {
         //debugger;
         var vm = this;
         vm.data = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';

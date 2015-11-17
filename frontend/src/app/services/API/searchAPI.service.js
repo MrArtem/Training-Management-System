@@ -10,7 +10,7 @@
             findAnything: findAnything,
             findTrainings: findTrainings,
             findUsers: findUsers
-        }
+        };
 
         return searchAPI;
 

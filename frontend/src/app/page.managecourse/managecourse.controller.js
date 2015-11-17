@@ -11,7 +11,7 @@
         var vm = this;
         vm.exCoachList = [];
         vm.courseInfo = {};
-        vm.courseInfo.tagList = []
+        vm.courseInfo.tagList = [];
         vm.exCoachInfo = {};
 
         vm.approveCourse = approveCourse;
@@ -51,7 +51,6 @@
             else {
                 //if admin/user wants to edit
                 vm.getCourseToEdit();
-
             }
         }
         else {
@@ -110,7 +109,7 @@
             }
 
             courseAPI.createCourse($scope.courseInfo).then(function (data) {
-                console.log("request success")
+                console.log("request success");
             }); //some then with alert?
 
             console.log($scope.courseInfo);
@@ -144,11 +143,11 @@
         }
 
         function isActive(state) {
-            return $location.absUrl().search(state) === -1 ? false : true
+            return $location.absUrl().search(state) === -1 ? false : true;
         }
 
         function isAdmin() {
-            return authService.getAccessRights() == 0 ? true : false;
+            return authService.getAccessRights() === 0 ? true : false;
         }
 
         ///////////////////////////////////////
