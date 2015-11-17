@@ -89,6 +89,7 @@ public class TrainingCRUDController {
     @Secured({"ADMIN", "USER", "EX_COACH"})
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.PUT)
     void editTraining(@PathVariable("id") long trainingId, @RequestBody AddingTrainingModel addingTrainingModel) {
+        CustomAuthentication customAuthentication = (CustomAuthentication) SecurityContextHolder.getContext().getAuthentication();
         trainingService.editTraining(trainingId
                 , addingTrainingModel.getTitle()
                 , addingTrainingModel.getDescription()
@@ -100,7 +101,8 @@ public class TrainingCRUDController {
                 , addingTrainingModel.getTagList()
                 , addingTrainingModel.getAdditionalInfo()
                 , addingTrainingModel.getLessonList()
-                , addingTrainingModel.getRepeatModel(), 1);
+                , addingTrainingModel.getRepeatModel()
+                , customAuthentication.getUserId());
     }
 
     @LegalID
