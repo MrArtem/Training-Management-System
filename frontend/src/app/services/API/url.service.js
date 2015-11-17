@@ -14,6 +14,7 @@
             addTag: addTag,
             approveCourse: approveCourse,
             cancelCreate: cancelCreate,
+            cancelDeleteCourse: cancelDeleteCourse,
             cancelEdit: cancelEdit,
             changePassword: changePassword,
             confirm: confirm,
@@ -83,6 +84,10 @@
 
     function cancelCreate(trainingId) {
         return '/api/training/cancel_create/' + trainingId;
+    }
+
+    function cancelDeleteCourse(actionId) {
+        return '/api/training/cancel_change/' + actionId;
     }
 
     function cancelEdit(trainingId) {

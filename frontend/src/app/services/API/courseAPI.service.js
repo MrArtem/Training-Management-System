@@ -14,6 +14,7 @@
             addTag: addTag,
             approveCourse: approveCourse,
             cancelCreate: cancelCreate,
+            cancelDeleteCourse: cancelDeleteCourse,
             cancelEdit: cancelEdit,
             createCourse: createCourse,
             deleteCourse: deleteCourse,
@@ -211,6 +212,12 @@
                 console.log('Course canceled successfully!');
                 $state.transitionTo('mycourses');
                 return results.data;
+            });
+        }
+
+        function cancelDeleteCourse(actionId) {
+            return $http.put(urlProvider.cancelDeleteCourse(actionId)).then(function(result) {
+                return result.data;
             });
         }
 

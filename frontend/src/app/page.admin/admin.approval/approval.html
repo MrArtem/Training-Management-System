@@ -7,7 +7,7 @@
 				<div class="approve-item" ng-repeat="item in approval.approveList track by $index">
 					<p><span><a ui-sref="profile({userId: item.coachId})" >{{item.coachName}}</a>
 						{{approval.makeText(item.type, item.tableName)}} <a href=""
-							ui-sref="step1({courseId: item.trainingId, type: item.type, edit: true, id: item.id})">{{item.trainingTitle}}</a></span>
+							ui-sref="managecourse({courseId: item.trainingId, type: item.type, edit: true, id: item.id})">{{item.trainingTitle}}</a></span>
 						<a href="" ng-click="approval.seeDetails(item)"><span class="pull-right see-details"><i class="fa fa-eye"></i></span></a>
 					</p>
 					<p class="top-mg-25"><i class="fa fa-clock-o"></i> {{item.date | date: "MMM d, y h:mm a"}}</p>
@@ -16,6 +16,35 @@
 			</div>
 			<p ng-if="approval.approveList.length == 0">You have nothing to approve.</p>
 
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="deleteTrainingModal" tabindex="-1" role="dialog" aria-labelledby="deleteTitle">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+						aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="deleteTitle"></h4>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<div class="col-xs-12 col-sm-6">
+						<p>Can {{approval.coachDeleting}} delete his training?</p>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+
+				<button href="" class="btn default-btn pull-left" data-dismiss="modal">Cancel</button>
+				<button href="" class="btn default-btn-red" data-dismiss="modal"
+						ng-click="approval.cancelDeleteCourse()">No
+				</button>
+				<button href="" class="btn default-btn-green" data-dismiss="modal"
+						ng-click="approval.deleteCourse()">Yes
+				</button>
+			</div>
 		</div>
 	</div>
 </div>

@@ -3,10 +3,23 @@
         <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
             <div class="row courseinfo-short">
                 <p><span class="title"><h1 class="inline">{{courseInfo.title}}</h1></span>
-                    <a ng-if="courseInfo.isCoach || courseinfo.isAdmin()" href="" ui-sref="managecourse({courseId: courseInfo.trainingId, edit: true})"><span
-                        class="pull-right edit-course"><i class="fa fa-pencil-square-o"></i></span></a>
-                    <a ng-if="courseInfo.isCoach || courseinfo.isAdmin()" href="" ng-click="courseinfo.deleteCourse()"><span
-                            class="pull-right delete-course"><i class="fa fa-ban"></i></span></a></p>
+
+                    <span class="pull-right" uib-dropdown ng-if="courseInfo.isCoach || courseinfo.isAdmin()">
+                        <a href id="course-dropdown" uib-dropdown-toggle>
+                            <i class="fa fa-ellipsis-v"></i>
+                        </a>
+                        <ul class="uib-dropdown-menu" aria-labelledby="simple-dropdown">
+                            <li>
+                                <a href ui-sref="managecourse({courseId: courseInfo.trainingId, edit: true})">Edit training</a>
+                            </li>
+                            <hr>
+                            <li>
+                                <a href ng-click="courseinfo.deleteCourse()">Delete training</a>
+                            </li>
+                        </ul>
+                    </span>
+
+                </p>
 
 
                 <!--Uncomment when checked-->

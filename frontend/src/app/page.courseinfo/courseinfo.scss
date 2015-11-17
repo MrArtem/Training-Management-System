@@ -32,24 +32,17 @@
     }
   }
 
-  .edit-course, .delete-course {
+  .fa-ellipsis-v {
     font-size: 30px;
+    color: rgba(0,0,0,0.28);
     margin: 3px;
     margin-top: 0;
   }
 
-  .edit-course {
-    color: rgba(0,0,0,0.28);
-  }
+  hr {
+    margin: 3px 8px !important;
 
-  .delete-course {
-    color: #ef3e36;
   }
-
-  .delete-course:hover {
-    color: #a1161b;
-  }
-
 
   .courseinfo-view {
     padding-top: 25px;
