@@ -6,12 +6,13 @@
         .controller('ApprovalController', ApprovalController);
 
     /** @ngInject */
-    function ApprovalController($scope, $state, adminAPI) {
+    function ApprovalController($state, adminAPI, courseAPI) {
         var vm = this;
+        vm.approveList = [];
         //var stompClient = null;
 
-        vm.approveList = [];
         //vm.disconnect = disconnect;
+        vm.deleteCourse = deleteCourse;
         vm.getApproveList = getApproveList;
         vm.makeText = makeText;
         vm.seeDetails = seeDetails;
@@ -51,6 +52,12 @@
         //    stompClient.send("/approve_list", {}, JSON.stringify({ 'page': 0, 'page_size': 10 }))
         //}
 
+        function deleteCourse() {
+            courseAPI.deleteCourse(vm.idToDelete).then(function(data) {
+                $('#deleteTrainingModal').modal('hide');
+            });
+        }
+
         function getApproveList() {
             adminAPI.getApproveList().then(function(data) {
                 vm.approveList = angular.copy(data);
@@ -87,8 +94,15 @@
                         $state.go('managecourse', {courseId: item.trainingId, edit: true, id: item.id, type: type});
                     }
                     break;
-                //case 'REMOVE':
-                //    return (tableName == 'APPROVE_TRAINING') ? ' wants to delete training ' : ' wants to delete lesson from training ';
+                case 'REMOVE':
+                    if(tableName == 'APPROVE_TRAINING') {
+                        vm.idToDelete = item.trainingId;
+                        vm.coachDeleting = item.coachName;
+                        $('#deleteTrainingModal').modal();
+                    }
+                    else {
+
+                    }
                 default:
                     return '';
             }
