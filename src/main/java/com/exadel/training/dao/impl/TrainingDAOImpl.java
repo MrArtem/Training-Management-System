@@ -8,6 +8,7 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.*;
+import org.hibernate.sql.JoinType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Repository;
@@ -51,7 +52,7 @@ public class TrainingDAOImpl implements TrainingDAO {
         User user = userDAO.getUserByID(customUser.getUserId());
         Criterion isCoach = Restrictions.eq("training.coach", user);
 
-        criteria.createAlias("training.listenerList", "listener");
+        criteria.createAlias("training.listenerList", "listener", JoinType.LEFT_OUTER_JOIN);
         Criterion isSubscribed = Restrictions.eq("listener.user", user);
         Criterion stateListener = Restrictions.eq("listener.state", Listener.State.ACCEPTED);
         return Restrictions.or(isCoach, Restrictions.and(isSubscribed, stateListener));
