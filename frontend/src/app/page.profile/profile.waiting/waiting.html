@@ -15,8 +15,8 @@
                     </thead>
                     <tbody>
                     <tr ng-repeat="course in profileInfo.waitingCourses">
-                        <td>{{course.coachName}}</td>
-                        <td>{{course.trainingTitle}}</td>
+                        <td><a ui-sref="profile({userId: course.coachId}{})">{{course.coachName}}</a></td>
+                        <td><a ui-sref="courseinfo({courseId: course.id})">{{course.trainingTitle}}</a></td>
                     </tr>
                     </tbody>
                 </table>
