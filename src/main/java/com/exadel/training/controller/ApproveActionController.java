@@ -45,10 +45,14 @@ public class ApproveActionController {
             approveActionModel.setCoachId(coach.getId());
             approveActionModel.setCoachName(coach.getFirstName() + " " + coach.getLastName());
             approveActionModel.setId(approveAction.getId());
-            if (approveAction.getApproveLessonList().size() == 0) {
-                approveActionModel.setTableName(trainingTableName);
+            if (approveAction.getApproveTraining() == null) {
+                if (approveAction.getApproveLessonList().size() == 0) {
+                    approveActionModel.setTableName(trainingTableName);
+                } else {
+                    approveActionModel.setTableName(lessonTableName);
+                }
             } else {
-                approveActionModel.setTableName(lessonTableName);
+                approveActionModel.setTableName(trainingTableName);
             }
             approveActionModelList.add(approveActionModel);
         }

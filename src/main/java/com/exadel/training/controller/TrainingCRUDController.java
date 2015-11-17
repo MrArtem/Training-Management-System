@@ -7,12 +7,10 @@ import com.exadel.training.controller.model.trainingModels.LessonModel;
 import com.exadel.training.dao.domain.*;
 import com.exadel.training.security.authentication.CustomAuthentication;
 import com.exadel.training.service.TrainingService;
-import com.exadel.training.validate.AddingTrainingModelValidator;
 import com.exadel.training.validate.annotation.LegalID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -25,13 +23,13 @@ public class TrainingCRUDController {
     @Autowired
     private TrainingService trainingService;
 
-    @Autowired
-    private AddingTrainingModelValidator addingTrainingModelValidator;
-
-    @InitBinder
-    protected void initBinder(WebDataBinder binder) {
-        binder.setValidator(addingTrainingModelValidator);
-    }
+//    @Autowired
+//    private AddingTrainingModelValidator addingTrainingModelValidator;
+//
+//    @InitBinder
+//    protected void initBinder(WebDataBinder binder) {
+//        binder.setValidator(addingTrainingModelValidator);
+//    }
 
     @Secured({"ADMIN", "USER"})
     @RequestMapping(value = "/create", method = RequestMethod.POST)

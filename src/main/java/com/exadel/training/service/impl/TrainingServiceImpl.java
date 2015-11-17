@@ -517,18 +517,13 @@ public class TrainingServiceImpl implements TrainingService {
             approveAction.setDate(Utils.getTime());
             approveAction.setTraining(training);
             approveAction.setType(ApproveAction.Type.EDIT);
-
+            approveActionDAO.addApproveAction(approveAction);
 
             ApproveLesson approveLesson = new ApproveLesson();
             approveLesson.setLesson(lesson);
             approveLesson.setDate(lessonModel.getDate());
             approveLesson.setPlace(lessonModel.getPlace());
             lessonApproveDAO.addApprove(approveLesson);
-
-            List<ApproveLesson> approveLessonList = new ArrayList<ApproveLesson>();
-            approveLessonList.add(approveLesson);
-            approveAction.setApproveLessonList(approveLessonList);
-            approveActionDAO.addApproveAction(approveAction);
         } else {
             lesson.setState(Lesson.State.REMOVAL);
             for (Attendance attendance : Utils.emptyIfNull(lesson.getAttendanceList())) {
@@ -540,12 +535,7 @@ public class TrainingServiceImpl implements TrainingService {
             newLesson.setTraining(training);
             newLesson.setState(Lesson.State.ADD);
             lessonDAO.addLesson(newLesson);
-            for (Listener listener : Utils.emptyIfNull(training.getListenerList())) {
-                Attendance attendance = new Attendance();
-                attendance.setUser(listener.getUser());
-                attendance.setLesson(lesson);
-                attendanceDAO.save(attendance);
-            }
+            addAttendance(lesson, training.getListenerList());
         }
     }
 
@@ -560,33 +550,27 @@ public class TrainingServiceImpl implements TrainingService {
             lesson.setTraining(training);
             lessonDAO.addLesson(lesson);
 
-            ApproveLesson approveLesson = new ApproveLesson();
-            approveLesson.setDate(lessonModel.getDate());
-            approveLesson.setPlace(lessonModel.getPlace());
-            approveLesson.setLesson(lesson);
-            lessonApproveDAO.addApprove(approveLesson);
 
             ApproveAction approveAction = new ApproveAction();
             approveAction.setTraining(training);
             approveAction.setDate(Utils.getTime());
-            approveAction.setType(ApproveAction.Type.EDIT);
+            approveAction.setType(ApproveAction.Type.CREATE);
 
-            List<ApproveLesson> approveLessonList = new ArrayList<ApproveLesson>();
-            approveLessonList.add(approveLesson);
-            approveAction.setApproveLessonList(approveLessonList);
+            ApproveLesson approveLesson = new ApproveLesson();
+            approveLesson.setDate(lessonModel.getDate());
+            approveLesson.setPlace(lessonModel.getPlace());
+            approveLesson.setLesson(lesson);
+
             approveActionDAO.addApproveAction(approveAction);
+            approveLesson.setApproveAction(approveAction);
+            lessonApproveDAO.addApprove(approveLesson);
         } else {
             Lesson lesson = new Lesson();
             lesson.setPlace(lessonModel.getPlace());
             lesson.setDate(lessonModel.getDate());
             lesson.setState(Lesson.State.ADD);
             lessonDAO.addLesson(lesson);
-            for (Listener listener : Utils.emptyIfNull(training.getListenerList())) {
-                Attendance attendance = new Attendance();
-                attendance.setUser(listener.getUser());
-                attendance.setLesson(lesson);
-                attendanceDAO.save(attendance);
-            }
+            addAttendance(lesson, training.getListenerList());
         }
     }
 
@@ -598,19 +582,16 @@ public class TrainingServiceImpl implements TrainingService {
 
         User user = userDAO.getUserByID(currentUserId);
         if (user.getRole() != User.Role.ADMIN) {
-            ApproveLesson approveLesson = new ApproveLesson();
-            approveLesson.setLesson(lesson);
-            lessonApproveDAO.addApprove(approveLesson);
-
             ApproveAction approveAction = new ApproveAction();
             approveAction.setTraining(training);
             approveAction.setDate(Utils.getTime());
-            approveAction.setType(ApproveAction.Type.EDIT);
-
-            List<ApproveLesson> approveLessonList = new ArrayList<ApproveLesson>();
-            approveLessonList.add(approveLesson);
-            approveAction.setApproveLessonList(approveLessonList);
+            approveAction.setType(ApproveAction.Type.REMOVE);
             approveActionDAO.addApproveAction(approveAction);
+
+            ApproveLesson approveLesson = new ApproveLesson();
+            approveLesson.setLesson(lesson);
+            approveLesson.setApproveAction(approveAction);
+            lessonApproveDAO.addApprove(approveLesson);
         } else {
             lesson.setState(Lesson.State.REMOVAL);
             for (Attendance attendance : Utils.emptyIfNull(lesson.getAttendanceList())) {
@@ -631,12 +612,7 @@ public class TrainingServiceImpl implements TrainingService {
             lesson.setDate(approveLessonModel.getNewDate());
             lesson.setState(Lesson.State.ADD);
             lessonDAO.changeLesson(lesson);
-            for (Listener listener : Utils.emptyIfNull(training.getListenerList())) {
-                Attendance attendance = new Attendance();
-                attendance.setUser(listener.getUser());
-                attendance.setLesson(lesson);
-                attendanceDAO.save(attendance);
-            }
+            addAttendance(lesson, training.getListenerList());
         }
         if (lesson.getState() == Lesson.State.NONE) {
             lesson.setState(Lesson.State.REMOVAL);
@@ -715,7 +691,6 @@ public class TrainingServiceImpl implements TrainingService {
 
     @Override
     public boolean getCanComment(Long trainingId, Long currentUserId) {
-        User currentUser = userDAO.getUserByID(currentUserId);
         Listener listener = listenerDAO.getListenerByTrainingAndUser(trainingId, currentUserId);
         if (listener != null && Utils.getTime() >= lessonDAO.getStartDateByTraining(trainingId)) {
             return true;
