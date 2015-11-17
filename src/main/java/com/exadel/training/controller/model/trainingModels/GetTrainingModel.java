@@ -20,6 +20,8 @@ public class GetTrainingModel extends TrainingModel {
 
     private boolean isInner;
 
+    private boolean canComment;
+
 
     public GetTrainingModel() {
     }
@@ -99,5 +101,13 @@ public class GetTrainingModel extends TrainingModel {
 
     public void setIsInner(boolean inner) {
         isInner = inner;
+    }
+
+    public boolean getCanComment() {
+        return canComment;
+    }
+
+    public void setCanComment(boolean canComment) {
+        this.canComment = canComment;
     }
 }

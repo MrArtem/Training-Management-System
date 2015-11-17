@@ -61,17 +61,19 @@ public class TrainingBaseController {
     @Secured({"ADMIN", "USER", "EX_COACH", "EX_USER"})
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     GetTrainingModel getTrainingModel(@PathVariable("id") long trainingId) {
+        CustomAuthentication customUser =
+                (CustomAuthentication) SecurityContextHolder.getContext().getAuthentication();
         GetTrainingModel getTrainingModel = new GetTrainingModel();
         Training training = trainingService.getTraining(trainingId);
+
         getTrainingModel.setTraining(training);
         getTrainingModel.setStartDate(lessonService.getStartDateByTraining(trainingId));
         getTrainingModel.setEndDate(lessonService.getEndDateByTraining(trainingId));
-        CustomAuthentication customUser =
-                (CustomAuthentication) SecurityContextHolder.getContext().getAuthentication();
         getTrainingModel.setCanRate(trainingService.canRate(trainingId, customUser.getUserId()));
         boolean isCoach = customUser.getUserId() == training.getCoach().getId();
         getTrainingModel.setIsCoach(isCoach);
         getTrainingModel.setCanSubscribe(!isCoach && listenerService.canSubscribe(trainingId, customUser.getUserId()));
+        getTrainingModel.setCanComment(trainingService.getCanComment(trainingId, customUser.getUserId()));
         return getTrainingModel;
     }
 

@@ -89,4 +89,6 @@ public interface TrainingService {
     void canceledLesson(long actionId);
 
     List<Training> getTrainingListForStatistic();
+
+    boolean getCanComment(Long trainingId, Long currentUserId);
 }

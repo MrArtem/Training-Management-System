@@ -712,4 +712,14 @@ public class TrainingServiceImpl implements TrainingService {
     public List<Training> getTrainingListForStatistic() {
         return trainingDAO.getTrainingListForStatistic();
     }
+
+    @Override
+    public boolean getCanComment(Long trainingId, Long currentUserId) {
+        User currentUser = userDAO.getUserByID(currentUserId);
+        Listener listener = listenerDAO.getListenerByTrainingAndUser(trainingId, currentUserId);
+        if (listener != null && Utils.getTime() >= lessonDAO.getStartDateByTraining(trainingId)) {
+            return true;
+        }
+        return false;
+    }
 }
