@@ -23,7 +23,7 @@ public class Lesson {
     @ManyToOne
     private Training training;
     @JsonIgnore
-    @OneToMany(mappedBy = "lesson", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "lesson", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Attendance> attendanceList;
 
     public Lesson() {

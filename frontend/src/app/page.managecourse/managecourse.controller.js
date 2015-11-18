@@ -42,7 +42,7 @@
             vm.courseId = parseInt($stateParams.courseId);
             vm.actionId = parseInt($stateParams.id);
             $scope.isEdited = true;
-            vm.isDraft = !($stateParams.type === 'EDIT');
+            vm.isDraft = $stateParams.type === 'EDIT';
 
             if (vm.isDraft) {
                 //if admin approves

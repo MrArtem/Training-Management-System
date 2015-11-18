@@ -245,7 +245,6 @@ public class TrainingServiceImpl implements TrainingService {
             lessonList.clear();
         }
         trainingDAO.changeTraining(training);
-        approveActionDAO.removeApproveAction(approveAction);
     }
 
     private void confirmRemoveTraining(Training training) {
@@ -295,6 +294,7 @@ public class TrainingServiceImpl implements TrainingService {
         removeApproveLessonList(approveAction, false);
         Training training = approveAction.getTraining();
         training.setState(Training.State.REMOVE);
+        approveActionDAO.removeApproveAction(approveAction);
         trainingDAO.changeTraining(training);
     }
 
@@ -306,6 +306,7 @@ public class TrainingServiceImpl implements TrainingService {
             trainingApproveDAO.removeApprove(approveTraining);
         }
         removeApproveLessonList(approveAction, false);
+        approveActionDAO.removeApproveAction(approveAction);
     }
 
     private void editTrainingWithPrevApprove(ApproveAction approveAction, String title
