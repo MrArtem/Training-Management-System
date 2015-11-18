@@ -21,7 +21,7 @@
 }
 
 .navbar {
-  color: black !important;
+  color: $black !important;
   background-color: rgba(255,255,255,0.96) !important;
   border-bottom: 1.5px solid rgba(0,0,0,0.07);
   font-family: $tre-header-font;
@@ -40,9 +40,9 @@
 
   li {
     a {
-      color: rgba(0,0,0,0.9) !important;
+      color: $black !important;
       font-weight: 500;
-      letter-spacing: 1.1px;
+
       padding-top: 20px;
       padding-bottom: 22px;
       padding-right: 15px;
@@ -58,7 +58,7 @@
       font-weight: 500;
       color: rgba(0,0,0,0.9) !important;
       border-bottom: 2px solid rgba(0,0,0,0.9);
-      letter-spacing: 1.0px;
+
       padding-left: 0px;
       padding-right: 0px;
       margin-left: 15px;
@@ -243,35 +243,6 @@
   }
 }
 
-//<div class="row">
-//<div class="found-training">
-//<p>TRAINING</p>
-//<h4>Angular js</h4>
-//
-//<p class="state">Right Now</p>
-//
-//<p class="excerpt">Become the greatest on the planet</p>
-//
-//<p class="info">Coach: <span class="value"><a >Anthony Dossow</a></span>
-//</p>
-//</div>
-//
-//</div>
-
-//.full-modal {
-//  background-size: 100% 100% !important;
-//  background-repeat: no-repeat !important;
-//  height: 100% !important;
-//}
-
-//.modal-dialog {
-//  border: none !important;
-//  width: 100% !important;
-//  height: 100% !important;
-//  background-color: rgba(0, 0, 0, 0.5);
-//
-//
-//}
 
 div#searchModal {
   top: 0 !important;
@@ -280,7 +251,9 @@ div#searchModal {
 .create-btn {
   margin-top: 15px !important;
   margin-bottom: 8px !important;
-
+  margin-right: 16px;    
+    
+    
   font-weight: 500;
   font-family: $tre-header-font;
   overflow: hidden;

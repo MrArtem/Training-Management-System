@@ -70,7 +70,7 @@ $dark-border-color: rgba(0, 0, 0, 0.40);
 
       .course-title {
         a {
-          color: black;
+          color: $black;
         }
       }
 
@@ -111,7 +111,18 @@ $dark-border-color: rgba(0, 0, 0, 0.40);
   }
 
   .localSearchForm {
-    height: 36px;
-    border-radius: 16px;
+    height: 40px;
+    border-radius: 20px;
   }
+    .segmented-picker{
+        width: 288px;
+        margin: auto;
+    }
+    .segmented-button{
+        padding-top: 0;
+        padding-bottom: 0;
+        width: 96px;
+        height: 40px;
+        line-height: 38px;
+    }
 }
