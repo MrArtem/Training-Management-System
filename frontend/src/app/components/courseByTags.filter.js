@@ -9,14 +9,14 @@
     /* @ngInject */
     function filterByTags() {
         return function(input, tagIdList) {
-            if(tagIdList.length == 0) {
+            if(tagIdList.length === 0) {
                 return input;
             }
 
             var filteredArray = [];
 
             input.forEach(function(course) {
-                if(course.tagList.length != 0) {
+                if(course.tagList.length !== 0) {
                     var idList = course.tagList.map(function(tag) {
                         return tag.id;
                     });
@@ -33,7 +33,7 @@
             });
 
             return filteredArray;
-        }
+        };
     }
 
 

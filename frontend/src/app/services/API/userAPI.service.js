@@ -22,7 +22,7 @@
         function addExCoach(coachInfo) {
             return $http.post(urlProvider.addExCoach(), coachInfo).then(function(result) {
                 return result.data;
-            })
+            });
         }
 
         function addFeedbackOnUser(courseId, userId, fbInfo) {

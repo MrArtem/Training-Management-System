@@ -11,7 +11,7 @@
             getLessonToApprove: getLessonToApprove,
             getNewsList: getNewsList,
             getStatistics: getStatistics
-        }
+        };
         return adminAPI;
 
         function getApproveList() {

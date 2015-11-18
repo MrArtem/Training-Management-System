@@ -59,7 +59,7 @@
             courseAPI.leave($stateParams.courseId).then(function(data) {
                 vm.courseInfo.canSubscribe = true;
                 console.log('Left training successfully');
-            })
+            });
         }
 
         function setRating(rating) {
@@ -74,14 +74,13 @@
 
         function subscribe() {
             courseAPI.subscribe($stateParams.courseId).then(function(data) {
-                debugger;
                 $scope.courseInfo.canSubscribe = false;
                 console.log('Subscribed successfully');
-            })
+            });
         }
 
         function isActive(state) {
-            return $location.absUrl().search(state) === -1 ? false : true
+            return $location.absUrl().search(state) === -1 ? false : true;
         }
 
         function isAdmin() {

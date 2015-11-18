@@ -35,6 +35,34 @@ $dark-border-color: rgba(0, 0, 0, 0.40);
       padding-right: 15px;
 
       margin-bottom: 15px;
+      height: 450px;
+
+      overflow: hidden;
+
+      /*HEIGHT*/
+      @media screen and (max-width: 280px) {
+        height: auto;
+      }
+
+      @media screen and(max-width: 768px) and (min-width: 400px) {
+        height: 280px;
+      }
+
+      @media screen and (max-width: 400px) and (min-width: 280px) {
+        height: 350px;
+      }
+
+      @media screen and (max-width: 900px) and (min-width: 820px) {
+        height: 380px;
+      }
+
+      @media screen and (max-width: 1500px) and (min-width: 900px) {
+        height: 340px;
+      }
+
+      @media screen and (min-width: 1500px) {
+        height: 320px;
+      }
 
       cursor: pointer;
       @include card-transition(250ms);

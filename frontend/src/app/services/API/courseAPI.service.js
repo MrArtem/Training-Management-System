@@ -40,7 +40,7 @@
             setRating: setRating,
             subscribe: subscribe,
             uploadFiles: uploadFiles
-        }
+        };
         return courseAPI;
 
         //////////

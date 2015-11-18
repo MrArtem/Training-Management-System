@@ -63,7 +63,7 @@
             console.log('Attendance to be set: ', vm.attendanceList);
             courseAPI.setAttendance(vm.attendanceList).then(function(data) {
                 console.log('Attendance set successfully');
-            })
+            });
         }
     }
 

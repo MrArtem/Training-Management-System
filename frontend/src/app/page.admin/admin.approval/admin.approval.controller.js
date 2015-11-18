@@ -134,10 +134,8 @@
             switch(type) {
                 case 'CREATE':
                     return (tableName == 'APPROVE_TRAINING') ? ' wants to create training ' : ' wants to add lesson to training ';
-                    break;
                 case 'EDIT':
                     return (tableName == 'APPROVE_TRAINING') ? ' wants to edit training ' : ' wants to edit lesson in training ';
-                    break;
                 case 'REMOVE':
                     return (tableName == 'APPROVE_TRAINING') ? ' wants to delete training ' : ' wants to delete lesson from training ';
                 default:
