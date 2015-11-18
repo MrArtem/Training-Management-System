@@ -2,18 +2,19 @@
     <div class="row">
         <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
             <div class="row managecourse-short">
-                <form name="courseForm" novalidate>
+                <form name="courseForm" class="form-inline" novalidate>
 
 
                     <h1 class="title">
                         <span ng-show="courseForm.title.$invalid && courseForm.title.$touched"
-                              class="badge invalid-form" uib-tooltip="maximum length: 50 symbols"
-                              tooltip-trigger="focus"
+                              class="badge invalid-form"
+                              uib-tooltip="This field is required, maximum length: 50 symbols"
+                              tooltip-trigger="mouseenter"
                               tooltip-placement="bottom">
                             <i class="fa fa-exclamation-circle"></i>
                         </span>
                         <input class="material-input" type="text" name="title" placeholder="Enter course name"
-                               ng-model="courseInfo.title" ng-disabled="isEdited" ng-maxlength="50"
+                               ng-model="courseInfo.title" ng-disabled="isEdited" maxlength="50"
                                uib-tooltip="maximum length: 50 symbols" tooltip-trigger="focus"
                                tooltip-placement="bottom" required>
                     </h1>
@@ -69,7 +70,16 @@
                     <!--Set participants number-->
                     <div class="row">
                         <div class="col-xs-12">
-                            <p class="pull-left">Number of participants:
+                            <p class="pull-left">
+
+                                <span ng-show="courseForm.participantsNumber.$invalid && courseForm.participantsNumber.$touched"
+                                      class="badge invalid-form"
+                                      uib-tooltip="This field is required"
+                                      tooltip-trigger="mouseenter"
+                                      tooltip-placement="bottom">
+                                    <i class="fa fa-exclamation-circle"></i>
+                                </span>
+                                Number of participants:
                                 <input class="material-input" name="participantsNumber" id="maxSize" type="number"
                                        placeholder="click to enter" ng-model="courseInfo.maxSize"
                                        uib-tooltip="how many students do you want to see?" tooltip-trigger="focus"
@@ -82,9 +92,17 @@
                     <!--Set place if admin-->
                     <div class="row" ng-if="managecourse.isAdmin() && managecourse.isDraft">
                         <div class="col-xs-12">
-                            <p class="pull-left">Place:
+                            <p class="pull-left">
+                                <span ng-show="courseForm.place.$invalid && courseForm.place.$touched"
+                                      class="badge invalid-form"
+                                      uib-tooltip="This field is required, maximum length: 255 symbols"
+                                      tooltip-trigger="mouseenter"
+                                      tooltip-placement="bottom">
+                                    <i class="fa fa-exclamation-circle"></i>
+                                </span>
+                                Place:
                                 <input class="material-input" name="place" id="place" type="text"
-                                       placeholder="click to enter" ng-model="courseInfo.place" ng-maxlength="255"
+                                       placeholder="click to enter" ng-model="courseInfo.place" maxlength="255"
                                        uib-tooltip="it will be set for all the dates that you add"
                                        tooltip-trigger="focus"
                                        tooltip-placement="bottom">
@@ -94,23 +112,41 @@
 
                     <!--Set short info-->
                     <div class="row">
-                        <div class="col-xs-12">
-                            <textarea class="material-input scroll" id="shortInfo" name="shortInfo"
+                        <div class="col-xs-12 form-group">
+                            <label for="shortInfo"
+                                   ng-show="courseForm.shortInfo.$invalid && courseForm.shortInfo.$touched"
+                                   class="badge invalid-form"
+                                   uib-tooltip="This field is required, maximum length: 255 symbols"
+                                   tooltip-trigger="mouseenter"
+                                   tooltip-placement="bottom">
+                                <i class="fa fa-exclamation-circle"></i>
+                            </label>
+                            <textarea class=" form-control material-input scroll" id="shortInfo" name="shortInfo"
+                                      rows="5"
                                       placeholder="Click to write short description" ng-model="courseInfo.shortInfo"
-                                      ng-maxlength="255" uib-tooltip="maximum length: 255 symbols"
+                                      maxlength="255" uib-tooltip="maximum length: 255 symbols"
                                       tooltip-trigger="focus" tooltip-placement="top" required></textarea>
                         </div>
                     </div>
 
                     <!--Set description-->
                     <div class="row">
-                        <div class="col-xs-12">
-                        <textarea class="material-input scroll" name="description" id="description" rows="5"
-                                  placeholder="Click to write your course description here..."
-                                  ng-model="courseInfo.description"
-                                  uib-tooltip="try to describe your training more specifically"
-                                  tooltip-trigger="focus" tooltip-placement="top"
-                                  required></textarea>
+                        <div class="col-xs-12 form-group">
+                            <label for="description"
+                                   ng-show="courseForm.description.$invalid && courseForm.description.$touched"
+                                   class="badge invalid-form"
+                                   uib-tooltip="This field is required"
+                                   tooltip-trigger="mouseenter"
+                                   tooltip-placement="bottom">
+                                <i class="fa fa-exclamation-circle"></i>
+                            </label>
+                            <textarea class="form-control material-input scroll" name="description" id="description"
+                                      rows="5"
+                                      placeholder="Click to write your course description here..."
+                                      ng-model="courseInfo.description"
+                                      uib-tooltip="try to describe your training more specifically"
+                                      tooltip-trigger="focus" tooltip-placement="top"
+                                      required></textarea>
                         </div>
                     </div>
 
@@ -139,17 +175,25 @@
                 </form>
                 <div class="row top-mg-25">
                     <div class="col-xs-12">
-                        <a ng-if="managecourse.isDraft && !isEdited" href="" class="btn accent-btn-green pull-left"
-                           ng-click="managecourse.createCourse()" ng-disabled="courseForm.$invalid">Create
-                            course</a>
-                        <a ng-if="!managecourse.isDraft && !managecourse.isAdmin()" href=""
-                           class="btn accent-btn-green pull-left"
-                           ng-disabled="courseForm.$invalid"
-                           ng-click="managecourse.editCourse()">Edit course</a>
-                        <a ng-if="managecourse.isAdmin() && isEdited" href=""
-                           class="btn accent-btn-green pull-left"
-                           ng-disabled="courseForm.$invalid"
-                           ng-click="managecourse.approveCourse()">Approve course</a>
+                        <span class="invalid-form no-arrow" uib-tooltip="check your fields, they're not entirely correct"
+                              tooltip-trigger="mouseenter" tooltip-enable="courseForm.$invalid" tooltip-placement="top">
+                            <button ng-if="managecourse.isDraft && !isEdited" href=""
+                                    class="btn accent-btn-green pull-left"
+                                    ng-click="managecourse.createCourse()" ng-disabled="courseForm.$invalid">Create
+                                course
+                            </button>
+
+
+                        <button ng-if="!managecourse.isDraft && !managecourse.isAdmin()" href=""
+                                class="btn accent-btn-green pull-left"
+                                ng-disabled="courseForm.$invalid"
+                                ng-click="managecourse.editCourse()">Edit course
+                        </button>
+                        <button ng-if="managecourse.isAdmin() && isEdited" href=""
+                                class="btn accent-btn-green pull-left"
+                                ng-disabled="courseForm.$invalid"
+                                ng-click="managecourse.approveCourse()">Approve course
+                        </button>
                     </div>
                 </div>
             </div>
