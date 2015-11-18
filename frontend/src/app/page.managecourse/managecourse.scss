@@ -3,6 +3,14 @@
   $left-pd: 48px;
   $right-pd: 48px;
 
+  .material-input + .tooltip > .tooltip-inner {
+    color: $text-color;
+    background-color: #E7E7E7;
+  }
+  .material-input + .tooltip > .tooltip-arrow {
+    border-bottom-color: rgba(0, 0, 0, 0.1);;
+  }
+
   .managecourse-h1 {
     font-size: 48px;
     color: #4C4C4C;
