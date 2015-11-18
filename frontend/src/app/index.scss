@@ -160,11 +160,17 @@ body {
   box-shadow: none !important;
 }
 
+.invalid-form {
+  font-size: 14px;
+  color: #ff2631;
+  background-color: transparent;
+}
+
 ///////////////////////////
 
 
 .material-input {
-  border: none !important;
+  border: none;
   background: white !important;
 }
 

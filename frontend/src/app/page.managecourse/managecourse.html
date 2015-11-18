@@ -3,12 +3,19 @@
         <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
             <div class="row managecourse-short">
                 <form name="courseForm" novalidate>
-                    <h1 class="title"><input class="material-input" type="text" name="title"
-                                             placeholder="Enter course name"
-                                             ng-model="courseInfo.title" ng-disabled="isEdited" ng-maxlength="50"
-                                             uib-tooltip="maximum length: 50 symbols" tooltip-trigger="focus"
-                                             tooltip-placement="bottom"
-                                             required>
+
+
+                    <h1 class="title">
+                        <span ng-show="courseForm.title.$invalid && courseForm.title.$touched"
+                              class="badge invalid-form" uib-tooltip="maximum length: 50 symbols"
+                              tooltip-trigger="focus"
+                              tooltip-placement="bottom">
+                            <i class="fa fa-exclamation-circle"></i>
+                        </span>
+                        <input class="material-input" type="text" name="title" placeholder="Enter course name"
+                               ng-model="courseInfo.title" ng-disabled="isEdited" ng-maxlength="50"
+                               uib-tooltip="maximum length: 50 symbols" tooltip-trigger="focus"
+                               tooltip-placement="bottom" required>
                     </h1>
 
                     <!--Select coach-->
@@ -78,7 +85,8 @@
                             <p class="pull-left">Place:
                                 <input class="material-input" name="place" id="place" type="text"
                                        placeholder="click to enter" ng-model="courseInfo.place" ng-maxlength="255"
-                                       uib-tooltip="will be set for all the dates that you add" tooltip-trigger="focus"
+                                       uib-tooltip="it will be set for all the dates that you add"
+                                       tooltip-trigger="focus"
                                        tooltip-placement="bottom">
                             </p>
                         </div>
@@ -90,7 +98,7 @@
                             <textarea class="material-input scroll" id="shortInfo" name="shortInfo"
                                       placeholder="Click to write short description" ng-model="courseInfo.shortInfo"
                                       ng-maxlength="255" uib-tooltip="maximum length: 255 symbols"
-                                      tooltip-trigger="focus" tooltip-placement="bottom" required></textarea>
+                                      tooltip-trigger="focus" tooltip-placement="top" required></textarea>
                         </div>
                     </div>
 
@@ -100,6 +108,8 @@
                         <textarea class="material-input scroll" name="description" id="description" rows="5"
                                   placeholder="Click to write your course description here..."
                                   ng-model="courseInfo.description"
+                                  uib-tooltip="try to describe your training more specifically"
+                                  tooltip-trigger="focus" tooltip-placement="top"
                                   required></textarea>
                         </div>
                     </div>
@@ -132,7 +142,8 @@
                         <a ng-if="managecourse.isDraft && !isEdited" href="" class="btn accent-btn-green pull-left"
                            ng-click="managecourse.createCourse()" ng-disabled="courseForm.$invalid">Create
                             course</a>
-                        <a ng-if="!managecourse.isDraft && !managecourse.isAdmin()" href="" class="btn accent-btn-green pull-left"
+                        <a ng-if="!managecourse.isDraft && !managecourse.isAdmin()" href=""
+                           class="btn accent-btn-green pull-left"
                            ng-disabled="courseForm.$invalid"
                            ng-click="managecourse.editCourse()">Edit course</a>
                         <a ng-if="managecourse.isAdmin() && isEdited" href=""
