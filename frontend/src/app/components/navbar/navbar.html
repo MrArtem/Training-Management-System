@@ -19,7 +19,7 @@
                 <li ng-class="{activelink: navbar.isActive('profile')}"><a
                         ui-sref="profile({userId: navbar.user.userId})">PROFILE</a></li>
                 <!--<li ng-class="{activelink: navbar.isActive('admin')}" ng-if="navbar.isAdmin()"><a ui-sref="admin">ADMIN</a></li>-->
-                <li ng-class="{activelink: navbar.isActive('admin')}"><a ui-sref="admin">ADMIN</a></li>
+                <li ng-if="navbar.isAdmin()" ng-class="{activelink: navbar.isActive('admin')}"><a ui-sref="admin">ADMIN</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li>
@@ -40,87 +40,6 @@
         </div>
     </div>
 </nav>
-
-<!--<nav class="navbar navbar-default navbar-fixed-top tre-navbar">-->
-<!--<div class="container-fluid">-->
-<!--&lt;!&ndash; Brand and toggle get grouped for better mobile display &ndash;&gt;-->
-<!--<div class="navbar-header">-->
-<!--<a class="navbar-brand" ui-sref="mycourses">-->
-<!--<img alt="Exadel" ng-src="app/assets/images/ExadelLogo.png">-->
-<!--</a>-->
-<!--</div>-->
-
-<!--&lt;!&ndash; Collect the nav links, forms, and other content for toggling &ndash;&gt;-->
-<!--<div class="collapse navbar-collapse tre-navbar">-->
-<!--<ul class="nav navbar-nav">-->
-
-<!--<li><a ui-sref="mycourses" ng-class="{activelink: navbar.isActive('mycourses')}">MY COURSES</a></li>-->
-<!--<li><a ui-sref="browse" ng-class="{activelink: navbar.isActive('browse')}">BROWSE</a></li>-->
-<!--<li><a ui-sref="profile({userId: navbar.user.userId})"-->
-<!--ng-class="{activelink: navbar.isActive('profile')}">PROFILE</a></li>-->
-<!--<li ng-if="navbar.isAdmin()"><a ui-sref="admin"-->
-<!--ng-class="{activelink: navbar.isActive('admin')}">ADMIN</a></li>-->
-
-<!--</ul>-->
-
-<!--<ul class="nav navbar-nav navbar-right">-->
-
-<!--<li class=""><a ui-sref="step1" class="right button round small accent-btn-blue create-btn">CREATE-->
-<!--COURSE</a></li>-->
-<!--<li class=""><a href="" data-reveal-id="searchModal"><i class="fa fa-search"></i></a></li>-->
-<!--<li class=""><a href=""><i class="fa fa-globe"></i></a></li>-->
-<!--<li class="has-dropdown">-->
-<!--<a href="#"><i class="fa fa-user"></i></a>-->
-<!--<ul class="dropdown tre-dropdown">-->
-<!--<li><label>{{navbar.user.username}}</label></li>-->
-<!--<li class="no-margin-bottom"><a ui-sref="profile({userId: navbar.user.userId})">Profile</a></li>-->
-<!--<li class="no-margin-top"><a href="" ng-click="navbar.logout()">Logout</a></li>-->
-<!--</ul>-->
-<!--</li>-->
-<!--</ul>-->
-<!--</div>-->
-<!--</div>-->
-<!--</nav>-->
-
-<!--<div class="navbar">-->
-<!--<nav class="top-bar" data-topbar role="navigation">-->
-<!--<ul class="title-area">-->
-<!--<li class="name">-->
-<!--<h1><a ui-sref="mycourses"><img alt="Exadel" ng-src="app/assets/images/ExadelLogo.png"></a></h1>-->
-<!--</li>-->
-<!--</ul>-->
-
-<!--<section class="top-bar-section">-->
-
-<!--&lt;!&ndash; Left Nav Section &ndash;&gt;-->
-<!--<ul class="left">-->
-<!--<li><a ui-sref="mycourses" ng-class="{activelink: navbar.isActive('mycourses')}">MY COURSES</a></li>-->
-<!--<li><a ui-sref="browse" ng-class="{activelink: navbar.isActive('browse')}">BROWSE</a></li>-->
-<!--<li><a ui-sref="profile({userId: navbar.user.userId})"-->
-<!--ng-class="{activelink: navbar.isActive('profile')}">PROFILE</a></li>-->
-<!--<li ng-if="navbar.isAdmin()"><a ui-sref="admin"-->
-<!--ng-class="{activelink: navbar.isActive('admin')}">ADMIN</a></li>-->
-<!--</ul>-->
-
-<!--&lt;!&ndash; Right Nav Section &ndash;&gt;-->
-<!--<ul class="right">-->
-<!--<li class=""><a ui-sref="step1" class="right button round small accent-btn-blue create-btn">CREATE COURSE</a></li>-->
-<!--<li class=""><a href="#" data-reveal-id="searchModal"><i class="fa fa-search"></i></a></li>-->
-<!--<li class=""><a href="#"><i class="fa fa-globe"></i></a></li>-->
-<!--<li class="has-dropdown">-->
-<!--<a href="#"><i class="fa fa-user"></i></a>-->
-<!--<ul class="dropdown tre-dropdown">-->
-<!--<li><label>{{navbar.user.username}}</label></li>-->
-<!--<li class="no-margin-bottom"><a ui-sref="profile({userId: navbar.user.userId})">Profile</a></li>-->
-<!--<li class="no-margin-top"><a href="#" ng-click="navbar.logout()">Logout</a></li>-->
-<!--</ul>-->
-<!--</li>-->
-<!--</ul>-->
-
-<!--</section>-->
-
-<!--</nav>-->
-<!--</div>-->
 
 <div class="modal fade full-height" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="searchTitle">
     <div class="modal-dialog modal-lg modal-full-height" role="document">
@@ -144,59 +63,27 @@
                                     </div>
                                     <div class="row" ng-repeat="training in navbar.foundTrainings">
                                         <div class="found-training">
-                                            <p>TRAINING</p>
-                                            <h4>{{training.title}}</h4>
-
-                                            <p class="state">{{training.state}}</p>
-
+                                            <p class="found-type">TRAINING</p>
+                                            <h4 ui-sref="courseinfo({courseId: training.id})">{{training.title}}</h4>
                                             <p class="excerpt">{{training.excerpt}}</p>
 
-                                            <p class="info">Coach: <span class="value"><a ui-sref="profile({userId: training.coachId})">{{training.coachName}}</a></span>
-                                            </p>
-                                        </div>
-                                        </div>
-
-                                        <!-- ANTOXA-->
-
-                                        <div class="row">
-                                            <div class="found-training">
-                                                <p class="found-type">TRAINING</p>
-                                                <h4>Angular js</h4>
-                                                <p class="excerpt">Become the greatest on the planet</p>
-
-
-                                                <div class="found-meta">
-                                                <p class="state">Right Now</p>
-                                                <p class="info">Coach: <span class="value"><a >Anthony Dossow</a></span>
-
-                                                </p>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    <div class="row">
-                                        <div class="found-training">
-                                            <p class="found-type">TRAINING</p>
-                                            <h4>Angular js</h4>
-                                            <p class="excerpt">Become the greatest on the planet</p>
-
-
                                             <div class="found-meta">
-                                                <p class="state">Right Now</p>
-                                                <p class="info">Coach: <span class="value"><a >Anthony Dossow</a></span>
-
+                                                <p class="state">{{training.state}}</p>
+                                                <p class="info">Coach: <span class="value"><a ui-sref="profile({userId: training.coachId})">{{training.coachName}}</a></span>
                                                 </p>
                                             </div>
                                         </div>
                                     </div>
 
                                     <div class="row" ng-repeat="user in navbar.foundUsers">
-                                        <div class="found-user">
-                                            <p>{{user.username}}</p>
+                                        <div class="found-training">
+                                            <p class="found-type">USER</p>
+                                            <h4>{{user.username}}</h4>
 
-                                            <p>{{user.email}}</p>
-
-                                            <p>{{user.phone}}</p>
+                                            <div class="found-meta">
+                                                <p class="info">{{user.email}}</p>
+                                                <p class="info">{{user.phone}}</p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
