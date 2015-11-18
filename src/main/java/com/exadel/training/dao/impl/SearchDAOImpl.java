@@ -67,7 +67,7 @@ public class SearchDAOImpl implements SearchDAO {
                 .keyword()
                 .fuzzy()
                 .withPrefixLength(5)
-                .onFields("title", "description", "excerpt", "coach.firstName", "coach.lastName", "coach.email", "coach.phone", "tagList.specialty")
+                .onFields("title", "coach.firstName", "coach.lastName", "coach.email", "coach.phone", "tagList.specialty", "description", "excerpt")
                 .matching(searchWord)
                 .createQuery();
 
