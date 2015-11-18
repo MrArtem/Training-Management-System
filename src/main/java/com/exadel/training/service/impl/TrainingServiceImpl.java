@@ -219,19 +219,14 @@ public class TrainingServiceImpl implements TrainingService {
             approveAction.setType(ApproveAction.Type.CREATE);
             approveAction.setTraining(training);
             approveAction.setApproveTraining(approveTraining);
+            approveActionDAO.addApproveAction(approveAction);
         }
-        List<ApproveLesson> approveLessonList;
         if (isRepeating) {
-            approveLessonList = addLessonListRepeating(training, approveAction, repeatModel
+            addLessonListRepeating(training, approveAction, repeatModel
                     , false, true, place, isAdmin);
         } else {
-            approveLessonList = addLessonListNotRepeating(training, approveAction, lessonModelList
+            addLessonListNotRepeating(training, approveAction, lessonModelList
                     , false, true, place, isAdmin);
-        }
-        if (!isAdmin) {
-            approveAction.setApproveLessonList(approveLessonList);
-            approveAction.setType(ApproveAction.Type.CREATE);
-            approveActionDAO.addApproveAction(approveAction);
         }
     }
 
@@ -349,13 +344,11 @@ public class TrainingServiceImpl implements TrainingService {
 
         removeApproveLessonList(approveAction, false);
 
-        List<ApproveLesson> approveLessonList;
         if (training.isRepeat()) {
-            approveLessonList = addLessonListRepeating(training, approveAction, repeatModel, false, false, place, false);
+            addLessonListRepeating(training, approveAction, repeatModel, false, false, place, false);
         } else {
-            approveLessonList = addLessonListNotRepeating(training, approveAction, lessonModelList, false, false, place, false);
+            addLessonListNotRepeating(training, approveAction, lessonModelList, false, false, place, false);
         }
-        approveAction.setApproveLessonList(approveLessonList);
     }
 
     private ApproveAction editTrainingNotPrevApprove(Training training, String title
@@ -376,15 +369,12 @@ public class TrainingServiceImpl implements TrainingService {
         approveAction.setTraining(training);
         approveAction.setApproveTraining(approveTraining);
         approveAction.setType(ApproveAction.Type.EDIT);
-        List<ApproveLesson> approveLessonList;
-        if (training.isRepeat()) {
-            approveLessonList = addLessonListRepeating(training, approveAction, repeatModel, false, false, place, false);
-        } else {
-            approveLessonList = addLessonListNotRepeating(training, approveAction, lessonModelList, false, false, place, false);
-        }
-
-        approveAction.setApproveLessonList(approveLessonList);
         approveActionDAO.addApproveAction(approveAction);
+        if (training.isRepeat()) {
+            addLessonListRepeating(training, approveAction, repeatModel, false, false, place, false);
+        } else {
+            addLessonListNotRepeating(training, approveAction, lessonModelList, false, false, place, false);
+        }
 
         return approveAction;
     }
