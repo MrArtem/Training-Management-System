@@ -44,7 +44,7 @@
             $scope.isEdited = true;
             vm.isDraft = $stateParams.type == 'CREATE';
 
-            if (vm.isDraft) {
+            if (!vm.isDraft) {
                 //if admin approves
                 vm.getEditedCourse();
             }
