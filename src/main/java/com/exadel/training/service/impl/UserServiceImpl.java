@@ -94,7 +94,7 @@ public class UserServiceImpl implements UserService {
 
         user.setUserPassword(userPassword);
 
-        notification.send(exCoachModel.getEmail(), "coach", messageGenerator.getTextPasswordForExCoach(exCoachModel.getLastName() + exCoachModel.getFirstName(), 1L, password, login));
+        notification.send(exCoachModel.getEmail(), messageGenerator.getTextPasswordForExCoach(exCoachModel.getLastName() + exCoachModel.getFirstName(), 1L, password, login));
         return idUser;
     }
 
