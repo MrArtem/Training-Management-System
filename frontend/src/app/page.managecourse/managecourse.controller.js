@@ -75,7 +75,7 @@
         else {
             $scope.isEdited = false;
             vm.isDraft = true;
-            vm.courseInfo.isRepeating = false;
+            //vm.courseInfo.isRepeating = false;
             vm.courseInfo.lessonList = [];
             vm.courseInfo.tagList = [];
             vm.courseInfo.repeatModel = {
@@ -214,21 +214,24 @@
             if ($scope.courseInfo.isRepeating === undefined) {
                 return false;
             }
-
             if ($scope.courseInfo.isRepeating) {
-                if ($scope.temp.onDays.indexOf(true) == -1 || $scope.temp.startDate.getTime() < (new Date()).getTime() || $scope.temp.endDate.getTime() < (new Date()).getTime() || $scope.temp.endDate.getTime() <= $scope.temp.startDate.getTime()) {
+                if ($scope.temp.onDays.indexOf(true) == -1 || (new Date($scope.temp.startDate)).getTime() < (new Date()).getTime() || (new Date($scope.temp.endDate)).getTime() < (new Date()).getTime() || (new Date($scope.temp.endDate)).getTime() <= (new Date($scope.temp.startDate)).getTime()) {
+                    console.log(1);
                     return false;
                 }
                 $scope.tempDates.forEach(function (lesson, index) {
                     if ($scope.temp.onDays[index]) {
                         if (vm.isAdmin() && lesson.place == "") {
+                            console.log(2);
                             return false;
                         }
                         if (lesson.hours < 0 || lesson.hours != parseInt(lesson.hours, 10) || lesson.minutes < 0 || lesson.minutes != parseInt(lesson.minutes, 10)) {
+                            console.log(3);
                             return false;
                         }
                     }
                 });
+                return true;
             }
             else {
                 if ($scope.courseInfo.lessonList.length == 0) {

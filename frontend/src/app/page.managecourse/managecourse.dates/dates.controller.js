@@ -27,10 +27,10 @@
 
 		function changeTab() {
 			if ($scope.courseInfo.isRepeating) {
-				$state.transitionTo('managecourse.dates.repeat');
+				$state.go('managecourse.dates.repeat');
 			}
 			else {
-				$state.transitionTo('managecourse.dates.manual');
+				$state.go('managecourse.dates.manual');
 			}
 		}
 	}

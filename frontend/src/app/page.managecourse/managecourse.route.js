@@ -19,8 +19,10 @@
                 controller: 'FilesController',
                 controllerAs: 'files'
             }).state('managecourse.dates.manual', {
+                url: '/manual',
                 templateUrl: 'app/page.managecourse/managecourse.dates/dates.tabs/manual.tab.html'
             }).state('managecourse.dates.repeat', {
+                url: '/repeat',
                 templateUrl: 'app/page.managecourse/managecourse.dates/dates.tabs/repeat.tab.html'
             })
         ;

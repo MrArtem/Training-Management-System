@@ -178,7 +178,7 @@
                             <ul class="nav navbar-nav router-tabs">
                                 <li role="presentation" ng-class="{activelink: managecourse.isActive('dates')}">
 
-                                    <a ui-sref="managecourse.dates.manual">
+                                    <a ui-sref="managecourse.dates">
                                         <i class="fa fa-clock-o"></i>Timetable
                                         <span ng-if="!managecourse.areDatesSelected() && managecourse.trySubmit"
                                               class="badge invalid-form no-arrow"
@@ -213,7 +213,6 @@
                                 course
                             </button>
                         </span>
-
 
                             <button ng-if="!managecourse.isDraft && !managecourse.isAdmin()" href=""
                                     class="btn accent-btn-green pull-left"
