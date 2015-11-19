@@ -165,6 +165,19 @@ body {
   font-size: 14px;
   color: #ff2631;
   background-color: transparent;
+
+  .fa {
+    color: #ff2631 !important;
+  }
+}
+
+.form-inline {
+  .override-inline {
+    .bordered-input {
+      width: 100% !important;
+      display: block !important;
+    }
+  }
 }
 
 ///////////////////////////
@@ -555,7 +568,7 @@ table {
 
   .activelink {
     a {
-      color: rgba(0,0,0,0.9) !important;
+      color: rgba(0,0,0,0.9);
       background-color: white !important;
       border-bottom: 2px solid rgba(0,0,0,0.9) !important;
     }
