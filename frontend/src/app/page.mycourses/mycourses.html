@@ -13,19 +13,33 @@
                 </div>
                 <div class="col-sm-3">
                     <form name="localSearch">
-                        <input type="text" class="form-control localSearchForm" name="search" ng-model="mycourses.search" placeholder="Quick Look">
+                        <input type="text" class="form-control localSearchForm" name="search" ng-model="mycourses.filter.title" placeholder="Quick Look">
                     </form>
                 </div>
             </div>
 
-            <section class="row">
-                <!--TODO-->
-                <div style="margin-top:20%;" ng-if="mycourses.userCourses.length == 0">
+            <section class="row top-mg-25">
+                <!--No Courses-->
+                <div style="margin-top:20%;" ng-if="filteredCourses.length == 0 && !mycourses.filter.isCoach && !mycourses.filter.title">
                     <p class="text-center" >There is no courses you're attending</p>
                     <button ui-sref="browse" class="btn accent-btn-blue center-block">Choose One</button>
                 </div>
+                
+                <!--No Courses-->
+                <div style="margin-top:20%;" ng-if="filteredCourses.length == 0 && mycourses.filter.isCoach && !mycourses.filter.title">
+                    <p class="text-center" >Wooow, You're still not coaching?</p>
+                    <button ui-sref="managecourse({type: 'CREATE'})" class="btn accent-btn-blue center-block">Become Coach</button>
+                </div>
+                
+                <!--Filter returns 0-->
+                <div style="margin-top:20%;" ng-if="filteredCourses.length == 0 && mycourses.filter.title">
+                    <p class="text-center" >Wooow, Adjust Your Search Query</p>
+                    <button ng-click=(mycourses.clearSearch()) class="btn accent-btn-blue center-block">Clear Search</button>
+                </div>
 
-                <div class="col-xs-12 col-sm-6 col-lg-4 card" ng-repeat="course in mycourses.userCourses">
+                <div class="col-xs-12 col-sm-6 col-lg-4 card" ng-repeat="course in filteredCourses = (mycourses.userCourses | filter:{ title: mycourses.filter.title} | filter: {isCoach: mycourses.filter.isCoach})">
+                   
+                   
                     <div class="card-bg" ui-sref="courseinfo({courseId: course.id})">
                         <h1 class="course-title"><a ui-sref="courseinfo({courseId: course.id})">{{course.title}}</a>
 							</h1>
@@ -41,7 +55,7 @@
                         <p class="info"><i class="fa fa-clock-o"></i> <span class="value">{{course.nextDate | date: "MMM d, y h:mm a"}}</span>
                         </p>
 
-                        <p class="info"><i class="fa fa-map-marker"></i> <span class="value">{{course.nextPlace}}</span></p>
+                        <p class="info" style="margin-left:2px;"><i class="fa fa-map-marker"></i> <span class="value" style="margin-left:3px;">{{course.nextPlace}}</span></p>
 
 
                     </div>

@@ -12,8 +12,8 @@
         vm.isContentLoaded = false;
         vm.userCourses = [];
         vm.getMyCourses = getMyCourses;
-
-        vm.filter = {isCoach: "", search: ""};
+        vm.clearSearch = clearSearch;
+        vm.filter = {isCoach: "", title: ""};
 
         vm.getMyCourses();
 
@@ -24,6 +24,22 @@
                 console.log('Received courses: ', vm.userCourses);
             });
         }
+        
+        function clearSearch() {
+            vm.filter = {isCoach: "", title: ""};
+        }
+        
+//        var mock = [
+//            {
+//                id:"id",
+//                title:"Angular Js",
+//                excerpt:"Angular Js Materting",
+//                coachName:"Anton Dosov",
+//                coachId:"1",
+//                nextDate:"date",
+//                nextPlace:"unit"
+//            }
+//        ]
 
     }
 })();
