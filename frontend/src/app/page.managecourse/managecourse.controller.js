@@ -14,6 +14,17 @@
         vm.courseInfo.tagList = [];
         vm.exCoachInfo = {};
 
+        //Variables for form validations
+        vm.coachClicked = false;
+        vm.langClicked = false;
+        vm.trySubmit = false;
+        vm.typeClicked = false;
+
+        //Variables for popovers
+        vm.coachPopOpen = false;
+        vm.langPopOpen = false;
+        vm.typePopOpen = false;
+
         vm.approveCourse = approveCourse;
         vm.createCourse = createCourse;
         vm.getCourseToEdit = getCourseToEdit;
@@ -33,6 +44,14 @@
         vm.getType = getType;
         vm.setType = setType;
 
+        //Something like form validators
+        vm.areDatesSelected = areDatesSelected;
+        vm.click = click;
+        vm.isCoachSelected = isCoachSelected;
+        vm.isLangSelected = isLangSelected;
+        vm.isTypeSelected = isTypeSelected;
+        vm.isFormValid = isFormValid;
+
         //Load external coaches
         if (vm.isAdmin()) {
             vm.getExCoachList();
@@ -42,7 +61,7 @@
             vm.courseId = parseInt($stateParams.courseId);
             vm.actionId = parseInt($stateParams.id);
             $scope.isEdited = true;
-            vm.isDraft = !($stateParams.type === 'EDIT');
+            vm.isDraft = $stateParams.type === 'EDIT';
 
             if (vm.isDraft) {
                 //if admin approves
@@ -66,6 +85,7 @@
 
         $scope.tempDates = [];
         $scope.temp = {
+            onDays: [false, false, false, false, false, false, false],
             startDate: "",
             endDate: ""
         };
@@ -75,6 +95,10 @@
         ///////////////////////////////////////
 
         function approveCourse() {
+            vm.trySubmit = true;
+            if (!isFormValid) {
+                return;
+            }
             courseAPI.approveCourse(vm.actionId, $scope.courseInfo).then(function (result) {
                     //do something;
                 }
@@ -82,25 +106,33 @@
         }
 
         function createCourse() {
+            vm.trySubmit = true;
+            if (!vm.isFormValid()) {
+                return;
+            }
             console.log('course creating');
             if ($scope.courseInfo.isRepeating) {
-                for (var i = 0; i < 7; i++) {
-                    var date = new Date();
-                    var fictiveDate = new Date();
-                    date.setHours($scope.tempDates[i].hours);
-                    fictiveDate.setHours(0);
-                    date.setMinutes($scope.tempDates[i].minutes);
-                    fictiveDate.setMinutes(0);
-                    var time = date.getTime() - fictiveDate.getTime();
-                    $scope.courseInfo.repeatModel.lessonList.push({date: time, place: $scope.tempDates[i].place});
-                    $scope.courseInfo.repeatModel.startDate = (new Date($scope.temp.startDate)).getTime();
-                    var endDate = new Date($scope.temp.endDate);
-                    endDate.setHours(23);
-                    endDate.setMinutes(59);
-                    endDate.setSeconds(59);
-                    $scope.courseInfo.repeatModel.endDate = endDate.getTime();
-
-                }
+                var date = new Date();
+                var fictiveDate = new Date();
+                $scope.tempDates.forEach(function (lesson, index) {
+                    if ($scope.temp.onDays[index]) {
+                        date.setHours(lesson.hours);
+                        fictiveDate.setHours(0);
+                        date.setMinutes(lesson.minutes);
+                        fictiveDate.setMinutes(0);
+                        var time = date.getTime() - fictiveDate.getTime();
+                        $scope.courseInfo.repeatModel.lessonList.push({date: time, place: lesson.place});
+                    }
+                    else {
+                        $scope.courseInfo.repeatModel.lessonList.push({date: null, place: null});
+                    }
+                });
+                $scope.courseInfo.repeatModel.startDate = (new Date($scope.temp.startDate)).getTime();
+                var endDate = new Date($scope.temp.endDate);
+                endDate.setHours(23);
+                endDate.setMinutes(59);
+                endDate.setSeconds(59);
+                $scope.courseInfo.repeatModel.endDate = endDate.getTime();
             }
 
             //if admin is logged, he must choose a coach for training
@@ -137,17 +169,81 @@
         }
 
         function editCourse() {
-            courseAPI.editCourse($stateParams.courseId, $scope.courseInfo).then(function(data) {
+            vm.trySubmit = true;
+            if (!isFormValid) {
+                return;
+            }
+            courseAPI.editCourse($stateParams.courseId, $scope.courseInfo).then(function (data) {
                 //do something
             });
         }
 
         function isActive(state) {
-            return $location.absUrl().search(state) === -1 ? false : true;
+            return $location.absUrl().search(state) !== -1;
         }
 
         function isAdmin() {
-            return authService.getAccessRights() === 0 ? true : false;
+            return authService.getAccessRights() === 0;
+        }
+
+        ///////////////////////////////////////
+
+        function click(model, popOpen) {
+            model = !model;
+            popOpen = !popOpen;
+        }
+
+        function isCoachSelected() {
+            if (vm.isAdmin()) {
+                return $scope.courseInfo.coachId ? true : false;
+            }
+            else {
+                return true;
+            }
+        }
+
+        function isLangSelected() {
+            return $scope.courseInfo.language !== undefined;
+        }
+
+        function isTypeSelected() {
+            return $scope.courseInfo.isInner !== undefined;
+        }
+
+        function areDatesSelected() {
+            if ($scope.courseInfo.isRepeating === undefined) {
+                return false;
+            }
+
+            if ($scope.courseInfo.isRepeating) {
+                if ($scope.temp.onDays.indexOf(true) == -1 || $scope.temp.startDate.getTime() < (new Date()).getTime() || $scope.temp.endDate.getTime() < (new Date()).getTime() || $scope.temp.endDate.getTime() <= $scope.temp.startDate.getTime()) {
+                    return false;
+                }
+                $scope.tempDates.forEach(function (lesson, index) {
+                    if ($scope.temp.onDays[index]) {
+                        if (vm.isAdmin() && lesson.place == "") {
+                            return false;
+                        }
+                        if (lesson.hours < 0 || lesson.hours != parseInt(lesson.hours, 10) || lesson.minutes < 0 || lesson.minutes != parseInt(lesson.minutes, 10)) {
+                            return false;
+                        }
+                    }
+                });
+            }
+            else {
+                if ($scope.courseInfo.lessonList.length == 0) {
+                    return false;
+                }
+                $scope.courseInfo.lessonList.forEach(function (lesson) {
+                    if (lesson.date < (new Date().getTime())) {
+                        return false;
+                    }
+                })
+            }
+        }
+
+        function isFormValid() {
+            return vm.isCoachSelected() && vm.isLangSelected && vm.isTypeSelected() && vm.areDatesSelected();
         }
 
         ///////////////////////////////////////
@@ -172,11 +268,13 @@
             var coachId = vm.exCoachList[index].id;
             vm.coachName = vm.exCoachList[index].username;
             $scope.courseInfo.coachId = coachId;
+            vm.coachPopOpen = false;
         }
 
         function setMyselfAsCoach() {
             $scope.courseInfo.coachId = authService.getUser().userId;
             vm.coachName = 'me';
+            vm.coachPopOpen = false;
         }
 
         ///////////////////////////////////////

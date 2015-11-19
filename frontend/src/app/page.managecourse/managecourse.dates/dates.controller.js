@@ -15,6 +15,10 @@
 		vm.days = ['M', 'T', 'W', 'Th', 'F', 'Sa', 'S'];
 		vm.onDays = [false, false, false, false, false, false, false];
 
+		for(var i = 0; i < 7; i++) {
+			$scope.tempDates.push({hours: undefined, minutes: undefined, place: ""});
+		}
+
 		function addDate() {
 			$scope.courseInfo.lessonList.push({
 				date: (new Date(vm.tempDate)).getTime()

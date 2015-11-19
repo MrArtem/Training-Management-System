@@ -149,6 +149,7 @@ body {
   margin-right: 10px;
 }
 
+
 .link-select {
   margin-left: 5px;
   border: none !important;
@@ -160,11 +161,30 @@ body {
   box-shadow: none !important;
 }
 
+.invalid-form {
+  font-size: 14px;
+  color: #ff2631;
+  background-color: transparent;
+
+  .fa {
+    color: #ff2631 !important;
+  }
+}
+
+.form-inline {
+  .override-inline {
+    .bordered-input {
+      width: 100% !important;
+      display: block !important;
+    }
+  }
+}
+
 ///////////////////////////
 
 
 .material-input {
-  border: none !important;
+  border: none;
   background: white !important;
 }
 
@@ -534,11 +554,11 @@ table {
   }
 
   .segmented-button-left {
-    border-radius: 16px 0px 0px 16px;
+    border-radius: 20px 0px 0px 20px;
   }
 
   .segmented-button-right {
-    border-radius: 0px 16px 16px 0px;
+    border-radius: 0px 20px 20px 0px;
   }
 }
 
@@ -548,7 +568,7 @@ table {
 
   .activelink {
     a {
-      color: rgba(0,0,0,0.9) !important;
+      color: rgba(0,0,0,0.9);
       background-color: white !important;
       border-bottom: 2px solid rgba(0,0,0,0.9) !important;
     }
