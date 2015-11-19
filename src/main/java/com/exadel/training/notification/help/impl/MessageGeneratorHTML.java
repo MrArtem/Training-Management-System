@@ -2,12 +2,13 @@ package com.exadel.training.notification.help.impl;
 
 import com.exadel.training.notification.help.MessageGenerator;
 import freemarker.template.Template;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import java.io.File;
 import java.io.IOException;
 import java.io.StringWriter;
-import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -24,7 +25,8 @@ public class MessageGeneratorHTML implements MessageGenerator {
 
     private final String FOOTER = "";
 
-    private final String SITE_URI = "http://localhost:3000/#/";
+    @Value("${site.uri}")
+    private String SITE_URI;
 
     private SimpleDateFormat formatDate = new SimpleDateFormat("dd-MM-YYYY");
 
@@ -35,9 +37,8 @@ public class MessageGeneratorHTML implements MessageGenerator {
     @PostConstruct
     public void init() throws IOException {
         cfg = new freemarker.template.Configuration(freemarker.template.Configuration.VERSION_2_3_23);
-        cfg.setClassForTemplateLoading(this.getClass(), "/");
-
-        cfg.setDirectoryForTemplateLoading(Paths.get(".", "mail-template").toFile());
+        cfg.setDirectoryForTemplateLoading(new File(getClass().getResource("/mail-template").getFile()));
+        System.out.println(SITE_URI);
     }
 
     public String getTextActionTrainer(String title, String place, long time) {
