@@ -89,8 +89,8 @@
         return '/api/training/' + actionId + '/confirm/lesson';
     }
 
-    function cancelCreate(trainingId) {
-        return '/api/training/cancel_create/' + trainingId;
+    function cancelCreate(actionId) {
+        return '/api/training/cancel_create/' + actionId;
     }
 
     function cancelChange(actionId) {

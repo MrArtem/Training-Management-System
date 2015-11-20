@@ -7,35 +7,6 @@
     vertical-align: top !important;
   }
 
-  /* HELPER TOOLTIPS */
-  .material-input + .tooltip > .tooltip-inner {
-    color: $text-color;
-    background-color: #E7E7E7;
-  }
-  .material-input + .tooltip > .tooltip-arrow {
-    //border-top-color: rgba(0, 0, 0, 0.1);
-    //border-bottom-color: rgba(0, 0, 0, 0.1);
-    border-top-color: transparent;
-    border-bottom-color: transparent;
-  }
-
-  /* INVALID TOOLTIPS */
-  .invalid-form + .tooltip > .tooltip-inner {
-    color: white;
-    background-color: #ff2631;
-  }
-  .invalid-form + .tooltip > .tooltip-arrow {
-    //border-top-color: #ff2631;
-    //border-bottom-color: #ff2631;
-    border-top-color: transparent;
-    border-bottom-color: transparent;
-  }
-
-  .no-arrow + .tooltip > .tooltip-arrow {
-    border-top-color: transparent;
-    border-bottom-color: transparent;
-  }
-
   .managecourse-h1 {
     font-size: 48px;
     color: #4C4C4C;
@@ -74,6 +45,10 @@
     padding-top: 0 !important;
     padding-left: 0 !important;
     width: 90%;
+  }
+
+  .btn {
+    margin-right: 8px;
   }
 
 }

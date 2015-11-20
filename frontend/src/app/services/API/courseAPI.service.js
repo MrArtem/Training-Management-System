@@ -141,8 +141,8 @@
             });
         }
 
-        function cancelCreate(courseId) {
-            return $http.put(urlProvider.cancelCreate(courseId), {
+        function cancelCreate(actionId) {
+            return $http.put(urlProvider.cancelCreate(actionId), {
                 headers: {
                     'Content-Type': undefined
                 },
