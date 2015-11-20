@@ -9,12 +9,14 @@
     function LoginController($state, authService) {
         var vm = this;
         vm.submit = submit;
-            
-        ////
+        vm.loginError = false;
+        
         
         function submit(){
-            authService.login(vm.username, vm.password, vm.isRemember);
+            vm.loginError = false;
+            authService.login(vm.username, vm.password, vm.isRemember).catch(function(error) {
+                vm.loginError = true;
+            });
         }
-
     }
 })();
