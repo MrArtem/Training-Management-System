@@ -42,10 +42,7 @@
         }
 
         function login(login, password, isRemember) {
-            //Perform Server log in
-
-            authAPI.login(login, password).then(function (data) {
-                // success :
+            return authAPI.login(login, password).then(function (data) {
                 console.log(data);
                 isLogged = true;
                 user.username = data.username;
@@ -56,15 +53,7 @@
                 }
                 loginPromise.resolve(user);
                 $state.go('mycourses');
-            }, function () {
-                alert("Login Error");
-            });
-
-            return true;
-
-            //error:
-            //return error promise
-
+            })            
         }
 
         function logout() {
