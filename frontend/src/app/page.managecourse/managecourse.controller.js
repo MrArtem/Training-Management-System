@@ -27,6 +27,7 @@
 
         vm.approveCourse = approveCourse;
         vm.createCourse = createCourse;
+        vm.cancelCourse = cancelCourse;
         vm.getCourseToEdit = getCourseToEdit;
         vm.getEditedCourse = getEditedCourse;
         vm.editCourse = editCourse;
@@ -34,6 +35,7 @@
         vm.isAdmin = isAdmin;
 
         vm.addExCoach = addExCoach;
+        vm.clearInfo = clearInfo;
         vm.getExCoachList = getExCoachList;
         vm.setExCoach = setExCoach;
         vm.setMyselfAsCoach = setMyselfAsCoach;
@@ -75,7 +77,7 @@
         else {
             $scope.isEdited = false;
             vm.isDraft = true;
-            vm.courseInfo.isRepeating = false;
+            //vm.courseInfo.isRepeating = false;
             vm.courseInfo.lessonList = [];
             vm.courseInfo.tagList = [];
             vm.courseInfo.repeatModel = {
@@ -84,6 +86,10 @@
         }
 
         $scope.tempDates = [];
+        for (var i = 0; i < 7; i++) {
+            $scope.tempDates.push({});
+        }
+
         $scope.temp = {
             onDays: [false, false, false, false, false, false, false],
             startDate: "",
@@ -112,6 +118,7 @@
             }
             console.log('course creating');
             if ($scope.courseInfo.isRepeating) {
+                $scope.courseInfo.place = null;
                 var date = new Date();
                 var fictiveDate = new Date();
                 $scope.tempDates.forEach(function (lesson, index) {
@@ -124,7 +131,7 @@
                         $scope.courseInfo.repeatModel.lessonList.push({date: time, place: lesson.place});
                     }
                     else {
-                        $scope.courseInfo.repeatModel.lessonList.push({date: null, place: null});
+                        $scope.courseInfo.repeatModel.lessonList.push(null);
                     }
                 });
                 $scope.courseInfo.repeatModel.startDate = (new Date($scope.temp.startDate)).getTime();
@@ -140,11 +147,19 @@
                 $scope.courseInfo.coachId = authService.getUser().userId;
             }
 
+            console.log($scope.courseInfo);
+
             courseAPI.createCourse($scope.courseInfo).then(function (data) {
                 console.log("request success");
             }); //some then with alert?
 
             console.log($scope.courseInfo);
+        }
+
+        function cancelCourse(){
+            courseAPI.cancelCreate(vm.actionId).then(function(result) {
+                return result.data;
+            });
         }
 
         function getCourseToEdit() {
@@ -211,24 +226,27 @@
         }
 
         function areDatesSelected() {
-            if ($scope.courseInfo.isRepeating === undefined) {
+            if ($scope.courseInfo.isRepeating === undefined || $scope.courseInfo.isRepeating === null || !$scope.courseInfo.lessonList) {
                 return false;
             }
-
             if ($scope.courseInfo.isRepeating) {
-                if ($scope.temp.onDays.indexOf(true) == -1 || $scope.temp.startDate.getTime() < (new Date()).getTime() || $scope.temp.endDate.getTime() < (new Date()).getTime() || $scope.temp.endDate.getTime() <= $scope.temp.startDate.getTime()) {
+                if ($scope.temp.onDays.indexOf(true) == -1 || (new Date($scope.temp.startDate)).getTime() < (new Date()).getTime() || (new Date($scope.temp.endDate)).getTime() < (new Date()).getTime() || (new Date($scope.temp.endDate)).getTime() <= (new Date($scope.temp.startDate)).getTime()) {
+                    console.log(1);
                     return false;
                 }
                 $scope.tempDates.forEach(function (lesson, index) {
                     if ($scope.temp.onDays[index]) {
                         if (vm.isAdmin() && lesson.place == "") {
+                            console.log(2);
                             return false;
                         }
                         if (lesson.hours < 0 || lesson.hours != parseInt(lesson.hours, 10) || lesson.minutes < 0 || lesson.minutes != parseInt(lesson.minutes, 10)) {
+                            console.log(3);
                             return false;
                         }
                     }
                 });
+                return true;
             }
             else {
                 if ($scope.courseInfo.lessonList.length == 0) {
@@ -252,9 +270,13 @@
             console.log('Coach to be added: ', vm.exCoachInfo);
             userAPI.addExCoach(vm.exCoachInfo).then(function (data) {
                 vm.exCoachList = angular.copy(data);
-                vm.exCoachInfo = {};
                 console.log('Coach added successfully');
             });
+        }
+
+        function clearInfo() {
+            $scope.coachForm.$setUntouched();
+            vm.exCoachInfo = {};
         }
 
         function getExCoachList() {

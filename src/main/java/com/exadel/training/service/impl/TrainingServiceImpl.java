@@ -236,6 +236,7 @@ public class TrainingServiceImpl implements TrainingService {
         for (Lesson lesson : Utils.emptyIfNull(training.getLessonList())) {
             if (lesson.getApproveLesson() != null) {
                 lessonApproveDAO.removeApprove(lesson.getApproveLesson());
+                lesson.setApproveLesson(null);
             }
             if (removeLesson) {
                 lessonDAO.removeLesson(lesson);

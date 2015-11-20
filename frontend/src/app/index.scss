@@ -137,6 +137,7 @@ body {
   margin-bottom: 50px;
 }
 
+
 .top-mg-15 {
   margin-top: 15px;
 }
@@ -173,10 +174,45 @@ body {
 
 .form-inline {
   .override-inline {
-    .bordered-input {
+    .bordered-input, .material-input {
       width: 100% !important;
       display: block !important;
     }
+  }
+}
+
+.remove-inline {
+  .form-control {
+    width: auto !important;
+  }
+}
+
+/*VALIDATION*/
+
+.validation {
+  /* HELPER TOOLTIPS */
+  .material-input + .tooltip > .tooltip-inner {
+    color: $text-color;
+    background-color: #E7E7E7;
+  }
+  .material-input + .tooltip > .tooltip-arrow {
+    border-top-color: transparent;
+    border-bottom-color: transparent;
+  }
+
+  /* INVALID TOOLTIPS */
+  .invalid-form + .tooltip > .tooltip-inner {
+    color: white;
+    background-color: #ff2631;
+  }
+  .invalid-form + .tooltip > .tooltip-arrow {
+    border-top-color: transparent;
+    border-bottom-color: transparent;
+  }
+
+  .no-arrow + .tooltip > .tooltip-arrow {
+    border-top-color: transparent;
+    border-bottom-color: transparent;
   }
 }
 
