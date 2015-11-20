@@ -15,11 +15,21 @@
                 </div>
             </div>
         </div>
+
+        <div ng-if="isEdited" class="col-xs-12">
+            <p><b>Lesson dates: </b></p>
+            <div class="scrollable-div">
+                <table>
+                    <tr ng-repeat="lesson in courseInfo.lessonList track by $index">
+                        <td>{{lesson.date |  date: "MMM d, y h:mm a"}}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
     </div>
 
-    <div class="row">
-        <div ui-view>
-        </div>
+    <div ui-view>
     </div>
 
 </div>

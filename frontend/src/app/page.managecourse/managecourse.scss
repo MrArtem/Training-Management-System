@@ -3,12 +3,8 @@
   $left-pd: 48px;
   $right-pd: 48px;
 
-  .material-input + .tooltip > .tooltip-inner {
-    color: $text-color;
-    background-color: #E7E7E7;
-  }
-  .material-input + .tooltip > .tooltip-arrow {
-    border-bottom-color: rgba(0, 0, 0, 0.1);;
+  .badge {
+    vertical-align: top !important;
   }
 
   .managecourse-h1 {
@@ -46,7 +42,13 @@
   }
 
   #description, #shortInfo {
-    width: 100%;
+    padding-top: 0 !important;
+    padding-left: 0 !important;
+    width: 90%;
+  }
+
+  .btn {
+    margin-right: 8px;
   }
 
 }
