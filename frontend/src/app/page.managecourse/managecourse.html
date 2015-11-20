@@ -179,7 +179,7 @@
 
                                     <a ui-sref="managecourse.dates">
                                         <i class="fa fa-clock-o"></i>Timetable
-                                        <span ng-if="!managecourse.areDatesSelected() && managecourse.trySubmit"
+                                        <span ng-if="managecourse.trySubmit && !managecourse.areDatesSelected()"
                                               class="badge invalid-form no-arrow"
                                               uib-tooltip="Some of your dates are not correct, please check it"
                                               tooltip-trigger="mouseenter"
