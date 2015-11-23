@@ -113,6 +113,7 @@
 
         function createCourse() {
             vm.trySubmit = true;
+
             if (!vm.isFormValid()) {
                 return;
             }
@@ -152,8 +153,6 @@
             courseAPI.createCourse($scope.courseInfo).then(function (data) {
                 console.log("request success");
             }); //some then with alert?
-
-            console.log($scope.courseInfo);
         }
 
         function cancelCourse(){
@@ -226,27 +225,25 @@
         }
 
         function areDatesSelected() {
+            var isValid = true;
             if ($scope.courseInfo.isRepeating === undefined || $scope.courseInfo.isRepeating === null || !$scope.courseInfo.lessonList) {
                 return false;
             }
             if ($scope.courseInfo.isRepeating) {
                 if ($scope.temp.onDays.indexOf(true) == -1 || (new Date($scope.temp.startDate)).getTime() < (new Date()).getTime() || (new Date($scope.temp.endDate)).getTime() < (new Date()).getTime() || (new Date($scope.temp.endDate)).getTime() <= (new Date($scope.temp.startDate)).getTime()) {
-                    console.log(1);
                     return false;
                 }
+
                 $scope.tempDates.forEach(function (lesson, index) {
                     if ($scope.temp.onDays[index]) {
                         if (vm.isAdmin() && lesson.place == "") {
-                            console.log(2);
-                            return false;
+                            isValid = false;
                         }
-                        if (lesson.hours < 0 || lesson.hours != parseInt(lesson.hours, 10) || lesson.minutes < 0 || lesson.minutes != parseInt(lesson.minutes, 10)) {
-                            console.log(3);
-                            return false;
+                        if (lesson.hours < 0 || lesson.hours > 23 || lesson.hours != parseInt(lesson.hours, 10) || lesson.minutes < 0 || lesson.minutes > 59 || lesson.minutes != parseInt(lesson.minutes, 10)) {
+                            isValid = false;
                         }
                     }
                 });
-                return true;
             }
             else {
                 if ($scope.courseInfo.lessonList.length == 0) {
@@ -258,10 +255,11 @@
                     }
                 })
             }
+            return isValid;
         }
 
         function isFormValid() {
-            return vm.isCoachSelected() && vm.isLangSelected && vm.isTypeSelected() && vm.areDatesSelected();
+            return (vm.isCoachSelected() && vm.isLangSelected() && vm.isTypeSelected() && vm.areDatesSelected());
         }
 
         ///////////////////////////////////////

@@ -21,6 +21,7 @@ public class TrainingServiceImpl implements TrainingService {
     private final int DAY_OF_WEEK = 7;
     private final long MILLIS_IN_DAY = 86400000L;
     private final long MILLIS_IN_WEEK = MILLIS_IN_DAY * DAY_OF_WEEK;
+    private final long MILLIS_IN_HOUR = 3600000L;
 
     @Autowired
     private TrainingDAO trainingDAO;
@@ -137,13 +138,14 @@ public class TrainingServiceImpl implements TrainingService {
             , boolean isConfirmed, boolean createLesson, String place, boolean isAdmin) {
         List<ApproveLesson> approveLessonList = new ArrayList<ApproveLesson>();
         LessonModel[] lessonModelList = repeatModel.getLessonList();
-        int dayOfWeekStart = Utils.getDayOfWeek(repeatModel.getStartDate());
+        int dayOfWeekStart = Utils.getDayOfWeek(repeatModel.getStartDate() + 2 * MILLIS_IN_HOUR);
+        repeatModel.setStartDate(Utils.getStartDayInMillis(repeatModel.getStartDate() + 2 * MILLIS_IN_HOUR));
         for (int i = 0; i < 7; i++) {
             if (lessonModelList[i] == null) {
                 continue;
             }
             int offset = (i - dayOfWeekStart + DAY_OF_WEEK) % DAY_OF_WEEK;
-            long dateLesson = lessonModelList[i].getDate() + repeatModel.getStartDate() + offset * MILLIS_IN_DAY;
+            long dateLesson = lessonModelList[i].getDate() + repeatModel.getStartDate() + offset * MILLIS_IN_DAY - 2 * MILLIS_IN_HOUR;
             for (; dateLesson < repeatModel.getEndDate(); dateLesson += MILLIS_IN_WEEK) {
                 Lesson lesson = null;
                 if (createLesson) {

@@ -24,4 +24,14 @@ public class Utils {
         calendar.setTimeInMillis(millis);
         return (calendar.get(Calendar.DAY_OF_WEEK) + 5) % 7;
     }
+
+    public static long getStartDayInMillis(long millis) {
+        Calendar calendar = new GregorianCalendar();
+        calendar.setTimeZone(TimeZone.getTimeZone("UTC"));
+        calendar.setTimeInMillis(millis);
+        calendar.set(Calendar.HOUR, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        return calendar.getTimeInMillis();
+    }
 }
