@@ -48,14 +48,17 @@ public class NewsController {
                 case TRAINING:
                     Training training = trainingService.getTraining(news.getIdRow());
                     newsModel.setTitle(training.getTitle());
+                    newsModel.setTrainingId(training.getId());
                     break;
                 case COMMENT:
                     Comment comment = commentService.getComment(news.getIdRow());
                     newsModel.setTitle(comment.getTraining().getTitle());
+                    newsModel.setTrainingId(comment.getTraining().getId());
                     break;
                 case FEEDBACK:
                     Feedback feedback = feedbackService.getFeedback(news.getIdRow());
                     newsModel.setTitle(feedback.getTraining().getTitle());
+                    newsModel.setTrainingId(feedback.getTraining().getId());
             }
             newsModelList.add(newsModel);
         }
