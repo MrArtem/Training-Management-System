@@ -85,6 +85,13 @@
             };
         }
 
+        if($location.absUrl().search('repeat') !== -1) {
+            vm.courseInfo.isRepeating = true;
+        }
+        if($location.absUrl().search('manual') !== -1) {
+            vm.courseInfo.isRepeating = false;
+        }
+
         $scope.tempDates = [];
         for (var i = 0; i < 7; i++) {
             $scope.tempDates.push({});

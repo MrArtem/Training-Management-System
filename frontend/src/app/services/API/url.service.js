@@ -6,8 +6,6 @@
 
     /* @ngInject */
     function UrlProvider() {
-        
-        
         var urlProvider = {
             addComment: addComment,
             addExCoach: addExCoach,
@@ -62,7 +60,8 @@
         return urlProvider;
     }
     
-    var isApi = true
+    var isApi = true;
+
     function apiPrefix() {
         return isApi ? "/api" : "";
     }
@@ -70,7 +69,6 @@
     function addComment(courseId) {
         return apiPrefix() + '/training/' + courseId + '/add_comment';
     }
-
 
     function addExCoach() {
         return apiPrefix() + '/user_controller/add_ex_coach';

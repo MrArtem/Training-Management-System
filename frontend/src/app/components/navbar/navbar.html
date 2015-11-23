@@ -19,7 +19,7 @@
                 <li ng-class="{activelink: navbar.isActive('profile')}"><a
                         ui-sref="profile({userId: navbar.user.userId})">PROFILE</a></li>
                 <!--<li ng-class="{activelink: navbar.isActive('admin')}" ng-if="navbar.isAdmin()"><a ui-sref="admin">ADMIN</a></li>-->
-                <li ng-if="navbar.isAdmin()" ng-class="{activelink: navbar.isActive('admin')}"><a ui-sref="admin">ADMIN</a></li>
+                <li ng-if="navbar.isAdmin()" ng-class="{activelink: navbar.isActive('admin')}"><a ui-sref="admin.approval">ADMIN</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li>

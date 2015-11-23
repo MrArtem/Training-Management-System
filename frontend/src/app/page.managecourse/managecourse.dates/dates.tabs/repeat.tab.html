@@ -22,19 +22,17 @@
                            ng-disabled="!temp.onDays[$index]">
                 </div>
                 <div class="col-xs-4 col-sm-4" ng-if="managecourse.isAdmin()">
-                    <p class="pull-left">
-                        <input type="text" id="repeatPlace" name="repeatPlace{{$index}}"
-                               class="form-control bordered-input" placeholder="place"
-                               ng-model="tempDates[$index].place" ng-disabled="!temp.onDays[$index]"
-                               ng-required="courseInfo.isRepeating && managecourse.isAdmin()">
-                         <span ng-show="courseForm.repeatPlace{{$index}}.$invalid && courseForm.repeatPlace{{$index}}.$touched && temp.onDays[$index]"
-                               class="badge invalid-form"
+                    <input type="text" id="repeatPlace" name="repeatPlace{{$index}}"
+                           class="form-control bordered-input pull-left" placeholder="place"
+                           ng-model="tempDates[$index].place" ng-disabled="!temp.onDays[$index]"
+                           ng-required="courseInfo.isRepeating && managecourse.isAdmin()">
+                    <span ng-show="courseForm.repeatPlace{{$index}}.$invalid && courseForm.repeatPlace{{$index}}.$touched && temp.onDays[$index]"
+                               class="badge invalid-form pull-left"
                                uib-tooltip="This field is required"
                                tooltip-trigger="mouseenter"
                                tooltip-placement="bottom">
                                     <i class="fa fa-exclamation-circle"></i>
-                         </span>
-                    </p>
+                    </span>
                 </div>
 
             </div>
