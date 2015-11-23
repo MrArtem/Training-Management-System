@@ -16,6 +16,8 @@ public class NewsModel {
 
     private Long date;
 
+    private News.TableName tableName;
+
     public NewsModel(News news) {
         User user = news.getUser();
         this.userName = user.getFirstName() + " " + user.getLastName();
@@ -23,6 +25,7 @@ public class NewsModel {
         this.actionType = news.getActionType();
         this.idRow = news.getIdRow();
         this.date = news.getDate();
+        this.tableName = news.getTableName();
     }
 
     public NewsModel() {
@@ -74,5 +77,13 @@ public class NewsModel {
 
     public void setDate(Long date) {
         this.date = date;
+    }
+
+    public News.TableName getTableName() {
+        return tableName;
+    }
+
+    public void setTableName(News.TableName tableName) {
+        this.tableName = tableName;
     }
 }
