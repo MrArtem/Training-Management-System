@@ -16,9 +16,9 @@
 
     <hr>
 
-    <div class="row" ng-repeat="coach in managecourse.exCoachList">
+    <div class="row" ng-repeat="coach in managecourse.exCoachList track by $index">
         <div class="col-xs-12 select-dropdown">
-            <a href="" ng-click="managecourse.setExCoach(coach.id)" close-on-click="#coachPopover">{{coach.username}}</a>
+            <a href="" ng-click="managecourse.setExCoach($index)" close-on-click="#coachPopover">{{coach.username}}</a>
         </div>
     </div>
 
