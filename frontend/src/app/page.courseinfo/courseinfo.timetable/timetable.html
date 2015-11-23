@@ -1,41 +1,47 @@
 <div class="timetable">
-    <div class="row">
-        <div class="col-xs-12 col-md-11">
-            <h4 class="tab-heading">Timetable</h4>
+    <div ng-class="{'waiting-for-angular': !timetable.isContentLoaded }">
+        <div class="row">
+            <div class="col-xs-12 col-md-11">
+                <h4 class="tab-heading">Timetable</h4>
 
-            <a ng-if="courseInfo.isCoach || courseinfo.isAdmin()" class="btn default-btn-blue bottom-mg-25" data-toggle="modal" data-target="#addLessonModal"><i class="fa fa-plus"></i>Add
-                date</a>
+                <a ng-if="courseInfo.isCoach || courseinfo.isAdmin()" class="btn default-btn-blue bottom-mg-25"
+                   data-toggle="modal" data-target="#addLessonModal"><i class="fa fa-plus"></i>Add
+                    date</a>
 
 
-            <div class="scrollable-div">
+                <div class="scrollable-div">
 
-                <table ng-show="courseInfo.timetable.length != 0" class="table fullwidth-table">
-                    <thead>
-                    <tr>
-                        <th>Lesson</th>
-                        <th>When</th>
-                        <th>Where</th>
-                        <th ng-if="courseInfo.isCoach">Attendance</th>
-                        <th ng-if="courseInfo.isCoach || courseinfo.isAdmin()"></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr ng-repeat="lesson in courseInfo.lessonList">
-                        <td>{{$index + 1}}</td>
-                        <td>{{lesson.date | date: "MMM d, y h:mm a"}}</td>
-                        <td>{{lesson.place}}</td>
-                        <td ng-if="courseInfo.isCoach"><a href="" data-toggle="modal" data-target="#attendanceModal"
-                               ng-click="timetable.getAttendance($index)">Edit</a></td></td>
-                        <td ng-if="courseInfo.isCoach || courseinfo.isAdmin()"><a href="" data-toggle="modal" data-target="#editLessonModal"
-                               ng-click="timetable.getLessonId($index)">Edit</a></td>
-                    </tr>
-                    </tbody>
-                </table>
-                <p ng-show="courseInfo.timetable.length == 0">This training has no lessons.</p>
+                    <table ng-show="courseInfo.timetable.length != 0" class="table fullwidth-table">
+                        <thead>
+                        <tr>
+                            <th>Lesson</th>
+                            <th>When</th>
+                            <th>Where</th>
+                            <th ng-if="courseInfo.isCoach">Attendance</th>
+                            <th ng-if="courseInfo.isCoach || courseinfo.isAdmin()"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="lesson in courseInfo.lessonList">
+                            <td>{{$index + 1}}</td>
+                            <td>{{lesson.date | date: "MMM d, y h:mm a"}}</td>
+                            <td>{{lesson.place}}</td>
+                            <td ng-if="courseInfo.isCoach"><a href="" data-toggle="modal" data-target="#attendanceModal"
+                                                              ng-click="timetable.getAttendance($index)">Edit</a></td>
+                            </td>
+                            <td ng-if="courseInfo.isCoach || courseinfo.isAdmin()"><a href="" data-toggle="modal"
+                                                                                      data-target="#editLessonModal"
+                                                                                      ng-click="timetable.getLessonId($index)">Edit</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <p ng-show="courseInfo.timetable.length == 0">This training has no lessons.</p>
+                </div>
+
             </div>
 
         </div>
-
     </div>
 </div>
 
@@ -64,7 +70,8 @@
                                 </div>
                             </a>
                             <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                                <datetimepicker ng-model="timetable.newDate" data-datetimepicker-config="{ dropdownSelector: '#dropdown2', minuteStep: 15 }"></datetimepicker>
+                                <datetimepicker ng-model="timetable.newDate"
+                                                data-datetimepicker-config="{ dropdownSelector: '#dropdown2', minuteStep: 15 }"></datetimepicker>
                             </ul>
                         </span>
                     </div>
@@ -101,16 +108,17 @@
                             <a class="dropdown-toggle" id="dropdown1" role="button" data-toggle="dropdown">
                                 <div class="input-group">
                                     <input type="text" class="form-control"
-                               ng-value="timetable.editedDate | date: 'MMM d, y h:mm a'"
-                               placeholder="click to add date"
-                               disabled>
+                                           ng-value="timetable.editedDate | date: 'MMM d, y h:mm a'"
+                                           placeholder="click to add date"
+                                           disabled>
                                     <span class="input-group-addon addon-calendar">
                                         <i class="fa fa-calendar"></i>
                                     </span>
                                 </div>
                             </a>
                             <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                                <datetimepicker ng-model="timetable.editedDate" data-datetimepicker-config="{ dropdownSelector: '#dropdown1', minuteStep: 15 }"></datetimepicker>
+                                <datetimepicker ng-model="timetable.editedDate"
+                                                data-datetimepicker-config="{ dropdownSelector: '#dropdown1', minuteStep: 15 }"></datetimepicker>
                             </ul>
                         </span>
                     </div>
@@ -158,7 +166,8 @@
                             <td>{{$index + 1}}</td>
                             <td><a ui-sref="profile({userId: record.idUser})">{{record.nameUser}}</a></td>
                             <td><input type="checkbox" ng-model="record.presence"></td>
-                            <td><input type="text" class="material-input" ng-model="record.comment" placeholder="reason"></td>
+                            <td><input type="text" class="material-input" ng-model="record.comment"
+                                       placeholder="reason"></td>
                         </tr>
                         </tbody>
                     </table>

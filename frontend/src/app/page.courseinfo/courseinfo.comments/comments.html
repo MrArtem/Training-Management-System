@@ -1,35 +1,38 @@
 <div class="comments">
-    <div class="row">
-        <div class="col-xs-12 col-md-11">
+    <div ng-class="{'waiting-for-angular': !comments.isContentLoaded }">
+        <div class="row">
+            <div class="col-xs-12 col-md-11">
 
-            <h4 class="tab-heading">Comments</h4>
-            <a ng-if="courseInfo.canComment" class="btn default-btn-blue bottom-mg-25" data-toggle="modal" data-target="#addCommentModal"><i class="fa fa-pencil"></i>Add comment</a>
+                <h4 class="tab-heading">Comments</h4>
+                <a ng-if="courseInfo.canComment" class="btn default-btn-blue bottom-mg-25" data-toggle="modal"
+                   data-target="#addCommentModal"><i class="fa fa-pencil"></i>Add comment</a>
 
-            <div class="scrollable-div">
+                <div class="scrollable-div">
 
-                <table ng-if="courseInfo.commentList.length != 0" class="table fullwidth-table">
-                    <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Who left?</th>
-                        <th>Positive?</th>
-                        <th></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr ng-repeat="comment in courseInfo.commentList track by $index" class="rowWithSecret">
-                        <td>{{$index + 1}}</td>
-                        <td>{{comment.userName}}</td>
-                        <td>{{comment.isPositive ? '+' : '-'}}</td>
-                        <td>See details</td>
-                        <td class="hiddenCell" ng-click="comments.deleteComment($index)"><i class="fa fa-times"></i>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-                <p ng-if="courseInfo.commentList.length == 0">No comments left yet.</p>
+                    <table ng-if="courseInfo.commentList.length != 0" class="table fullwidth-table">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Who left?</th>
+                            <th>Positive?</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="comment in courseInfo.commentList track by $index" class="rowWithSecret">
+                            <td>{{$index + 1}}</td>
+                            <td>{{comment.userName}}</td>
+                            <td>{{comment.isPositive ? '+' : '-'}}</td>
+                            <td>See details</td>
+                            <td class="hiddenCell" ng-click="comments.deleteComment($index)"><i class="fa fa-times"></i>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <p ng-if="courseInfo.commentList.length == 0">No comments left yet.</p>
+                </div>
+
             </div>
-
         </div>
     </div>
 </div>
@@ -47,34 +50,41 @@
 
                     <div class="row">
                         <div class="col-xs-12 col-sm-6">
-                            <input type="checkbox" id="interesting" ng-model="comments.commentInfo.interesting"><label for="interesting">Was
+                            <input type="checkbox" id="interesting" ng-model="comments.commentInfo.interesting"><label
+                                for="interesting">Was
                             it interesting?</label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-xs-12 col-sm-6">
-                            <input type="checkbox" id="clear" ng-model="comments.commentInfo.clear"><label for="interesting">Was it
+                            <input type="checkbox" id="clear" ng-model="comments.commentInfo.clear"><label
+                                for="interesting">Was it
                             clear?</label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-xs-12 col-sm-6">
-                            <input type="checkbox" id="newMaterial" ng-model="comments.commentInfo.newMaterial"><label for="newMaterial">Did
+                            <input type="checkbox" id="newMaterial" ng-model="comments.commentInfo.newMaterial"><label
+                                for="newMaterial">Did
                             you learn something new?</label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-xs-12 col-sm-6">
-                            <input type="checkbox" id="creative" ng-model="comments.commentInfo.creativity"><label for="creative">Was the coach creative?</label>
+                            <input type="checkbox" id="creative" ng-model="comments.commentInfo.creativity"><label
+                                for="creative">Was the coach creative?</label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-xs-12 col-sm-6">
-                            <input type="checkbox" id="recommendation" ng-model="comments.commentInfo.recommendation"><label for="recommendation">Would you recommend this course?</label>
+                            <input type="checkbox" id="recommendation"
+                                   ng-model="comments.commentInfo.recommendation"><label for="recommendation">Would you
+                            recommend this course?</label>
                         </div>
                     </div>
                     <div class="row">
                         <label>Please, rate the effectiveness:</label>
+
                         <div class="col-xs-12 col-sm-6">
                             <select name="effectiveness" ng-model="comments.commentInfo.effective" required>
                                 <option>1</option>
@@ -88,7 +98,8 @@
                     <div class="row">
                         <div class="col-xs-12 col-sm-6">
                             <label>Anything else?
-                                <textarea type="text" name="other" placeholder="Do you have something else to say?" ng-model="courseInfo.commentInfo.other" ng-maxlength="10000"></textarea>
+                                <textarea type="text" name="other" placeholder="Do you have something else to say?"
+                                          ng-model="courseInfo.commentInfo.other" ng-maxlength="10000"></textarea>
                             </label>
                         </div>
                     </div>

@@ -1,32 +1,38 @@
 <div class="attachments">
-    <div class="row">
-        <div class="col-xs-12 col-md-11">
+    <div ng-class="{'waiting-for-angular': !attachments.isContentLoaded }">
+        <div class="row">
+            <div class="col-xs-12 col-md-11">
 
-            <h4 class="tab-heading">Attachments</h4>
+                <h4 class="tab-heading">Attachments</h4>
 
-            <a ng-if="courseInfo.isCoach || courseinfo.isAdmin()" class="btn default-btn-blue bottom-mg-25" data-toggle="modal" data-target="#uploadModal"><i class="fa fa-upload"></i>Upload files</a>
+                <a ng-if="courseInfo.isCoach || courseinfo.isAdmin()" class="btn default-btn-blue bottom-mg-25"
+                   data-toggle="modal" data-target="#uploadModal"><i class="fa fa-upload"></i>Upload files</a>
 
-            <div class="scrollable-div">
+                <div class="scrollable-div">
 
-                <table ng-show="courseInfo.files.length != 0" class="table fullwidth-table">
-                    <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Filename</th>
-                        <th></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr ng-repeat="file in courseInfo.files track by $index" class="rowWithSecret">
-                        <td>{{$index + 1}}</td>
-                        <td><a id="{{file.idFile}}" href="" ng-click="attachments.download(file.idFile, file.file, file.name)">{{file.name}}</a></td>
-                        <td class="hiddenCell" ng-click="attachments.deleteFile($index)"><i class="fa fa-times"></i></td>
-                    </tr>
-                    </tbody>
-                </table>
-                <p ng-show="courseInfo.files.length == 0">No files attached yet.</p>
+                    <table ng-show="courseInfo.files.length != 0" class="table fullwidth-table">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Filename</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="file in courseInfo.files track by $index" class="rowWithSecret">
+                            <td>{{$index + 1}}</td>
+                            <td><a id="{{file.idFile}}" href=""
+                                   ng-click="attachments.download(file.idFile, file.file, file.name)">{{file.name}}</a>
+                            </td>
+                            <td class="hiddenCell" ng-click="attachments.deleteFile($index)"><i class="fa fa-times"></i>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <p ng-show="courseInfo.files.length == 0">No files attached yet.</p>
+                </div>
+
             </div>
-
         </div>
     </div>
 </div>
@@ -40,7 +46,8 @@
                 <h4 class="modal-title" id="addTitle">Upload files</h4>
             </div>
             <div class="modal-body">
-                <div ng-if="courseInfo.isCoach || courseinfo.isAdmin()" class="row" ng-controller="FileUploadController as upload">
+                <div ng-if="courseInfo.isCoach || courseinfo.isAdmin()" class="row"
+                     ng-controller="FileUploadController as upload">
                     <div class="col-xs-12 col-sm-6">
                         <button class="btn btn-file default-btn-blue bottom-mg-10" id="uploadFileBtn">
                             <i class="fa fa-plus"></i> Add file
@@ -53,7 +60,8 @@
                     <table ng-if="filesToUpload.length != 0">
                         <tr ng-repeat="file in filesToUpload" class="rowWithSecret">
                             <td>{{file.name}}</td>
-                            <td ng-if="courseInfo.isCoach || courseinfo.isAdmin()" class="hiddenCell" ng-click="attachments.deleteFileFromUpload($index)"><i class="fa fa-times"></i></td>
+                            <td ng-if="courseInfo.isCoach || courseinfo.isAdmin()" class="hiddenCell"
+                                ng-click="attachments.deleteFileFromUpload($index)"><i class="fa fa-times"></i></td>
                         </tr>
                     </table>
                     <p ng-if="filesToUpload.length == 0">No files uploaded yet</p>

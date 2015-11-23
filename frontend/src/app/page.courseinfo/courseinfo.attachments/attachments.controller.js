@@ -11,6 +11,7 @@
         var vm = this;
         vm.data = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
         vm.fileName = 'logo.png';
+        vm.isContentLoaded = false;
         $scope.filesToUpload = [];
 
         vm.deleteFile = deleteFile;
@@ -51,8 +52,10 @@
 
 
         function getAttachments() {
+            vm.isContentLoaded = false;
             courseAPI.getAttachments($stateParams.courseId).then(function(data) {
                 $scope.$parent.courseInfo.files = angular.copy(data);
+                vm.isContentLoaded = true;
                 console.log('Received attachments: ', data);
             });
         }

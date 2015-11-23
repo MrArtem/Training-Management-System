@@ -16,6 +16,7 @@
             newMaterial: false,
             recommendation: false
         };
+        vm.isContentLoaded = false;
 
         vm.addComment = addComment;
         vm.deleteCommment = deleteComment;
@@ -37,8 +38,10 @@
         }
 
         function getComments() {
+            vm.isContentLoaded = false;
             courseAPI.getComments($stateParams.courseId).then(function(data) {
                 $scope.$parent.courseInfo.commentList = angular.copy(data);
+                vm.isContentLoaded = true;
                 console.log('Received comments: ');
                 console.log($scope.$parent.courseInfo.commentList);
             });

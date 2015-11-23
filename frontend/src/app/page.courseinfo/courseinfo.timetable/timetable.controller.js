@@ -9,6 +9,7 @@
     function TimetableController($scope, $stateParams, courseAPI) {
         var vm = this;
         vm.attendanceList = [];
+        vm.isContentLoaded = false;
 
         vm.addLesson = addLesson;
         vm.deleteLesson = deleteLesson;
@@ -52,8 +53,10 @@
         }
 
         function getTimetable() {
+            vm.isContentLoaded = false;
             courseAPI.getTimetable($stateParams.courseId).then(function (data) {
                     $scope.$parent.courseInfo.lessonList = angular.copy(data);
+                    vm.isContentLoaded = true;
                     console.log(data);
                 }
             );

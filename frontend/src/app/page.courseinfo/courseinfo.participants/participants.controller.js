@@ -17,6 +17,7 @@
             focusOnResult: false,
             other: ""
         };
+        vm.isContentLoaded = false;
         vm.participantInfo = {};
 
         vm.addFeedbackOnUser = addFeedbackOnUser;
@@ -58,9 +59,11 @@
         }
 
         function getParticipants() {
+            vm.isContentLoaded = false;
             courseAPI.getParticipants($stateParams.courseId).then(function(data) {
                 console.log("got participants");
                 $scope.$parent.courseInfo.participantsList = angular.copy(data);
+                vm.isContentLoaded = true;
             });
         }
 
