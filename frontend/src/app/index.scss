@@ -100,10 +100,11 @@ body {
 }
 
 .scrollable-div::-webkit-scrollbar-thumb {
-  border: 1px solid #eeeeee;
+  border: 1px solid #ebebeb;
   background-clip: padding-box;
   border-radius: 5px;
-  background-color: #eeeeee;
+  background-color: #ebebeb;
+  margin-left: 15px;
 }
 
 

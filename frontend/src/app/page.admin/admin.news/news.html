@@ -5,7 +5,7 @@
             <div ng-if="news.newsList.length != 0" class="scrollable-div">
                 <div class="approve-item" ng-repeat="item in news.newsList track by $index">
                     <p><span><a ui-sref="profile({userId: item.userId})">{{item.userName}}</a>
-						{{news.makeText(item.actionType)}} <a href="" ui-sref="courseinfo({courseId: item.trainingId})">{{item.title}}</a></span>
+						{{news.makeText(item.actionType, item.tableName)}} <a href="" ui-sref="courseinfo({courseId: item.idTraining})">{{item.title}}</a></span>
                     </p>
 
                     <p class="top-mg-25"><i class="fa fa-clock-o"></i> {{item.date | date: "MMM d, y h:mm a"}}</p>
