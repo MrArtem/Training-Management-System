@@ -62,7 +62,7 @@
         return urlProvider;
     }
     
-    var isApi = true
+    var isApi = false
     function apiPrefix() {
         return isApi ? "/api" : "";
     }

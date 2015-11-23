@@ -92,12 +92,21 @@ gulp.task('other', function () {
         .pipe($.debug())
         .pipe(gulp.dest(path.join(conf.paths.dist, 'styles/assets/images')))
         .pipe(gulp.dest(path.join(conf.paths.dist, 'styles/assets/fonts/merriweather')))
-        .pipe(gulp.dest(path.join(conf.paths.dist, 'app/assets/images')))
 });
+
+gulp.task('logo', function () {
+
+    return gulp.src([
+        path.join(conf.paths.src, 'app/assets/images/ExadelLogo.png'),
+    ])
+        .pipe(gulp.dest(path.join(conf.paths.dist, 'app/assets/images')));
+
+});
+
 
 
 gulp.task('clean', function (done) {
     $.del([path.join(conf.paths.dist, '/'), path.join(conf.paths.tmp, '/')], {force: true} /*done*/);
 });
 
-gulp.task('build', ['clean','html', 'fonts', 'other']);
+gulp.task('build', ['clean','html', 'fonts', 'other','logo']);
