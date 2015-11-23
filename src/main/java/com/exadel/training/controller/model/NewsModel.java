@@ -12,18 +12,20 @@ public class NewsModel {
 
     private News.ActionType actionType;
 
-    private Long idRow;
+    private Long idItem;
 
     private Long date;
 
     private News.TableName tableName;
+
+    private Long trainingId;
 
     public NewsModel(News news) {
         User user = news.getUser();
         this.userName = user.getFirstName() + " " + user.getLastName();
         this.userId = user.getId();
         this.actionType = news.getActionType();
-        this.idRow = news.getIdRow();
+        this.idItem = news.getIdRow();
         this.date = news.getDate();
         this.tableName = news.getTableName();
     }
@@ -63,14 +65,6 @@ public class NewsModel {
         this.actionType = actionType;
     }
 
-    public Long getIdRow() {
-        return idRow;
-    }
-
-    public void setIdRow(Long idRow) {
-        this.idRow = idRow;
-    }
-
     public Long getDate() {
         return date;
     }
@@ -85,5 +79,21 @@ public class NewsModel {
 
     public void setTableName(News.TableName tableName) {
         this.tableName = tableName;
+    }
+
+    public Long getTrainingId() {
+        return trainingId;
+    }
+
+    public void setTrainingId(Long trainingId) {
+        this.trainingId = trainingId;
+    }
+
+    public Long getIdItem() {
+        return idItem;
+    }
+
+    public void setIdItem(Long idItem) {
+        this.idItem = idItem;
     }
 }
