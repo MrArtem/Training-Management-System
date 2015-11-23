@@ -57,7 +57,7 @@ public class LessonDAOImpl implements LessonDAO {
     public List<Lesson> getLessonListActualByTraining(long trainingId) {
         Session session = sessionFactory.getCurrentSession();
         Training training = session.load(Training.class, trainingId);
-        return session.createQuery("from Lesson less where less.training = :training and less.state != :state")
+        return session.createQuery("from Lesson less where less.training = :training and less.state != :state order by less.date")
                 .setParameter("training", training)
                 .setParameter("state", Lesson.State.REMOVAL)
                 .list();
