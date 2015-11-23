@@ -6,6 +6,8 @@
 
     /* @ngInject */
     function UrlProvider() {
+        
+        
         var urlProvider = {
             addComment: addComment,
             addExCoach: addExCoach,
@@ -59,202 +61,207 @@
         };
         return urlProvider;
     }
+    
+    var isApi = true
+    function apiPrefix() {
+        return isApi ? "/api" : "";
+    }
 
     function addComment(courseId) {
-        return '/api/training/' + courseId + '/add_comment';
+        return apiPrefix() + '/training/' + courseId + '/add_comment';
     }
 
 
     function addExCoach() {
-        return '/api/user_controller/add_ex_coach';
+        return apiPrefix() + '/user_controller/add_ex_coach';
     }
 
     function addFeedback() {
-        return '/api/feedback_controller/add_feedback';
+        return apiPrefix() + '/feedback_controller/add_feedback';
     }
 
     function addParticipant(courseId) {
-        return '/api/training/' + courseId + '/addExListener';
+        return apiPrefix() + '/training/' + courseId + '/addExListener';
     }
 
     function addTag() {
-        return '/api/training/add_tag';
+        return apiPrefix() + '/training/add_tag';
     }
 
     function approveCourse(actionId) {
-        return '/api/training/confirm/' + actionId;
+        return apiPrefix() + '/training/confirm/' + actionId;
     }
 
     function approveLesson(actionId) {
-        return '/api/training/' + actionId + '/confirm/lesson';
+        return apiPrefix() + '/training/' + actionId + '/confirm/lesson';
     }
 
     function cancelCreate(actionId) {
-        return '/api/training/cancel_create/' + actionId;
+        return apiPrefix() + '/training/cancel_create/' + actionId;
     }
 
     function cancelChange(actionId) {
-        return '/api/training/cancel_change/' + actionId;
+        return apiPrefix() + '/training/cancel_change/' + actionId;
     }
 
     function cancelEdit(trainingId) {
-        return '/api/training/cancel_edit/' + trainingId;
+        return apiPrefix() + '/training/cancel_edit/' + trainingId;
     }
 
     function cancelLesson(actionId) {
-        return '/api/training/' + actionId + '/canceled_lesson';
+        return apiPrefix() + '/training/' + actionId + '/canceled_lesson';
     }
 
     function changePassword() {
-        return '/api/user_controller/set_password';
+        return apiPrefix() + '/user_controller/set_password';
     }
 
     function confirm(trainingId) {
-        return '/api/training/confirm/' + trainingId;
+        return apiPrefix() + '/training/confirm/' + trainingId;
     }
 
     function createCourse() {
-        return '/api/training/create';
+        return apiPrefix() + '/training/create';
     }
 
     function deleteCourse(courseId) {
-        return '/api/training/' + courseId + '/remove';
+        return apiPrefix() + '/training/' + courseId + '/remove';
     }
 
     function deleteFile(fileId) {
-        return '/api/file_controller/delete_file/' + fileId;
+        return apiPrefix() + '/file_controller/delete_file/' + fileId;
     }
 
     function deleteLesson(courseId, lessonId) {
-        return '/api/training/' + courseId + '/lesson/' + lessonId;
+        return apiPrefix() + '/training/' + courseId + '/lesson/' + lessonId;
     }
 
     function deleteParticipant(courseId, userId) {
-        return '/api/training/' + courseId + '/leave/' + userId;
+        return apiPrefix() + '/training/' + courseId + '/leave/' + userId;
     }
 
     function editCourse(courseId) {
-        return '/api/training/edit/' + courseId;
+        return apiPrefix() + '/training/edit/' + courseId;
     }
 
     function findTrainings(searchQuery) {
-        return '/api/search_controller/search_training';
+        return apiPrefix() + '/search_controller/search_training';
     }
 
     function findUsers(searchQuery) {
-        return '/api/search_controller/search_user'
+        return apiPrefix() + '/search_controller/search_user'
     }
 
     function getAllTags() {
-        return '/api/training/tag_list';
+        return apiPrefix() + '/training/tag_list';
     }
 
     function getApproveList() {
-        return '/api/approve_list';
+        return apiPrefix() + '/approve_list';
     }
 
     function getAttachments(courseId) {
-        return '/api/file_controller/get_files/' + courseId;
+        return apiPrefix() + '/file_controller/get_files/' + courseId;
     }
 
     function getAttendance(lessonId) {
-        return '/api/attendance_controller/all_attendance/' + lessonId;
+        return apiPrefix() + '/attendance_controller/all_attendance/' + lessonId;
     }
 
     function getComments(courseId) {
-        return '/api/training/' + courseId + '/comment_list';
+        return apiPrefix() + '/training/' + courseId + '/comment_list';
     }
 
     function getCourseList() {
-        return '/api/training/training_list';
+        return apiPrefix() + '/training/training_list';
     }
 
     function getCurrentCoursesForUser(userId) {
-        return '/api/user_controller/actualTraining/' + userId;
+        return apiPrefix() + '/user_controller/actualTraining/' + userId;
     }
 
     function getEditedCourse(trainingId) {
-        return '/api/training/getApproveTraining/' + trainingId;
+        return apiPrefix() + '/training/getApproveTraining/' + trainingId;
     }
 
     function getExCoachList() {
-        return '/api/user_controller/get_all_ex_coach';
+        return apiPrefix() + '/user_controller/get_all_ex_coach';
     }
 
     function getFeedbacksOnUser(userId) {
-        return '/api/feedback_controller/feedbacks_of_user/' + userId;
+        return apiPrefix() + '/feedback_controller/feedbacks_of_user/' + userId;
     }
 
     function getFeedback(fbId) {
-        return '/api/feedback_controller/get_feedback/' + fbId;
+        return apiPrefix() + '/feedback_controller/get_feedback/' + fbId;
     }
 
     function getLessonToApprove(actionId) {
-        return '/api/training/' + actionId + '/approve_lesson';
+        return apiPrefix() + '/training/' + actionId + '/approve_lesson';
     }
 
     function getNewsList() {
-        return '/api/news';
+        return apiPrefix() + '/news';
     }
 
     function getParticipants(courseId) {
-        return '/api/training/' + courseId + '/listener_list';
+        return apiPrefix() + '/training/' + courseId + '/listener_list';
     }
 
     function getPastCoursesForUser(userId) {
-        return '/api/user_controller/visitedTraining/' + userId;
+        return apiPrefix() + '/user_controller/visitedTraining/' + userId;
     }
 
     function getProfileInfo(userId) {
-        return '/api/user_controller/user_info/' + userId;
+        return apiPrefix() + '/user_controller/user_info/' + userId;
     }
 
     function getShortInfo(courseId) {
-        return '/api/training/' + courseId;
+        return apiPrefix() + '/training/' + courseId;
     }
 
     function getStatistics() {
-        return '/api/statistics';
+        return apiPrefix() + '/statistics';
     }
 
     function getTimetable(courseId) {
-        return '/api/training/' + courseId + '/lesson_list';
+        return apiPrefix() + '/training/' + courseId + '/lesson_list';
     }
 
     function getWaitingCoursesForUser(userId) {
-        return '/api/user_controller/waitingTraining/' + userId;
+        return apiPrefix() + '/user_controller/waitingTraining/' + userId;
     }
 
     function leave(courseId) {
-        return '/api/training/' + courseId + '/leave';
+        return apiPrefix() + '/training/' + courseId + '/leave';
     }
 
     function login() {
-        return '/api/login';
+        return apiPrefix() + '/login';
     }
 
     function logout() {
-        return '/api/logout';
+        return apiPrefix() + '/logout';
     }
 
     function manageLesson(courseId) {
-        return '/api/training/' + courseId + '/lesson';
+        return apiPrefix() + '/training/' + courseId + '/lesson';
     }
 
     function setAttendance() {
-        return '/api/attendance_controller/update_attendance';
+        return apiPrefix() + '/attendance_controller/update_attendance';
     }
 
     //TODO
     function setRating(courseId, rating) {
-        return '/api/training/' + courseId + '/set_rating/' + rating;
+        return apiPrefix() + '/training/' + courseId + '/set_rating/' + rating;
     }
 
     function subscribe(courseId) {
-        return '/api/training/' + courseId + '/addListener';
+        return apiPrefix() + '/training/' + courseId + '/addListener';
     }
 
     function uploadFiles() {
-        return '/api/file_controller/add_files';
+        return apiPrefix() + '/file_controller/add_files';
     }
 })();
