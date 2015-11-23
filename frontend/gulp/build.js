@@ -90,8 +90,9 @@ gulp.task('other', function () {
         .pipe(fileFilter)
         .pipe($.flatten())
         .pipe($.debug())
-
+        .pipe(gulp.dest(path.join(conf.paths.dist, 'styles/assets/images')))
         .pipe(gulp.dest(path.join(conf.paths.dist, 'styles/assets/fonts/merriweather')))
+        .pipe(gulp.dest(path.join(conf.paths.dist, 'app/assets/images')))
 });
 
 
