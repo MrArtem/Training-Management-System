@@ -1,32 +1,34 @@
 <div class="current">
-    <div class="row">
-        <div class="col-xs-12 col-md-11">
+    <div ng-class="{'waiting-for-angular': !currentcourses.isContentLoaded }">
+        <div class="row">
+            <div class="col-xs-12 col-md-11">
 
-            <h4 class="tab-heading">Current trainings</h4>
+                <h4 class="tab-heading">Current trainings</h4>
 
-            <div class="scrollable-div">
+                <div class="scrollable-div">
 
-                <table ng-if="profileInfo.currentCourses.length != 0" class="table fullwidth-table">
-                    <thead>
-                    <tr>
-                        <th>Coach</th>
-                        <th></th>
-                        <th>Training</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr ng-repeat="course in profileInfo.currentCourses">
-                        <td><a ui-sref="profile({userId: course.coachId})">{{course.coachName}}</a></td>
-                        <td>{{course.isCoach ? 'coach' : 'student'}}</td>
-                        <td><a ui-sref="courseinfo({courseId: course.id})">{{course.title}}</a></td>
-                    </tr>
-                    </tbody>
-                </table>
-                <p ng-if="profileInfo.currentCourses.length == 0">This user has no current trainings.</p>
+                    <table ng-if="profileInfo.currentCourses.length != 0" class="table fullwidth-table">
+                        <thead>
+                        <tr>
+                            <th>Coach</th>
+                            <th></th>
+                            <th>Training</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="course in profileInfo.currentCourses">
+                            <td><a ui-sref="profile({userId: course.coachId})">{{course.coachName}}</a></td>
+                            <td>{{course.isCoach ? 'coach' : 'student'}}</td>
+                            <td><a ui-sref="courseinfo({courseId: course.id})">{{course.title}}</a></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <p ng-if="profileInfo.currentCourses.length == 0">This user has no current trainings.</p>
+
+                </div>
 
             </div>
 
         </div>
-
     </div>
 </div>

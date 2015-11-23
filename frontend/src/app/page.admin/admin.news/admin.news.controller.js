@@ -10,13 +10,16 @@
 		var vm = this;
 		vm.newsList = [];
 		vm.getNews = getNews;
+		vm.isContentLoaded = false;
 		vm.makeText = makeText;
 
 		vm.getNews();
 
 		function getNews() {
+			vm.isContentLoaded = false;
 			adminAPI.getNewsList().then(function(data) {
 				vm.newsList = angular.copy(data);
+				vm.isContentLoaded = true;
 				console.log('Received news: ', data);
 			});
 		}

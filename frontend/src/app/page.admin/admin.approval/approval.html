@@ -1,23 +1,25 @@
 <div class="approval">
-    <div class="row">
-        <div class="col-xs-12">
+    <div ng-class="{'waiting-for-angular': !approval.isContentLoaded }">
+        <div class="row">
+            <div class="col-xs-12">
 
-            <div ng-if="approval.approveList.length != 0" class="scrollable-div">
+                <div ng-if="approval.approveList.length != 0" class="scrollable-div">
 
-                <div class="approve-item" ng-repeat="item in approval.approveList track by $index">
-                    <p><span><a ui-sref="profile({userId: item.coachId})">{{item.coachName}}</a>
+                    <div class="approve-item" ng-repeat="item in approval.approveList track by $index">
+                        <p><span><a ui-sref="profile({userId: item.coachId})">{{item.coachName}}</a>
 						{{approval.makeText(item.type, item.tableName)}} <a href=""
                                                                             ui-sref="courseinfo({courseId: item.trainingId})">{{item.trainingTitle}}</a></span>
-                        <a href="" ng-click="approval.seeDetails(item)"><span class="pull-right see-details"><i
-                                class="fa fa-eye"></i></span></a>
-                    </p>
+                            <a href="" ng-click="approval.seeDetails(item)"><span class="pull-right see-details"><i
+                                    class="fa fa-eye"></i></span></a>
+                        </p>
 
-                    <p class="top-mg-25"><i class="fa fa-clock-o"></i> {{item.date | date: "MMM d, y h:mm a"}}</p>
+                        <p class="top-mg-25"><i class="fa fa-clock-o"></i> {{item.date | date: "MMM d, y h:mm a"}}</p>
+                    </div>
+
                 </div>
+                <p ng-if="approval.approveList.length == 0">You have nothing to approve.</p>
 
             </div>
-            <p ng-if="approval.approveList.length == 0">You have nothing to approve.</p>
-
         </div>
     </div>
 </div>
@@ -35,7 +37,8 @@
                 <div class="row">
                     <div class="col-xs-12">
                         <p>Can {{approval.coachNameToApprove}} delete his training
-                            <a ui-sref="courseinfo({courseId: approval.trainingIdToApprove})">{{approval.trainingNameToApprove}}</a>?</p>
+                            <a ui-sref="courseinfo({courseId: approval.trainingIdToApprove})">{{approval.trainingNameToApprove}}</a>?
+                        </p>
                     </div>
                 </div>
             </div>

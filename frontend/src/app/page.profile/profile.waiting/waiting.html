@@ -1,29 +1,30 @@
 <div class="waiting">
-    <div class="row">
-        <div class="col-xs-12 col-md-11">
+    <div ng-class="{'waiting-for-angular': !waitingcourses.isContentLoaded }">
+        <div class="row">
+            <div class="col-xs-12 col-md-11">
 
-            <h4 class="tab-heading">Waiting for trainings</h4>
+                <h4 class="tab-heading">Waiting for trainings</h4>
 
-            <div class="scrollable-div">
+                <div class="scrollable-div">
 
-                <table ng-if="profileInfo.waitingCourses.length != 0" class="table fullwidth-table">
-                    <thead>
-                    <tr>
-                        <th>Coach</th>
-                        <th>Training</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr ng-repeat="course in profileInfo.waitingCourses">
-                        <td><a ui-sref="profile({userId: course.coachId}{})">{{course.coachName}}</a></td>
-                        <td><a ui-sref="courseinfo({courseId: course.id})">{{course.trainingTitle}}</a></td>
-                    </tr>
-                    </tbody>
-                </table>
-                <p ng-if="profileInfo.waitingCourses.length == 0">This user isn't waiting for any trainings.</p>
+                    <table ng-if="profileInfo.waitingCourses.length != 0" class="table fullwidth-table">
+                        <thead>
+                        <tr>
+                            <th>Coach</th>
+                            <th>Training</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="course in profileInfo.waitingCourses">
+                            <td><a ui-sref="profile({userId: course.coachId}{})">{{course.coachName}}</a></td>
+                            <td><a ui-sref="courseinfo({courseId: course.id})">{{course.trainingTitle}}</a></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <p ng-if="profileInfo.waitingCourses.length == 0">This user isn't waiting for any trainings.</p>
+                </div>
+
             </div>
-
         </div>
-
     </div>
 </div>
