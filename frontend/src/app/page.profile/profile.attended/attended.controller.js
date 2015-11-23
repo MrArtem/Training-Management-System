@@ -14,6 +14,7 @@
         vm.getPastCourses();
 
         function getPastCourses() {
+            vm.isContentLoaded = false;
             userAPI.getPastCourses($stateParams.userId).then(function(data) {
                 $scope.$parent.profileInfo.pastCourses = angular.copy(data);
                 vm.isContentLoaded = true;

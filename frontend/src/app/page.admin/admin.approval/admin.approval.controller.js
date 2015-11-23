@@ -10,6 +10,7 @@
         var vm = this;
         vm.approveList = [];
         vm.lessonToApprove = {};
+        vm.isContentLoaded = false;
         //var stompClient = null;
 
         //vm.disconnect = disconnect;
@@ -117,8 +118,10 @@
         }
 
         function getApproveList() {
+            vm.isContentLoaded = false;
             adminAPI.getApproveList().then(function(data) {
                 vm.approveList = angular.copy(data);
+                vm.isContentLoaded = true;
                 console.log('Received approvals: ', vm.approveList);
             });
         }

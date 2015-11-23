@@ -12,6 +12,7 @@
 
         vm.clearFbInfo = clearFbInfo;
         vm.getFeedbacks = getFeedbacks;
+        vm.isContentLoaded = false;
         vm.leaveFeedback = leaveFeedback;
         vm.seeFeedback = seeFeedback;
 
@@ -22,8 +23,10 @@
         }
 
         function getFeedbacks() {
+            vm.isContentLoaded = false;
             userAPI.getFeedbacksOn($stateParams.userId).then(function(feedbacks) {
                 $scope.$parent.profileInfo.feedbacks = angular.copy(feedbacks);
+                vm.isContentLoaded = true;
                 console.log("Received feedbacks: ");
                 console.log($scope.$parent.profileInfo.feedbacks);
             });

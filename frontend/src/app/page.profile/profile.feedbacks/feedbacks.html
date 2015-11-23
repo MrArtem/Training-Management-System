@@ -1,35 +1,38 @@
 <div class="feedbacks">
-    <div class="row">
-        <div class="col-xs-12 col-md-11">
+    <div ng-class="{'waiting-for-angular': !feedbacks.isContentLoaded }">
+        <div class="row">
+            <div class="col-xs-12 col-md-11">
 
-            <h4 class="tab-heading">Feedbacks</h4>
+                <h4 class="tab-heading">Feedbacks</h4>
 
-            <!--First need to get training list-->
-            <!--<a class="btn default-btn-blue" data-toggle="modal" data-target="#addFeedbackModal">Leave feedback</a>-->
+                <!--First need to get training list-->
+                <!--<a class="btn default-btn-blue" data-toggle="modal" data-target="#addFeedbackModal">Leave feedback</a>-->
 
-            <div class="scrollable-div">
+                <div class="scrollable-div">
 
-                <table ng-if="profileInfo.feedbacks.length != 0" class="table fullwidth-table">
-                    <thead>
-                    <tr>
-                        <th>Who left</th>
-                        <th>Positive?</th>
-                        <th></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr ng-repeat="fb in profileInfo.feedbacks track by $index">
-                        <td><a ui-sref="profile({userId: fb.coachID})">{{fb.coachName}}</a></td>
-                        <td>{{fb.isPositive==true ? '+' : '-'}}</td>
-                        <td><a href="" data-toggle="modal" data-target="#seeFeedbackModal" ng-click="feedbacks.seeFeedback($index)">See details</a></td>
-                    </tr>
-                    </tbody>
-                </table>
-                <p ng-if="profileInfo.feedbacks.length == 0">No feedbacks left yet.</p>
+                    <table ng-if="profileInfo.feedbacks.length != 0" class="table fullwidth-table">
+                        <thead>
+                        <tr>
+                            <th>Who left</th>
+                            <th>Positive?</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="fb in profileInfo.feedbacks track by $index">
+                            <td><a ui-sref="profile({userId: fb.coachID})">{{fb.coachName}}</a></td>
+                            <td>{{fb.isPositive==true ? '+' : '-'}}</td>
+                            <td><a href="" data-toggle="modal" data-target="#seeFeedbackModal"
+                                   ng-click="feedbacks.seeFeedback($index)">See details</a></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <p ng-if="profileInfo.feedbacks.length == 0">No feedbacks left yet.</p>
+                </div>
+
             </div>
 
         </div>
-
     </div>
 </div>
 
@@ -47,41 +50,48 @@
 
                     <div class="row">
                         <div class="col-xs-12 col-sm-6">
-                            <input type="checkbox" id="attendance2" ng-model="feedbacks.fbInfo.attendance"><label for="attendance2">Was
+                            <input type="checkbox" id="attendance2" ng-model="feedbacks.fbInfo.attendance"><label
+                                for="attendance2">Was
                             it interesting?</label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-xs-12 col-sm-6">
-                            <input type="checkbox" id="attitude2" ng-model="feedbacks.fbInfo.attitude"><label for="attitude2">Was it
+                            <input type="checkbox" id="attitude2" ng-model="feedbacks.fbInfo.attitude"><label
+                                for="attitude2">Was it
                             clear?</label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-xs-12 col-sm-6">
-                            <input type="checkbox" id="commSkills2" ng-model="feedbacks.fbInfo.commSkills"><label for="commSkills2">Did
+                            <input type="checkbox" id="commSkills2" ng-model="feedbacks.fbInfo.commSkills"><label
+                                for="commSkills2">Did
                             you learn something new?</label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-xs-12 col-sm-6">
-                            <input type="checkbox" id="questions2" ng-model="feedbacks.fbInfo.questions"><label for="questions2">Was the coach creative?</label>
+                            <input type="checkbox" id="questions2" ng-model="feedbacks.fbInfo.questions"><label
+                                for="questions2">Was the coach creative?</label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-xs-12 col-sm-6">
-                            <input type="checkbox" id="motivation2" ng-model="feedbacks.fbInfo.motivation"><label for="motivation2">Would you recommend this course?</label>
+                            <input type="checkbox" id="motivation2" ng-model="feedbacks.fbInfo.motivation"><label
+                                for="motivation2">Would you recommend this course?</label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-xs-12 col-sm-6">
-                            <input type="checkbox" id="focusOnResult2" ng-model="feedbacks.fbInfo.focusOnResult"><label for="focusOnResult2">Would you recommend this course?</label>
+                            <input type="checkbox" id="focusOnResult2" ng-model="feedbacks.fbInfo.focusOnResult"><label
+                                for="focusOnResult2">Would you recommend this course?</label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-xs-12 col-sm-6">
                             <label>Anything else?
-                                <textarea type="text" name="other" placeholder="Do you have something else to say?" ng-model="feedbacks.fbInfo.other" ng-maxlength="10000"></textarea>
+                                <textarea type="text" name="other" placeholder="Do you have something else to say?"
+                                          ng-model="feedbacks.fbInfo.other" ng-maxlength="10000"></textarea>
                             </label>
                         </div>
                     </div>
@@ -110,38 +120,45 @@
 
                     <div class="row">
                         <div class="col-xs-12 col-sm-6">
-                            <input type="checkbox" id="attendance" ng-model="feedbacks.fbInfo.attendance" ng-disabled><label for="attendance">Has the student attended the lectures?</label>
+                            <input type="checkbox" id="attendance" ng-model="feedbacks.fbInfo.attendance"
+                                   ng-disabled><label for="attendance">Has the student attended the lectures?</label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-xs-12 col-sm-6">
-                            <input type="checkbox" id="attitude" ng-model="feedbacks.fbInfo.attitude" ng-disabled><label for="attitude">Wass the student willing to learn?</label>
+                            <input type="checkbox" id="attitude" ng-model="feedbacks.fbInfo.attitude" ng-disabled><label
+                                for="attitude">Wass the student willing to learn?</label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-xs-12 col-sm-6">
-                            <input type="checkbox" id="commSkills" ng-model="feedbacks.fbInfo.commSkills" ng-disabled><label for="commSkills">Was the student communicative?</label>
+                            <input type="checkbox" id="commSkills" ng-model="feedbacks.fbInfo.commSkills"
+                                   ng-disabled><label for="commSkills">Was the student communicative?</label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-xs-12 col-sm-6">
-                            <input type="checkbox" id="questions" ng-model="feedbacks.fbInfo.questions" ng-disabled><label for="questions">Was the student asking questions?</label>
+                            <input type="checkbox" id="questions" ng-model="feedbacks.fbInfo.questions"
+                                   ng-disabled><label for="questions">Was the student asking questions?</label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-xs-12 col-sm-6">
-                            <input type="checkbox" id="motivation" ng-model="feedbacks.fbInfo.motivation"><label for="motivation">Was the student motivated?</label>
+                            <input type="checkbox" id="motivation" ng-model="feedbacks.fbInfo.motivation"><label
+                                for="motivation">Was the student motivated?</label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-xs-12 col-sm-6">
-                            <input type="checkbox" id="focusOnResult" ng-model="feedbacks.fbInfo.focusOnResult" ng-disabled><label for=focusOnResult>Was the student focused on result?</label>
+                            <input type="checkbox" id="focusOnResult" ng-model="feedbacks.fbInfo.focusOnResult"
+                                   ng-disabled><label for=focusOnResult>Was the student focused on result?</label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-xs-12 col-sm-6">
                             <label>Anything else?
-                                <textarea type="text" name="other" placeholder="Do you have something else to say?" ng-model="feedbacks.fbInfo.other" ng-maxlength="10000" ng-disabled></textarea>
+                                <textarea type="text" name="other" placeholder="Do you have something else to say?"
+                                          ng-model="feedbacks.fbInfo.other" ng-maxlength="10000" ng-disabled></textarea>
                             </label>
                         </div>
                     </div>
@@ -149,7 +166,9 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button href="" class="btn default-btn-blue" data-dismiss="modal" ng-click="feedbacks.clearFbInfo()">OK</button>
+                <button href="" class="btn default-btn-blue" data-dismiss="modal" ng-click="feedbacks.clearFbInfo()">
+                    OK
+                </button>
             </div>
         </div>
     </div>

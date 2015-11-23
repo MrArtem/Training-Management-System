@@ -12,17 +12,23 @@
                 url: '/approval',
                 templateUrl: 'app/page.admin/admin.approval/approval.html',
                 controller: 'ApprovalController',
-                controllerAs: 'approval'
+                controllerAs: 'approval',
+                auth: true,
+                accessRights: 0
             }).state('admin.news', {
                 url: '/news',
                 templateUrl: 'app/page.admin/admin.news/news.html',
                 controller: 'NewsController',
-                controllerAs: 'news'
+                controllerAs: 'news',
+                auth: true,
+                accessRights: 0
             }).state('admin.statistics', {
                 url: '/statistics',
                 templateUrl: 'app/page.admin/admin.statistics/statistics.html',
                 controller: 'StatisticsController',
-                controllerAs: 'statistics'
+                controllerAs: 'statistics',
+                auth: true,
+                accessRights: 0
             })
         ;
 

@@ -1,18 +1,21 @@
 <div class="news">
-    <div class="row">
-        <div class="col-xs-12">
+    <div ng-class="{'waiting-for-angular': !news.isContentLoaded }">
+        <div class="row">
+            <div class="col-xs-12">
 
-            <div ng-if="news.newsList.length != 0" class="scrollable-div">
-                <div class="approve-item" ng-repeat="item in news.newsList track by $index">
-                    <p><span><a ui-sref="profile({userId: item.userId})">{{item.userName}}</a>
-						{{news.makeText(item.actionType, item.tableName)}} <a href="" ui-sref="courseinfo({courseId: item.trainingId})">{{item.title}}</a></span>
-                    </p>
+                <div ng-if="news.newsList.length != 0" class="scrollable-div">
+                    <div class="approve-item" ng-repeat="item in news.newsList track by $index">
+                        <p><span><a ui-sref="profile({userId: item.userId})">{{item.userName}}</a>
+						{{news.makeText(item.actionType, item.tableName)}} <a href=""
+                                                                              ui-sref="courseinfo({courseId: item.trainingId})">{{item.title}}</a></span>
+                        </p>
 
-                    <p class="top-mg-25"><i class="fa fa-clock-o"></i> {{item.date | date: "MMM d, y h:mm a"}}</p>
+                        <p class="top-mg-25"><i class="fa fa-clock-o"></i> {{item.date | date: "MMM d, y h:mm a"}}</p>
+                    </div>
                 </div>
-            </div>
 
-            <p ng-if="news.newsList.length == 0">Nothing new.</p>
+                <p ng-if="news.newsList.length == 0">Nothing new.</p>
+            </div>
         </div>
     </div>
 </div>
