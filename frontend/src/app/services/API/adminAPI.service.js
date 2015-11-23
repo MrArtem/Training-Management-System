@@ -30,12 +30,11 @@
         }
 
         function getNewsList() {
-            return $http.get(urlProvider.getNewsList(), {
-                params: {
-                    page: 0,
-                    page_size: 10
-                }
-            }).then(function (results) {
+            var pageModel = {
+                page: 0,
+                page_size: 10
+            };
+            return $http.post(urlProvider.getNewsList(), pageModel).then(function (results) {
                 return results.data;
             });
         }

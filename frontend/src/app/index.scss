@@ -89,6 +89,24 @@ body {
   cursor: pointer;
 }
 
+/* SCROLL */
+
+.scrollable-div::-webkit-scrollbar-track {
+  width:8px;
+}
+
+.scrollable-div::-webkit-scrollbar {
+  width: 12px;
+}
+
+.scrollable-div::-webkit-scrollbar-thumb {
+  border: 1px solid #eeeeee;
+  background-clip: padding-box;
+  border-radius: 5px;
+  background-color: #eeeeee;
+}
+
+
 ///// UTILITY CLASSES /////
 
 .inline {
