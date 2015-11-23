@@ -1,20 +1,18 @@
 <div class="news">
+    <div class="row">
+        <div class="col-xs-12">
 
-    <div class="small-12 medium-8 large-8 column">
+            <div ng-if="news.newsList.length != 0" class="scrollable-div">
+                <div class="approve-item" ng-repeat="item in news.newsList track by $index">
+                    <p><span><a ui-sref="profile({userId: item.userId})">{{item.userName}}</a>
+						{{news.makeText(item.actionType, item.tableName)}} <a href="" ui-sref="courseinfo({courseId: item.trainingId})">{{item.title}}</a></span>
+                    </p>
 
-        <h5>Something that needs your atention</h5>
+                    <p class="top-mg-25"><i class="fa fa-clock-o"></i> {{item.date | date: "MMM d, y h:mm a"}}</p>
+                </div>
+            </div>
 
-        <div class="scrollable-div">
-
-            <table class="fullwidth-table">
-                <tbody>
-                <tr ng-repeat="i in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]">
-                    <td>News will be displayed here</td>
-                </tr>
-                </tbody>
-            </table>
-
+            <p ng-if="news.newsList.length == 0">Nothing new.</p>
         </div>
-
     </div>
 </div>

@@ -57,7 +57,7 @@
 
         function leave() {
             courseAPI.leave($stateParams.courseId).then(function(data) {
-                vm.courseInfo.canSubscribe = true;
+                $scope.courseInfo.canSubscribe = true;
                 console.log('Left training successfully');
             });
         }
