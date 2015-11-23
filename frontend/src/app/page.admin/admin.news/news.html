@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-xs-12">
 
-                <div ng-if="news.newsList.length != 0" class="scrollable-div">
+                <div ng-if="news.newsList.length != 0" class="scrollable-div fullwidth-table">
                     <div class="approve-item" ng-repeat="item in news.newsList track by $index">
                         <p><span><a ui-sref="profile({userId: item.userId})">{{item.userName}}</a>
 						{{news.makeText(item.actionType, item.tableName)}} <a href=""
