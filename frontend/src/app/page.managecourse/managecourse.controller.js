@@ -64,13 +64,14 @@
             vm.actionId = parseInt($stateParams.id);
             $scope.isEdited = true;
             vm.isDraft = $stateParams.type === 'EDIT';
+            vm.isCreate = $stateParams.type === 'CREATE';
 
             if (vm.isDraft) {
-                //if admin approves
+                //if admin approves edit
                 vm.getEditedCourse();
             }
             else {
-                //if admin/user wants to edit
+                //if admin/user wants to edit or approve creation
                 vm.getCourseToEdit();
             }
         }
@@ -233,34 +234,39 @@
 
         function areDatesSelected() {
             var isValid = true;
-            if ($scope.courseInfo.isRepeating === undefined || $scope.courseInfo.isRepeating === null || !$scope.courseInfo.lessonList) {
-                return false;
-            }
-            if ($scope.courseInfo.isRepeating) {
-                if ($scope.temp.onDays.indexOf(true) == -1 || (new Date($scope.temp.startDate)).getTime() < (new Date()).getTime() || (new Date($scope.temp.endDate)).getTime() < (new Date()).getTime() || (new Date($scope.temp.endDate)).getTime() <= (new Date($scope.temp.startDate)).getTime()) {
-                    return false;
-                }
-
-                $scope.tempDates.forEach(function (lesson, index) {
-                    if ($scope.temp.onDays[index]) {
-                        if (vm.isAdmin() && lesson.place == "") {
-                            isValid = false;
-                        }
-                        if (lesson.hours < 0 || lesson.hours > 23 || lesson.hours != parseInt(lesson.hours, 10) || lesson.minutes < 0 || lesson.minutes > 59 || lesson.minutes != parseInt(lesson.minutes, 10)) {
-                            isValid = false;
-                        }
-                    }
-                });
+            if($stateParams.edit && $stateParams.type === 'CREATE') {
+                return true;
             }
             else {
-                if ($scope.courseInfo.lessonList.length == 0) {
+                if ($scope.courseInfo.isRepeating === undefined || $scope.courseInfo.isRepeating === null || !$scope.courseInfo.lessonList) {
                     return false;
                 }
-                $scope.courseInfo.lessonList.forEach(function (lesson) {
-                    if (lesson.date < (new Date().getTime())) {
+                if ($scope.courseInfo.isRepeating) {
+                    if ($scope.temp.onDays.indexOf(true) == -1 || (new Date($scope.temp.startDate)).getTime() < (new Date()).getTime() || (new Date($scope.temp.endDate)).getTime() < (new Date()).getTime() || (new Date($scope.temp.endDate)).getTime() <= (new Date($scope.temp.startDate)).getTime()) {
                         return false;
                     }
-                })
+
+                    $scope.tempDates.forEach(function (lesson, index) {
+                        if ($scope.temp.onDays[index]) {
+                            if (vm.isAdmin() && lesson.place == "") {
+                                isValid = false;
+                            }
+                            if (lesson.hours < 0 || lesson.hours > 23 || lesson.hours != parseInt(lesson.hours, 10) || lesson.minutes < 0 || lesson.minutes > 59 || lesson.minutes != parseInt(lesson.minutes, 10)) {
+                                isValid = false;
+                            }
+                        }
+                    });
+                }
+                else {
+                    if ($scope.courseInfo.lessonList.length == 0) {
+                        return false;
+                    }
+                    $scope.courseInfo.lessonList.forEach(function (lesson) {
+                        if (lesson.date < (new Date().getTime())) {
+                            return false;
+                        }
+                    })
+                }
             }
             return isValid;
         }
