@@ -17,14 +17,20 @@
         </div>
 
         <div ng-if="isEdited" class="col-xs-12">
-            <p><b>Lesson dates: </b></p>
-            <div class="scrollable-div">
-                <table>
-                    <tr ng-repeat="lesson in courseInfo.lessonList track by $index">
-                        <td>{{lesson.date |  date: "MMM d, y h:mm a"}}</td>
-                    </tr>
-                </table>
+            <div ng-if="!courseInfo.isRepeating">
+                <p><b>Lesson dates: </b></p>
+                <div class="scrollable-div">
+                    <table>
+                        <tr ng-repeat="lesson in courseInfo.lessonList track by $index">
+                            <td>{{lesson.date |  date: "MMM d, y h:mm a"}}</td>
+                        </tr>
+                    </table>
+                </div>
             </div>
+            <div ng-if="courseInfo.isRepeating">
+                <p><b>Lesson repeat model: </b></p>
+            </div>
+
         </div>
 
     </div>

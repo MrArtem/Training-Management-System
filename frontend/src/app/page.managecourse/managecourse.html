@@ -110,7 +110,7 @@
                     </div>
 
                     <!--Set place if admin-->
-                    <div class="row" ng-if="managecourse.isAdmin() && managecourse.isCreate">
+                    <div class="row" ng-if="managecourse.isAdmin() && managecourse.isCreate && !courseInfo.isRepeating">
                         <div class="col-xs-12">
                             <p class="pull-left">
                                 Place:
@@ -118,7 +118,7 @@
                                        placeholder="click to enter" ng-model="courseInfo.place" maxlength="255"
                                        uib-tooltip="it will be set for all the dates that you add"
                                        tooltip-trigger="focus"
-                                       tooltip-placement="bottom" ng-required="managecourse.isAdmin() && managecourse.isCreate">
+                                       tooltip-placement="bottom" ng-required="managecourse.isAdmin() && managecourse.isCreate && !courseInfo.isRepeating">
                                 <span ng-show="courseForm.place.$invalid && courseForm.place.$touched || courseForm.place.$invalid && managecourse.isAdmin() && isEdited"
                                       class="badge invalid-form"
                                       uib-tooltip="This field is required, maximum length: 255 symbols"
@@ -177,7 +177,7 @@
                             <ul class="nav navbar-nav router-tabs">
                                 <li role="presentation" ng-class="{activelink: managecourse.isActive('dates')}">
 
-                                    <a ui-sref="managecourse.dates">
+                                    <a href="" ng-click="managecourse.seeTimetable()">
                                         <i class="fa fa-clock-o"></i>Timetable
                                         <span ng-if="managecourse.trySubmit && !managecourse.areDatesSelected()"
                                               class="badge invalid-form no-arrow"

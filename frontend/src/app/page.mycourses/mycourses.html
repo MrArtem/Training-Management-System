@@ -27,13 +27,13 @@
                 
                 <!--No Courses-->
                 <div style="margin-top:20%;" ng-if="filteredCourses.length == 0 && mycourses.filter.isCoach && !mycourses.filter.title">
-                    <p class="text-center" >Wooow, You're still not coaching?</p>
+                    <p class="text-center" >You're still not coaching?</p>
                     <button ui-sref="managecourse({type: 'CREATE'})" class="btn accent-btn-blue center-block">Become Coach</button>
                 </div>
                 
                 <!--Filter returns 0-->
                 <div style="margin-top:20%;" ng-if="filteredCourses.length == 0 && mycourses.filter.title">
-                    <p class="text-center" >Wooow, Adjust Your Search Query</p>
+                    <p class="text-center" >Please, adjust your search query</p>
                     <button ng-click=(mycourses.clearSearch()) class="btn accent-btn-blue center-block">Clear Search</button>
                 </div>
 
