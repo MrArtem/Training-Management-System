@@ -9,23 +9,23 @@
                     <label ng-bind="dates.days[$index]"></label>
                 </div>
                 <div class="col-xs-1 col-sm-1">
-                    <input type="checkbox" ng-model="temp.onDays[$index]">
+                    <input type="checkbox" ng-model="temp.onDays[$index]" ng-disabled="managecourse.isCreate">
                 </div>
                 <div class="col-xs-3 col-sm-2">
                     <input type="number" class="form-control bordered-input" placeholder="hours"
                            ng-model="tempDates[$index].hours"
-                           ng-disabled="!temp.onDays[$index]">
+                           ng-disabled="!temp.onDays[$index] || managecourse.isCreate">
                 </div>
                 <div class="col-xs-3 col-sm-2">
                     <input type="number" class="form-control bordered-input" placeholder="minutes"
                            ng-model="tempDates[$index].minutes"
-                           ng-disabled="!temp.onDays[$index]">
+                           ng-disabled="!temp.onDays[$index] || managecourse.isCreate">
                 </div>
                 <div class="col-xs-4 col-sm-4" ng-if="managecourse.isAdmin()">
                     <input type="text" id="repeatPlace" name="repeatPlace{{$index}}"
                            class="form-control bordered-input pull-left" placeholder="place"
                            ng-model="tempDates[$index].place" ng-disabled="!temp.onDays[$index]"
-                           ng-required="courseInfo.isRepeating && managecourse.isAdmin()">
+                           ng-required="courseInfo.isRepeating && managecourse.isAdmin() && temp.onDays[$index]">
                     <span ng-show="courseForm.repeatPlace{{$index}}.$invalid && courseForm.repeatPlace{{$index}}.$touched && temp.onDays[$index]"
                                class="badge invalid-form pull-left"
                                uib-tooltip="This field is required"

@@ -9,6 +9,11 @@
 				<!--</div>-->
 			<!--</div>-->
 
+			<div style="margin-top:20%;" ng-if="browse.courseList.length == 0">
+				<p class="text-center">Sorry, there are no current courses. Want to fix this?</p>
+				<button ui-sref="managecourse({type: 'CREATE'})" class="btn accent-btn-blue center-block">Create Course</button>
+			</div>
+
 			<div class="row">
 				<div class="pull-left col-xs-12 col-sm-6 col-lg-4 card" ng-repeat="course in browse.courseList">
 					<div class="card-bg" ui-sref="courseinfo({courseId: course.id})">
