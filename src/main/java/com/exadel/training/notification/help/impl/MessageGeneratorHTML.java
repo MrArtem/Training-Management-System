@@ -1,14 +1,18 @@
 package com.exadel.training.notification.help.impl;
 
 import com.exadel.training.notification.help.MessageGenerator;
+import freemarker.template.Configuration;
 import freemarker.template.Template;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import java.io.File;
-import java.io.IOException;
-import java.io.StringWriter;
+import javax.servlet.ServletContext;
+import java.io.*;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -22,22 +26,30 @@ import java.util.Map;
 public class MessageGeneratorHTML implements MessageGenerator {
 
     private final String HEADER = "";
-
     private final String FOOTER = "";
+
+    @Autowired
+    private ResourceLoader resourceLoader;
 
     @Value("${site.uri}")
     private String SITE_URI;
 
+    @Autowired
+    private ServletContext servletContext;
+
     private SimpleDateFormat formatDate = new SimpleDateFormat("dd-MM-YYYY");
-
     private SimpleDateFormat formatTime = new SimpleDateFormat("H-m");
-
     private freemarker.template.Configuration cfg;
 
     @PostConstruct
     public void init() throws IOException {
         cfg = new freemarker.template.Configuration(freemarker.template.Configuration.VERSION_2_3_23);
-        cfg.setDirectoryForTemplateLoading(new File(getClass().getResource("/mail-template").getFile()));
+
+
+        cfg.setClassForTemplateLoading(this.getClass(), "/mail-template");
+//        Resource templates = resourceLoader.getResource("classpath:mail-template");
+//        cfg.setDirectoryForTemplateLoading(templates.getFile());
+
         System.out.println(SITE_URI);
     }
 

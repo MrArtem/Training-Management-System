@@ -10,6 +10,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.sql.JoinType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -70,13 +71,14 @@ public class UserDAOImpl implements UserDAO {
     public List<Training> actualTrainings(long idUser) {
         Session session = sessionFactory.getCurrentSession();
         Criteria criteria = session.createCriteria(Training.class, "training");
-        criteria.createAlias("training.listenerList", "listener");
+        criteria.createAlias("training.listenerList", "listener", JoinType.LEFT_OUTER_JOIN);
         criteria.createAlias("training.lessonList", "lesson");
 
         Criterion criterionListener = Restrictions.and(Restrictions.eq("listener.user.id", idUser));
+        Criterion criterionStateListener = Restrictions.and(Restrictions.eq("listener.state", Listener.State.ACCEPTED));
         Criterion criterionCoach = Restrictions.and(Restrictions.eq("training.coach.id", idUser));
 
-        criteria.add(Restrictions.or(criterionListener, criterionCoach));
+        criteria.add(Restrictions.or(Restrictions.and(criterionListener, criterionStateListener), criterionCoach));
         criteria.add(Restrictions.gt("lesson.date", new Date().getTime()));
 
         criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);

@@ -25,6 +25,7 @@ import java.util.Properties;
 public class NotificationEmail implements Notification {
     private final String USERNAME = "tms@exadel.com";
     private final String PASSWORD = "trainingMS";
+    private final String SUBJECT = "Training-Management-System";
 
     @Autowired
     private MessageGenerator messageGenerator;
@@ -48,13 +49,13 @@ public class NotificationEmail implements Notification {
                 });
     }
 
-    public void send(String adress, String subject, String text) {
+    public void send(String address, String text) {
         try {
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress(USERNAME));
             message.setRecipients(Message.RecipientType.TO,
-                    InternetAddress.parse(adress));
-            message.setSubject(subject);
+                    InternetAddress.parse(address));
+            message.setSubject(SUBJECT);
             message.setText(text);
 
             MimeMultipart multipart = new MimeMultipart("related");
