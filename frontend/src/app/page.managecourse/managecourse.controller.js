@@ -244,8 +244,8 @@
             $scope.courseInfo.repeatModel.lessonList.forEach(function (lesson) {
                 if (lesson) {
                     $scope.tempDates.push({
-                        hours: new Date(lesson.date).getHours(),
-                        minutes: (new Date()).getMinutes(),
+                        hours: (new Date(lesson.date)).getHours(),
+                        minutes: (new Date(lesson.date)).getMinutes(),
                         place: lesson.place
                     });
                 }
