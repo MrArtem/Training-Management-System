@@ -1,4 +1,4 @@
-# Training-Management-System
+# Training-Management-System (Summer Traineeship)
 If you want to run our project:
 ---------------------
 1) Create MySQL database:
